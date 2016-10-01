@@ -21,7 +21,7 @@ class CreateUserOrganizationTable extends Migration
             ]);
 
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('organization_id')->unsigned();
             $table->foreign('organization_id')->references('id')->on('organization')->onDelete('cascade');
