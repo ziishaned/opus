@@ -15,6 +15,18 @@ class CreateUserOrganizationTable extends Migration
     {
         Schema::create('user_organization', function (Blueprint $table) {
             $table->increments('id');
+            $table->enum('user_type', [
+                'normal',
+                'admin',
+            ]);
+
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+
+            $table->integer('organization_id')->unsigned();
+            $table->foreign('organization_id')->references('id')->on('organization')->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }
