@@ -1,27 +1,48 @@
-# Laravel PHP Framework
+# Wiki
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+> This tool helps you to create your organiaztion or projects wiki with simple steps.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Features
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+* You can create thousand of wikis.
+* Invite your organization employees so that can also work on your organization wikis.   
+* Instantly get notification if someone modify wiki.
+* Add wiki pages to your favourite list so that you can read it after a while.
+* Add wiki to your watch list.
+* and more features are comming... 
 
-## Official Documentation
+## Are you Developer
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+### Installation
 
-## Contributing
+* Clone this repo:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+```shell
+$ git clone git@gitlab.com:zeeshanu/wiki.git
+```
 
-## Security Vulnerabilities
+* Create following database `wiki` 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+* Run migration
 
-## License
+```shell
+$ php artisan migrate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+* Fill database with dummy data - optional
+
+```shell
+$ php artisan db:seed
+```
+
+* Create a virtual host or just run the following command in your project root directory:
+
+```shello
+$ php artisan serve	
+```
+
+* Lastly in your favourite browser open following url 
+
+```
+localhost:8000
+```
