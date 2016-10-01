@@ -11,9 +11,7 @@
 * Add wiki to your watch list.
 * and more features are comming... 
 
-## Are you Developer
-
-### Installation
+## Installation
 
 * Clone this repo:
 
