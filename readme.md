@@ -1,6 +1,6 @@
 # Wiki
 
-> This tool helps you to create your organiaztion or projects wiki with simple steps.
+> This tool helps you to create your organization or projects wiki with simple steps.
 
 ## Features
 
