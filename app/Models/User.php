@@ -16,4 +16,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function organization() {
+        return $this->hasOne('App\Models\Organization');
+    }
+
+    public function user_organization() {
+        return $this->hasMany('App\Models\UserOrganization');
+    }
+
+    public function wiki() {
+        return $this->hasMany('App\Models\Wiki');
+    }
+
+    public function wiki_page() {
+        return $this->hasMany('App\Models\WikiPage');
+    }
 }

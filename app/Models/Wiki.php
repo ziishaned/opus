@@ -15,4 +15,16 @@ class Wiki extends Model
         'created_at',
         'organization_id',
     ];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function wiki_page() {
+        return $this->hasMany('App\Models\WikiPage');
+    }
+
+    public function organization() {
+        return $this->belongsTo('App\Models\Organization');
+    }
 }

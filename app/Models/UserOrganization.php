@@ -15,4 +15,12 @@ class UserOrganization extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function organization() {
+        return $this->belongsTo('App\Models\Organization');
+    }
 }
