@@ -21,7 +21,7 @@ $ git clone git@gitlab.com:zeeshanu/wiki.git
 
 * Create following database `wiki` 
 
-* Run migration
+* Run migration with the following command
 
 ```shell
 $ php artisan migrate
