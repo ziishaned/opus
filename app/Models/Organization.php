@@ -16,18 +16,14 @@ class Organization extends Model
     ];
 
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function user_organization() {
-        return $this->hasMany('App\Models\UserOrganization');
+    public function wikis() {
+        return $this->hasMany(Wiki::class);
     }
 
-    public function wiki() {
-        return $this->hasMany('App\Models\Wiki');
-    }
-
-    public function wiki_page() {
-        return $this->hasMany('App\Models\WikiPage');
+    public function pages() {
+        return $this->hasMany(WikiPage::class);
     }
 }

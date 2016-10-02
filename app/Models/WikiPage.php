@@ -19,14 +19,14 @@ class WikiPage extends Model
     ];
 
     public function wiki() {
-        return $this->belongsTo('App\Models\Wiki');
+        return $this->belongsTo(Wiki::class);
     }
 
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     public function organization() {
-        return $this->belongsTo('App\Models\Organization');
+        return $this->belongsTo(Organization::class);
     }
 }

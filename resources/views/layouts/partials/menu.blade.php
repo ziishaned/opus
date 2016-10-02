@@ -14,38 +14,40 @@
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        Wikis <span class="caret"></span>
-                    </a>
+            @if(Auth::check())
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Wikis <span class="caret"></span>
+                        </a>
 
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Hello World</a>
-                        </li>
-                        <li>
-                            <a href="#">Welcome to Wiki</a>
-                        </li>
-                        <li>
-                            <a href="#">Just added a new One</a>
-                        </li>
-                        <li>
-                            <a href="#">New Wiki</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">Create Wiki</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="/people">People</a></li>
-                <li>
-                    <p class="navbar-btn">
-                        <a href="#" class="btn btn-success" style="border-radius: 0px;">Create Wiki</a>
-                    </p>
-                </li>
-            </ul>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Hello World</a>
+                            </li>
+                            <li>
+                                <a href="#">Welcome to Wiki</a>
+                            </li>
+                            <li>
+                                <a href="#">Just added a new One</a>
+                            </li>
+                            <li>
+                                <a href="#">New Wiki</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">Create Wiki</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="/people">People</a></li>
+                    <li>
+                        <p class="navbar-btn">
+                            <a href="#" class="btn btn-success" style="border-radius: 0px;">Create Wiki</a>
+                        </p>
+                    </li>
+                </ul>
+            @endif
 
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
