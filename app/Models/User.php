@@ -10,21 +10,21 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * @var $fillable  array
+     * @var array
      */
     protected $fillable = [
         'name', 'email', 'password',
     ];
 
     /**
-     * @var $hidden array
+     * @var array
      */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
     /**
-     * Get the organization of a user.
+     * An organization has only one owner.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -33,7 +33,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all the organizations of a user.
+     * An organization can have mutiple employee.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
@@ -42,7 +42,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all the wikis of a user.
+     * A user can has many wikis.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all pages of wikis created by a user.
+     * A user can create many pages in a wiki.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
