@@ -26,7 +26,7 @@ class Wiki extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**
@@ -42,6 +42,6 @@ class Wiki extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function organization() {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 }
