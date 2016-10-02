@@ -6,8 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class WikiPage extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = 'wiki_page';
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name',
         'description',
@@ -18,15 +24,24 @@ class WikiPage extends Model
         'updated_at',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function wiki() {
-        return $this->belongsTo('App\Models\Wiki');
+        return $this->belongsTo(Wiki::class, 'wiki_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function organization() {
-        return $this->belongsTo('App\Models\Organization');
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 }
