@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -19,7 +20,7 @@ class UserController extends Controller
 
     public function __construct(Request $request, User $user)
     {
-        $this->user     = $user;
+        $this->user    = $user;
         $this->request = $request;
     }
 
@@ -42,6 +43,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return $this->user->getUser($id);
+        $user = $this->user->getUser($id);
+        if($user) {
+            return $user;
+        }
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);
     }
 }

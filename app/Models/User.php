@@ -91,12 +91,10 @@ class User extends Authenticatable
 
     public function getUser($id)
     {
-        if($this->find($id)) {
-            return $this->where('id', '=', $id)->with(['followers', 'following'])->get();
+        $user = $this->where('id', '=', $id)->with(['followers', 'following'])->first();
+        if($user) {
+            return $user;
         }
-
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+        return false;
     }
 }
