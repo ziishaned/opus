@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class Wiki extends Model
 {
@@ -43,5 +45,54 @@ class Wiki extends Model
      */
     public function organization() {
         return $this->belongsTo(Organization::class, 'organization_id', 'id');
+    }
+
+    public function getWikis()
+    {
+        return $this->with(['organization', 'pages', 'user'])->paginate(10);
+    }
+
+    public function getWiki($id)
+    {
+        if($this->find($id)) {
+            return $this->where('id', '=', $id)->with(['organization', 'pages', 'user'])->get();
+        }
+
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);
+    }
+
+    public function saveWiki($data)
+    {
+        $this->create([
+            'name' => $data['wiki_name'],
+            'user_id' => Auth::user()->id,
+            'organization_id' => 2
+        ]);
+
+        return response()->json([
+            'message' => 'Wiki succesfully created.'
+        ], Response::HTTP_CREATED);
+    }
+
+    public function deleteWiki($id)
+    {
+        $this->where('id', '=', $id)->delete();
+
+        return response()->json([
+            'message' => 'Wiki succesfully deleted.'
+        ], Response::HTTP_NO_CONTENT);
+    }
+
+    public function updateWiki($id, $data)
+    {
+        $wiki = $this->find($id);
+        $wiki->name = $data['wiki_name'];
+        $wiki->save();
+
+        return response()->json([
+            'message' => 'Wiki succesfully updated.'
+        ], Response::HTTP_OK);
     }
 }
