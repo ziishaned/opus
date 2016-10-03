@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrganizationController extends Controller
 {
@@ -35,7 +36,13 @@ class OrganizationController extends Controller
      */
     public function show($id)
     {
-        return $this->organization->getOrganization($id);
+        $organization = $this->organization->getOrganization($id);
+        if($organization) {
+            return $organization;
+        }
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -53,11 +60,11 @@ class OrganizationController extends Controller
      */
     public function store()
     {
-        $this->validate($this->request, [
-           'organization_name' => 'required|max:55|unique:organization,name',
-        ]);
-
-        return $this->organization->postOrganization($this->request->get('organization_name'));
+        $this->validate($this->request, Organization::ORGANIZATION_RULES);
+        $this->organization->postOrganization($this->request->get('organization_name'));
+        return response()->json([
+            'message' => 'Organization successfully created.'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -78,11 +85,16 @@ class OrganizationController extends Controller
      */
     public function update($id)
     {
-        $this->validate($this->request, [
-            'organization_name' => 'required|max:55|unique:organization,name',
-        ]);
-
-        return $this->organization->updateOrganization($id, $this->request->get('organization_name'));
+        $this->validate($this->request, Organization::ORGANIZATION_RULES);
+        $updated = $this->organization->updateOrganization($id, $this->request->get('organization_name'));
+        if($updated) {
+            return response()->json([
+                'message' => 'Organization successfully updated.'
+            ], Response::HTTP_OK);
+        }
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -93,6 +105,14 @@ class OrganizationController extends Controller
      */
     public function destroy($id)
     {
-        return $this->organization->deleteOrganization($id);
+        $deleted = $this->organization->deleteOrganization($id);
+        if($deleted) {
+            return response()->json([
+                'message' => 'Organization successfully deleted.'
+            ], Response::HTTP_OK);
+        }
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);
     }
 }

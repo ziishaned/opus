@@ -11,6 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 class Organization extends Model
 {
     /**
+     * @const array
+     */
+    const ORGANIZATION_RULES = [
+        'organization_name' => 'required|max:55|unique:organization,name',
+    ];
+
+    /**
      * @var string
      */
     protected $table = 'organization';
@@ -68,13 +75,11 @@ class Organization extends Model
      */
     public function getOrganization($id)
     {
-        if($this->find($id)) {
-            return $this->where('id', '=', $id)->with(['user', 'wikis'])->get();
+        $organization = $this->where('id', '=', $id)->with(['user', 'wikis'])->first();
+        if($organization) {
+            return $organization;
         }
-
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+        return false;
     }
 
     /**
@@ -89,14 +94,10 @@ class Organization extends Model
             'name'     =>  $organizationName,
             'user_id'  =>  Auth::user()->id
         ]);
-
         DB::insert('INSERT INTO user_organization (user_type, user_id, organization_id, created_at, updated_at) values(?, ?, ?, ?, ?)', [
             'admin', Auth::user()->id, $organization->id, Carbon::now(), Carbon::now()
         ]);
-
-        return response()->json([
-            'message' => 'Organization successfully created.'
-        ], Response::HTTP_CREATED);
+        return true;
     }
 
     /**
@@ -108,19 +109,13 @@ class Organization extends Model
      */
     public function updateOrganization($id, $organizationName)
     {
-        if($this->find($id)) {
-            $organization = $this->find($id);
-            $organization->name = $organizationName;
-            $organization->save();
-
-            return response()->json([
-                'message' => 'Organization successfully updated.'
-            ], Response::HTTP_OK);
+        $organization = $this->find($id)->update([
+            'name' => $organizationName,
+        ]);
+        if($organization) {
+            return true;
         }
-
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+        return false;
     }
 
     /**
@@ -131,15 +126,9 @@ class Organization extends Model
      */
     public function deleteOrganization($id)
     {
-        if($this->find($id)) {
-            $this->find($id)->delete();
-            return response()->json([
-                'message' => 'Organization successfully deleted.'
-            ], Response::HTTP_OK);
-        }
-
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+        if($this->find($id)->delete()) {
+            return true;
+        };
+        return false;
     }
 }
