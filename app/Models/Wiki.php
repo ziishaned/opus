@@ -25,6 +25,13 @@ class Wiki extends Model
     ];
 
     /**
+     * @const array
+     */
+    const WIKI_RULES = [
+        'wiki_name' => 'required|max:35|min:3',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
@@ -47,22 +54,39 @@ class Wiki extends Model
         return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 
+    /**
+     * Retrieve all wikis from database.
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getWikis()
     {
         return $this->with(['organization', 'pages', 'user'])->paginate(10);
     }
 
+    /**
+     * Retrieve a wiki from database.
+     *
+     * @param  integer $id
+     * @return mixed
+     */
     public function getWiki($id)
     {
-        if($this->find($id)) {
-            return $this->where('id', '=', $id)->with(['organization', 'pages', 'user'])->get();
+        $query = $this->where('id', '=', $id);
+        $query = $query->with(['organization', 'pages', 'user'])->first();
+        if(!$query) {
+            return false;
         }
+        return $query;
 
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
     }
 
+    /**
+     * Create a wiki
+     *
+     * @param  array $data
+     * @return bool
+     */
     public function saveWiki($data)
     {
         $this->create([
@@ -71,28 +95,38 @@ class Wiki extends Model
             'organization_id' => 2
         ]);
 
-        return response()->json([
-            'message' => 'Wiki succesfully created.'
-        ], Response::HTTP_CREATED);
+        return true;
     }
 
+    /**
+     * Delete wiki
+     *
+     * @param  integer $id
+     * @return bool
+     */
     public function deleteWiki($id)
     {
-        $this->where('id', '=', $id)->delete();
+        $query = $this->where('id', '=', $id)->delete();
 
-        return response()->json([
-            'message' => 'Wiki succesfully deleted.'
-        ], Response::HTTP_NO_CONTENT);
+        if(!$query) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Update wiki
+     *
+     * @param  integer  $id
+     * @param  array    $data
+     * @return bool
+     */
     public function updateWiki($id, $data)
     {
-        $wiki = $this->find($id);
-        $wiki->name = $data['wiki_name'];
-        $wiki->save();
+        $this->find($id)->update([
+            'name' => $data['wiki_name'],
+        ]);
 
-        return response()->json([
-            'message' => 'Wiki succesfully updated.'
-        ], Response::HTTP_OK);
+        return true;
     }
 }

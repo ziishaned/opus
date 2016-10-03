@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Wiki;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class WikiController extends Controller
 {
@@ -51,16 +52,16 @@ class WikiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $this->validate($this->request, [
-            'wiki_name' => 'required|max:35|min:3',
-        ]);
+        $this->validate($this->request, Wiki::WIKI_RULES);
+        $this->wiki->saveWiki($this->request->all());
 
-        return $this->wiki->saveWiki($this->request->all());
+        return response()->json([
+            'message' => 'Wiki successfully created.'
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -71,7 +72,13 @@ class WikiController extends Controller
      */
     public function show($id)
     {
-        return $this->wiki->getWiki($id);
+        $wiki = $this->wiki->getWiki($id);
+        if($wiki) {
+            return $wiki;
+        }
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -93,11 +100,11 @@ class WikiController extends Controller
      */
     public function update($id)
     {
-        $this->validate($this->request, [
-            'wiki_name' => 'required|max:35|min:3',
-        ]);
-
-        return $this->wiki->updateWiki($id, $this->request->all());
+        $this->validate($this->request, Wiki::WIKI_RULES);
+        $this->wiki->updateWiki($id, $this->request->all());
+        return response()->json([
+            'message' => 'Wiki successfully updated.'
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -108,6 +115,15 @@ class WikiController extends Controller
      */
     public function destroy($id)
     {
-        $this->wiki->deleteWiki($id);
+        $wikiDeleted = $this->wiki->deleteWiki($id);
+        if($wikiDeleted) {
+            return response()->json([
+                'message' => 'Wiki successfully deleted.'
+            ], Response::HTTP_NO_CONTENT);
+        }
+        return response()->json([
+            'message' => 'We are having some issues.'
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 }
