@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,10 +15,14 @@ Route::get('people/{id}', function() {
     return view('people.profile');
 });
 
-Route::get('wiki/{name}', function() {
-    return view('wiki.wiki');
-});
 
-Route::get('wiki/{name}/page/{page_id}', function() {
-    return "ok";
-});
+/*
+|--------------------------------------------------------------------------
+| Organization Routes
+|--------------------------------------------------------------------------|
+*/
+Route::get('organizations',  ['uses' => 'OrganizationController@index', '']);
+Route::get('organizations/{id}',  ['uses' => 'OrganizationController@show', '']);
+Route::post('organizations',  ['uses' => 'OrganizationController@store', '']);
+Route::patch('organizations/{id}',  ['uses' => 'OrganizationController@update', '']);
+Route::delete('organizations/{id}',  ['uses' => 'OrganizationController@destroy', '']);
