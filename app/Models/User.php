@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Symfony\Component\HttpFoundation\Response;
 
 class User extends Authenticatable
 {
@@ -28,17 +29,39 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function organization() {
+    public function organization()
+    {
         return $this->hasOne(Organization::class, 'user_id', 'id');
     }
 
     /**
-     * An organization can have mutiple employee.
+     * An organization can have multiple employee.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function organizations() {
+    public function organizations()
+    {
         return $this->belongsToMany(Organization::class, 'user_organization', 'organization_id', 'id');
+    }
+
+    /**
+     * A user can have many followers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_follower', 'user_id', 'id');
+    }
+
+    /**
+     * A user can follow many people.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'user_following', 'user_id', 'id');
     }
 
     /**
@@ -46,7 +69,8 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function wikis() {
+    public function wikis()
+    {
         return $this->hasMany(Wiki::class, 'user_id', 'id');
     }
 
@@ -55,7 +79,24 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pages() {
+    public function pages()
+    {
         return $this->hasMany(WikiPage::class, 'user_id', 'id');
+    }
+
+    public function getUsers()
+    {
+        return $this->with(['followers', 'following'])->paginate(10);
+    }
+
+    public function getUser($id)
+    {
+        if($this->find($id)) {
+            return $this->where('id', '=', $id)->with(['followers', 'following'])->get();
+        }
+
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);
     }
 }

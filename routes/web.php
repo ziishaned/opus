@@ -33,3 +33,11 @@ Route::get('wiki/{name}', function() {
 Route::get('wiki/{name}/page/{page_id}', function() {
     return "ok";
 });
+
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------|
+*/
+Route::get('users', ['uses' => 'UserController@index', ]);
+Route::get('users/{id}', ['uses' => 'UserController@show', ]);
