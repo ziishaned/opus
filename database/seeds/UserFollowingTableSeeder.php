@@ -3,11 +3,10 @@
 use Carbon\Carbon;
 use Faker\Factory;
 use App\Models\User;
-use App\Models\Organization;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserOrganizationTableSeeder extends Seeder
+class UserFollowingTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,18 +17,12 @@ class UserOrganizationTableSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        $userType = [
-            'normal',
-            'admin'
-        ];
         $users = User::pluck('id')->all();
-        $organizations = Organization::pluck('id')->all();
 
         for ($i = 0; $i < 20; $i++) {
-            DB::insert('INSERT INTO user_organization (user_id, user_type, organization_id, created_at, updated_at) values (?, ?, ?, ?, ?)', [
+            DB::insert('INSERT INTO user_following (following_id, user_id, created_at, updated_at) values (?, ?, ?, ?)', [
                 $faker->randomElement($users),
-                $faker->randomElement($userType),
-                $faker->randomElement($organizations),
+                $faker->randomElement($users),
                 Carbon::now(),
                 Carbon::now(),
             ]);
