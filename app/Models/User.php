@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Symfony\Component\HttpFoundation\Response;
 
 class User extends Authenticatable
 {

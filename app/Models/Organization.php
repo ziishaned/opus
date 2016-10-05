@@ -94,8 +94,12 @@ class Organization extends Model
             'name'     =>  $organizationName,
             'user_id'  =>  Auth::user()->id
         ]);
-        DB::insert('INSERT INTO user_organization (user_type, user_id, organization_id, created_at, updated_at) values(?, ?, ?, ?, ?)', [
-            'admin', Auth::user()->id, $organization->id, Carbon::now(), Carbon::now()
+        DB::table('user_organization')->insert([
+            'user_type'        => 'admin',
+            'user_id'          => Auth::user()->id,
+            'organization_id'  => $organization->id,
+            'created_at'       => Carbon::now(),
+            'updated_at'       => Carbon::now(),
         ]);
         return true;
     }
