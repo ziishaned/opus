@@ -37,6 +37,11 @@ class Organization extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'user_organization', 'user_id', 'organization_id');
+    }
+
     /**
      * An organization can have many wikis.
      * 
@@ -101,7 +106,7 @@ class Organization extends Model
             'created_at'       => Carbon::now(),
             'updated_at'       => Carbon::now(),
         ]);
-        return true;
+        return $organization->id;
     }
 
     /**
@@ -134,5 +139,32 @@ class Organization extends Model
             return true;
         };
         return false;
+    }
+
+    public function inviteUser($data) {
+        $userHaveOrganization =  DB::table('user_organization')
+                                        ->whereIn('user_id', [$data['userId']])
+                                        ->whereIn('organization_id', [$data['organizationId']])
+                                        ->first();
+        if(!$userHaveOrganization) {
+            DB::table('user_organization')->insert([
+                'user_type'       => 'normal',
+                'user_id'         => $data['userId'],
+                'organization_id' => $data['organizationId'],
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now(),
+            ]);
+            return true;
+        }
+        return true;
+    }
+
+    public function removeInvite($data)
+    {
+        DB::table('user_organization')
+            ->where('user_id', '=', $data['userId'])
+            ->where('organization_id', '=', $data['organizationId'])
+            ->delete();
+        return true;
     }
 }

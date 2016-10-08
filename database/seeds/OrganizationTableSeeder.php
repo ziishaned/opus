@@ -11,10 +11,10 @@ class OrganizationTableSeeder extends Seeder
     {
         $users = User::pluck('id')->all();
         $faker = Factory::create();
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             Organization::create([
                 'name'    =>  $faker->company,
-                'user_id' =>  $faker->randomElement($users)
+                'user_id' =>  $users[$i]
             ]);
         }
     }

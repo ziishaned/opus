@@ -1,127 +1,80 @@
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
+<nav class="navbar navbar-default" role="navigation" style="border-radius: 0;">
+    <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Wiki') }}
-            </a>
+            <a class="navbar-brand" href="#">Wiki</a>
         </div>
 
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            @if(Auth::check())
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            @if(Auth::user())
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Wikis <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Hello World</a>
-                            </li>
-                            <li>
-                                <a href="#">Welcome to Wiki</a>
-                            </li>
-                            <li>
-                                <a href="#">Just added a new One</a>
-                            </li>
-                            <li>
-                                <a href="#">New Wiki</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">Create Wiki</a>
-                            </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizations <span class="badge">{{ $user->organizations->count()  }}</span> <i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu">
+                            @foreach($user->organizations as $organization)
+                                <li><a href="{{ $organization->id  }}">{{ $organization->name  }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
-                    <li><a href="/people">People</a></li>
-                    <li>
-                        <p class="navbar-btn">
-                            <a href="#" class="btn btn-success" style="border-radius: 0px;">Create Wiki</a>
-                        </p>
-                    </li>
+                    @if(!ViewHelper::getCurrentRoute() === '/')
+                        <li><a href="#">Wikis</a></li>
+                    @endif
                 </ul>
             @endif
-
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+            </form>
+            <div class="spinner">
+                <img src="/images/ajax-loader.gif" class="img-responsive" alt="Image">
+            </div>
             <ul class="nav navbar-nav navbar-right">
-                @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
-                @else
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group input-find">
-                            <input type="text" class="form-control" style="margin-right: -20px;">
-                            <span style="position: relative; left: -10px;"><i class="fa fa-search"></i></span></div>
-                    </form>
+                @if(Auth::user())
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question-circle-o fa-lg"></i> <span class="caret"></span> </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Quick help</a></li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Favourite <span class="badge">{{ $user->starWikis->count() + $user->starPages->count()  }}</span> <i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Wikis <span class="badge pull-right">{{ $user->starWikis->count() }}</span></a></li>
+                            <li><a href="#">Pages <span class="badge pull-right">{{ $user->starPages->count()  }}</span></a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="text-transform: capitalize;"><i class="fa fa-inbox fa-lg"></i></a>
-                        <div class="dropdown-menu" role="menu" style="width: 345px !important;">
-                            <div class="container-fluid">
-                                <h3 style="text-align: center; margin-top: 5px; font-size: 15px;">Notifications</h3>
-                                <div class="notification-item" style="border-radius: 0px 4px 4px 0px; cursor: pointer; background-color: white; margin-bottom: 10px;">
-                                    <a class="content" href="#" style="text-decoration: none;">
-                                        <div class="row">
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                                <img src="/images/default.png" class="img-responsive" alt="Image">
-                                            </div>
-                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="padding-left: 0;">
-                                                <h5 class="item-title" style="margin: 0;">John Doe</h5>
-                                                <p class="item-info" style="font-size: 12px; margin: 0;">Can you plaese look at the laravel wiki.</p>
-                                                <p style="color: #777; font-size: 12px; margin: 0;">10 hours ago</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="notification-item" style="border-radius: 0px 4px 4px 0px; cursor: pointer; background-color: white;">
-                                    <a class="content" href="#" style="text-decoration: none;">
-                                        <div class="row">
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                                <img src="/images/default.png" class="img-responsive" alt="Image">
-                                            </div>
-                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="padding-left: 0;">
-                                                <h5 class="item-title" style="margin: 0;">Jane Doe</h5>
-                                                <p class="item-info" style="font-size: 12px; margin: 0;">Lorem ipsum dolor sit amet, consectetur.</p>
-                                                <p style="color: #777; font-size: 12px; margin: 0;">Today at 2:45 PM</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="loader-con" style="margin-top: 10px; margin-bottom: 5px;">
-                                    <button class="btn btn-primary btn-block" style="border-radius: 0px;">Load More</button>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Watch <span class="badge">{{ $user->watchWikis->count() + $user->watchPages->count() }}</span> <i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Wikis <span class="badge pull-right">{{ $user->watchWikis->count() }}</span></a></li>
+                            <li><a href="#">Pages <span class="badge pull-right">{{ $user->watchPages->count() }}</span></a></li>
+                        </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="text-transform: capitalize;">
-                            <img src="/images/default.png" class="img-responsive" alt="Image" style="display: inline-block; width: 20px;"> <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Add personal wiki</a></li>
-                            <li><a href="#">Recent Activities</a></li>
-                            <li class="nav-divider"></li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell fa-lg"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus fa-lg"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('createOrganization') }}">Create Organization</a></li>
+                            <li><a href="#">Create Personal Wiki</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/images/default.png" width="20" class="img-responsive img-circle" alt="Image"></a>
+                        <ul class="dropdown-menu">
                             <li><a href="#">Profile</a></li>
-                            <li><a href="#">Watches</a></li>
-                            <li><a href="#">Saved for later</a></li>
-                            <li><a href="#">Setting</a></li>
-                            <li class="nav-divider"></li>
+                            <li><a href="#">Settings</a></li>
                             <li>
                                 <a href="{{ url('/logout') }}"
                                    onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
 
@@ -131,6 +84,9 @@
                             </li>
                         </ul>
                     </li>
+                @else
+                    <li @if(ViewHelper::getCurrentRoute() === 'login') class="active" @endif><a href="{{ url('login')  }}">Login</a></li>
+                    <li @if(ViewHelper::getCurrentRoute() === 'register') class="active" @endif><a href="{{ url('register')  }}">Register</a></li>
                 @endif
             </ul>
         </div>

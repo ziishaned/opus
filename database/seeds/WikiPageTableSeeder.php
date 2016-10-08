@@ -17,7 +17,7 @@ class WikiPageTableSeeder extends Seeder
         $wikis = Wiki::pluck('id')->all();
         $organizations = Organization::pluck('id')->all();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             WikiPage::create([
                 'name'            =>  $faker->sentence(6, true),
                 'description'     =>  $faker->paragraph(4, true),

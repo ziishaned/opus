@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWikiTable extends Migration
+class CreateUserWatchTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,18 @@ class CreateWikiTable extends Migration
      */
     public function up()
     {
-        Schema::create('wiki', function (Blueprint $table) {
+        Schema::create('user_watch', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('organization_id')->unsigned()->nullable();
-            $table->foreign('organization_id')->references('id')->on('organization')->onDelete('cascade');
+            $table->integer('entity_id')->unsigned();
+
+            $table->enum('entity_type', [
+                'wiki',
+                'page'
+            ]);
 
             $table->timestamps();
         });
@@ -34,6 +37,6 @@ class CreateWikiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wiki');
+        Schema::dropIfExists('user_watch');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserFollowingTable extends Migration
+class CreateUserStarTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,18 @@ class CreateUserFollowingTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_following', function (Blueprint $table) {
+        Schema::create('user_star', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('following_id')->unsigned();
-            $table->foreign('following_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->integer('entity_id')->unsigned();
+
+            $table->enum('entity_type', [
+                'wiki',
+                'page'
+            ]);
 
             $table->timestamps();
         });
@@ -33,6 +37,6 @@ class CreateUserFollowingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_following');
+        Schema::dropIfExists('user_star');
     }
 }

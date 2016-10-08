@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -50,5 +51,12 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Resource not found.'
         ], Response::HTTP_NOT_FOUND);
+    }
+
+    public function getUser($text) {
+        return User::where(function ($query) use ($text) {
+            $query->where('name', 'like', '%' . $text . '%')
+                  ->orWhere('email', 'like', '%' . $text . '%');
+        })->where('id', '!=', Auth::user()->id)->get();
     }
 }

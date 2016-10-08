@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrganizationController extends Controller
 {
     protected $request;
     protected $organization;
+    /**
+     * @var \App\Http\Controllers\User
+     */
+    private $user;
 
-    public function __construct(Request $request, Organization $organization)
+    public function __construct(Request $request, Organization $organization, User $user)
     {
         $this->middleware('auth');
         $this->request = $request;
         $this->organization = $organization;
+        $this->user = $user;
     }
 
     /**
@@ -50,7 +58,8 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-
+        $user  = $this->user->getUser(Auth::user()->id);
+        return view('organization.create', compact('user'));
     }
 
     /**
@@ -61,9 +70,31 @@ class OrganizationController extends Controller
     public function store()
     {
         $this->validate($this->request, Organization::ORGANIZATION_RULES);
-        $this->organization->postOrganization($this->request->get('organization_name'));
+        $organization = $this->organization->postOrganization($this->request->get('organization_name'));
+        return redirect()->to('/organization/invite')->with('organization_id', $organization);
+    }
+
+    public function getInvite() {
+        if(!Session::get('organization_id')) {
+            return redirect()->to('/');
+        }
+
+        $organizationId = Session::get('organization_id');
+        $user  = $this->user->getUser(Auth::user()->id);
+        return view('organization.invite', compact('user', 'organizationId'));
+    }
+
+    public function inviteUser() {
+        $this->organization->inviteUser($this->request->all());
         return response()->json([
-            'message' => 'Organization successfully created.'
+            'message' => 'User successfully Invited to organization.'
+        ], Response::HTTP_CREATED);
+    }
+
+    public function removeInvite() {
+        $this->organization->removeInvite($this->request->all());
+        return response()->json([
+            'message' => 'User removed from organization invitation.'
         ], Response::HTTP_CREATED);
     }
 

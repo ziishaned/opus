@@ -14,9 +14,9 @@ class WikiTableSeeder extends Seeder
         $users = User::pluck('id')->all();
         $organizations = Organization::pluck('id')->all();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             Wiki::create([
-                'name'            =>  $faker->sentence(6, true),
+                'name'            =>  $faker->sentence(2, true),
                 'user_id'         =>  $faker->randomElement($users),
                 'organization_id' =>  $faker->randomElement($organizations),
             ]);

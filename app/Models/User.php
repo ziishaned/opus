@@ -30,7 +30,7 @@ class User extends Authenticatable
      */
     public function organization()
     {
-        return $this->hasOne(Organization::class, 'user_id', 'id');
+            return $this->hasOne(Organization::class, 'user_id', 'id');
     }
 
     /**
@@ -40,7 +40,47 @@ class User extends Authenticatable
      */
     public function organizations()
     {
-        return $this->belongsToMany(Organization::class, 'user_organization', 'organization_id', 'id');
+        return $this->belongsToMany(Organization::class, 'user_organization', 'user_id', 'organization_id');
+    }
+
+    /**
+     * Get all the wikis that are starred by a user.
+     *
+     * @return mixed
+     */
+    public function starWikis()
+    {
+        return $this->belongsToMany(Wiki::class, 'user_star', 'user_id', 'entity_id')->where('entity_type', '=', 'wiki');
+    }
+
+    /**
+     * Get all the pages that are starred by a user.
+     *
+     * @return mixed
+     */
+    public function starPages()
+    {
+        return $this->belongsToMany(Wiki::class, 'user_star', 'user_id', 'entity_id')->where('entity_type', '=', 'page');
+    }
+
+    /**
+     * Get all the wikis that are watched by a user.
+     *
+     * @return mixed
+     */
+    public function watchWikis()
+    {
+        return $this->belongsToMany(Wiki::class, 'user_watch', 'user_id', 'entity_id')->where('entity_type', '=', 'wiki');
+    }
+
+    /**
+     * Get all the pages that are watched by a user.
+     *
+     * @return mixed
+     */
+    public function watchPages()
+    {
+        return $this->belongsToMany(Wiki::class, 'user_watch', 'user_id', 'entity_id')->where('entity_type', '=', 'page');
     }
 
     /**
@@ -51,16 +91,6 @@ class User extends Authenticatable
     public function followers()
     {
         return $this->belongsToMany(User::class, 'user_follower', 'user_id', 'id');
-    }
-
-    /**
-     * A user can follow many people.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function following()
-    {
-        return $this->belongsToMany(User::class, 'user_following', 'user_id', 'id');
     }
 
     /**
@@ -90,7 +120,7 @@ class User extends Authenticatable
 
     public function getUser($id)
     {
-        $user = $this->where('id', '=', $id)->with(['followers', 'following'])->first();
+        $user = $this->where('id', '=', $id)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages'])->first();
         if($user) {
             return $user;
         }

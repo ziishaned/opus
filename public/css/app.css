@@ -1,3 +1,36 @@
-a, p, h1, h2, h3, h5, h6, input {
+li, a, p, h1, h2, h3, h5, h6, input {
 	font-family: "Open Sans";
+}
+.user-invite-list {
+    padding: 5px 0px 5px 0px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.user-invite-list>li {
+    margin-top: 8px;
+}
+
+.user-invite-list li:nth-child(1) {
+    margin-top: 0;
+}
+
+.user-invite-list li i {
+    cursor: pointer;
+    display: flex;
+    height: 45px;
+    align-items: center;
+}
+
+.user-invite-list:empty {
+    display: none;
+}
+
+.spinner {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px !important;
+    align-items: center;
+    display: none;
+    margin-top: 9px;
 }

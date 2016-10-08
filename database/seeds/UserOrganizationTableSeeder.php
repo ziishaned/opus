@@ -25,13 +25,13 @@ class UserOrganizationTableSeeder extends Seeder
         $users = User::pluck('id')->all();
         $organizations = Organization::pluck('id')->all();
 
-        for ($i = 0; $i < 20; $i++) {
-            DB::insert('INSERT INTO user_organization (user_id, user_type, organization_id, created_at, updated_at) values (?, ?, ?, ?, ?)', [
-                $faker->randomElement($users),
-                $faker->randomElement($userType),
-                $faker->randomElement($organizations),
-                Carbon::now(),
-                Carbon::now(),
+        for ($i = 0; $i < 50; $i++) {
+            DB::table('user_organization')->insert([
+                'user_id'         =>  $faker->randomElement($users),
+                'user_type'       =>  $faker->randomElement($userType),
+                'organization_id' =>  $faker->randomElement($organizations),
+                'created_at'      =>  Carbon::now(),
+                'updated_at'      =>  Carbon::now(),
             ]);
         }
     }
