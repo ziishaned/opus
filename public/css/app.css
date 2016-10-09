@@ -67,3 +67,7 @@ li, a, p, h1, h2, h3, h5, h6, input {
 #member-list-item {
     margin-bottom: 15px;
 }
+
+a:hover {
+    text-decoration: none;
+}

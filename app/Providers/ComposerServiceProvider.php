@@ -18,6 +18,7 @@ class ComposerServiceProvider extends ServiceProvider
             'home',
             'organization.organization',
             'organization.members',
+            'user.organizations',
         ], MenuComposer::class);
     }
 

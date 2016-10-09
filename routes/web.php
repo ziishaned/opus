@@ -31,3 +31,6 @@ Route::get('organizations/{id}/members', [
 ]);
 
 Route::get('/users/search/{text}', 'UserController@getUser');
+
+Route::get('/users/{id}', 'UserController@show');
+Route::get('/users/{id}/organizations', 'UserController@getUserOrganizations');

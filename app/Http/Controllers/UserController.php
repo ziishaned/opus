@@ -46,17 +46,24 @@ class UserController extends Controller
     {
         $user = $this->user->getUser($id);
         if($user) {
-            return $user;
+            return view('user.user', compact('user'));
         }
         return response()->json([
             'message' => 'Resource not found.'
         ], Response::HTTP_NOT_FOUND);
     }
 
-    public function getUser($text) {
+    public function getUser($text)
+    {
         return User::where(function ($query) use ($text) {
             $query->where('name', 'like', '%' . $text . '%')
                   ->orWhere('email', 'like', '%' . $text . '%');
         })->where('id', '!=', Auth::user()->id)->get();
+    }
+
+    public function getUserOrganizations($id)
+    {
+        $organizations = $this->user->getOrganizations($id);
+        return view('user.organizations', compact('organizations'));
     }
 }

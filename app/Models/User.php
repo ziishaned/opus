@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -125,5 +126,17 @@ class User extends Authenticatable
             return $user;
         }
         return false;
+    }
+
+    public function getOrganizations($id)
+    {
+        $query = $this;
+        $query = $query->where('users.id', '=', $id);
+        $query = $query->join('user_organization', 'users.id', '=', 'user_organization.user_id')
+                       ->join('organization', 'user_organization.organization_id', '=', 'organization.id')
+                       ->leftJoin('wiki', 'user_organization.organization_id', '=', 'wiki.organization_id')
+                       ->groupBy('user_organization.organization_id')
+                       ->select('organization.*', DB::raw('COUNT(user_organization.user_id) as total_members'), DB::raw('COUNT(wiki.id) as total_wikis'));
+        return $query->paginate(10);
     }
 }
