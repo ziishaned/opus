@@ -6,6 +6,7 @@ use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -45,12 +46,19 @@ class OrganizationController extends Controller
     public function show($id)
     {
         $organization = $this->organization->getOrganization($id);
+
         if($organization) {
-            return $organization;
+            return view('organization.organization', compact('organization'));
         }
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+
+        return abort(404);
+    }
+
+    public function getMembers($id)
+    {
+        $organizationId = $id;
+        $members = $this->organization->getMembers($organizationId);
+        return view('organization.members', compact('members', 'organizationId'));
     }
 
     /**

@@ -17,7 +17,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizations <span class="badge">{{ $user->organizations->count()  }}</span> <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             @foreach($user->organizations as $organization)
-                                <li><a href="{{ $organization->id  }}">{{ $organization->name  }}</a></li>
+                                <li><a href="{{ url('/organizations/' . $organization->id)  }}">{{ $organization->name  }}</a></li>
                             @endforeach
                         </ul>
                     </li>

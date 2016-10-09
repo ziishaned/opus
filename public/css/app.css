@@ -34,3 +34,36 @@ li, a, p, h1, h2, h3, h5, h6, input {
     display: none;
     margin-top: 9px;
 }
+
+#organization-nav {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#organization-nav>li>a:first-child {
+    background-color: #ffffff !important;
+}
+
+#organization-nav>li>ul>li>a {
+    color: #555;
+}
+
+#organization-nav li a {
+    color: #959494;
+}
+
+#organization-nav li.active {
+    border-bottom: 2px solid #4a8bee;
+}
+
+#organization-nav li.active a {
+    color: #000;
+}
+
+#organization-nav li.active .badge {
+    color: #fff !important;
+    background-color: #777 !important;
+}
+
+#member-list-item {
+    margin-bottom: 15px;
+}

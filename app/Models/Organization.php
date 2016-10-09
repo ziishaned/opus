@@ -39,7 +39,7 @@ class Organization extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'user_organization', 'user_id', 'organization_id');
+        return $this->belongsToMany(User::class, 'user_organization', 'organization_id', 'user_id');
     }
 
     /**
@@ -80,7 +80,7 @@ class Organization extends Model
      */
     public function getOrganization($id)
     {
-        $organization = $this->where('id', '=', $id)->with(['user', 'wikis'])->first();
+        $organization = $this->where('id', '=', $id)->with(['user', 'wikis', 'members'])->first();
         if($organization) {
             return $organization;
         }
@@ -166,5 +166,23 @@ class Organization extends Model
             ->where('organization_id', '=', $data['organizationId'])
             ->delete();
         return true;
+    }
+
+    public function getMembers($organizationId)
+    {
+        $query = $this;
+        $query = $query->where('organization.id', '=', $organizationId);
+        $query = $query->join('user_organization', 'organization.id', '=', 'organization_id')
+                       ->join('users', 'user_organization.user_id', '=', 'users.id')
+                       ->select([
+                           'organization.id as organization_id',
+                           'user_organization.user_type as member_type',
+                           'users.name as member_name',
+                           'users.id as member_id',
+                           'users.email as member_email',
+                       ])
+                       ->groupBy('user_organization.user_id')
+                       ->paginate(16);
+        return $query;
     }
 }
