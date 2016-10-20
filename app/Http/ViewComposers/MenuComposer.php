@@ -25,7 +25,7 @@ class MenuComposer {
         $user  = $this->user->getUser(Auth::user()->id);
 
         $view->with([
-            'user' => $user,
+            'loggedInUser' => $user,
         ]);
     }
 }

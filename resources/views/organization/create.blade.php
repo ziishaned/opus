@@ -33,7 +33,7 @@
     <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-lg-offset-4">
             <h3 style="font-size: 16px; margin-top: 0;">Set up the organization</h3>
-            <form action="{{ route('storeOrganization') }}" method="POST" role="form">
+            <form action="{{ route('organizations.store') }}" method="POST" role="form">
                 <div class="form-group @if($errors->has('organization_name')) has-error  @endif">
                     <label for="organization_name" class="control-label">Organization name</label>
                     <input type="text" class="form-control" name="organization_name" id="organization_name">

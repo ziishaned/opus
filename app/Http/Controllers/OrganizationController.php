@@ -56,9 +56,9 @@ class OrganizationController extends Controller
 
     public function getMembers($id)
     {
-        $organizationId = $id;
-        $members = $this->organization->getMembers($organizationId);
-        return view('organization.members', compact('members', 'organizationId'));
+        $members = $this->organization->getMembers($id);
+        $organization = $this->organization->getOrganization($id);
+        return view('organization.members', compact('members', 'organization'));
     }
 
     /**
@@ -79,12 +79,12 @@ class OrganizationController extends Controller
     {
         $this->validate($this->request, Organization::ORGANIZATION_RULES);
         $organization = $this->organization->postOrganization($this->request->get('organization_name'));
-        return redirect()->to('/organization/invite')->with('organization_id', $organization);
+        return redirect()->route('organizations.invite.show')->with('organization_id', $organization);
     }
 
     public function getInvite() {
         if(!Session::get('organization_id')) {
-            return redirect()->to('/');
+            return redirect()->route('dashboard');
         }
 
         $organizationId = Session::get('organization_id');
@@ -104,6 +104,12 @@ class OrganizationController extends Controller
         return response()->json([
             'message' => 'User removed from organization invitation.'
         ], Response::HTTP_CREATED);
+    }
+
+    public function getWikis($organizationId)
+    {
+        $organization = $this->organization->getWikis($organizationId);
+        return view('organization.wikis', compact('organization'));
     }
 
     /**
@@ -153,5 +159,10 @@ class OrganizationController extends Controller
         return response()->json([
             'message' => 'Resource not found.'
         ], Response::HTTP_NOT_FOUND);
+    }
+
+    public function filterOrganizations($text)
+    {
+        return $this->organization->filterOrganizations($text);
     }
 }

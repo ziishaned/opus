@@ -23,7 +23,8 @@ class CreateUserStarTable extends Migration
 
             $table->enum('entity_type', [
                 'wiki',
-                'page'
+                'page',
+                'comment',
             ]);
 
             $table->timestamps();

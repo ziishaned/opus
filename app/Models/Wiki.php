@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Wiki extends Model
 {
@@ -17,10 +18,12 @@ class Wiki extends Model
      */
     protected $fillable = [
         'name',
+        'description',
+        'wiki_type',
         'user_id',
+        'organization_id',
         'updated_at',
         'created_at',
-        'organization_id',
     ];
 
     /**
@@ -28,6 +31,13 @@ class Wiki extends Model
      */
     const WIKI_RULES = [
         'wiki_name' => 'required|max:35|min:3',
+    ];
+
+    /**
+     * @const array
+     */
+    const WIKI_PAGE_RULES = [
+        'page_name' => 'required|max:35|min:3',
     ];
 
     /**
@@ -63,21 +73,13 @@ class Wiki extends Model
         return $this->with(['organization', 'pages', 'user'])->paginate(10);
     }
 
-    /**
-     * Retrieve a wiki from database.
-     *
-     * @param  integer $id
-     * @return mixed
-     */
     public function getWiki($id)
     {
-        $query = $this->where('id', '=', $id);
-        $query = $query->with(['organization', 'pages', 'user'])->first();
-        if(!$query) {
+        $wiki = $this->where('id', '=', $id)->where('user_id', '=', Auth::user()->id)->first();
+        if(is_null($wiki)) {
             return false;
         }
-        return $query;
-
+        return $wiki;
     }
 
     /**
@@ -88,13 +90,15 @@ class Wiki extends Model
      */
     public function saveWiki($data)
     {
-        $this->create([
-            'name' => $data['wiki_name'],
-            'user_id' => Auth::user()->id,
-            'organization_id' => 2
+        $wiki = $this->create([
+            'name'            =>  $data['wiki_name'],
+            'description'     =>  $data['page_description'],
+            'user_id'         =>  Auth::user()->id,
+            'organization_id' =>  !empty($data['organization_id']) ? $data['organization_id'] : null,
+            'wiki_type'       =>  !empty($data['organization_id']) ? 'organization' : 'personal',
         ]);
 
-        return true;
+        return $wiki;
     }
 
     /**
@@ -124,8 +128,18 @@ class Wiki extends Model
     {
         $this->find($id)->update([
             'name' => $data['wiki_name'],
+            'description' => $data['wiki_description'],
         ]);
 
         return true;
+    }
+
+    public function filterWikis($text)
+    {
+        $query = $this;
+        $query = $query->where('user_id', '=', Auth::user()->id);
+        $query = $query->where('name', 'like', '%' . $text . '%')->get();   
+
+        return $query;
     }
 }

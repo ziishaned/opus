@@ -9,6 +9,30 @@ use Illuminate\Support\Facades\DB;
 
 class UserOrganizationTableSeeder extends Seeder
 {
+    const USER_TYPE = [
+        'normal',
+        'admin'
+    ];
+
+    /**
+     * @var App\Models\User
+     */
+    protected $user;
+
+    /**
+     * @var App\Models\Organization
+     */
+    protected $organization;
+
+    /**
+     * @param User         $user         App\Models\User
+     * @param Organization $organization App\Models\Organization
+     */
+    public function __construct(User $user, Organization $organization) {
+        $this->user         = $user;
+        $this->organization = $organization;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -16,19 +40,14 @@ class UserOrganizationTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
-
-        $userType = [
-            'normal',
-            'admin'
-        ];
-        $users = User::pluck('id')->all();
-        $organizations = Organization::pluck('id')->all();
+        $faker         = Factory::create();
+        $users         = $this->user->pluck('id')->all();
+        $organizations = $this->organization->pluck('id')->all();
 
         for ($i = 0; $i < 50; $i++) {
             DB::table('user_organization')->insert([
                 'user_id'         =>  $faker->randomElement($users),
-                'user_type'       =>  $faker->randomElement($userType),
+                'user_type'       =>  $faker->randomElement(self::USER_TYPE),
                 'organization_id' =>  $faker->randomElement($organizations),
                 'created_at'      =>  Carbon::now(),
                 'updated_at'      =>  Carbon::now(),

@@ -1,16 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ul class="nav nav-pills" id="organization-nav">
-                <li><a href="{{ url('/users/' . $user->id)  }}">Profile</a></li>
-                <li class="active"><a href="{{ url('/users/' . $user->id . '/organizations')  }}">Organizations</a></li>
-                <li><a href="#">Follower <span class="badge">3</span></a></li>
-                <li><a href="#">Following <span class="badge">6</span></a></li>
-            </ul>
-        </div>
-    </div>
+    @include('layouts.partials.user-nav')
     <div class="row" style="margin-top: 20px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row">
@@ -27,7 +18,13 @@
                     <p style="margin-top: 5px; margin-bottom: 0; font-size: 24px; text-transform: capitalize;">{{ $user->name  }}</p>
                     <p><i class="fa fa-envelope"></i> {{ $user->email  }}</p>
                     <p><i class="fa fa-clock-o"></i> Joined on {{  $user->created_at->toFormattedDateString() }}</p>
-                    <a href="#" class="btn btn-default btn-block" style="margin-top: 10px;"><i class="fa fa-user-plus"></i> Follow</a>
+                    @if($user->id != Auth::user()->id)
+                        @if(ViewHelper::isFollowing($user->id)) 
+                            <button id="unfollow-button" data-follow-id="{{ $user->id }}" class="btn btn-info btn-block following-button">Following</button>
+                        @else 
+                            <button id="follow-button" class="btn btn-default btn-block" data-follow-id="{{ $user->id }}" style="margin-top: 10px; background-color: #f5f8fa; background-image: linear-gradient(#fff,#f5f8fa); font-weight: 600;">Follow</button>
+                        @endif
+                    @endif
                 </div>
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                     <div class="row">
@@ -41,7 +38,7 @@
                             <hr style="margin-bottom: 0px;">
                             <div class="activity">
                                 <ul class="list-group">
-                                    @foreach($organizations as $organization)
+                                    @foreach($user->organizations as $organization)
                                         <li class="list-group-item" style="border-color: #eee;; margin-bottom: 0px; border-top: none; border-radius: 0; border-left: 0; border-right: 0;">
                                             <div class="row">
                                                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -63,11 +60,6 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="row text-center">
-                    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            {{ $organizations->links()  }}
-                    	</div>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,7 @@
     </div>
     <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-lg-offset-4">
-            <form action="" method="POST" role="form">
+            <form action="" method="" role="form">
                 <div class="form-group">
                     <label for="" >Search by username, full name or email address</label>
                     <input type="text" name="organization_id" id="invite-to-organization-id" class="hide" value="{{ $organizationId  }}">
@@ -50,7 +50,7 @@
                         <ul class="list-unstyled user-invite-list"></ul>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success">Finish</button>
+                <input type="submit" class="btn btn-success" value="Finish">
             </form>
         </div>
     </div>

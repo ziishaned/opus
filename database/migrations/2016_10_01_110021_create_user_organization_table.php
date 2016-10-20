@@ -26,7 +26,6 @@ class CreateUserOrganizationTable extends Migration
             $table->integer('organization_id')->unsigned();
             $table->foreign('organization_id')->references('id')->on('organization')->onDelete('cascade');
 
-
             $table->timestamps();
         });
     }

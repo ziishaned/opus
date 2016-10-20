@@ -53,23 +53,14 @@ class Organization extends Model
     }
 
     /**
-     * An organization can have multiple pages in a wiki.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function pages()
-    {
-        return $this->hasMany(WikiPage::class, 'organization_id', 'id');
-    }
-
-    /**
      * Get all the organizations.
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getOrganizations()
     {
-        return $this->with(['user', 'wikis'])->paginate(10);
+        return $this->with(['user', 'wikis'])
+                    ->paginate(10);
     }
 
     /**
@@ -80,7 +71,9 @@ class Organization extends Model
      */
     public function getOrganization($id)
     {
-        $organization = $this->where('id', '=', $id)->with(['user', 'wikis', 'members'])->first();
+        $organization = $this->where('id', '=', $id)
+                             ->with(['user', 'wikis', 'members'])
+                             ->first();
         if($organization) {
             return $organization;
         }
@@ -143,9 +136,9 @@ class Organization extends Model
 
     public function inviteUser($data) {
         $userHaveOrganization =  DB::table('user_organization')
-                                        ->whereIn('user_id', [$data['userId']])
-                                        ->whereIn('organization_id', [$data['organizationId']])
-                                        ->first();
+                                     ->whereIn('user_id', [$data['userId']])
+                                     ->whereIn('organization_id', [$data['organizationId']])
+                                     ->first();
         if(!$userHaveOrganization) {
             DB::table('user_organization')->insert([
                 'user_type'       => 'normal',
@@ -183,6 +176,37 @@ class Organization extends Model
                        ])
                        ->groupBy('user_organization.user_id')
                        ->paginate(16);
+        return $query;
+    }
+
+    public function getWikis($organizationId)
+    {
+        $organization = $this->where('id', '=', $organizationId)
+                             ->with(['wikis', 'members'])
+                             ->first();
+        return $organization;
+    }
+
+    public function isMember($userId, $organizationId)
+    {
+        $member = DB::table('user_organization')->where([
+            'user_id'         => $userId,
+            'organization_id' => $organizationId,
+        ])->first();
+
+        if($member) {
+            return true;
+        }
+        return false;
+    }
+
+    public function filterOrganizations($text)
+    {
+        $query = $this;
+        $query = $query->where('user_organization.user_id', '=', Auth::user()->id);
+        $query = $query->where('organization.name', 'like', '%' . $text . '%');
+        $query = $query->join('user_organization', 'organization.id', '=', 'user_organization.organization_id')
+                       ->select('organization.*')->get();   
         return $query;
     }
 }

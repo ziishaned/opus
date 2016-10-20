@@ -16,9 +16,22 @@ class ComposerServiceProvider extends ServiceProvider
     {
         view()->composer([
             'home',
+            'organization.invite',
+            'organization.create',
             'organization.organization',
             'organization.members',
+            'organization.wikis',
             'user.organizations',
+            'user.followers',
+            'user.following',
+            'user.user',
+            'user.wikis',
+            'wiki.create',
+            'wiki.wiki',
+            'wiki.edit',
+            'wiki.page.create',
+            'wiki.page.page',
+            'wiki.page.edit',
         ], MenuComposer::class);
     }
 

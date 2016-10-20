@@ -6,19 +6,23 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/prism.css">
     <link rel="stylesheet" href="/css/selectize.css">
     <link rel="stylesheet" href="/css/selectize.default.css">
+    <link rel="stylesheet" href="/js/themes/default/style.min.css">
 </head>
 <body>
 <header>
     @include('layouts.partials.menu')
 
-    <div class="alert alert-danger hide" style="border-radius: 0;">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <strong>Title!</strong> Alert body ...
-    </div>
+    @if(Session::get('alert'))
+        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ Session::get('alert') }}
+        </div>
+    @endif
 
-    <div class="main-body">
+    <div class="main-body" style="margin-top: 25px;">
         <div class="container-fluid">
             @yield('content')
         </div>
@@ -27,7 +31,17 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/ajax-loading.js"></script>
+<script src="/js/tinymce.min.js"></script>
+<script src="/js/validator.min.js"></script>
+<script src="/js/jstree.min.js"></script>
 <script src="/js/standalone/selectize.min.js"></script>
+<script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>
+<script src="/js/modules/view.js"></script>
+<script>
+    $(window).load(function() {
+        $("body").fadeIn('slow');
+    });
+</script>
 </body>
 </html>

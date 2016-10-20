@@ -1,16 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ul class="nav nav-pills" id="organization-nav">
-                <li class="active"><a href="{{ url('/users/' . $user->id)  }}">Profile</a></li>
-                <li><a href="{{ url('/users/' . $user->id . '/organizations')  }}">Organizations</a></li>
-                <li><a href="#">Follower <span class="badge">3</span></a></li>
-                <li><a href="#">Following <span class="badge">6</span></a></li>
-            </ul>
-        </div>
-    </div>
+    @include('layouts.partials.user-nav')
     <div class="row" style="margin-top: 20px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row">
@@ -27,9 +18,15 @@
                     <p style="margin-top: 5px; margin-bottom: 0; font-size: 24px; text-transform: capitalize;">{{ $user->name  }}</p>
                     <p><i class="fa fa-envelope"></i> {{ $user->email  }}</p>
                     <p><i class="fa fa-clock-o"></i> Joined on {{  $user->created_at->toFormattedDateString() }}</p>
-                    <a href="#" class="btn btn-default btn-block" style="margin-top: 10px;"><i class="fa fa-user-plus"></i> Follow</a>
+                    @if($user->id != Auth::user()->id)
+                        @if(ViewHelper::isFollowing($user->id)) 
+                            <button id="unfollow-button" data-follow-id="{{ $user->id }}" class="btn btn-info btn-block following-button">Following</button>
+                        @else 
+                            <button id="follow-button" class="btn btn-default btn-block" data-follow-id="{{ $user->id }}" style="margin-top: 10px; background-color: #f5f8fa; background-image: linear-gradient(#fff,#f5f8fa); font-weight: 600;">Follow</button>
+                        @endif
+                    @endif
                 </div>
-                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <h3 style="margin: 0;">Activity</h3>
@@ -69,6 +66,25 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Latest Wikis</h3>
+                        </div>
+                        @if($user->wikis->count() > 0)
+                            <div class="list-group">
+                                @foreach($user->wikis as $wiki)
+                                    <a href="{{ $wiki->id }}" class="list-group-item">{{ $wiki->name }}</a>
+                                @endforeach
+                            </div>
+                        @else 
+                            <ul class="list-group">
+                                <li class="list-group-item" style="box-shadow: inset 0 0 10px rgba(0,0,0,0.05); background-color: #ffffff; text-align: center;">Nothing found</li>
+                            </ul>
+                        @endif
                         </div>
                     </div>
                 </div>

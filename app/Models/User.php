@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +25,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
 
     /**
      * An organization has only one owner.
@@ -91,7 +98,12 @@ class User extends Authenticatable
      */
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'user_follower', 'user_id', 'id');
+        return $this->belongsToMany(User::class, 'user_followers', 'follow_id', 'user_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'user_followers', 'user_id', 'follow_id');
     }
 
     /**
@@ -121,7 +133,7 @@ class User extends Authenticatable
 
     public function getUser($id)
     {
-        $user = $this->where('id', '=', $id)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages'])->first();
+        $user = $this->where('id', '=', $id)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages', 'followers', 'following', 'wikis'])->first();
         if($user) {
             return $user;
         }
@@ -130,13 +142,53 @@ class User extends Authenticatable
 
     public function getOrganizations($id)
     {
+        return $this->where('id', '=', $id)->with(['organizations', 'followers', 'following'])->first();
+        // $query = $this;
+        // $query = $query->where('users.id', '=', $id)->with(['followers', 'following']);
+        // $query = $query->join('user_organization', 'users.id', '=', 'user_organization.user_id')
+        //                ->join('organization', 'user_organization.organization_id', '=', 'organization.id')
+        //                ->leftJoin('wiki', 'user_organization.organization_id', '=', 'wiki.organization_id')
+        //                ->groupBy('user_organization.organization_id')
+        //                ->select('organization.*', DB::raw('COUNT(user_organization.user_id) as total_members'), DB::raw('COUNT(wiki.id) as total_wikis'))->first();
+        // return $query;
+    }
+
+    public function getFollowers($id)
+    {
         $query = $this;
-        $query = $query->where('users.id', '=', $id);
-        $query = $query->join('user_organization', 'users.id', '=', 'user_organization.user_id')
-                       ->join('organization', 'user_organization.organization_id', '=', 'organization.id')
-                       ->leftJoin('wiki', 'user_organization.organization_id', '=', 'wiki.organization_id')
-                       ->groupBy('user_organization.organization_id')
-                       ->select('organization.*', DB::raw('COUNT(user_organization.user_id) as total_members'), DB::raw('COUNT(wiki.id) as total_wikis'));
-        return $query->paginate(10);
+        $query = $query->where('users.id', '=', $id)->with(['organizations', 'followers', 'following'])->first();
+        return $query;
+    }
+
+    public function getFollowing($id)
+    {
+        $query = $this;
+        $query = $query->where('id', '=', $id)->with(['organizations', 'following', 'followers'])->first();
+        return $query;
+    }
+
+    public function getWikis($id)
+    {
+        $query = $this;
+        $query = $query->where('id', '=', $id)->with(['organizations', 'following', 'followers'])->first();
+        return $query;   
+    }
+
+    public function followUser($followId)
+    {
+        return DB::table('user_followers')->insert([
+            'user_id'    => Auth::user()->id,
+            'follow_id'  => $followId,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+    }
+
+    public function unfollowUser($followId)
+    {
+        return DB::table('user_followers')->where([
+            'user_id'    => Auth::user()->id,
+            'follow_id'  => $followId,
+        ])->delete();
     }
 }

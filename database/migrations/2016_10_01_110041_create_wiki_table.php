@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,15 @@ class CreateWikiTable extends Migration
         Schema::create('wiki', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->longText('description')->nullable();
+            $table->enum('wiki_type', [
+                'personal',
+                'organization',
+            ]);
+            $table->enum('visibilty', [
+                'private',
+                'public'
+            ]);
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

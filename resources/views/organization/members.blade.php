@@ -1,22 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ul class="nav nav-pills" id="organization-nav">
-                <li><a href="#">Activity</a></li>
-                <li class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Discover <i class="fa fa-caret-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><i class="fa fa-pencil"></i> Recently worked on</a></li>
-                        <li><a href="#"><i class="fa fa-floppy-o"></i> Saved for latter</a></li>
-                    </ul>
-                </li>
-                <li class="active"><a href="{{ route('getOrganizationMembers', $organizationId) }}">Members <span class="badge">{{ $members->count() }}</span></a></li>
-                <li><a href="#">Create Wiki</a></li>
-            </ul>
-        </div>
-    </div>
+    @include('layouts.partials.organization-nav')
     <div class="row" style="margin-top: 20px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row">

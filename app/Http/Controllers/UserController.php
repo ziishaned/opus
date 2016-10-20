@@ -53,7 +53,7 @@ class UserController extends Controller
         ], Response::HTTP_NOT_FOUND);
     }
 
-    public function getUser($text)
+    public function filterUser($text)
     {
         return User::where(function ($query) use ($text) {
             $query->where('name', 'like', '%' . $text . '%')
@@ -63,7 +63,41 @@ class UserController extends Controller
 
     public function getUserOrganizations($id)
     {
-        $organizations = $this->user->getOrganizations($id);
-        return view('user.organizations', compact('organizations'));
+        $user = $this->user->getOrganizations($id);
+        return view('user.organizations', compact('user'));
+    }
+
+    public function getUserFollowers($id)
+    {
+        $user = $this->user->getFollowers($id);
+        return view('user.followers', compact('user'));
+    }
+
+    public function getUserFollowing($id)
+    {
+        $user = $this->user->getFollowing($id);
+        return view('user.following', compact('user'));
+    }
+
+    public function wikis($id)
+    {
+        $user = $this->user->getWikis($id);
+        return view('user.wikis', compact('user'));
+    }
+
+    public function follow()
+    {
+        $this->user->followUser($this->request->get('followId'));
+        return response()->json([
+            'message' => 'Successfully following.'
+        ], Response::HTTP_CREATED);
+    }
+
+    public function unfollow()
+    {
+        $this->user->unfollowUser($this->request->get('followId'));
+        return response()->json([
+            'message' => 'Successfully unfollow.'
+        ], Response::HTTP_CREATED);
     }
 }

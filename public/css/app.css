@@ -1,4 +1,8 @@
-li, a, p, h1, h2, h3, h5, h6, input {
+body {
+    display: none;
+}
+
+li, a, p, h1, h2, h3, h5, h6, input, select, div {
 	font-family: "Open Sans";
 }
 .user-invite-list {
@@ -43,16 +47,13 @@ li, a, p, h1, h2, h3, h5, h6, input {
     background-color: #ffffff !important;
 }
 
-#organization-nav>li>ul>li>a {
-    color: #555;
-}
-
-#organization-nav li a {
-    color: #959494;
+#organization-nav>li>a {
+    color: #555 !important;
 }
 
 #organization-nav li.active {
     border-bottom: 2px solid #4a8bee;
+    font-weight: 600;
 }
 
 #organization-nav li.active a {
@@ -70,4 +71,228 @@ li, a, p, h1, h2, h3, h5, h6, input {
 
 a:hover {
     text-decoration: none;
+}
+
+.separator::after {
+    content: '/';
+}
+
+.following-button:hover {
+    background-color: #e81c4f !important;
+    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.15)) !important;
+    border: 1px solid #1da1f2 !important;
+    color: #fff;
+}
+
+.following-button {
+    margin-top: 10px;
+    font-weight: 600;
+    background-color: #1da1f2;
+    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));
+    border: 1px solid #3b88c3;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.edit-page-con {
+    margin-top: 15px;
+}
+
+.wiki-nav-con li a {
+    color: #555;
+}
+
+.wiki-nav-con li a:hover, .wiki-nav-con li a:active{
+    background-color: #555;
+    color: #fff;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.wiki-nav-con ul.dropdown-menu a:hover {
+    border-radius: 0px;
+}
+
+.selectize-input input {
+    min-width: 50% !important;
+}
+
+.wiki-nav-con ul li a {
+    font-weight: 600;
+}
+
+/** ====================
+ * Lista de Comentarios
+ =======================*/
+
+.comments-container h1 {
+    font-size: 36px;
+    color: #283035;
+    font-weight: 400;
+}
+
+.comments-container h1 a {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.comments-list {
+    padding-left: 0px;
+    position: relative;
+}
+
+.comments-list li {
+    margin-bottom: 15px;
+    display: block;
+    position: relative;
+}
+
+.comments-list .comment-head ul {
+    margin-top: 8px;
+}
+
+.comments-list .comment-head ul li {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.comments-list li:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+    width: 0;
+}
+
+.reply-list {
+    padding-left: 88px;
+    clear: both;
+    margin-top: 15px;
+}
+/**
+ * Avatar
+ ---------------------------*/
+.comments-list .comment-avatar {
+    position: relative;
+    z-index: 99;
+    border: 3px solid #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.comment-main-level:after {
+    content: '';
+    width: 0;
+    height: 0;
+    display: block;
+    clear: both;
+}
+/**
+ * Caja del Comentario
+ ---------------------------*/
+.comments-list .comment-box {
+    position: relative;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+
+.comments-list .comment-box:before, .comments-list .comment-box:after {
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    display: block;
+    border-width: 10px 12px 10px 0;
+    border-style: solid;
+    border-color: transparent #FCFCFC;
+    top: 8px;
+    left: -11px;
+}
+
+.comments-list .comment-box:before {
+    border-width: 10px 12px 10px 0;
+    border-color: transparent #ccc;
+    left: -12px;
+}
+
+.comment-box .comment-head, .comment-box .comment-foot {
+    background: #FCFCFC;
+    padding: 10px 12px;
+    /*border-bottom: 1px solid #E5E5E5;*/
+    border: 1px solid #ccc;
+    overflow: hidden;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.comment-box .comment-head p {
+    float: right;
+    margin-left: 14px;
+    position: relative;
+    top: 12px;
+    font-weight: 600;
+    -webkit-transition: color 0.3s ease;
+    -o-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+}
+
+.comment-box .comment-head ul li a {
+    cursor: pointer;
+    color: #555;
+}
+
+.comment-box .comment-name {
+    color: #283035;
+    font-size: 14px;
+    font-weight: 700;
+    float: left;
+    margin-right: 10px;
+}
+
+.comment-box .comment-name a {
+    color: #283035;
+}
+
+.comment-box .comment-content h1, .comment-box .comment-content h2, .comment-box .comment-content h3, .comment-box .comment-content h4, .comment-box .comment-content h5, .comment-box .comment-content h6 {
+    margin: 0;
+}
+
+.comment-box .comment-content {
+    background: #FFF;
+    padding: 12px;
+    font-size: 15px;
+    color: #595959;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+
+.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
+
+/** =====================
+ * Responsive
+ ========================*/
+@media only screen and (max-width: 766px) {
+    .comments-container {
+        width: 480px;
+    }
+
+    .comments-list .comment-box {
+        width: 390px;
+    }
+
+    .reply-list .comment-box {
+        width: 320px;
+    }
+}
+
+.page-head ul li a i {
+    color: #fff;
 }

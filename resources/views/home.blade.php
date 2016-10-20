@@ -2,16 +2,22 @@
 
 @section('content')
 <div class="row">
-    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <h3 style="margin: 0; margin-bottom: 10px;">Activity</h3>
-                <select name="name" id="inputID" class="form-control">
-                    <option value="" selected> All </option>
-                    @foreach($user->organizations as $organization)
-                        <option value="{{ $organization->id  }}">{{ $organization->name }} </option>
-                    @endforeach
-                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="form-group" style="margin: 0;">
+                    <select id="organization-input" name="organization_id" placeholder="Select Organization..">
+                        <option value="all" selected="selected">All</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <button type="button" class="btn btn-default">Go</button>
             </div>
         </div>
         <div class="row" style="margin-top: 20px;">
@@ -44,15 +50,26 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Personal Wikis</h3>
+                <div class="row">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <h3 class="panel-title">Personal Wikis</h3>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                        <a href="{{ route('users.wikis', Auth::user()->id) }}">All</a>
+                    </div>
+                </div>
             </div>
             <div class="list-group">
-                @foreach($wikis as $wiki)
-                    <a href="{{ $wiki->id }}" class="list-group-item">{{ $wiki->name }} <span class="badge"><i class="fa fa-star"></i> {{ $wiki->total_star }}</span></a>
-                @endforeach
+                @if($wikis->count() > 0)
+                    @foreach($wikis as $wiki)
+                        <a href="{{ route('wikis.show', $wiki->id) }}" class="list-group-item">{{ $wiki->name }} <span class="badge"><i class="fa fa-star"></i> {{ $wiki->total_star }}</span></a>
+                    @endforeach
+                @else 
+                    <li class="list-group-item" style="text-align: center;">Nothing found</li>
+                @endif
             </div>
         </div>
     </div>
