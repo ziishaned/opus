@@ -356,7 +356,7 @@ $(document).ready(function() {
         /* toolbar */
         toolbar: [
         	"fontsizeselect styleselect | bold italic underline forecolor backcolor | bullist numlist | alignleft aligncenter alignright alignjustify | outdent indent",
-        	"undo redo | link image media table | print preview fullpage | emoticons | codesample"
+        	"undo redo | link unlink image media table | print preview fullpage | emoticons | codesample"
         ],
 
         style_formats: [
@@ -554,19 +554,17 @@ $(document).ready(function() {
         ],
 
         /* toolbar */
-        toolbar: "bold italic underline | bullist numlist | emoticons link | codesample",
+        toolbar: "bold italic underline | bullist numlist | emoticons link unlink | codesample",
     });
 
-    $('#page-tree').jstree({
-        "core": {
-            "themes":{
-                "icons":false,
-                "dots":false
-            },
-            "check_callback" : true
+    $("#page-tree").fancytree({
+      activate: function(event, data){
+            var node = data.node,
+                orgEvent = data.originalEvent;
+
+            if(node.data.href){
+                window.location.href=node.data.href;    
+            }
         },
-        "plugins" : ["dnd"]
-    }).on("select_node.jstree", function (e, data) { 
-        document.location = data.node.a_attr.href; 
     });
 });

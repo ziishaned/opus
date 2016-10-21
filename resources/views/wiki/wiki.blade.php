@@ -61,7 +61,7 @@
 	               	@else
 	                    <div id="page-tree">
 							<ul>
-								{{ ViewHelper::makeWikiPageTree($wikiPages) }}
+								{{ ViewHelper::makeWikiPageTree($wikiPages, null) }}
 							</ul>
 						</div>
 					@endif
