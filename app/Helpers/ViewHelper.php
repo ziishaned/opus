@@ -49,13 +49,18 @@ class ViewHelper
         return false;
     }
 
-    public static function makeWikiPageTree($wikiPages)
+    public static function makeWikiPageTree($wikiPages, $currentPageId)
     {
         foreach ($wikiPages as $page => $value) {
-            echo  '<li><a href="/wikis/'. $value->wiki_id .'/pages/'. $value->id . '">' . $value->name . '</a>';
+            $class = '';
+            if($value->id == $currentPageId) {
+                $class='active';
+            }
+
+            echo  '<li class="'.$class.'"><a href="/wikis/'. $value->wiki_id .'/pages/'. $value->id . '">' . $value->name . '</a>';
             if(!empty($value['pages'])) {
                 echo '<ul>';
-                self::makeWikiPageTree($value['pages']);
+                self::makeWikiPageTree($value['pages'], $currentPageId);
                 echo '</ul></li>';
             }
         }

@@ -296,3 +296,15 @@ a:hover {
 .page-head ul li a i {
     color: #fff;
 }
+
+.fancytree-container {
+    border: none !important;
+    outline: none !important;
+}
+
+.fancytree-treefocus span.fancytree-selected span.fancytree-title,
+.fancytree-treefocus span.fancytree-active span.fancytree-title {
+  color: #000 !important;
+  outline: none !important;
+  background-color: #D4D4D4 !important;
+}

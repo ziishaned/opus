@@ -62,7 +62,7 @@
 		               	@else
 		                    <div id="page-tree">
 								<ul>
-									{{ ViewHelper::makeWikiPageTree($wikiPages) }}
+									{{ ViewHelper::makeWikiPageTree($wikiPages, $page->id) }}
 								</ul>
 							</div>
 						@endif
@@ -115,7 +115,7 @@
 	    			<div class="well well-sm" style="margin-bottom: 0px; border-radius: 0; color: #fff; border: 1px solid transparent; box-shadow: 0 1px 1px rgba(0,0,0,.05); background-color: #555;">
 		    			<div class="pull-left">
 			    			<h3 style="margin: 0; margin-bottom: 5px;">{{ $page->name }}</h3>
-		    				<p style="margin-bottom: 0;">Created by {{ ViewHelper::getUsername($page->user_id) }} <i class="fa fa-clock-o"></i> {{ $page->created_at->toFormattedDateString() }}</p>
+		    				<p style="margin-bottom: 0;">Created by {{ ViewHelper::getUsername($page->user_id) }} <i class="fa fa-clock-o"></i> <time class="timeago" datetime="{{ $page->created_at }}">{{ $page->created_at->diffForHumans() }}</time></p>
 		    			</div>
 						<div class="pull-right" style="margin-top: 15px;">
 		    				<ul class="list-unstyled list-inline">
@@ -154,7 +154,7 @@
 														<div class="comment-head">
 															<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">{{ $comment->user->name }}</a></h6>
 															<ul class="list-unstyled list-inline pull-right">
-																<li><i class="fa fa-clock-o"></i> {{ $comment->created_at->diffForHumans() }}</li>
+																<li><i class="fa fa-clock-o"></i> <time class="timeago" datetime="{{ $comment->created_at }}">{{ $comment->created_at->diffForHumans() }}</time></li>
 																<li><a href="#" id="like-comment" data-commentid="{{ $comment->id }}"><i class="fa fa-heart"></i></a> <span id="comment-total-star" data-commentid="{{ $comment->id }}">{{ ViewHelper::getCommentStar($comment->id) }}</span></li>
 															</ul>
 														</div>
