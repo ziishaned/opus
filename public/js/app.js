@@ -558,7 +558,46 @@ $(document).ready(function() {
     });
 
     $("#page-tree").fancytree({
-      activate: function(event, data){
+        extensions: ["dnd", "edit"],
+        dnd: {
+            draggable: {
+                zIndex: 1000,
+                scroll: false,
+                revert: "invalid",
+                appendTo: "body"
+            },
+            autoExpandMS: 400,
+            focusOnClick: true,
+            preventVoidMoves: true,
+            preventRecursiveMoves: true,
+            dragStart: function(node, data) {
+                return true;
+            },
+            dragEnter: function(node, data) {
+               return true;
+            },
+            dragDrop: function(node, data) {
+                $.ajax({
+                    url: '/pages/reorder',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        _method: 'patch',
+                        nodeId: data.otherNode.key,
+                        parentId: data.node.key,
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(error) {
+                        var response = JSON.parse(error.responseText);
+                        console.log(response);
+                    }
+                });
+                data.otherNode.moveTo(node, data.hitMode);
+            }
+        },
+        activate: function(event, data){
             var node = data.node,
                 orgEvent = data.originalEvent;
 
