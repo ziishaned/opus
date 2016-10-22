@@ -29,7 +29,7 @@
                 	</div>
                 </div>
                 <div class="list-group">
-                    <a href="{{ route('wikis.show', $wiki->id) }}" class="list-group-item"><i class="fa fa-file-text-o"></i> Pages</a>
+                    <a href="{{ route('wikis.show', $wiki->id) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
                 </div>
             </div>
             <div class="panel panel-default">

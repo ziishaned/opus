@@ -16,7 +16,7 @@
 								    <i class="fa fa-gear fa-lg"></i> <span class="caret"></span>
 								  </button>
 								  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-								    <li><a href="#"><i class="fa fa-align-left"></i> Reorder Pages</a></li>
+								    <li><a href="{{ route('wikis.pages.reorder', $wikiId) }}"><i class="fa fa-align-left"></i> Reorder Pages</a></li>
 								    <li>
 								    	<a href="#" onclick="event.preventDefault(); document.getElementById('delete-wiki').submit();"><i class="fa fa-trash-o"></i> Delete</a>
 										<form id="delete-wiki" action="{{ route('wikis.destroy', $wikiId) }}" method="POST" style="display: none;">
@@ -30,7 +30,7 @@
 	                	</div>
 	                </div>
 	                <div class="list-group">
-	                    <a href="{{ route('wikis.show', $wikiId) }}" class="list-group-item"><i class="fa fa-file-text-o"></i> Pages</a>
+	                    <a href="{{ route('wikis.show', $wikiId) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
 	                </div>
 	            </div>
 	            <div class="panel panel-default">
@@ -86,16 +86,16 @@
 				            <li class="dropdown">
 		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v fa-lg"></i></a>
 		                        <ul class="dropdown-menu">
-		                            <li><a href="#"><i class="fa fa-paperclip"></i> Attachments <span class="badge">0</span></a></li>
+		                            <li><a href="#"><i class="fa fa-paperclip"></i> Attachments<span class="badge">0</span></a></li>
 		                            <li><a href="#"><i class="fa fa-history"></i> Page History</a></li>
 		                            <li><a href="#"><i class="fa fa-lock"></i> Privacy</a></li>
 		                            <li class="divider"></li>
 		                            <li><a href="#"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
 		                            <li><a href="#"><i class="fa fa-exchange"></i> Export to Word</a></li>
-		                            <li><a href="#"><i class="fa fa-file-word-o"></i> Import Word Document</a></li>
+		                            <li><a href="{{ route('pages.edit', [$wikiId, $page->id]) }}"><i class="fa fa-file-word-o"></i> Import Word Document</a></li>
 		                            <li class="divider"></li>
-		                            <li><a href="#"><i class="fa fa-copy"></i> Copy</a></li>
-		                            <li><a href="#"><i class="fa fa-arrows"></i> Move</a></li>
+		                            <li><a href="{{ route('wikis.pages.reorder', $wikiId) }}"><i class="fa fa-copy"></i> Copy</a></li>
+		                            <li><a href="{{ route('wikis.pages.reorder', $wikiId) }}"><i class="fa fa-arrows"></i> Move</a></li>
 		                            <li>
 										<a href="#" onclick="event.preventDefault(); document.getElementById('delete-page').submit();"><i class="fa fa-trash-o"></i> Delete</a>
 										<form id="delete-page" action="{{ route('pages.destroy', [$wikiId, $page->id]) }}" method="POST" style="display: none;">

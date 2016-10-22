@@ -141,4 +141,19 @@ class WikiPage extends Model
         DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->delete();
         return false;
     }
+
+    public function changeParent($data)
+    {
+        $page = $this->where('id', '=', $data['nodeId'])->first();
+        
+        if($page->parent_id == $data['parentId']) {
+            $page->parent_id = null;
+            $page->save();
+            return true;
+        }
+
+        $page->parent_id = $data['parentId'];
+        $page->save();
+        return true;
+    }
 }

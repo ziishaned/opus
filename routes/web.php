@@ -143,7 +143,7 @@ Route::delete('/wikis/{id}', [
 
 /*
 |--------------------------------------------------------------------------
-| Wikis Routes
+| Wikis Pages Routes
 |--------------------------------------------------------------------------
 */
 
@@ -181,6 +181,13 @@ Route::post('/pages/{id}/star', [
 Route::post('/wikis/{id}/pages/{pageId}/comments', [
     'uses'  =>  'CommentController@store',
     'as'    =>  'wikis.pages.comments.store',
+]);
+Route::get('/wikis/{id}/pages/reorder', [
+    'uses'  =>  'WikiController@pagesReorder',
+    'as'    =>  'wikis.pages.reorder',
+]);
+Route::patch('/pages/reorder', [
+    'uses'  =>  'WikiController@updatePageParent',
 ]);
 
 /*

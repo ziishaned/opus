@@ -32,6 +32,7 @@ class ComposerServiceProvider extends ServiceProvider
             'wiki.page.create',
             'wiki.page.page',
             'wiki.page.edit',
+            'wiki.page.reorder',
         ], MenuComposer::class);
     }
 

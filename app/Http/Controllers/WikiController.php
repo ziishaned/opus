@@ -240,4 +240,25 @@ class WikiController extends Controller
             'unstar' => true
         ], Response::HTTP_ACCEPTED);          
     }
+
+    public function pagesReorder($id)
+    {
+        $wiki = $this->wiki->getWiki($id);        
+        $wikiPages = $this->wikiPage->getPages($id);
+
+        if($wikiPages) {
+            return view('wiki.page.reorder', compact('wikiPages', 'wiki'));
+        }
+        return response()->json([
+            'message' => 'Resource not found.'
+        ], Response::HTTP_NOT_FOUND);        
+    }
+
+    public function updatePageParent()
+    {
+        $this->wikiPage->changeParent($this->request->all());
+        return response()->json([
+            'message' => 'Page parent has been changed.'
+        ], Response::HTTP_OK);
+    }
 }
