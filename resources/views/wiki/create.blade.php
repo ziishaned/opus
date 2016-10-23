@@ -13,8 +13,8 @@
                             <div class="form-group" style="margin: 0;">
                                 <label for="" class="control-label">Owner</label>
                                 <select id="organization-input" name="organization_id" placeholder="Find and select organization..">
-                                    @if(!is_null($organizationId))
-                                        <option value="{{ $organizationId }}" selected>{{ ViewHelper::getOrganizationName($organizationId) }}</option>
+                                    @if(!is_null($organization))
+                                        <option value="{{ $organization->id }}" selected>{{ $organization->name }}</option>
                                     @endif
                                 </select>
                             </div>

@@ -6,9 +6,26 @@ use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Wiki extends Model
 {
+    use Sluggable;
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
     /**
      * @var string
      */
@@ -74,9 +91,9 @@ class Wiki extends Model
         return $this->with(['organization', 'pages', 'user'])->paginate(10);
     }
 
-    public function getWiki($id)
+    public function getWiki($nameSlug)
     {
-        $wiki = $this->where('id', '=', $id)->where('user_id', '=', Auth::user()->id)->first();
+        $wiki = $this->where('slug', '=', $nameSlug)->where('user_id', '=', Auth::user()->id)->first();
         if(is_null($wiki)) {
             return false;
         }
@@ -107,12 +124,12 @@ class Wiki extends Model
     /**
      * Delete wiki
      *
-     * @param  integer $id
+     * @param  string $slug
      * @return bool
      */
-    public function deleteWiki($id)
+    public function deleteWiki($slug)
     {
-        $query = $this->where('id', '=', $id)->delete();
+        $query = $this->where('slug', '=', $slug)->delete();
 
         if(!$query) {
             return false;
@@ -127,9 +144,9 @@ class Wiki extends Model
      * @param  array    $data
      * @return bool
      */
-    public function updateWiki($id, $data)
+    public function updateWiki($slug, $data)
     {
-        $this->find($id)->update([
+        $this->where('slug', '=', $slug)->update([
             'name' => $data['wiki_name'],
             'description' => $data['wiki_description'],
         ]);

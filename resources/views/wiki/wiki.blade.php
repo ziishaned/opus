@@ -18,7 +18,7 @@
 							    <li><a href="#"><i class="fa fa-align-left"></i> Reorder Pages</a></li>
 							    <li>
 							    	<a href="#" onclick="event.preventDefault(); document.getElementById('delete-wiki').submit();"><i class="fa fa-trash-o"></i> Delete</a>
-									<form id="delete-wiki" action="{{ route('wikis.destroy', $wiki->id) }}" method="POST" style="display: none;">
+									<form id="delete-wiki" action="{{ route('wikis.destroy', $wiki->slug) }}" method="POST" style="display: none;">
 	                                    {!! method_field('delete') !!}
 	                                    {!! csrf_field() !!}
 	                                </form>
@@ -29,7 +29,7 @@
                 	</div>
                 </div>
                 <div class="list-group">
-                    <a href="{{ route('wikis.show', $wiki->id) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
+                    <a href="{{ route('wikis.show', $wiki->slug) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
                 </div>
             </div>
             <div class="panel panel-default">
@@ -51,7 +51,7 @@
 		                    <h3 class="panel-title" style="margin-top: 4px;">Page Tree</h3>
                 		</div>
                 		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                			<a href="{{ route('wikis.pages.create', $wiki->id) }}" class="btn btn-success btn-xs">Create Page</a>
+                			<a href="{{ route('wikis.pages.create', $wiki->slug) }}" class="btn btn-success btn-xs">Create Page</a>
                 		</div>
                 	</div>
                 </div>
@@ -78,7 +78,7 @@
 		    		</div>
 		    		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 		    			<ul class="nav nav-pills navbar-right" style="margin-right: 10px;">
-				            <li><a href="{{ route('wikis.edit', $wiki->id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+				            <li><a href="{{ route('wikis.edit', $wiki->slug) }}"><i class="fa fa-pencil"></i> Edit</a></li>
 				            <li><a href="#"><i class="fa fa-clock-o"></i> Save for later</a></li>
 				            <li><a href="#"><i class="fa fa-eye"></i> Watch</a></li>
 				            <li class="dropdown">
@@ -111,7 +111,7 @@
 		    			</div>
 		    			<div class="pull-right" style="margin-top: 15px;">
 		    				<ul class="list-unstyled list-inline">
-			    				<li><i class="fa fa-heart"></i> {{ ViewHelper::getWikiStar($wiki->id) }}</li>
+			    				<li><i class="fa fa-heart"></i> {{ ViewHelper::getWikiStar($wiki->slug) }}</li>
 			    			</ul>
 		    			</div>
 				    	<div class="clearfix"></div>

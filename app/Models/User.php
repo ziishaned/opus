@@ -4,13 +4,29 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Sluggable;
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 
     /**
      * @var array
@@ -131,9 +147,9 @@ class User extends Authenticatable
         return $this->with(['followers', 'following'])->paginate(10);
     }
 
-    public function getUser($id)
+    public function getUser($userSlug)
     {
-        $user = $this->where('id', '=', $id)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages', 'followers', 'following', 'wikis'])->first();
+        $user = $this->where('slug', '=', $userSlug)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages', 'followers', 'following', 'wikis'])->first();
         
         if($user) {
             return $user;
@@ -141,37 +157,29 @@ class User extends Authenticatable
         return false;
     }
 
-    public function getOrganizations($id)
+    public function getOrganizations($userSlug)
     {
-        return $this->where('id', '=', $id)->with(['organizations', 'followers', 'following'])->first();
-        // $query = $this;
-        // $query = $query->where('users.id', '=', $id)->with(['followers', 'following']);
-        // $query = $query->join('user_organization', 'users.id', '=', 'user_organization.user_id')
-        //                ->join('organization', 'user_organization.organization_id', '=', 'organization.id')
-        //                ->leftJoin('wiki', 'user_organization.organization_id', '=', 'wiki.organization_id')
-        //                ->groupBy('user_organization.organization_id')
-        //                ->select('organization.*', DB::raw('COUNT(user_organization.user_id) as total_members'), DB::raw('COUNT(wiki.id) as total_wikis'))->first();
-        // return $query;
+        return $this->where('slug', '=', $userSlug)->with(['organizations', 'followers', 'following'])->first();
     }
 
-    public function getFollowers($id)
+    public function getFollowers($userSlug)
     {
         $query = $this;
-        $query = $query->where('users.id', '=', $id)->with(['organizations', 'followers', 'following'])->first();
+        $query = $query->where('slug', '=', $userSlug)->with(['organizations', 'followers', 'following'])->first();
         return $query;
     }
 
-    public function getFollowing($id)
+    public function getFollowing($userSlug)
     {
         $query = $this;
-        $query = $query->where('id', '=', $id)->with(['organizations', 'following', 'followers'])->first();
+        $query = $query->where('slug', '=', $userSlug)->with(['organizations', 'following', 'followers'])->first();
         return $query;
     }
 
-    public function getWikis($id)
+    public function getWikis($userSlug)
     {
         $query = $this;
-        $query = $query->where('id', '=', $id)->with(['organizations', 'following', 'followers'])->first();
+        $query = $query->where('slug', '=', $userSlug)->with(['organizations', 'following', 'followers'])->first();
         return $query;   
     }
 

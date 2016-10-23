@@ -40,12 +40,12 @@ class OrganizationController extends Controller
     /**
      * Get a specific organization.
      *
-     * @param  integer $id
+     * @param  string $organizationSlug
      * @return mixed
      */
-    public function show($id)
+    public function show($organizationSlug)
     {
-        $organization = $this->organization->getOrganization($id);
+        $organization = $this->organization->getOrganization($organizationSlug);
 
         if($organization) {
             return view('organization.organization', compact('organization'));
@@ -54,10 +54,9 @@ class OrganizationController extends Controller
         return abort(404);
     }
 
-    public function getMembers($id)
+    public function getMembers($organizationSlug)
     {
-        $members = $this->organization->getMembers($id);
-        $organization = $this->organization->getOrganization($id);
+        $organization = $this->organization->getOrganization($organizationSlug);
         return view('organization.members', compact('members', 'organization'));
     }
 

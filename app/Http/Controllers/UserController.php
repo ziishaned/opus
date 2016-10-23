@@ -41,12 +41,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $userSlug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($userSlug)
     {
-        $user = $this->user->getUser($id);
+        $user = $this->user->getUser($userSlug);
         $activities = DB::table('activity_log')->where('causer_id', '=', Auth::user()->id)->latest()->paginate(10);
 
         if($user) {
@@ -65,27 +65,27 @@ class UserController extends Controller
         })->where('id', '!=', Auth::user()->id)->get();
     }
 
-    public function getUserOrganizations($id)
+    public function getUserOrganizations($userSlug)
     {
-        $user = $this->user->getOrganizations($id);
+        $user = $this->user->getOrganizations($userSlug);
         return view('user.organizations', compact('user'));
     }
 
-    public function getUserFollowers($id)
+    public function getUserFollowers($userSlug)
     {
-        $user = $this->user->getFollowers($id);
+        $user = $this->user->getFollowers($userSlug);
         return view('user.followers', compact('user'));
     }
 
-    public function getUserFollowing($id)
+    public function getUserFollowing($userSlug)
     {
-        $user = $this->user->getFollowing($id);
+        $user = $this->user->getFollowing($userSlug);
         return view('user.following', compact('user'));
     }
 
-    public function wikis($id)
+    public function wikis($userSlug)
     {
-        $user = $this->user->getWikis($id);
+        $user = $this->user->getWikis($userSlug);
         return view('user.wikis', compact('user'));
     }
 

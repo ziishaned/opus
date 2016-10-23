@@ -17,6 +17,7 @@ class CreateWikiTable extends Migration
         Schema::create('wiki', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('slug', 65535);
             $table->longText('description')->nullable();
             $table->enum('wiki_type', [
                 'personal',

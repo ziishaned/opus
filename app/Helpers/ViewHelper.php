@@ -16,14 +16,15 @@ class ViewHelper
 		return Route::getCurrentRoute()->getPath();
 	}
 
-    public static function userHasOrganization($id)
+    public static function userHasOrganization($organizationSlug)
     {
-        $organization =  DB::table('user_organization')->where([
+        $organization = (new Organization)->getOrganization($organizationSlug);
+        $userHasOrganization =  DB::table('user_organization')->where([
             'user_id' => Auth::user()->id,
-            'organization_id' => $id,
+            'organization_id' => $organization->id,
         ])->first();
 
-        if($organization) {
+        if($userHasOrganization) {
             return true;
         }
         return false;
@@ -66,9 +67,9 @@ class ViewHelper
         }
     }
 
-    public static function getWikiName($id)
+    public static function getWiki($slug)
     {
-        return Wiki::where('id', '=', $id)->pluck('name')->first();
+        return Wiki::where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->first();
     }
 
     public static function getCommentStar($id)

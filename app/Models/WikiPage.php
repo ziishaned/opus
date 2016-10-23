@@ -4,12 +4,30 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
+use App\Models\Wiki;
 use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class WikiPage extends Model
 {
+    use Sluggable;
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
     /**
      * @var string
      */
@@ -63,15 +81,15 @@ class WikiPage extends Model
     /**
      * Retrieve a wiki from database.
      *
-     * @param  integer $id
+     * @param  string $slug
      * @return mixed
      */
-    public function getPages($id)
+    public function getPages($slug)
     {
         $query = $this;
-        $query = $query->where('wiki_page.wiki_id', '=', $id);
+        $query = $query->where('wiki_page.slug', '=', $slug);
         $query = $query->where('wiki_page.parent_id', '=', null);
-        $query = $query->with('pages')->get();
+        $query = $query->with(['pages', 'wiki'])->get();
         if(!$query) {
             return false;
         }
@@ -84,23 +102,24 @@ class WikiPage extends Model
         return $query;
     }
 
-    public function saveWikiPage($wikiId, $data)
+    public function saveWikiPage($wikiSlug, $data)
     {
+        $wiki = (new Wiki)->getWiki($wikiSlug);
         $page = $this->create([
             'name'         =>  $data['page_name'],
             'description'  =>  !empty($data['page_description']) ? $data['page_description'] : null,
             'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
             'user_id'      =>  Auth::user()->id,
-            'wiki_id'      =>  $wikiId,
+            'wiki_id'      =>  $wiki->id,
         ]);
 
         ActivityLogHelper::createWikiPage($page);
-        return $page->id;
+        return $page;
     }
 
-    public function getPage($id)
+    public function getPage($slug)
     {
-        $page = $this->where('id', '=', $id)->where('user_id', '=', Auth::user()->id)->with('comments')->first();
+        $page = $this->where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->with(['comments', 'wiki'])->first();
         if(is_null($page)) {
             return false;
         }

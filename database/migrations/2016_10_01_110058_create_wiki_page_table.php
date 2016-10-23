@@ -16,6 +16,7 @@ class CreateWikiPageTable extends Migration
         Schema::create('wiki_page', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('slug', 65535);
             $table->longText('description')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
 

@@ -10,16 +10,13 @@ use App\Models\Organization;
 
 class ActivityLogHelper
 {
-    public static function createComment($pageId, $comment)
+    public static function createComment($page, $comment)
     {
-        $page = (new WikiPage)->getPage($pageId);
-        $wiki = (new Wiki)->getWiki($page->wiki_id);
-
         activity()
             ->useLog('created_comment')
             ->performedOn((new Comment))
             ->causedBy(Auth::user()->id)
-            ->withProperties(['log_type' => 'commented', 'page_id' => $page->id, 'wiki_id' => $wiki->id, 'page' => $page->name, 'wiki' => $wiki->name, 'user_id' => Auth::user()->id, 'comment' => $comment])
+            ->withProperties(['log_type' => 'commented', 'page_id' => $page->id, 'wiki_id' => $page->wiki->id, 'page' => $page->name, 'wiki' => $page->wiki->name, 'user_id' => Auth::user()->id, 'comment' => $comment])
             ->log('<a href="/users/:properties.user_id">:causer.name</a> :properties.log_type on <a href="/wikis/:properties.wiki_id/pages/:properties.page_id">:properties.page</a> at <a href="/wikis/:properties.wiki_id">:properties.wiki</a>.');
         return true;
     }
@@ -53,7 +50,7 @@ class ActivityLogHelper
     public static function createWiki($wiki)
     {
         if(!empty($wiki->organization_id)) {
-            $organization  = (new Organization)->getOrganization($wiki->organization_id);
+            $organization  = (new Organization)->where('id', '=', $wiki->organization_id)->first();
             activity()
                 ->useLog('created_wiki')
                 ->performedOn((new Wiki))
@@ -73,7 +70,7 @@ class ActivityLogHelper
 
     public static function createWikiPage($page)
     {
-        $wiki  = (new Wiki)->getWiki($page->wiki_id);
+        $wiki  = (new Wiki)->where('id', '=', $page->wiki_id)->first();
         activity()
             ->useLog('created_wiki_page')
             ->performedOn((new WikiPage))

@@ -7,10 +7,27 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Symfony\Component\HttpFoundation\Response;
 
 class Organization extends Model
 {
+    use Sluggable;
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
     /**
      * @const array
      */
@@ -70,9 +87,9 @@ class Organization extends Model
      * @param  integer $id
      * @return mixed
      */
-    public function getOrganization($id)
+    public function getOrganization($organizationSlug)
     {
-        $organization = $this->where('id', '=', $id)
+        $organization = $this->where('slug', '=', $organizationSlug)
                              ->with(['user', 'wikis', 'members'])
                              ->first();
         if($organization) {

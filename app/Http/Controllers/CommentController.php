@@ -30,11 +30,11 @@ class CommentController extends Controller
         ], Response::HTTP_ACCEPTED);
     }
 
-    public function store($wikiId, $pageId)
+    public function store($wikiSlug, $pageSlug)
     {
         $this->validate($this->request, Comment::COMMENT_RULES);
-        $this->comment->storeComment($pageId, $this->request->all());
-        return redirect()->route('wikis.pages.show', [$wikiId, $pageId])->with([
+        $this->comment->storeComment($pageSlug, $this->request->all());
+        return redirect()->route('wikis.pages.show', [$wikiSlug, $pageSlug])->with([
             'alert'      => 'Comment successfully posted.',
             'alert_type' => 'success'
         ]);

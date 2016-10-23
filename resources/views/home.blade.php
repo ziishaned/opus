@@ -65,7 +65,7 @@
             <div class="list-group">
                 @if($wikis->count() > 0)
                     @foreach($wikis as $wiki)
-                        <a href="{{ route('wikis.show', $wiki->id) }}" class="list-group-item">{{ $wiki->name }} <span class="badge"><i class="fa fa-star"></i> {{ $wiki->total_star }}</span></a>
+                        <a href="{{ route('wikis.show', $wiki->slug) }}" class="list-group-item">{{ $wiki->name }} <span class="badge"><i class="fa fa-star"></i> {{ $wiki->total_star }}</span></a>
                     @endforeach
                 @else 
                     <li class="list-group-item" style="text-align: center;">Nothing found</li>
