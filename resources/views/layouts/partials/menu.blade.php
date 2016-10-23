@@ -18,7 +18,7 @@
                         <ul class="dropdown-menu" @if($loggedInUser->organizations->count() == 0) style="background-color: #fafafa;" @endif>
                             @if($loggedInUser->organizations->count() > 0)
                                 @foreach($loggedInUser->organizations as $organization)
-                                    <li><a href="{{ route('organizations.show', $organization->id) }}">{{ $organization->name  }}</a></li>
+                                    <li><a href="{{ route('organizations.show', $organization->slug) }}">{{ $organization->name  }}</a></li>
                                 @endforeach
                             @else 
                                 <li style="background-color: #fafafa; text-align: center; font-size: 14px; font-weight: 500;">Nothing Found!</li>
@@ -85,7 +85,7 @@
                             </ul>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('users.show', $loggedInUser->id) }}">Profile</a></li>
+                            <li><a href="{{ route('users.show', $loggedInUser->slug) }}">Profile</a></li>
                             <li><a href="#">Settings</a></li>
                             <li class="divider"></li>
                             <li>

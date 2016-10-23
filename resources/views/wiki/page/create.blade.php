@@ -6,16 +6,14 @@
             <h3 style="margin: 0px; margin-bottom: 8px;">Create a new wiki</h3>
             <p class="text-muted">A wiki contains all the pages with informative text for your project.</p>   
             <hr>
-            <form action="{{ route('wikis.pages.store', $wikiId) }}" method="POST" role="form" style="margin-bottom: 15px;">
+            <form action="{{ route('wikis.pages.store', $wiki->slug) }}" method="POST" role="form" style="margin-bottom: 15px;">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                             <div class="form-group" style="margin: 0;">
                                 <label for="" class="control-label">Select Wiki</label>
                                 <select id="wiki-input" name="wiki_id" placeholder="Find and select wiki.." disabled>
-                                    @if(!is_null($wikiId))
-                                        <option value="{{ $wikiId }}" selected>{{ ViewHelper::getWikiName($wikiId) }}</option>
-                                    @endif
+                                    <option value="{{ $wiki->id }}" selected>{{ $wiki->name }}</option>
                                 </select>
                             </div>
                         </div>

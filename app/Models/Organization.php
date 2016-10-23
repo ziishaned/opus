@@ -87,9 +87,9 @@ class Organization extends Model
      * @param  integer $id
      * @return mixed
      */
-    public function getOrganization($id)
+    public function getOrganization($organizationSlug)
     {
-        $organization = $this->where('id', '=', $id)
+        $organization = $this->where('slug', '=', $organizationSlug)
                              ->with(['user', 'wikis', 'members'])
                              ->first();
         if($organization) {

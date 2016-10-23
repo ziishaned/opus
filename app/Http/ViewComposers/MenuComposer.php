@@ -22,7 +22,7 @@ class MenuComposer {
     }
 
     public function compose(View $view) {
-        $user  = $this->user->getUser(Auth::user()->id);
+        $user  = $this->user->getUser(Auth::user()->slug);
 
         $view->with([
             'loggedInUser' => $user,

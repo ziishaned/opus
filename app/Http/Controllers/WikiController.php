@@ -59,9 +59,15 @@ class WikiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($organizationId = null)
+    public function create($organizationSlug = null)
     {
-        return view('wiki.create', compact('organizationId'));
+
+        if(!is_null($organizationSlug)) {
+            $organization = $this->organization->getOrganization($organizationSlug);
+        } else {
+            $organization = null;
+        }
+        return view('wiki.create', compact('organization'));
     }
 
     /**
@@ -81,7 +87,7 @@ class WikiController extends Controller
 
         $wiki = $this->wiki->saveWiki($this->request->all());
 
-        return redirect()->route('wikis.show', $wiki->id)->with([
+        return redirect()->route('wikis.show', $wiki->slug)->with([
             'alert' => 'Wiki successfully created.',
             'alert_type' => 'success'
         ]);
@@ -90,23 +96,18 @@ class WikiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $nameSlug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($nameSlug)
     {
-        $wiki = $this->wiki->getWiki($id);
+        $wiki = $this->wiki->getWiki($nameSlug);
         if(!$wiki) {
             abort('404');
         }
         
-        $wikiPages = $this->wikiPage->getPages($id);
-        if($wikiPages) {
-            return view('wiki.wiki', compact('wikiPages', 'wiki'));
-        }
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+        $wikiPages = $this->wikiPage->getPages($wiki->id);
+        return view('wiki.wiki', compact('wikiPages', 'wiki'));
     }
 
     /**
@@ -115,23 +116,23 @@ class WikiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($nameSlug)
     {
-        $wiki = $this->wiki->getWiki($id);
+        $wiki = $this->wiki->getWiki($nameSlug);
         return view('wiki.edit', compact('wiki'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  string  $nameSlug
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($nameSlug)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
-        $this->wiki->updateWiki($id, $this->request->all());
-        return redirect()->route('wikis.show', $id)->with([
+        $this->wiki->updateWiki($nameSlug, $this->request->all());
+        return redirect()->route('wikis.show', $nameSlug)->with([
             'alert' => 'Wiki successfully updated.',
             'alert_type' => 'success'
         ]);
@@ -140,12 +141,12 @@ class WikiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $nameSlug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($nameSlug)
     {
-        $wikiDeleted = $this->wiki->deleteWiki($id);
+        $wikiDeleted = $this->wiki->deleteWiki($nameSlug);
         if($wikiDeleted) {
             return redirect()->route('dashboard')->with([
                 'alert' => 'Wiki successfully deleted.',
@@ -157,10 +158,10 @@ class WikiController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function createPage($id)
+    public function createPage($wikiSlug)
     {
-        $wikiId = $id;
-        return view('wiki.page.create', compact('wikiId'));
+        $wiki = $this->wiki->getWiki($wikiSlug);
+        return view('wiki.page.create', compact('wiki'));
     }
 
     public function filterWikis($text)
@@ -173,26 +174,26 @@ class WikiController extends Controller
         return $this->wikiPage->filterWikiPages($wikiId, $text);
     }
 
-    public function storePage($wikiId)
+    public function storePage($wikiSlug)
     {
         $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
-        $pageId = $this->wikiPage->saveWikiPage($wikiId, $this->request->all());
-        return redirect()->route('wikis.pages.show', [$wikiId, $pageId])->with([
+        $page = $this->wikiPage->saveWikiPage($wikiSlug, $this->request->all());
+        return redirect()->route('wikis.pages.show', [$wikiSlug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success'
         ]);
     }
 
-    public function showPage($wikiId, $pageId)
+    public function showPage($wikiSlug, $pageSlug)
     {
-        $page = $this->wikiPage->getPage($pageId);
+        $page = $this->wikiPage->getPage($pageSlug);
         if(!$page) {
             abort('404');
         }
         
-        $wikiPages = $this->wikiPage->getPages($wikiId);
+        $wikiPages = $this->wikiPage->getPages($pageSlug);
         if($wikiPages) {
-            return view('wiki.page.page', compact('wikiId', 'wikiPages', 'page'));
+            return view('wiki.page.page', compact('wikiPages', 'page'));
         }
         return response()->json([
             'message' => 'Resource not found.'

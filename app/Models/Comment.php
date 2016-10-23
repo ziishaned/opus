@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
+use App\Models\WikiPage;
 use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -73,11 +74,12 @@ class Comment extends Model
         return false;
     }
 
-    public function storeComment($pageId, $data)
+    public function storeComment($pageSlug, $data)
     {
-        ActivityLogHelper::createComment($pageId, $data['comment']);
+        $page = (new WikiPage)->getPage($pageSlug);
+        ActivityLogHelper::createComment($page, $data['comment']);
         $this->create([
-            'page_id'    => $pageId,
+            'page_id'    => $page->id,
             'content'    => $data['comment'],
             'user_id'    => Auth::user()->id,
             'updated_at' => Carbon::now(),

@@ -3,7 +3,7 @@
 @section('content')
     @include('layouts.partials.organization-nav')
     <div class="row" style="margin-top: 20px;">
-        @if(ViewHelper::userHasOrganization($organization->id))
+        @if(ViewHelper::userHasOrganization($organization->slug))
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                 <div class="user-profile-pic">
                     <img src="/images/default.png" class="img-responsive img-rounded" alt="Image">

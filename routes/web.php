@@ -17,23 +17,23 @@ Auth::routes();
 Route::get('/users/search/{text}', [
     'uses'  =>  'UserController@filterUser',
 ]);
-Route::get('/users/{id}', [
+Route::get('/users/{user_slug}', [
     'uses'  =>  'UserController@show',
     'as'    =>  'users.show',
 ]);
-Route::get('/users/{id}/organizations', [
+Route::get('/users/{user_slug}/organizations', [
     'uses'  =>  'UserController@getUserOrganizations',
     'as'    =>  'users.organizations',
 ]);
-Route::get('/users/{id}/followers', [
+Route::get('/users/{user_slug}/followers', [
     'uses'  =>  'UserController@getUserFollowers',
     'as'    =>  'users.followers',
 ]);
-Route::get('/users/{id}/following', [
+Route::get('/users/{user_slug}/following', [
     'uses'  =>  'UserController@getUserFollowing',
     'as'    =>  'users.following',
 ]);
-Route::get('/users/{id}/wikis', [
+Route::get('/users/{user_slug}/wikis', [
     'uses'  =>  'UserController@wikis',
     'as'    =>  'users.wikis',
 ]);
@@ -87,19 +87,19 @@ Route::delete('/organizations/invite', [
     'uses'  =>  'OrganizationController@removeInvite',
     'as'    =>  'organizations.invite.destroy',
 ]);
-Route::get('/organizations/{id}', [
+Route::get('/organizations/{organization_slug}', [
     'uses'  =>  'OrganizationController@show',
     'as'    =>  'organizations.show',
 ]);
-Route::get('/organizations/{id}/members', [
+Route::get('/organizations/{organization_slug}/members', [
     'uses'  =>  'OrganizationController@getMembers',
     'as'    =>  'organizations.members',
 ]);
-Route::get('/organizations/{id}/wikis', [
+Route::get('/organizations/{organization_slug}/wikis', [
     'uses'  =>  'OrganizationController@getWikis',
     'as'    =>  'organizations.wikis.show',
 ]);
-Route::get('/organizations/{id}/wiki', [
+Route::get('/organizations/{organization_slug}/wiki', [
     'uses'  =>  'WikiController@create',
     'as'    =>  'organizations.wiki.create',
 ]);
@@ -121,22 +121,22 @@ Route::post('/wikis', [
     'uses'  =>  'WikiController@store',
     'as'    =>  'wikis.store'
 ]);
-Route::get('/wikis/{id}', [
+Route::get('/wikis/{wiki_slug}', [
     'uses'  =>  'WikiController@show',
     'as'    =>  'wikis.show'
 ]);
-Route::get('/wikis/{id}/edit', [
+Route::get('/wikis/{wiki_slug}/edit', [
     'uses'  =>  'WikiController@edit',
     'as'    =>  'wikis.edit',
 ]);
-Route::patch('/wikis/{id}', [
+Route::patch('/wikis/{wiki_slug}', [
     'uses'  =>  'WikiController@update',
     'as'    =>  'wikis.update',
 ]);
 Route::get('/wikis/search/{text}', [
     'uses'  =>  'WikiController@filterWikis',
 ]);
-Route::delete('/wikis/{id}', [
+Route::delete('/wikis/{wiki_slug}', [
     'uses'  =>  'WikiController@destroy',
     'as'    =>  'wikis.destroy',
 ]);
@@ -147,25 +147,25 @@ Route::delete('/wikis/{id}', [
 |--------------------------------------------------------------------------
 */
 
-Route::get('/wikis/{id}/pages/{pageId}', [
-    'uses'  =>  'WikiController@showPage',
-    'as'    =>  'wikis.pages.show',
-]);
 Route::get('/wikis/{id}/pages/{pageId}/edit', [
     'uses'  =>  'WikiController@editPage',
     'as'    =>  'pages.edit',
 ]);
-Route::patch('/wikis/{id}/pages/{pageId}', [
+Route::patch('/wikis/{wiki_slug}/pages/{page_slug}', [
     'uses'  =>  'WikiController@updatePage',
     'as'    =>  'pages.update',
 ]);
-Route::post('/wikis/{id}/pages', [
-    'uses'  =>  'WikiController@storePage',
-    'as'    =>  'wikis.pages.store',
-]);
-Route::get('/wikis/{id}/pages/create', [
+Route::get('/wikis/{wiki_slug}/pages/create', [
     'uses'  =>  'WikiController@createPage',
     'as'    =>  'wikis.pages.create',
+]);
+Route::get('/wikis/{wiki_slug}/pages/{page_slug}', [
+    'uses'  =>  'WikiController@showPage',
+    'as'    =>  'wikis.pages.show',
+]);
+Route::post('/wikis/{wiki_slug}/pages', [
+    'uses'  =>  'WikiController@storePage',
+    'as'    =>  'wikis.pages.store',
 ]);
 Route::get('/wikis/{id}/pages/search/{text}', [
     'uses'  =>  'WikiController@filterWikiPages',
@@ -178,7 +178,7 @@ Route::post('/pages/{id}/star', [
     'uses'  =>  'WikiController@starPage',
     'as'    =>  'pages.star',
 ]);
-Route::post('/wikis/{id}/pages/{pageId}/comments', [
+Route::post('/wikis/{wiki_slug}/pages/{page_slug}/comments', [
     'uses'  =>  'CommentController@store',
     'as'    =>  'wikis.pages.comments.store',
 ]);

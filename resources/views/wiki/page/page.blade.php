@@ -8,7 +8,7 @@
 	                <div class="panel-heading" style="padding-top: 5px; padding-bottom: 5px;">
 	                	<div class="row" style="display: flex; align-items: center;">
 	                		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">	
-			                    <h3 class="panel-title">{{ ViewHelper::getWikiName($wikiId) }}</h3>
+			                    <h3 class="panel-title">{{ $page->wiki->name }}</h3>
 	                		</div>
 	                		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 	                			<div class="dropdown">
@@ -16,10 +16,10 @@
 								    <i class="fa fa-gear fa-lg"></i> <span class="caret"></span>
 								  </button>
 								  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-								    <li><a href="{{ route('wikis.pages.reorder', $wikiId) }}"><i class="fa fa-align-left"></i> Reorder Pages</a></li>
+								    <li><a href="{{ route('wikis.pages.reorder', $page->wiki->id) }}"><i class="fa fa-align-left"></i> Reorder Pages</a></li>
 								    <li>
 								    	<a href="#" onclick="event.preventDefault(); document.getElementById('delete-wiki').submit();"><i class="fa fa-trash-o"></i> Delete</a>
-										<form id="delete-wiki" action="{{ route('wikis.destroy', $wikiId) }}" method="POST" style="display: none;">
+										<form id="delete-wiki" action="{{ route('wikis.destroy', $page->wiki->id) }}" method="POST" style="display: none;">
 		                                    {!! method_field('delete') !!}
 		                                    {!! csrf_field() !!}
 		                                </form>
@@ -30,7 +30,7 @@
 	                	</div>
 	                </div>
 	                <div class="list-group">
-	                    <a href="{{ route('wikis.show', $wikiId) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
+	                    <a href="{{ route('wikis.show', $page->wiki->slug) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
 	                </div>
 	            </div>
 	            <div class="panel panel-default">
@@ -52,7 +52,7 @@
 			                    <h3 class="panel-title" style="margin-top: 4px;">Page Tree</h3>
 	                		</div>
 	                		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-	                			<a href="{{ route('wikis.pages.create', $wikiId) }}" class="btn btn-success btn-xs">Create Page</a>
+	                			<a href="{{ route('wikis.pages.create', $page->wiki->id) }}" class="btn btn-success btn-xs">Create Page</a>
 	                		</div>
 	                	</div>
 	                </div>
@@ -80,7 +80,7 @@
 		    		</div>
 		    		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 		    			<ul class="nav nav-pills navbar-right" style="margin-right: 10px;">
-				            <li><a href="{{ route('pages.edit', [$wikiId, $page->id]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+				            <li><a href="{{ route('pages.edit', [$page->wiki->id, $page->id]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
 				            <li><a href="#"><i class="fa fa-clock-o"></i> Save for later</a></li>
 				            <li><a href="#"><i class="fa fa-eye"></i> Watch</a></li>
 				            <li class="dropdown">
@@ -92,13 +92,13 @@
 		                            <li class="divider"></li>
 		                            <li><a href="#"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
 		                            <li><a href="#"><i class="fa fa-exchange"></i> Export to Word</a></li>
-		                            <li><a href="{{ route('pages.edit', [$wikiId, $page->id]) }}"><i class="fa fa-file-word-o"></i> Import Word Document</a></li>
+		                            <li><a href="{{ route('pages.edit', [$page->wiki->id, $page->id]) }}"><i class="fa fa-file-word-o"></i> Import Word Document</a></li>
 		                            <li class="divider"></li>
-		                            <li><a href="{{ route('wikis.pages.reorder', $wikiId) }}"><i class="fa fa-copy"></i> Copy</a></li>
-		                            <li><a href="{{ route('wikis.pages.reorder', $wikiId) }}"><i class="fa fa-arrows"></i> Move</a></li>
+		                            <li><a href="{{ route('wikis.pages.reorder', $page->wiki->id) }}"><i class="fa fa-copy"></i> Copy</a></li>
+		                            <li><a href="{{ route('wikis.pages.reorder', $page->wiki->id) }}"><i class="fa fa-arrows"></i> Move</a></li>
 		                            <li>
 										<a href="#" onclick="event.preventDefault(); document.getElementById('delete-page').submit();"><i class="fa fa-trash-o"></i> Delete</a>
-										<form id="delete-page" action="{{ route('pages.destroy', [$wikiId, $page->id]) }}" method="POST" style="display: none;">
+										<form id="delete-page" action="{{ route('pages.destroy', [$page->wiki->id, $page->id]) }}" method="POST" style="display: none;">
 		                                    {!! method_field('delete') !!}
 		                                    {!! csrf_field() !!}
 		                                </form>
@@ -175,7 +175,7 @@
 			<hr>
 			<div class="row" style="margin-bottom: 15px;">
 	    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    			<form action="{{ route('wikis.pages.comments.store', [$wikiId, $page->id]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
+	    			<form action="{{ route('wikis.pages.comments.store', [$page->wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
 	    				<div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}" style="margin-bottom: 0;">
 	    					<div class="row">
 	    						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
@@ -200,46 +200,6 @@
 	    			</form>
 	    		</div>
 	    	</div>
-	    	{{-- <div class="row" style="margin-bottom: 15px;">
-	    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    			<form action="" method="POST" id="comment-form" role="form" data-toggle="validator"> 
-	    				<div class="form-group" style="margin-bottom: 0;">
-	    					<input type="text" name="enity_id" class="form-control hide" value="{{ $wikiId }}">	
-	    					<div class="row">
-	    						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="padding-right: 0;">
-	    							<img src="/images/default.png" class="img-responsive img-rounded" alt="Image">		
-	    						</div>
-	    						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
-									<textarea id="comment-input" class="form-control" rows="3" placeholder="Submit your comment.." data-error="This comment field is required." required="required"></textarea>
-								    <div class="help-block with-errors"></div>
-	    						</div>
-	    					</div>
-	    				</div>
-	    				<input type="submit" class="btn btn-primary pull-right" id="submit-comment" value="Submit">
-	    				<div class="clearfix"></div>
-	    			</form>
-	    		</div>
-	    	</div> --}}
-		    {{-- @if($wikiPages->count() == 0) --}}
-	            {{-- <h3 style="font-size: 27px; margin-top: 0;">Set up your first page</h3>
-	            <form action="" method="POST" role="form" style="margin-bottom: 10px;">
-	                <div class="form-group @if($errors->has('organization_name')) has-error  @endif">
-	                    <label for="organization_name" class="control-label">Page Name</label>
-	                    <input type="text" class="form-control" name="organization_name" id="organization_name">
-	                    @if($errors->has('organization_name'))
-	                        <p class="text-danger">{{ $errors->first('organization_name')  }}</p>
-	                    @endif
-	                </div>
-	                <div class="form-group">
-		                <button class="btn btn-success" id="add-page-description">Add Description</button>
-	                </div>
-	                <div class="form-group hide" id="page-description-input">
-					    <textarea id="mytextarea"></textarea>
-	    			</div>
-	                <input type="submit" class="btn btn-success hide pull-right" id="create-page-btn" value="Create Page">
-	                <div class="clearfix"></div>
-	            </form> --}}
-		    {{-- @endif --}}
 	    </div>
 	</div>
 @endsection
