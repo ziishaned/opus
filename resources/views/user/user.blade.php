@@ -31,41 +31,32 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <h3 style="margin: 0;">Activity</h3>
                             <hr>
-                            <div class="activity">
-                                <div class="row">
-                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                        <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-image-o"></i> Admin attached Screenshot-08-10-201.png to <b>Wiki Name</b> at <b>Ourganization Name</b></p>
-                                        <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-commenting-o"></i> Admin commented on page Lorem ipsum dolor sit to <b>Wiki Name</b> at <b>Ourganization Name</b></p>
-                                    </div>
-                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">
-                                        <p>18 hours ago</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="activity">
-                                <div class="row">
-                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                        <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-image-o"></i> Admin attached Screenshot-08-10-201.png to <b>Wiki Name</b> at <b>Ourganization Name</b></p>
-                                        <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-text-o"></i> Admin create page Lorem ipsum dolor sit to <b>Wiki Name</b> at <b>Ourganization Name</b></p>
-                                    </div>
-                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">
-                                        <p>2 days ago</p>
+                            @foreach($activities as $activity)
+                                <div class="activity">
+                                    <div class="row">
+                                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                            @if($activity->log_name == 'created_comment') 
+                                                <i class="fa fa-comment-o"></i>
+                                            @endif
+                                            @if($activity->log_name == 'created_wiki_page' || $activity->log_name == 'created_wiki') 
+                                                <i class="fa fa-file-text-o"></i>
+                                            @endif
+                                            @if($activity->log_name == 'created_organization') 
+                                                <i class="fa fa-university"></i>
+                                            @endif
+                                            {!! $activity->description !!}      
+                                        </div>
+                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+                                            <p><i class="fa fa-clock-o"></i> <time class="timeago" datetime="{{ $activity->created_at }}">{{ $activity->created_at }}</time></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="activity">
-                                <div class="row">
-                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                        <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-image-o"></i> Admin attached Screenshot-08-10-201.png to <b>Wiki Name</b> at <b>Ourganization Name</b></p>
-                                        <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-text-o"></i> Admin create page Lorem ipsum dolor sit to <b>Wiki Name</b> at <b>Ourganization Name</b></p>
-                                    </div>
-                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">
-                                        <p>10 days ago</p>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            {{ $activities->links() }}
                         </div>
                     </div>
                 </div>
@@ -76,8 +67,13 @@
                         </div>
                         @if($user->wikis->count() > 0)
                             <div class="list-group">
+                                <?php $count = 0; ?>
                                 @foreach($user->wikis as $wiki)
-                                    <a href="{{ $wiki->id }}" class="list-group-item">{{ $wiki->name }}</a>
+                                    @if($count == 5)
+                                        <?php break ?>
+                                    @endif
+                                    <a href="{{ route('wikis.show', $wiki->id) }}" class="list-group-item">{{ $wiki->name }}</a>
+                                    <?php $count++; ?>
                                 @endforeach
                             </div>
                         @else 

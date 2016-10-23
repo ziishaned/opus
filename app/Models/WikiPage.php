@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
+use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -93,6 +94,7 @@ class WikiPage extends Model
             'wiki_id'      =>  $wikiId,
         ]);
 
+        ActivityLogHelper::createWikiPage($page);
         return $page->id;
     }
 

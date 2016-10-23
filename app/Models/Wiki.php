@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class Wiki extends Model
 {
@@ -90,6 +91,7 @@ class Wiki extends Model
      */
     public function saveWiki($data)
     {
+
         $wiki = $this->create([
             'name'            =>  $data['wiki_name'],
             'description'     =>  $data['page_description'],
@@ -98,6 +100,7 @@ class Wiki extends Model
             'wiki_type'       =>  !empty($data['organization_id']) ? 'organization' : 'personal',
         ]);
 
+        ActivityLogHelper::createWiki($wiki);
         return $wiki;
     }
 
