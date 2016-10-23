@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
+use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -58,6 +59,7 @@ class Comment extends Model
     {
         $commentStarred = DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->first();
         if(is_null($commentStarred)) {
+            ActivityLogHelper::likeComment($id);
             DB::table('user_star')->insert([
                 'entity_id'     => $id,
                 'entity_type'   => 'comment',
@@ -73,7 +75,8 @@ class Comment extends Model
 
     public function storeComment($pageId, $data)
     {
-        $this->insert([
+        ActivityLogHelper::createComment($pageId, $data['comment']);
+        $this->create([
             'page_id'    => $pageId,
             'content'    => $data['comment'],
             'user_id'    => Auth::user()->id,

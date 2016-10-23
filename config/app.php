@@ -179,6 +179,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        
+        Spatie\Activitylog\ActivitylogServiceProvider::class,
     ],
 
     /*

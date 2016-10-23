@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,6 +100,7 @@ class Organization extends Model
             'created_at'       => Carbon::now(),
             'updated_at'       => Carbon::now(),
         ]);
+        ActivityLogHelper::createOrganization($organization);
         return $organization->id;
     }
 

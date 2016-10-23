@@ -32,7 +32,7 @@ class UserStarTableSeeder extends Seeder
      * @param User     $user     App\Models\User
      * @param WikiPage $wikiPage App\Models\WikiPage
      */
-    function __construct(User $user, WikiPage $wikiPage) 
+    public function __construct(User $user, WikiPage $wikiPage) 
     {
         $this->user     = $user;
         $this->wikiPage = $wikiPage;

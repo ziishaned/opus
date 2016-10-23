@@ -113,7 +113,7 @@ class User extends Authenticatable
      */
     public function wikis()
     {
-        return $this->hasMany(Wiki::class, 'user_id', 'id');
+        return $this->hasMany(Wiki::class, 'user_id', 'id')->latest();
     }
 
     /**
@@ -134,6 +134,7 @@ class User extends Authenticatable
     public function getUser($id)
     {
         $user = $this->where('id', '=', $id)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages', 'followers', 'following', 'wikis'])->first();
+        
         if($user) {
             return $user;
         }

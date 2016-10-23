@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -45,8 +47,10 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->user->getUser($id);
+        $activities = DB::table('activity_log')->where('causer_id', '=', Auth::user()->id)->latest()->paginate(10);
+
         if($user) {
-            return view('user.user', compact('user'));
+            return view('user.user', compact('user', 'activities'));
         }
         return response()->json([
             'message' => 'Resource not found.'
