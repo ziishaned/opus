@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use App\Helpers\ActivityLogHelper;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
+/**
+ * Class Wiki
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Models
+ */
 class Wiki extends Model
 {
     use Sluggable;
@@ -84,13 +89,23 @@ class Wiki extends Model
     /**
      * Retrieve all wikis from database.
      *
+     * @param null $limit
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getWikis()
+    public function getWikis($limit = null)
     {
-        return $this->with(['organization', 'pages', 'user'])->paginate(10);
+        if(!is_null($limit)) {
+            return $this->where('user_id', '=', Auth::user()->id)->with(['organization', 'pages', 'user'])->latest()->limit(5)->get();
+        }
+        return $this->where('user_id', '=', Auth::user()->id)->with(['organization', 'pages', 'user'])->get();
     }
 
+    /**
+     * Get a specific resource.
+     *
+     * @param  string $nameSlug
+     * @return bool
+     */
     public function getWiki($nameSlug)
     {
         $wiki = $this->where('slug', '=', $nameSlug)->where('user_id', '=', Auth::user()->id)->first();
@@ -140,8 +155,8 @@ class Wiki extends Model
     /**
      * Update wiki
      *
-     * @param  integer  $id
-     * @param  array    $data
+     * @param  string $slug
+     * @param  array  $data
      * @return bool
      */
     public function updateWiki($slug, $data)
@@ -154,6 +169,12 @@ class Wiki extends Model
         return true;
     }
 
+    /**
+     * Filter wikis.
+     *
+     * @param string $text
+     * @return \App\Models\Wiki
+     */
     public function filterWikis($text)
     {
         $query = $this;

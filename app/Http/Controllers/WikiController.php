@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Wiki;
 use App\Models\WikiPage;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Auth;
 
+/**
+ * Class WikiController
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Http\Controllers
+ */
 class WikiController extends Controller
 {
     /**
@@ -36,6 +42,8 @@ class WikiController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Wiki         $wiki
+     * @param \App\Models\Organization $organization
+     * @param \App\Models\WikiPage     $wikiPage
      */
     public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage) {
         $this->wiki         = $wiki;
@@ -47,7 +55,7 @@ class WikiController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
@@ -57,6 +65,7 @@ class WikiController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param null|string $organizationSlug
      * @return \Illuminate\Http\Response
      */
     public function create($organizationSlug = null)
@@ -113,8 +122,8 @@ class WikiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $nameSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($nameSlug)
     {
@@ -158,22 +167,47 @@ class WikiController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Returns the view to create a wiki page.
+     *
+     * @param $wikiSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function createPage($wikiSlug)
     {
         $wiki = $this->wiki->getWiki($wikiSlug);
         return view('wiki.page.create', compact('wiki'));
     }
 
+    /**
+     * Filter wikis.
+     *
+     * @param string $text
+     * @return \App\Models\Wiki
+     */
     public function filterWikis($text)
     {
         return $this->wiki->filterWikis($text);
     }
 
+    /**
+     * Filter a specific wiki pages.
+     *
+     * @param integer $wikiId
+     * @param string  $text
+     * @return mixed
+     */
     public function filterWikiPages($wikiId, $text)
     {
         return $this->wikiPage->filterWikiPages($wikiId, $text);
     }
 
+    /**
+     * Create a new resource.
+     *
+     * @param string $wikiSlug
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storePage($wikiSlug)
     {
         $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
@@ -184,6 +218,13 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Return a view with a specific wiki page.
+     *
+     * @param string $wikiSlug
+     * @param string $pageSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showPage($wikiSlug, $pageSlug)
     {
         $page = $this->wikiPage->getPage($pageSlug);
@@ -200,12 +241,26 @@ class WikiController extends Controller
         ], Response::HTTP_NOT_FOUND);
     }
 
-    public function editPage($wikiId, $pageId)
+    /**
+     * Edit a specific resource.
+     *
+     * @param string $wikiSlug
+     * @param string $pageSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPage($wikiSlug, $pageSlug)
     {
-        $page = $this->wikiPage->getPage($pageId);
-        return view('wiki.page.edit', compact('wikiId', 'page'));
+        $page = $this->wikiPage->getPage($pageSlug);
+        return view('wiki.page.edit', compact('wikiSlug', 'page'));
     }
 
+    /**
+     * Update a specific resource.
+     *
+     * @param $wikiId
+     * @param $pageId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updatePage($wikiId, $pageId)
     {
         $this->wikiPage->updatePage($pageId, $this->request->all());
@@ -215,6 +270,13 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Remove a specific resource.
+     *
+     * @param $wikiId
+     * @param $pageId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroyPage($wikiId, $pageId)
     {
         $pageDeleted = $this->wikiPage->deletePage($pageId);
@@ -229,6 +291,12 @@ class WikiController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);   
     }
 
+    /**
+     * Like or Unlike a specific page.
+     *
+     * @param $id
+     * @return mixed
+     */
     public function starPage($id)
     {
         $star = $this->wikiPage->star($id);
@@ -242,6 +310,12 @@ class WikiController extends Controller
         ], Response::HTTP_ACCEPTED);          
     }
 
+    /**
+     * Get the pages reorder view.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function pagesReorder($id)
     {
         $wiki = $this->wiki->getWiki($id);        
@@ -255,6 +329,11 @@ class WikiController extends Controller
         ], Response::HTTP_NOT_FOUND);        
     }
 
+    /**
+     * Update the page parent.
+     *
+     * @return mixed
+     */
     public function updatePageParent()
     {
         $this->wikiPage->changeParent($this->request->all());

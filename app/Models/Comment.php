@@ -9,12 +9,23 @@ use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Comment
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Models
+ */
 class Comment extends Model
 {
     /**
      * @var string
      */
     protected $table = 'comment';
+
+    /**
+     * @var \App\Models\WikiPage $wikiPage
+     */
+    protected $wikiPage;
 
     /**
      * @var array
@@ -27,35 +38,59 @@ class Comment extends Model
         'created_at',
     ];
 
+    /**
+     * @const array COMMENT_RULES
+     */
     const COMMENT_RULES = [
         'comment' => 'required',
     ];
 
+    /**
+     * Comment constructor.
+     *
+     * @param \App\Models\WikiPage $wikiPage
+     */
+    public function __constructor(WikiPage $wikiPage)
+    {
+        $this->wikiPage = $wikiPage;
+    }
+
+    /**
+     * A user can post comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    /**
+     * A wiki can have comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function wiki()
     {
         return $this->belongsTo(Wiki::class, 'page_id', 'id');
     }
 
+    /**
+     * Wiki pages can have comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function wikiPage()
     {
         return $this->belongsTo(WikiPage::class, 'page_id', 'id');
     }
 
-    public function childs()
-    {
-        return $this->hasMany(Comment::class, 'parent_id', 'id');
-    }
-
-    public function comments()
-    {
-        return $this->childs()->with('comments');
-    }
-
+    /**
+     * Like a comment.
+     *
+     * @param integer  $id
+     * @return bool
+     */
     public function starComment($id)
     {
         $commentStarred = DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->first();
@@ -74,9 +109,16 @@ class Comment extends Model
         return false;
     }
 
+    /**
+     * Create a new comment.
+     *
+     * @param string  $pageSlug
+     * @param array  $data
+     * @return bool
+     */
     public function storeComment($pageSlug, $data)
     {
-        $page = (new WikiPage)->getPage($pageSlug);
+        $page = $this->wikiPage->getPage($pageSlug);
         ActivityLogHelper::createComment($page, $data['comment']);
         $this->create([
             'page_id'    => $page->id,

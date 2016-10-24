@@ -8,8 +8,13 @@ use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class Organization
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Models
+ */
 class Organization extends Model
 {
     use Sluggable;
@@ -50,11 +55,21 @@ class Organization extends Model
         'created_at',
     ];
 
+    /**
+     * User can join organization.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    /**
+     * Organization can have many members or users.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function members()
     {
         return $this->belongsToMany(User::class, 'user_organization', 'organization_id', 'user_id');
@@ -84,7 +99,7 @@ class Organization extends Model
     /**
      * Find a specific array in organization table.
      *
-     * @param  integer $id
+     * @param  string $organizationSlug
      * @return mixed
      */
     public function getOrganization($organizationSlug)
@@ -153,6 +168,12 @@ class Organization extends Model
         return false;
     }
 
+    /**
+     * Invite a user to organization.
+     *
+     * @param array $data
+     * @return bool
+     */
     public function inviteUser($data) {
         $userHaveOrganization =  DB::table('user_organization')
                                      ->whereIn('user_id', [$data['userId']])
@@ -171,6 +192,12 @@ class Organization extends Model
         return true;
     }
 
+    /**
+     * Remove a user from organization.
+     *
+     * @param array $data
+     * @return bool
+     */
     public function removeInvite($data)
     {
         DB::table('user_organization')
@@ -180,6 +207,12 @@ class Organization extends Model
         return true;
     }
 
+    /**
+     * Get all the members of an organization
+     *
+     * @param $organizationId
+     * @return \App\Models\Organization
+     */
     public function getMembers($organizationId)
     {
         $query = $this;
@@ -198,14 +231,27 @@ class Organization extends Model
         return $query;
     }
 
-    public function getWikis($organizationId)
+    /**
+     * Get all the wikis of an organization.
+     *
+     * @param  string $organizationSlug
+     * @return mixed
+     */
+    public function getWikis($organizationSlug)
     {
-        $organization = $this->where('id', '=', $organizationId)
+        $organization = $this->where('slug', '=', $organizationSlug)
                              ->with(['wikis', 'members'])
                              ->first();
         return $organization;
     }
 
+    /**
+     * Check if a user is member of an organization.
+     *
+     * @param $userId
+     * @param $organizationId
+     * @return bool
+     */
     public function isMember($userId, $organizationId)
     {
         $member = DB::table('user_organization')->where([
@@ -219,6 +265,12 @@ class Organization extends Model
         return false;
     }
 
+    /**
+     * Filter the organizations.
+     *
+     * @param string $text
+     * @return \App\Models\Organization
+     */
     public function filterOrganizations($text)
     {
         $query = $this;
