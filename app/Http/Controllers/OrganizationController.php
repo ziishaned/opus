@@ -6,25 +6,45 @@ use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class OrganizationController
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Http\Controllers
+ */
 class OrganizationController extends Controller
 {
-    protected $request;
-    protected $organization;
     /**
-     * @var \App\Http\Controllers\User
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
+    /**
+     * @var \App\Models\Organization
+     */
+    protected $organization;
+
+    /**
+     * @var \App\Http\Controllers\UserController
      */
     private $user;
 
+    /**
+     * OrganizationController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Organization $organization
+     * @param \App\Models\User         $user
+     */
     public function __construct(Request $request, Organization $organization, User $user)
     {
         $this->middleware('auth');
-        $this->request = $request;
+        $this->request      = $request;
         $this->organization = $organization;
-        $this->user = $user;
+        $this->user         = $user;
     }
 
     /**
@@ -54,6 +74,13 @@ class OrganizationController extends Controller
         return abort(404);
     }
 
+    /**
+     * Get mem
+     *
+     * @param $organizationSlug
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getMembers($organizationSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
@@ -62,6 +89,8 @@ class OrganizationController extends Controller
 
     /**
      * Get the create organization view.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -81,6 +110,11 @@ class OrganizationController extends Controller
         return redirect()->route('organizations.invite.show')->with('organization_id', $organization);
     }
 
+    /**
+     * Get the invite user to organization view.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function getInvite() {
         if(!Session::get('organization_id')) {
             return redirect()->route('dashboard');
@@ -91,6 +125,11 @@ class OrganizationController extends Controller
         return view('organization.invite', compact('user', 'organizationId'));
     }
 
+    /**
+     * Invite user to organization.
+     *
+     * @return mixed
+     */
     public function inviteUser() {
         $this->organization->inviteUser($this->request->all());
         return response()->json([
@@ -98,6 +137,11 @@ class OrganizationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
+    /**
+     * Remove a user from organization.
+     *
+     * @return mixed
+     */
     public function removeInvite() {
         $this->organization->removeInvite($this->request->all());
         return response()->json([
@@ -105,9 +149,15 @@ class OrganizationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function getWikis($organizationId)
+    /**
+     * Return view with all the wikis of an organization.
+     *
+     * @param $organizationSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getWikis($organizationSlug)
     {
-        $organization = $this->organization->getWikis($organizationId);
+        $organization = $this->organization->getWikis($organizationSlug);
         return view('organization.wikis', compact('organization'));
     }
 
@@ -160,6 +210,12 @@ class OrganizationController extends Controller
         ], Response::HTTP_NOT_FOUND);
     }
 
+    /**
+     * Filter the organization.
+     *
+     * @param mixed $text
+     * @return \App\Models\Organization
+     */
     public function filterOrganizations($text)
     {
         return $this->organization->filterOrganizations($text);

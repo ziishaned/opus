@@ -6,17 +6,41 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class CommentController
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Http\Controllers
+ */
 class CommentController extends Controller
 {
+    /**
+     * @var \Illuminate\Http\Request
+     */
 	protected $request;
 
+    /**
+     * @var \App\Models\Comment
+     */
 	protected $comment;
 
+    /**
+     * CommentController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Comment      $comment
+     */
     public function __construct(Request $request, Comment $comment) {
     	$this->request = $request;
     	$this->comment = $comment;
     }
 
+    /**
+     * Like Comment.
+     *
+     * @param  integer $id
+     * @return mixed
+     */
     public function starComment($id)
     {
         $star = $this->comment->starComment($id);
@@ -30,6 +54,13 @@ class CommentController extends Controller
         ], Response::HTTP_ACCEPTED);
     }
 
+    /**
+     * Create a new resource.
+     *
+     * @param string  $wikiSlug
+     * @param string $pageSlug
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store($wikiSlug, $pageSlug)
     {
         $this->validate($this->request, Comment::COMMENT_RULES);
