@@ -20,7 +20,7 @@ class ComposerServiceProvider extends ServiceProvider
             'organization.create',
             'organization.organization',
             'organization.members',
-            'organization.wikis',
+            'organization.activity',
             'user.organizations',
             'user.followers',
             'user.following',

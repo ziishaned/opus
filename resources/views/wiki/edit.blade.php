@@ -17,6 +17,10 @@
                         <p class="text-danger">{{ $errors->first('wiki_name')  }}</p>
                     @endif
                 </div>
+                <div class="form-group">
+                    <label for="outline">Outline</label>
+                    <input type="text" id="outline" name="outline" class="form-control" value="{{ $wiki->outline }}">
+                </div>
             	<div class="form-group">
             		<label for="textarea" class="control-label">Description</label>
         			<textarea name="wiki_description" id="page-description" class="form-control">{{ $wiki->description }}</textarea>

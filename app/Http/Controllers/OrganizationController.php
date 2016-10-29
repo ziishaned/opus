@@ -105,10 +105,9 @@ class OrganizationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function getWikis($organizationId)
-    {
-        $organization = $this->organization->getWikis($organizationId);
-        return view('organization.wikis', compact('organization'));
+    public function getActivity($organizationSlug) {
+        $organization = $this->organization->getOrganization($organizationSlug);
+        return view('organization.activity', compact('organization'));
     }
 
     /**

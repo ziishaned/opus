@@ -95,13 +95,13 @@ Route::get('/organizations/{organization_slug}/members', [
     'uses'  =>  'OrganizationController@getMembers',
     'as'    =>  'organizations.members',
 ]);
-Route::get('/organizations/{organization_slug}/wikis', [
-    'uses'  =>  'OrganizationController@getWikis',
-    'as'    =>  'organizations.wikis.show',
-]);
 Route::get('/organizations/{organization_slug}/wiki', [
     'uses'  =>  'WikiController@create',
     'as'    =>  'organizations.wiki.create',
+]);
+Route::get('/organizations/{organization_slug}/activity', [
+    'uses'  =>  'OrganizationController@getActivity',
+    'as'    =>  'organizations.activity',
 ]);
 Route::get('/organizations/search/{text}', [
     'uses'  =>  'OrganizationController@filterOrganizations',

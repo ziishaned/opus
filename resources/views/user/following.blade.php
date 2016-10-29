@@ -2,14 +2,8 @@
 
 @section('content')
     @include('layouts.partials.user-nav')
-    <div class="row" style="margin-top: 20px;">
+    <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="row">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3 style="margin: 0;">Following</h3>
-                </div>
-            </div>
-            <hr style="margin-top: 12px;">
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     <div class="user-profile-pic">
@@ -26,27 +20,51 @@
                         @endif
                     @endif
                 </div>
-                @if($user->following->count() > 0)
-                    @foreach($user->following as $following)
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="member-list-item">
-                            <div class="row">
-                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                    <a href="http://wiki.dev/users/{{ $following->id  }}"><img src="/images/default.png" style="width: 70px;" alt="Image"></a>
-                                </div>
-                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="padding-left: 0px;">
-                                    <h4 style="margin: 0px 0px 5px;"><a href="http://wiki.dev/users/{{ $following->id  }}">{{ $following->name  }}</a></h4>
-                                    <p class="text-muted"><a href="http://wiki.dev/users/{{ $following->id  }}">{{ $following->email  }}</a></p>
-                                </div>
-                            </div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">                    
+                    <div class="row" style="display: flex; align-items: center;">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <h3 style="margin: 0; font-size: 19px;">All Following</h3>
                         </div>
-                    @endforeach
-                @else
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                        <div class="jumbotron" style="border: 1px solid #e5e5e5; border-radius: 3px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); background-color: #fafafa;">
-                            <h3 class="text-center" style="margin: 5px;"><i class="fa fa-info-circle"></i> @if(Auth::user()->name == $user->name) You @else {{ $user->name }} @endif doesn't have any followers yet. </h3>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                            <form class="project-filter-form" id="project-filter-form" action="/lundskommun" accept-charset="UTF-8" method="get">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
+                                        <input type="search" name="filter_wikis" id="filter_wikis" placeholder="Filter by name" class="wikis-list-filter form-control">
+                                        <span class="fa fa-search" style="position: absolute; top: 10px; right: 23px; color: #e7e9ed;"></span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                @endif
+                    <hr>
+                    <div class="row">                        
+                        @if($userFollowing->count() > 0)
+                            @foreach($userFollowing as $following)
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="member-list-item">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                            <a href="http://wiki.dev/users/{{ $following->id  }}"><img src="/images/default.png" style="width: 70px;" alt="Image"></a>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="padding-left: 0px;">
+                                            <h4 style="margin: 0px 0px 5px;"><a href="http://wiki.dev/users/{{ $following->id  }}">{{ $following->name  }}</a></h4>
+                                            <p class="text-muted"><a href="http://wiki.dev/users/{{ $following->id  }}">{{ $following->email  }}</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" id="member-list-item">
+                                <h3 style="font-size: 17px; font-weight: 600; color: #777777; box-shadow: 0 0 10px rgba(0,0,0,0.05); background-color: #ffffff; text-align: center; padding: 15px 0px 15px 0px; border: 1px solid #ccc; border-radius: 4px; margin: 0; margin-top: 5px;">Nothing found</h3>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            {{ $userFollowing->links() }}        
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

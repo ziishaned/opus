@@ -16,8 +16,8 @@ class ActivityLogHelper
             ->useLog('created_comment')
             ->performedOn((new Comment))
             ->causedBy(Auth::user()->id)
-            ->withProperties(['log_type' => 'commented', 'page_id' => $page->id, 'wiki_id' => $page->wiki->id, 'page' => $page->name, 'wiki' => $page->wiki->name, 'user_id' => Auth::user()->id, 'comment' => $comment])
-            ->log('<a href="/users/:properties.user_id">:causer.name</a> :properties.log_type on <a href="/wikis/:properties.wiki_id/pages/:properties.page_id">:properties.page</a> at <a href="/wikis/:properties.wiki_id">:properties.wiki</a>.');
+            ->withProperties(['log_type' => 'commented', 'page_slug' => $page->slug, 'wiki_slug' => $page->wiki->slug, 'page' => $page->name, 'wiki' => $page->wiki->name, 'user_slug' => Auth::user()->slug, 'comment' => $comment])
+            ->log('<a href="/users/:properties.user_slug">:causer.name</a> :properties.log_type on <a href="/wikis/:properties.wiki_slug/pages/:properties.page_slug">:properties.page</a> at <a href="/wikis/:properties.wiki_slug">:properties.wiki</a>.');
         return true;
     }
 
@@ -31,8 +31,8 @@ class ActivityLogHelper
             ->useLog('star_comment')
             ->performedOn((new Comment))
             ->causedBy(Auth::user()->id)
-            ->withProperties(['log_type' => 'like comment', 'page_id' => $page->id, 'wiki_id' => $wiki->id, 'page' => $page->name, 'wiki' => $wiki->name, 'user_id' => Auth::user()->id])
-            ->log('<a href="/users/:properties.user_id">:causer.name</a> :properties.log_type on <a href="/wikis/:properties.wiki_id/pages/:properties.page_id">:properties.page</a> at <a href="/wikis/:properties.wiki_id">:properties.wiki</a>.');
+            ->withProperties(['log_type' => 'like comment', 'page_slug' => $page->slug, 'wiki_slug' => $wiki->slug, 'page' => $page->name, 'wiki' => $wiki->name, 'user_slug' => Auth::user()->slug])
+            ->log('<a href="/users/:properties.user_slug">:causer.name</a> :properties.log_type on <a href="/wikis/:properties.wiki_slug/pages/:properties.page_slug">:properties.page</a> at <a href="/wikis/:properties.wiki_slug">:properties.wiki</a>.');
         return true;
     }
 
@@ -42,8 +42,8 @@ class ActivityLogHelper
             ->useLog('created_organization')
             ->performedOn((new Organization))
             ->causedBy(Auth::user()->id)
-            ->withProperties(['log_type' => 'created organization', 'organization_id' => $organization->id, 'organization_name' => $organization->name, 'user_id' => Auth::user()->id])
-            ->log('<a href="/users/:properties.user_id">:causer.name</a> :properties.log_type <a href="/organizations/:properties.organization_id">:properties.organization_name</a>.');
+            ->withProperties(['log_type' => 'created organization', 'organization_slug' => $organization->slug, 'organization_name' => $organization->name, 'user_slug' => Auth::user()->slug])
+            ->log('<a href="/users/:properties.user_slug">:causer.name</a> :properties.log_type <a href="/organizations/:properties.organization_slug">:properties.organization_name</a>.');
         return true;   
     }
 
@@ -55,16 +55,16 @@ class ActivityLogHelper
                 ->useLog('created_wiki')
                 ->performedOn((new Wiki))
                 ->causedBy(Auth::user()->id)
-                ->withProperties(['log_type' => 'created wiki', 'organization_id' => $organization->id, 'organization_name' => $organization->name, 'wiki_id' => $wiki->id, 'wiki_name' => $wiki->name, 'user_id' => Auth::user()->id])
-                ->log('<a href="/users/:properties.user_id">:causer.name</a> :properties.log_type <a href="/wikis/:properties.wiki_id">:properties.wiki_name</a> at <a href="/organizations/:properties.organization_id">:properties.organization_name</a>.');
+                ->withProperties(['log_type' => 'created wiki', 'organization_slug' => $organization->slug, 'organization_name' => $organization->name, 'wiki_slug' => $wiki->slug, 'wiki_name' => $wiki->name, 'user_slug' => Auth::user()->slug])
+                ->log('<a href="/users/:properties.user_slug">:causer.name</a> :properties.log_type <a href="/wikis/:properties.wiki_slug">:properties.wiki_name</a> at <a href="/organizations/:properties.organization_slug">:properties.organization_name</a>.');
             return true;   
         }
         activity()
             ->useLog('created_wiki')
             ->performedOn((new Wiki))
             ->causedBy(Auth::user()->id)
-            ->withProperties(['log_type' => 'created wiki', 'wiki_id' => $wiki->id, 'wiki_name' => $wiki->name, 'user_id' => Auth::user()->id])
-            ->log('<a href="/users/:properties.user_id">:causer.name</a> :properties.log_type <a href="/wikis/:properties.wiki_id">:properties.wiki_name</a>');
+            ->withProperties(['log_type' => 'created wiki', 'wiki_slug' => $wiki->slug, 'wiki_name' => $wiki->name, 'user_slug' => Auth::user()->slug])
+            ->log('<a href="/users/:properties.user_slug">:causer.name</a> :properties.log_type <a href="/wikis/:properties.wiki_slug">:properties.wiki_name</a>');
         return true;   
     }
 
@@ -75,8 +75,8 @@ class ActivityLogHelper
             ->useLog('created_wiki_page')
             ->performedOn((new WikiPage))
             ->causedBy(Auth::user()->id)
-            ->withProperties(['log_type' => 'created wiki page', 'wiki_id' => $wiki->id, 'wiki_name' => $wiki->name, 'page_id' => $page->id, 'page_name' => $page->name, 'user_id' => Auth::user()->id])
-            ->log('<a href="/users/:properties.user_id">:causer.name</a> :properties.log_type <a href="/wikis/:properties.wiki_id/pages/:properties.page_id">:properties.page_name</a> at <a href="/wikis/:properties.wiki_id">:properties.wiki_name</a>.');
+            ->withProperties(['log_type' => 'created wiki page', 'wiki_slug' => $wiki->slug, 'wiki_name' => $wiki->name, 'page_slug' => $page->slug, 'page_name' => $page->name, 'user_slug' => Auth::user()->slug])
+            ->log('<a href="/users/:properties.user_slug">:causer.name</a> :properties.log_type <a href="/wikis/:properties.wiki_slug/pages/:properties.page_slug">:properties.page_name</a> at <a href="/wikis/:properties.wiki_slug">:properties.wiki_name</a>.');
         return true;
     }
 }

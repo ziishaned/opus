@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-lg-offset-2">
-            <h3 style="margin: 0px; margin-bottom: 8px;">Create a new wiki</h3>
-            <p class="text-muted">A wiki contains all the pages with informative text for your project.</p>   
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3 style="margin: 0px;">Create a new wiki</h3>
+            <p class="text-muted" style="margin: 0;">A wiki contains all the pages with informative text for your project.</p>
             <hr>
             <form action="{{ route('wikis.store') }}" method="POST" role="form" style="margin-bottom: 15px;">
                 <div class="form-group">
@@ -36,13 +36,14 @@
                     <p class="text-muted">Great wiki names are short and memorable.</p>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success" id="add-page-description" style="margin-bottom: 12px;">Add Wiki Description</button>
-                    <p class="well" style="padding: 7px; font-weight: 600; color: #777;"><i class="fa fa-info-circle"></i> Whenever this wiki will be opened this description will appear in front of user.</p>
+                    <label for="outline">Outline</label>
+                    <input type="text" id="outline" name="outline" class="form-control">
                 </div>
-                <div class="form-group hide" id="page-description-input">
+                <div class="form-group" id="page-description-input">
+                    <label for="page-description">Description</label>
                     <textarea id="page-description" name="page_description"></textarea>
                 </div>
-                <input type="submit" class="btn btn-success hide pull-right" id="create-wiki-btn" value="Create Wiki">
+                <input type="submit" class="btn btn-success pull-right" id="create-wiki-btn" value="Create Wiki">
                 <div class="clearfix"></div>
             </form>
         </div>

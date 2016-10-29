@@ -37,6 +37,7 @@ class Wiki extends Model
     protected $fillable = [
         'name',
         'description',
+        'outline',
         'wiki_type',
         'user_id',
         'organization_id',
@@ -108,9 +109,9 @@ class Wiki extends Model
      */
     public function saveWiki($data)
     {
-
         $wiki = $this->create([
             'name'            =>  $data['wiki_name'],
+            'outline'         =>  $data['outline'],
             'description'     =>  $data['page_description'],
             'user_id'         =>  Auth::user()->id,
             'organization_id' =>  !empty($data['organization_id']) ? $data['organization_id'] : null,

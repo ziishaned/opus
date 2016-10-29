@@ -1,10 +1,23 @@
+html {
+    height: 100%;
+}
+
 body {
+    height: 100%;
     display: none;
 }
 
-li, a, p, h1, h2, h3, h5, h6, input, select, div {
-	font-family: "Open Sans";
+hr {
+    margin: 12px 0px 12px 0px;
 }
+
+li, a, p, input, select, div {
+	font-family: "Source Sans Pro";
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Open Sans";
+}
+
 .user-invite-list {
     padding: 5px 0px 5px 0px;
     border-top: 1px solid #eee;
@@ -98,6 +111,7 @@ a:hover {
 }
 
 .wiki-nav-con li a {
+    font-weight: 400;
     color: #555;
 }
 
@@ -113,10 +127,6 @@ a:hover {
 
 .selectize-input input {
     min-width: 50% !important;
-}
-
-.wiki-nav-con ul li a {
-    font-weight: 600;
 }
 
 /** ====================
@@ -307,4 +317,81 @@ a:hover {
   color: #000 !important;
   outline: none !important;
   background-color: #D4D4D4 !important;
+}
+
+.count {
+    color: #ccc;
+    background: #555;
+}
+
+.sidebar-nav .count {
+    float: right;
+    border-radius: 5px;
+    padding: 0px 9px;
+}
+
+.navbar-nav>.open>a {
+    background: #f8f8f8 !important;
+}
+
+.dropdown-menu>li>a {
+    color: #555;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.profile-img{
+    margin-right: 5px;
+    float: left;
+    background: url('../images/default.png') 50% 50% no-repeat;
+    background-size: auto 100%;
+    width: 20px;
+    height: 20px;
+}
+
+.stats span {
+    margin-right: 15px;
+}
+
+.panel-title {
+    font-size: 15px;
+}
+
+.dropdown-menu:before {
+   position: absolute;
+   top: -7px;
+   left: 9px;
+   display: inline-block;
+   border-right: 7px solid transparent;
+   border-bottom: 7px solid #CCC;
+   border-left: 7px solid transparent;
+   border-bottom-color: rgba(0, 0, 0, 0.2);
+   content: '';
+ }
+
+.dropdown-menu:after {
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid white;
+    border-left: 6px solid transparent;
+    content: '';
+  }
+
+.dropdown-menu:before, .dropdown-menu.pull-right:before {
+    right: 8px;
+    left: auto;
+}
+
+.dropdown-menu::after, .dropdown-menu.pull-right:after {
+    right: 9px;
+    left: auto;
+}
+
+a#manage-wiki-dropdown {
+   border: none;
+   outline: none;
+   text-decoration: none;
 }

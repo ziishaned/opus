@@ -157,30 +157,28 @@ class User extends Authenticatable
         return false;
     }
 
-    public function getOrganizations($userSlug)
+    public function getOrganizations($user)
     {
-        return $this->where('slug', '=', $userSlug)->with(['organizations', 'followers', 'following'])->first();
+        $userOrganizations = $this->find($user->id)->organizations()->paginate(10);
+        return $userOrganizations;
     }
 
-    public function getFollowers($userSlug)
+    public function getFollowers($user)
     {
-        $query = $this;
-        $query = $query->where('slug', '=', $userSlug)->with(['organizations', 'followers', 'following'])->first();
-        return $query;
+        $userFollowers = $this->find($user->id)->followers()->paginate(10);
+        return $userFollowers;
     }
 
-    public function getFollowing($userSlug)
+    public function getFollowing($user)
     {
-        $query = $this;
-        $query = $query->where('slug', '=', $userSlug)->with(['organizations', 'following', 'followers'])->first();
-        return $query;
+        $userFollowing = $this->find($user->id)->following()->paginate(10);
+        return $userFollowing;
     }
 
-    public function getWikis($userSlug)
-    {
-        $query = $this;
-        $query = $query->where('slug', '=', $userSlug)->with(['organizations', 'following', 'followers'])->first();
-        return $query;   
+    public function getWikis($user)
+    {        
+        $userWikis = $this->find($user->id)->wikis()->paginate(10);
+        return $userWikis;
     }
 
     public function followUser($followId)

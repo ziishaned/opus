@@ -55,6 +55,7 @@ class WikiTableSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             $this->wiki->create([
                 'name'            =>  $faker->sentence(2, true),
+                'outline'         =>  $faker->paragraph(4, true),
                 'description'     =>  $faker->paragraph(4, true),
                 'user_id'         =>  $faker->randomElement($users),
                 'wiki_type'       =>  $faker->randomElement(self::WIKI_TYPE),

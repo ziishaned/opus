@@ -6,24 +6,44 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3 style="margin: 0;">Members</h3>
+                    <h3 style="margin: 0; font-size: 19px;">Existing users</h3>
+                </div>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <form class="project-filter-form" id="project-filter-form" action="/lundskommun" accept-charset="UTF-8" method="get">
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
+                                <input type="search" name="filter_wikis" id="filter_wikis" placeholder="Find existing members by name" class="wikis-list-filter form-control">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <hr style="margin-top: 12px;">
-            <div class="row" style="margin-top: 20px;">
-                @foreach($organization->members as $member)
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="member-list-item">
-                        <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                <a href="{{ route('users.show', $member->slug) }}"><img src="/images/default.png" style="width: 70px;" alt="Image"></a>
-                            </div>
-                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="padding-left: 0px;">
-                                <h4 style="margin: 0px 0px 5px;"><a href="{{ route('users.show', $member->slug) }}">{{ $member->name }}</a></h4>
-                                <p class="text-muted"><a href="{{ route('users.show', $member->slug) }}">{{ $member->email  }}</a></p>
-                            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="font-size: 15px; padding: 6px 16px; line-height: 36px; color: #5c5c5c; background-color: #fafafa; border-color: #e5e5e5;">
+                            Users with access to <strong>{{ $organization->name  }}</strong> <span class="badge">{{ $organization->members->count()  }}</span>
                         </div>
+                        <ul class="list-unstyled">
+                            @foreach($organization->members as $member)
+                                <li style="padding: 10px 16px; border-color: #f0f0f0; font-size: 15px; color: #5c5c5c;">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <img src="/images/default.png" width="40" height="40" class="img-responsive" alt="Image" style="margin-right: 15px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); float: left;">
+                                            <p style="margin: 0;"><a href="{{ route('users.show', $member->slug) }}">{{ '@' . $member->name  }}</a></p>
+                                            <p class="text-muted" style="margin: 0;">Joined about <stron>TODO</stron></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                                            <p style="margin-right: 20px;">Owner <stron>TODO</stron></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
-                @endforeach
+                </div>
             </div>
         </div>
     </div>

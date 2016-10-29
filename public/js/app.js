@@ -69,14 +69,6 @@ var App = {
             that.unFollowUser(followId);
         });
 
-        $(document).on('click', '#add-page-description', function(event) {
-            event.preventDefault();
-            $(this).closest('.form-group').hide();
-            $('#page-description-input').removeClass('hide');
-            $('#create-page-btn').removeClass('hide');
-            $('#create-wiki-btn').removeClass('hide');
-        });
-
         // $(document).on('click', '#submit-comment', function(event) {
         //     event.preventDefault();
         //     var comment = $(document).find('#comment-input').val();

@@ -9,23 +9,54 @@
     <link rel="stylesheet" href="/css/prism.css">
     <link rel="stylesheet" href="/css/selectize.css">
     <link rel="stylesheet" href="/css/selectize.default.css">
+    <link rel="stylesheet" href="/css/simple-sidebar.css">
     <link rel="stylesheet" href="/js/fancytree-lion/ui.fancytree.min.css">
     <link rel="stylesheet" href="/js/themes/default/style.min.css">
 </head>
 <body>
-<header>
-    @include('layouts.partials.menu')
+    <div id="wrapper">
+        @if(Auth::user())
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li>
+                        <a href="{{ route('dashboard')  }}">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('users.organizations', Auth::user()->slug)  }}">Organizations <span class="count">{{ $loggedInUser->organizations->count()  }}</span></a>
+                    </li>
+                    <li>
+                        <a href="#">Favourite <span class="count">{{ $loggedInUser->starWikis->count() + $loggedInUser->starPages->count()  }}</span></a>
+                    </li>
+                    <li>
+                        <a href="#">Watch <span class="count">{{ $loggedInUser->watchWikis->count() + $loggedInUser->watchPages->count() }}</span></a>
+                    </li>
+                    <li>
+                        <a href="#">Discover</a>
+                    </li>
+                    <li>
+                        <a href="#">Help</a>
+                    </li>
+                    <li>
+                        <a href="#">Profile Settings</a>
+                    </li>
+                </ul>
+            </div>
+        @endif
+        <div class="main-wrapper">
+            @include('layouts.partials.menu')
 
-    @if(Session::get('alert'))
-        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0;">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ Session::get('alert') }}
-        </div>
-    @endif
+            @if(Session::get('alert'))
+                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ Session::get('alert') }}
+                </div>
+            @endif
 
-    <div class="main-body" style="margin-top: 25px;">
-        <div class="container-fluid">
-            @yield('content')
+            <div class="main-body" id="page-content-wrapper" style="padding-top: 10px;">
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+            </div>
         </div>
     </div>
 
@@ -55,6 +86,11 @@
             $(val).text(moment.utc(timestamp).fromNow());
         });
     }, 60000);
+    $("#wrapper").toggleClass("toggled");
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
 </script>
 </body>
 </html>

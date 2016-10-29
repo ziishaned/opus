@@ -5,7 +5,7 @@
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <h3 style="margin: 0; margin-bottom: 10px;">Activity</h3>
+                <h3 style="margin: 0px 0px 8px;font-size: 17px;">Activity</h3>
             </div>
         </div>
         <div class="row">
@@ -55,17 +55,23 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                        <h3 class="panel-title">Personal Wikis</h3>
-                    </div>
-                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
-                        <a href="{{ route('users.wikis', Auth::user()->id) }}">All</a>
+                        <h3 class="panel-title" style="font-size: 15px;">Personal Wikis</h3>
                     </div>
                 </div>
             </div>
             <div class="list-group">
                 @if($wikis->count() > 0)
                     @foreach($wikis as $wiki)
-                        <a href="{{ route('wikis.show', $wiki->slug) }}" class="list-group-item">{{ $wiki->name }} <span class="badge"><i class="fa fa-star"></i> {{ $wiki->total_star }}</span></a>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <a href="{{ route('wikis.show', $wiki->slug) }}">{{ $wiki->name }}</a>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">
+                                    <span style="color: #888;">{{ $wiki->total_star }} <i class="fa fa-star"></i></span>                                    
+                                </div>
+                            </div>
+                        </li>
                     @endforeach
                 @else 
                     <li class="list-group-item" style="text-align: center;">Nothing found</li>

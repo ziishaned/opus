@@ -67,26 +67,30 @@ class UserController extends Controller
 
     public function getUserOrganizations($userSlug)
     {
-        $user = $this->user->getOrganizations($userSlug);
-        return view('user.organizations', compact('user'));
+        $user               = $this->user->getUser($userSlug);
+        $userOrganizations  = $this->user->getOrganizations($user);
+        return view('user.organizations', compact('user', 'userOrganizations'));
     }
 
     public function getUserFollowers($userSlug)
     {
-        $user = $this->user->getFollowers($userSlug);
-        return view('user.followers', compact('user'));
+        $user          = $this->user->getUser($userSlug);
+        $userFollowers = $this->user->getFollowers($user);
+        return view('user.followers', compact('user', 'userFollowers'));
     }
 
     public function getUserFollowing($userSlug)
     {
-        $user = $this->user->getFollowing($userSlug);
-        return view('user.following', compact('user'));
+        $user          = $this->user->getUser($userSlug);
+        $userFollowing = $this->user->getFollowing($user);
+        return view('user.following', compact('user', 'userFollowing'));
     }
 
     public function wikis($userSlug)
     {
-        $user = $this->user->getWikis($userSlug);
-        return view('user.wikis', compact('user'));
+        $user       = $this->user->getUser($userSlug);
+        $userWikis  = $this->user->getWikis($user);
+        return view('user.wikis', compact('user', 'userWikis'));
     }
 
     public function follow()
