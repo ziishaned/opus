@@ -191,7 +191,7 @@ class User extends Authenticatable
      * @param  string $userSlug
      * @return mixed
      */
-    public function getOrganizations($userSlug)
+    public function getOrganizations($user)
     {
         $userOrganizations = $this->find($user->id)->organizations()->paginate(10);
         return $userOrganizations;
@@ -203,7 +203,7 @@ class User extends Authenticatable
      * @param  string $userSlug
      * @return \App\Models\User
      */
-    public function getFollowers($userSlug)
+    public function getFollowers($user)
     {
         $userFollowers = $this->find($user->id)->followers()->paginate(10);
         return $userFollowers;
@@ -215,7 +215,7 @@ class User extends Authenticatable
      * @param  string $userSlug
      * @return \App\Models\User
      */
-    public function getFollowing($userSlug)
+    public function getFollowing($user)
     {
         $userFollowing = $this->find($user->id)->following()->paginate(10);
         return $userFollowing;
