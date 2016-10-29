@@ -3,26 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wiki;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
+/**
+ * Class HomeController
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
-    public function __construct()
+    /**
+     * @var \App\Models\Wiki
+     */
+    protected $wiki;
+
+    /**
+     * HomeController constructor.
+     *
+     * @param \App\Models\Wiki $wiki
+     */
+    public function __construct(Wiki $wiki)
     {
+        $this->wiki = $wiki;
         $this->middleware('auth');
     }
 
+    /**
+     * Get the home view.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $wikis = Wiki::where('wiki.user_id', '=', Auth::user()->id)
-                     ->where('wiki.wiki_type', '=', 'personal')
-                     ->leftJoin('user_star', 'wiki.id', '=', 'user_star.entity_id')
-                     ->select('wiki.*', DB::raw("COUNT(user_star.id) as total_star"))
-                     ->groupBy('wiki.id')
-                     ->latest()
-                     ->take(5)
-                     ->get();
+        $wikis = $this->wiki->getWikis($limit = 5);
         return view('home', compact('wikis'));
     }
 }

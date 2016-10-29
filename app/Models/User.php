@@ -9,6 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ *
+ * @author Zeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -42,6 +48,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * DESC
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'user_id', 'id');
@@ -117,6 +128,11 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'user_followers', 'follow_id', 'user_id');
     }
 
+    /**
+     * DESC
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function following()
     {
         return $this->belongsToMany(User::class, 'user_followers', 'user_id', 'follow_id');
@@ -142,11 +158,23 @@ class User extends Authenticatable
         return $this->hasMany(WikiPage::class, 'user_id', 'id');
     }
 
+    /**
+     * DESC
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getUsers()
     {
         return $this->with(['followers', 'following'])->paginate(10);
     }
 
+    /**
+     * Get all resources.
+     *
+     * @param $userSlug
+     *
+     * @return bool
+     */
     public function getUser($userSlug)
     {
         $user = $this->where('slug', '=', $userSlug)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages', 'followers', 'following', 'wikis'])->first();
@@ -157,30 +185,60 @@ class User extends Authenticatable
         return false;
     }
 
-    public function getOrganizations($user)
+    /**
+     * Get a specific resource.
+     *
+     * @param  string $userSlug
+     * @return mixed
+     */
+    public function getOrganizations($userSlug)
     {
         $userOrganizations = $this->find($user->id)->organizations()->paginate(10);
         return $userOrganizations;
     }
 
-    public function getFollowers($user)
+    /**
+     * Get followers of a user
+     *
+     * @param  string $userSlug
+     * @return \App\Models\User
+     */
+    public function getFollowers($userSlug)
     {
         $userFollowers = $this->find($user->id)->followers()->paginate(10);
         return $userFollowers;
     }
 
-    public function getFollowing($user)
+    /**
+     * Get all the user following.
+     *
+     * @param  string $userSlug
+     * @return \App\Models\User
+     */
+    public function getFollowing($userSlug)
     {
         $userFollowing = $this->find($user->id)->following()->paginate(10);
         return $userFollowing;
     }
 
+    /**
+     * Get all the wikis of a user.
+     *
+     * @param  string $userSlug
+     * @return \App\Models\User
+     */
     public function getWikis($user)
     {        
         $userWikis = $this->find($user->id)->wikis()->paginate(10);
         return $userWikis;
     }
 
+    /**
+     * Follow a specific user.
+     *
+     * @param  int $followId
+     * @return mixed
+     */
     public function followUser($followId)
     {
         return DB::table('user_followers')->insert([
@@ -191,11 +249,31 @@ class User extends Authenticatable
         ]);
     }
 
+    /**
+     * Unfollow a user.
+     *
+     * @param  int $followId
+     * @return mixed
+     */
     public function unfollowUser($followId)
     {
         return DB::table('user_followers')->where([
             'user_id'    => Auth::user()->id,
             'follow_id'  => $followId,
         ])->delete();
+    }
+
+    /**
+     * Filter the users.
+     *
+     * @param  string $text
+     * @return mixed
+     */
+    public function filter($text)
+    {
+        return User::where(function ($query) use ($text) {
+            $query->where('name', 'like', '%' . $text . '%')
+                  ->orWhere('email', 'like', '%' . $text . '%');
+        })->where('id', '!=', Auth::user()->id)->get();
     }
 }

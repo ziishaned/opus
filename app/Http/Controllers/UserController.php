@@ -6,9 +6,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Activitylog\Models\Activity;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class UserController
+ *
+ * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
     /**
@@ -21,6 +26,12 @@ class UserController extends Controller
      */
     protected $request;
 
+    /**
+     * UserController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User         $user
+     */
     public function __construct(Request $request, User $user)
     {
         $this->user    = $user;
@@ -46,7 +57,7 @@ class UserController extends Controller
      */
     public function show($userSlug)
     {
-        $user = $this->user->getUser($userSlug);
+        $user       = $this->user->getUser($userSlug);
         $activities = DB::table('activity_log')->where('causer_id', '=', Auth::user()->id)->latest()->paginate(10);
 
         if($user) {
@@ -57,14 +68,23 @@ class UserController extends Controller
         ], Response::HTTP_NOT_FOUND);
     }
 
+    /**
+     * Filter Users.
+     *
+     * @param $text
+     * @return mixed
+     */
     public function filterUser($text)
     {
-        return User::where(function ($query) use ($text) {
-            $query->where('name', 'like', '%' . $text . '%')
-                  ->orWhere('email', 'like', '%' . $text . '%');
-        })->where('id', '!=', Auth::user()->id)->get();
+        return $this->user->filter($text);
     }
 
+    /**
+     * Return organizations view with user organizations.
+     *
+     * @param $userSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getUserOrganizations($userSlug)
     {
         $user               = $this->user->getUser($userSlug);
@@ -72,6 +92,12 @@ class UserController extends Controller
         return view('user.organizations', compact('user', 'userOrganizations'));
     }
 
+    /**
+     * Return followers view with the list of a specific user followers.
+     *
+     * @param $userSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getUserFollowers($userSlug)
     {
         $user          = $this->user->getUser($userSlug);
@@ -79,6 +105,12 @@ class UserController extends Controller
         return view('user.followers', compact('user', 'userFollowers'));
     }
 
+    /**
+     * Return following view with the list of a specific user following.
+     *
+     * @param $userSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getUserFollowing($userSlug)
     {
         $user          = $this->user->getUser($userSlug);
@@ -86,6 +118,12 @@ class UserController extends Controller
         return view('user.following', compact('user', 'userFollowing'));
     }
 
+    /**
+     * Get all the wikis of a specific user and return them on user wikis view.
+     *
+     * @param $userSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function wikis($userSlug)
     {
         $user       = $this->user->getUser($userSlug);
@@ -93,19 +131,29 @@ class UserController extends Controller
         return view('user.wikis', compact('user', 'userWikis'));
     }
 
+    /**
+     * Follow a user.
+     *
+     * @return mixed
+     */
     public function follow()
     {
         $this->user->followUser($this->request->get('followId'));
         return response()->json([
-            'message' => 'Successfully following.'
+            'message' => 'User successfully followed.'
         ], Response::HTTP_CREATED);
     }
 
+    /**
+     * Unfollow a user.
+     *
+     * @return mixed
+     */
     public function unfollow()
     {
         $this->user->unfollowUser($this->request->get('followId'));
         return response()->json([
-            'message' => 'Successfully unfollow.'
+            'message' => 'User successfully unfollowed.'
         ], Response::HTTP_CREATED);
     }
 }
