@@ -62,7 +62,7 @@
                                     @else
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <h3 style="    font-size: 17px; font-weight: 600; color: #777777; box-shadow: 0 0 10px rgba(0,0,0,0.05); background-color: #ffffff; text-align: center; padding: 15px 0px 15px 0px; border: 1px solid #ccc; border-radius: 4px;     margin: 0; margin-top: 5px;">Nothing found</h3>
+                                                <h3 style="font-size: 17px; font-weight: 600; color: #777777; box-shadow: 0 0 10px rgba(0,0,0,0.05); background-color: #ffffff; text-align: center; padding: 15px 0px 15px 0px; border: 1px solid #ccc; border-radius: 4px; margin: 0; margin-top: 5px;">Nothing found</h3>
                                             </div>
                                         </div>
                                     @endif

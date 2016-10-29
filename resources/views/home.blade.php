@@ -68,7 +68,7 @@
                                     <a href="{{ route('wikis.show', $wiki->slug) }}">{{ $wiki->name }}</a>
                                 </div>
                                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">
-                                    <span style="color: #888;">{{ $wiki->total_star }} <i class="fa fa-star"></i></span>                                    
+                                    <span style="color: #888;">{{ ViewHelper::getWikiStar($wiki->id) }} <i class="fa fa-star"></i></span>
                                 </div>
                             </div>
                         </li>

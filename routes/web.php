@@ -87,6 +87,10 @@ Route::delete('/organizations/invite', [
     'uses'  =>  'OrganizationController@removeInvite',
     'as'    =>  'organizations.invite.destroy',
 ]);
+Route::delete('/organizations/{id}', [
+    'uses'  =>  'OrganizationController@destroy',
+    'as'    =>  'organizations.destroy',
+]);
 Route::get('/organizations/{organization_slug}', [
     'uses'  =>  'OrganizationController@show',
     'as'    =>  'organizations.show',
