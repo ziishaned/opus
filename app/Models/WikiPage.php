@@ -62,9 +62,9 @@ class WikiPage extends Model
      *
      * @param \App\Models\Wiki $wiki
      */
-    public function __construct(Wiki $wiki)
+    public function __construct()
     {
-        $this->wiki = $wiki;
+        $this->wiki = new Wiki;
     }
 
     /**
