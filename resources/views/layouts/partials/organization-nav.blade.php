@@ -4,10 +4,19 @@
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}') class="active" @endif><a href="{{ route('organizations.show', $organization->slug) }}">Organization</a></li>
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/members') class="active" @endif><a href="{{ route('organizations.members', $organization->slug) }}">Members</a></li>
             @if(\App\Helpers\ViewHelper::userHasOrganization($organization->slug))
-                <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/activity') class="active" @endif><a href="{{ route('organizations.activity', $organization->slug) }}">Activity</a></li>
-            @endif
-            @if(\App\Helpers\ViewHelper::userHasOrganization($organization->slug))
-                <li><a href="{{ route('organizations.wiki.create', $organization->slug) }}">Create Wiki</a></li>
+                <li class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="manage-wiki-dropdown" style="color: #333;"><i class="fa fa-gear fa-lg"></i> <span class="caret"></span></a>
+                    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu2" style="top: 37px; right: 10px;">
+                        <li><a href="{{ route('organizations.wiki.create', $organization->slug) }}"><i class="fa fa-plus-square"></i> Create Wiki</a></li>
+                        <li>
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('delete-organization').submit();"><i class="fa fa-trash-o"></i> Delete</a>
+                            <form id="delete-organization" action="{{ route('organizations.destroy', $organization->id)  }}" method="POST" style="display: none;">
+                                {{ method_field('delete') }}
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                    </ul>
+                </li>
             @endif
         </ul>
     </div>

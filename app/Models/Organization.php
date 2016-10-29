@@ -72,7 +72,7 @@ class Organization extends Model
      */
     public function members()
     {
-        return $this->belongsToMany(User::class, 'user_organization', 'organization_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_organization', 'organization_id', 'user_id')->withPivot('created_at as joined_date', 'user_type as user_role');
     }
 
     /**
@@ -111,6 +111,12 @@ class Organization extends Model
             return $organization;
         }
         return false;
+    }
+
+    public function getWikis($organization)
+    {
+        $organizationWikis = $this->find($organization->id)->wikis()->paginate(10);
+        return $organizationWikis;
     }
 
     /**
@@ -210,39 +216,13 @@ class Organization extends Model
     /**
      * Get all the members of an organization
      *
-     * @param $organizationId
+     * @param $organization
      * @return \App\Models\Organization
      */
-    public function getMembers($organizationId)
+    public function getMembers($organization)
     {
-        $query = $this;
-        $query = $query->where('organization.id', '=', $organizationId);
-        $query = $query->join('user_organization', 'organization.id', '=', 'organization_id')
-                       ->join('users', 'user_organization.user_id', '=', 'users.id')
-                       ->select([
-                           'organization.id as organization_id',
-                           'user_organization.user_type as member_type',
-                           'users.name as member_name',
-                           'users.id as member_id',
-                           'users.email as member_email',
-                       ])
-                       ->groupBy('user_organization.user_id')
-                       ->paginate(16);
-        return $query;
-    }
-
-    /**
-     * Get all the wikis of an organization.
-     *
-     * @param  string $organizationSlug
-     * @return mixed
-     */
-    public function getWikis($organizationSlug)
-    {
-        $organization = $this->where('slug', '=', $organizationSlug)
-                             ->with(['wikis', 'members'])
-                             ->first();
-        return $organization;
+        $members = $this->find($organization->id)->members()->paginate(10);
+        return $members;
     }
 
     /**

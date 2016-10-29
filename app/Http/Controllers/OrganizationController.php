@@ -65,10 +65,11 @@ class OrganizationController extends Controller
      */
     public function show($organizationSlug)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
+        $organization       = $this->organization->getOrganization($organizationSlug);
+        $organizationWikis  = $this->organization->getWikis($organization);
 
         if($organization) {
-            return view('organization.organization', compact('organization'));
+            return view('organization.organization', compact('organization', 'organizationWikis'));
         }
 
         return abort(404);
@@ -83,8 +84,9 @@ class OrganizationController extends Controller
      */
     public function getMembers($organizationSlug)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-        return view('organization.members', compact('members', 'organization'));
+        $organization        = $this->organization->getOrganization($organizationSlug);
+        $organizationMembers = $this->organization->getMembers($organization);
+        return view('organization.members', compact('organization', 'organizationMembers'));
     }
 
     /**
@@ -204,15 +206,16 @@ class OrganizationController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->organization->deleteOrganization($id);
-        if($deleted) {
-            return response()->json([
-                'message' => 'Organization successfully deleted.'
-            ], Response::HTTP_OK);
+        $organizationDeleted = $this->organization->deleteOrganization($id);
+        if($organizationDeleted) {
+            return redirect()->route('dashboard')->with([
+                'alert' => 'Organization successfully deleted.',
+                'alert_type' => 'success'
+            ]);
         }
         return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+            'message' => 'We are having some issues.'
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
