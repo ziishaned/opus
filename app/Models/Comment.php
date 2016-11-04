@@ -114,4 +114,21 @@ class Comment extends Model
         ]);
         return true;        
     }
+
+    public function deleteComment($id) {
+        $query = $this->where('id', '=', $id)->delete();
+
+        if(!$query) {
+            return false;
+        }
+        return true;
+    }
+
+    public function updateComment($id, $data) {
+        $this->find($id)->update([
+            'content' => $data['comment'],
+        ]);
+
+        return true;
+    }
 }

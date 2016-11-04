@@ -49,8 +49,8 @@ var App = {
             if($('#edit-comment-form').length == 0) {
                 var commentId = $(this).attr('data-commentid');
                 var editCommentForm = `
-                                       <form action="#" method="POST" id="edit-comment-form" role="form" data-toggle="validator">
-                                            <input type="text" name="comment_id" class="hide" value="` + commentId + `">
+                                       <form action="/comments/`+commentId+`" method="POST" id="edit-comment-form" role="form" data-toggle="validator">
+                                            <input type="hidden" name="_method" value="patch">
                                             <div class="form-group" style="margin-bottom: 0;">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

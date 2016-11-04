@@ -204,3 +204,11 @@ Route::post('/comments/{id}/star', [
     'uses'  =>  'CommentController@starComment',
     'as'    =>  'comments.star',
 ]);
+Route::delete('/comments/{id}', [
+    'uses'  =>  'CommentController@destroy',
+    'as'    =>  'comments.delete',
+]);
+Route::patch('/comments/{id}', [
+    'uses'  =>  'CommentController@update',
+    'as'    =>  'comments.delete',
+]);

@@ -70,4 +70,26 @@ class CommentController extends Controller
             'alert_type' => 'success'
         ]);
     }
+
+    public function destroy($id) {
+        $pageDeleted = $this->comment->deleteComment($id);
+        if($pageDeleted) {
+            return redirect()->back()->with([
+                'alert' => 'Comment successfully deleted.',
+                'alert_type' => 'success'
+            ]);
+        }
+        return response()->json([
+            'message' => 'We are having some issues.'
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function update($id) {
+        $this->validate($this->request, Comment::COMMENT_RULES);
+        $this->comment->updateComment($id, $this->request->all());
+        return redirect()->back()->with([
+            'alert'       => 'Comment successfully updated.',
+            'alert_type'  => 'success'
+        ]);
+    }
 }

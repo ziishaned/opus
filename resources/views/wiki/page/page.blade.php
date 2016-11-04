@@ -12,7 +12,7 @@
 	                		</div>
 	                		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-3 text-right">
 								<div class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="manage-wiki-dropdown" style="color: #333;"><i class="fa fa-gear fa-lg"></i> <span class="caret"></span></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="manage-wiki-dropdown" style="color: #333;"><i class="fa fa-gear fa-lg"></i> <span class="fa fa-caret-down"></span></a>
 									<ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu2" style="top: 25px;">
 										<li><a href="{{ route('wikis.pages.reorder', $page->wiki->id) }}"><i class="fa fa-align-left"></i> Reorder Pages</a></li>
 										<li>
@@ -31,18 +31,18 @@
 	                    <a href="{{ route('wikis.show', $page->wiki->slug) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
 	                </div>
 	            </div>
-	            <div class="panel panel-default">
-	                <div class="panel-heading">
-	                	<div class="row">
-	                		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			                    <h3 class="panel-title" style="margin-top: 4px;">Wiki Shortcuts</h3>
-	                		</div>
-	                	</div>
-	                </div>
-	                <div class="list-group">
-	                	<li class="list-group-item" style="text-align: center;">Nothing found</li>
-	                </div>
-	            </div>
+	            {{--<div class="panel panel-default">--}}
+	                {{--<div class="panel-heading">--}}
+	                	{{--<div class="row">--}}
+	                		{{--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">--}}
+			                    {{--<h3 class="panel-title" style="margin-top: 4px;">Wiki Shortcuts</h3>--}}
+	                		{{--</div>--}}
+	                	{{--</div>--}}
+	                {{--</div>--}}
+	                {{--<div class="list-group">--}}
+	                	{{--<li class="list-group-item" style="text-align: center;">Nothing found</li>--}}
+	                {{--</div>--}}
+	            {{--</div>--}}
 	            <div class="panel panel-default">
 	                <div class="panel-heading">
 	                	<div class="row">
@@ -144,7 +144,9 @@
 											<div class="row">
 												<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
 													<div class="comment-avatar">
-														<img src="/images/default.png" class="img-responsive" alt="Image">
+                                                        <a href="#">
+                                                            <img src="/images/default.png" width="44" height="44" class="img-responsive" alt="Image" style="border-radius: 3px;">
+                                                        </a>
 													</div>
 												</div>
 												<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
@@ -156,7 +158,13 @@
 																<li><a href="#" id="like-comment" data-commentid="{{ $comment->id }}"><i class="fa fa-heart"></i></a> <span id="comment-total-star" data-commentid="{{ $comment->id }}">{{ ViewHelper::getCommentStar($comment->id) }}</span></li>
                                                                 @if($comment->user->id == Auth::user()->id)
                                                                     <li><a href="#" id="edit-comment" data-commentid="{{ $comment->id  }}"><i class="fa fa-pencil"></i></a></li>
-                                                                    <li><a href="#"><i class="fa fa-trash-o"></i></a></li>
+                                                                    <li>
+                                                                        <a href="#" onclick="if(confirm('Are you sure you want to delete comment?')) {event.preventDefault(); document.getElementById('delete-comment').submit();}"><i class="fa fa-trash-o"></i></a>
+                                                                        <form id="delete-comment" action="{{ route('comments.delete', $comment->id) }}" method="POST" style="display: none;">
+                                                                            {!! method_field('delete') !!}
+                                                                            {!! csrf_field() !!}
+                                                                        </form>
+                                                                    </li>
                                                                 @endif
 															</ul>
 														</div>
@@ -180,12 +188,12 @@
 	    			<form action="{{ route('wikis.pages.comments.store', [$page->wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
 	    				<div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}" style="margin-bottom: 0;">
 	    					<div class="row">
-	    						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-	    							<div style="border: 3px solid #FFF; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
-		    							<img src="/images/default.png" class="img-responsive" alt="Image">		
-	    							</div>
+	    						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                    <a href="#">
+                                        <img src="/images/default.png" width="44" height="44" class="img-responsive" alt="Image" style="border-radius: 3px;">
+                                    </a>
 	    						</div>
-	    						<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+	    						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 comment-input-con">
 									<textarea name="comment" id="comment-input" class="form-control" rows="5" placeholder="Submit your comment.."></textarea>
 									@if ($errors->has('comment'))
 	                                    <span class="help-block">
