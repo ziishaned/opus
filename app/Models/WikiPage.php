@@ -58,16 +58,6 @@ class WikiPage extends Model
     ];
 
     /**
-     * WikiPage constructor.
-     *
-     * @param \App\Models\Wiki $wiki
-     */
-    public function __construct()
-    {
-        $this->wiki = new Wiki;
-    }
-
-    /**
      * @return mixed
      */
     public function comments()
@@ -108,13 +98,13 @@ class WikiPage extends Model
     /**
      * Retrieve a wiki from database.
      *
-     * @param  string $slug
+     * @param $wikiId
      * @return mixed
      */
-    public function getPages($slug)
+    public function getPages($wikiId)
     {
         $query = $this;
-        $query = $query->where('wiki_page.slug', '=', $slug);
+        $query = $query->where('wiki_page.wiki_id', '=', $wikiId);
         $query = $query->where('wiki_page.parent_id', '=', null);
         $query = $query->with(['pages', 'wiki'])->get();
         if(!$query) {
@@ -145,7 +135,7 @@ class WikiPage extends Model
      */
     public function saveWikiPage($wikiSlug, $data)
     {
-        $wiki = $this->wiki->getWiki($wikiSlug);
+        $wiki = (new Wiki)->getWiki($wikiSlug);
         $page = $this->create([
             'name'         =>  $data['page_name'],
             'description'  =>  !empty($data['page_description']) ? $data['page_description'] : null,

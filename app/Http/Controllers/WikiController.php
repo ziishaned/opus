@@ -227,12 +227,13 @@ class WikiController extends Controller
      */
     public function showPage($wikiSlug, $pageSlug)
     {
+        $wiki = $this->wiki->getWiki($wikiSlug);
         $page = $this->wikiPage->getPage($pageSlug);
         if(!$page) {
             abort('404');
         }
         
-        $wikiPages = $this->wikiPage->getPages($pageSlug);
+        $wikiPages = $this->wikiPage->getPages($wiki->id);
         if($wikiPages) {
             return view('wiki.page.page', compact('wikiPages', 'page'));
         }

@@ -19,13 +19,8 @@ class CreateWikiPageTable extends Migration
             $table->string('slug', 65535);
             $table->longText('description')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
-
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->integer('wiki_id')->unsigned();
-            $table->foreign('wiki_id')->references('id')->on('wiki')->onDelete('cascade');
-            
             $table->timestamps();
         });
     }

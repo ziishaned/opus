@@ -316,7 +316,6 @@ a:hover {
 .fancytree-treefocus span.fancytree-active span.fancytree-title {
   color: #000 !important;
   outline: none !important;
-  background-color: #D4D4D4 !important;
 }
 
 .count {
@@ -394,4 +393,34 @@ a#manage-wiki-dropdown {
    border: none;
    outline: none;
    text-decoration: none;
+}
+
+span.fancytree-active {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 3px 0px 3px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.fancytree-container {
+    padding: 0 !important;
+}
+
+span.fancytree-active span.fancytree-title {
+    background: none !important;
+}
+
+.fancytree-node {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.rte-autocomplete:before {
+    right: unset;
+    left: 9px;
+}
+
+.rte-autocomplete:after {
+    right: unset;
+    left: 10px;
 }

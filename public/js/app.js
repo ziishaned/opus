@@ -42,6 +42,99 @@ var App = {
     },
     bindUI: function () {
         var that = this;
+        $(document).on('click', '#edit-comment', function (e) {
+            e.preventDefault();
+            var curComment = this;
+            var comment = $(this).closest('.comment-box').find('.comment-content').html();
+            if($('#edit-comment-form').length == 0) {
+                var commentId = $(this).attr('data-commentid');
+                var editCommentForm = `
+                                       <form action="#" method="POST" id="edit-comment-form" role="form" data-toggle="validator">
+                                            <input type="text" name="comment_id" class="hide" value="` + commentId + `">
+                                            <div class="form-group" style="margin-bottom: 0;">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <textarea name="comment" id="edit-comment-input" class="form-control" rows="5" placeholder="Submit your comment..">` + comment + `</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="margin-top: 10px; height: 35px; margin-bottom: 10px;">
+                                                <input type="submit" class="btn btn-default pull-left" id="close-edit-comment-form" value="Close">
+                                                <input type="submit" class="btn btn-success pull-right" id="submit-comment" value="Update Comment">
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    `;
+                $(this).closest('.comment-box').find('.comment-content').empty();
+                $(this).closest('.comment-box').find('.comment-content').append(editCommentForm);
+                tinymce.remove("#edit-comment-input");
+                tinymce.init({
+                    selector: "#edit-comment-input",
+                    content_css: "/css/bootstrap.min.css,/css/tinymce.css",
+                    statusbar: false,
+
+                    /* theme of the editor */
+                    theme: "modern",
+                    skin: "lightgray",
+
+                    /* width and height of the editor */
+                    width: "100%",
+                    height: 100,
+
+                    /* display statusbar */
+                    menubar: false,
+                    statubar: false,
+
+                    /* plugin */
+                    plugins: [
+                        "advlist autolink link lists charmap hr anchor pagebreak mention",
+                        "searchreplace wordcount visualblocks visualchars code nonbreaking",
+                        "save table contextmenu directionality emoticons template paste textcolor codesample placeholder"
+                    ],
+                    mentions: {
+                        source: function (query, process, delimiter) {
+                            if (delimiter === '@') {
+                                $.getJSON('/users/search/' + query, function (data) {
+                                    process(data)
+                                });
+                            }
+                        },
+                        insert: function (item) {
+                            return '<a href="/users/' + item.slug + '" style="font-weight: bold;">@' + item.name + '</a>';
+                        }
+                    },
+                    paste_webkit_styles: "all",
+                    paste_retain_style_properties: "all",
+
+                    browser_spellcheck: true,
+                    nonbreaking_force_tab: true,
+                    relative_urls: false,
+                    codesample_languages: [
+                        {text: 'HTML/XML', value: 'markup'},
+                        {text: 'JavaScript', value: 'javascript'},
+                        {text: 'CSS', value: 'css'},
+                        {text: 'PHP', value: 'php'},
+                        {text: 'Ruby', value: 'ruby'},
+                        {text: 'Python', value: 'python'},
+                        {text: 'Java', value: 'java'},
+                        {text: 'C', value: 'c'},
+                        {text: 'C#', value: 'csharp'},
+                        {text: 'C++', value: 'cpp'},
+                        {text: 'SQL', value: 'sql'},
+                        {text: 'Bash', value: 'bash'}
+                    ],
+
+                    /* toolbar */
+                    toolbar: "bold italic underline | bullist numlist | emoticons link unlink | codesample",
+                });
+            }
+            $('#close-edit-comment-form').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $('#edit-comment-form').remove();
+                $(curComment).closest('.comment-box').find('.comment-content').html(comment);
+            });
+        });
         $(document).find('#add-to-invite-list').on('click', function() {
             var userId   = that.params.inviteUserInput.val();
             var userItem = that.params.inviteUserInput.closest('.row').find('.selectize-dropdown-content').children('[data-value='+userId+']').html();
@@ -72,7 +165,7 @@ var App = {
         // $(document).on('click', '#submit-comment', function(event) {
         //     event.preventDefault();
         //     var comment = $(document).find('#comment-input').val();
-        //     var wikiId  = $(document).find('#wiki-id').val(); 
+        //     var wikiId  = $(document).find('#wiki-id').val();
         //     that.saveComment(comment, wikiId);
         // });
 
@@ -169,7 +262,7 @@ var App = {
                 console.log(response);
             }
         });
-    },  
+    },
     initSelectize: function() {
         this.params.selectOrganization.selectize({
             valueField: 'id',
@@ -504,7 +597,8 @@ $(document).ready(function() {
     tinymce.init({
         /* replace textarea having class .tinymce with tinymce editor */
         selector: "#comment-input",
-        content_css : "/css/bootstrap.min.css,/css/tinymce.css", 
+        content_css : "/css/bootstrap.min.css,/css/tinymce.css",
+        statusbar: false,
 
         /* theme of the editor */
         theme: "modern",
@@ -520,10 +614,22 @@ $(document).ready(function() {
         
         /* plugin */
         plugins: [
-            "advlist autolink link lists charmap hr anchor pagebreak",
+            "advlist autolink link lists charmap hr anchor pagebreak mention",
             "searchreplace wordcount visualblocks visualchars code nonbreaking",
             "save table contextmenu directionality emoticons template paste textcolor codesample placeholder"
         ],
+        mentions: {
+            source: function (query, process, delimiter) {
+                if (delimiter === '@') {
+                    $.getJSON('/users/search/' + query, function (data) {
+                        process(data)
+                    });
+                }
+            },
+            insert: function(item) {
+                return '<a href="/users/'+item.slug+'" style="font-weight: bold;">@' + item.name + '</a>';
+            }
+        },
         paste_webkit_styles: "all",
         paste_retain_style_properties: "all",
 
@@ -551,6 +657,7 @@ $(document).ready(function() {
 
     $("#page-tree").fancytree({
         extensions: ["dnd", "edit"],
+        icon: false,
         dnd: {
             draggable: {
                 zIndex: 1000,

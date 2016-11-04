@@ -23,11 +23,6 @@ class Comment extends Model
     protected $table = 'comment';
 
     /**
-     * @var \App\Models\WikiPage $wikiPage
-     */
-    protected $wikiPage;
-
-    /**
      * @var array
      */
     protected $fillable = [
@@ -44,16 +39,6 @@ class Comment extends Model
     const COMMENT_RULES = [
         'comment' => 'required',
     ];
-
-    /**
-     * Comment constructor.
-     *
-     * @param \App\Models\WikiPage $wikiPage
-     */
-    public function __constructor(WikiPage $wikiPage)
-    {
-        $this->wikiPage = $wikiPage;
-    }
 
     /**
      * A user can post comments.
@@ -118,7 +103,7 @@ class Comment extends Model
      */
     public function storeComment($pageSlug, $data)
     {
-        $page = $this->wikiPage->getPage($pageSlug);
+        $page = (new wikiPage)->getPage($pageSlug);
         ActivityLogHelper::createComment($page, $data['comment']);
         $this->create([
             'page_id'    => $page->id,

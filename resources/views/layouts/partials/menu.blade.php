@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation" style="border-radius: 0; margin-bottom: 0;">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="border-radius: 0; margin-bottom: 0;">
     <div class="container-fluid">
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())

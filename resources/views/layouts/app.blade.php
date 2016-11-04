@@ -46,13 +46,13 @@
             @include('layouts.partials.menu')
 
             @if(Session::get('alert'))
-                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0;">
+                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-top: 51px; margin-bottom: -40px;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ Session::get('alert') }}
                 </div>
             @endif
 
-            <div class="main-body" id="page-content-wrapper" style="padding-top: 10px;">
+            <div class="main-body" id="page-content-wrapper" style="margin-top: 45px;">
                 <div class="container-fluid">
                     @yield('content')
                 </div>
