@@ -2,6 +2,10 @@
     border-radius: 4px !important;
 }
 
+#tinymce pre {
+    font-family: monaco !important;
+}
+
 body {
 	font-family: 'Open Sans', sans-serif, arial;
 	padding-left: 10px;

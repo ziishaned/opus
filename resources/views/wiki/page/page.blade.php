@@ -2,137 +2,90 @@
 
 @section('content')
 	<div class="row">
-	    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-	    	<div>
-		    	<div class="panel panel-default">
-	                <div class="panel-heading">
-	                	<div class="row" style="display: flex; align-items: center;">
-	                		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-9">
-			                    <h3 class="panel-title">{{ $page->wiki->name }}</h3>
-	                		</div>
-	                		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-3 text-right">
-								<div class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="manage-wiki-dropdown" style="color: #333;"><i class="fa fa-gear fa-lg"></i> <span class="fa fa-caret-down"></span></a>
-									<ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu2" style="top: 25px;">
-										<li><a href="{{ route('wikis.pages.reorder', $page->wiki->id) }}"><i class="fa fa-align-left"></i> Reorder Pages</a></li>
-										<li>
-											<a href="#" onclick="event.preventDefault(); document.getElementById('delete-wiki').submit();"><i class="fa fa-trash-o"></i> Delete</a>
-											<form id="delete-wiki" action="{{ route('wikis.destroy', $page->wiki->id) }}" method="POST" style="display: none;">
-												{!! method_field('delete') !!}
-												{!! csrf_field() !!}
-											</form>
-										</li>
-									</ul>
-								</div>
-	                		</div>
-	                	</div>
-	                </div>
-	                <div class="list-group">
-	                    <a href="{{ route('wikis.show', $page->wiki->slug) }}" class="list-group-item"><i class="fa fa-home"></i> Home</a>
-	                </div>
-	            </div>
-	            {{--<div class="panel panel-default">--}}
-	                {{--<div class="panel-heading">--}}
-	                	{{--<div class="row">--}}
-	                		{{--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">--}}
-			                    {{--<h3 class="panel-title" style="margin-top: 4px;">Wiki Shortcuts</h3>--}}
-	                		{{--</div>--}}
-	                	{{--</div>--}}
-	                {{--</div>--}}
-	                {{--<div class="list-group">--}}
-	                	{{--<li class="list-group-item" style="text-align: center;">Nothing found</li>--}}
-	                {{--</div>--}}
-	            {{--</div>--}}
-	            <div class="panel panel-default">
-	                <div class="panel-heading">
-	                	<div class="row">
-	                		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			                    <h3 class="panel-title" style="margin-top: 4px;">Page Tree</h3>
-	                		</div>
-	                		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-	                			<a href="{{ route('wikis.pages.create', $page->wiki->slug) }}" class="btn btn-success btn-xs">Create Page</a>
-	                		</div>
-	                	</div>
-	                </div>
-	                <div class="list-group" style="padding-top: 8px; padding-bottom: 8px;">
-	                	@if($wikiPages->count() == 0)
-		                	<li class="list-group-item" style="box-shadow: inset 0 0 10px rgba(0,0,0,0.05); background-color: #ffffff; text-align: center;">Nothing found</li>
-		               	@else
-		                    <div id="page-tree">
-								<ul>
-									{{ ViewHelper::makeWikiPageTree($wikiPages, $page->id) }}
-								</ul>
-							</div>
-						@endif
-	                </div>
-	            </div>
-	    	</div>
-	    </div>
-	    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-	    	<div class="row">
+	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    	<div class="row" style="margin-bottom: 10px;">
 		    	<div class="wiki-nav-con">
-		    		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				        <ul class="nav nav-pills">
-				            <li><a href="#">Pages</a></li>
-					    </ul>
+		    		<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+		    			<div class="row">
+		    				<div class="pull-left" style="position: relative; top: 10px; left: 15px; margin-right: 5px;">
+		    					<i class="fa fa-wikipedia-w fa-lg"></i> 
+		    				</div>
+		    				<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+				    			<h2 style="margin: 0; margin-bottom: 3px; font-size: 18px; margin-top: 10px; font-weight: normal;"><a href="#" style="color:#4078c0; font-weight: normal; text-transform: capitalize;">{{ $page->wiki->name }} / {{ $page->name }}</a></h2>
+				    			<p style="margin-bottom: 0;" class="text-muted">Created by {{ ViewHelper::getUsername($page->user_id) }} on {{ $page->created_at->toFormattedDateString() }} at {{ $page->created_at->format('h:i A') }} </p>
+		    				</div>
+		    			</div>
 		    		</div>
-		    		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-		    			<ul class="nav nav-pills navbar-right" style="margin-right: 10px;">
-				            <li><a href="{{ route('pages.edit', [$page->wiki->id, $page->id]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-				            <li><a href="#"><i class="fa fa-clock-o"></i> Save for later</a></li>
-				            <li><a href="#"><i class="fa fa-eye"></i> Watch</a></li>
-				            <li class="dropdown">
-		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v fa-lg"></i></a>
-		                        <ul class="dropdown-menu">
-		                            <li><a href="#"><i class="fa fa-paperclip"></i> Attachments<span class="badge">0</span></a></li>
-		                            <li><a href="#"><i class="fa fa-history"></i> Page History</a></li>
-		                            <li><a href="#"><i class="fa fa-lock"></i> Privacy</a></li>
-		                            <li class="divider"></li>
-		                            <li><a href="#"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
-		                            <li><a href="#"><i class="fa fa-exchange"></i> Export to Word</a></li>
-		                            <li><a href="{{ route('pages.edit', [$page->wiki->id, $page->id]) }}"><i class="fa fa-file-word-o"></i> Import Word Document</a></li>
-		                            <li class="divider"></li>
-		                            <li><a href="{{ route('wikis.pages.reorder', $page->wiki->id) }}"><i class="fa fa-copy"></i> Copy</a></li>
-		                            <li><a href="{{ route('wikis.pages.reorder', $page->wiki->id) }}"><i class="fa fa-arrows"></i> Move</a></li>
-		                            <li>
-										<a href="#" onclick="event.preventDefault(); document.getElementById('delete-page').submit();"><i class="fa fa-trash-o"></i> Delete</a>
-										<form id="delete-page" action="{{ route('pages.destroy', [$page->wiki->id, $page->id]) }}" method="POST" style="display: none;">
-		                                    {!! method_field('delete') !!}
-		                                    {!! csrf_field() !!}
-		                                </form>
-		                            </li>
-		                        </ul>
-		                    </li>
-				        </ul>	
+		    		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right" style="margin-top: 10px;">
+		    			<ul class="list-inline list-unstyled" style="margin-bottom: 0px;">
+		    				<li>
+		    					<button type="submit" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px;">
+							        <i class="fa fa-star-o"></i> Unstar
+							    </button>
+							    <div class="count-with-arrow pull-left">
+									<span class="count star-count"> {{ ViewHelper::getWikiStar($page->slug) }} </span>
+								</div>
+								<div class="clearfix"></div>
+		    				</li>
+		    			</ul>
 		    		</div>
 		    	</div>
 	    	</div>
 	    	<div class="clearfix"></div>
-	    	<div class="row page-head">
-	    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    			<div class="well well-sm" style="margin-bottom: 0px; border-radius: 0; color: #fff; border: 1px solid transparent; box-shadow: 0 1px 1px rgba(0,0,0,.05); background-color: #555;">
-		    			<div class="pull-left">
-			    			<h3 style="margin: 0; margin-bottom: 5px;">{{ $page->name }}</h3>
-		    				<p style="margin-bottom: 0;">Created by {{ ViewHelper::getUsername($page->user_id) }} <i class="fa fa-clock-o"></i> <time class="timeago" datetime="{{ $page->created_at }}">{{ $page->created_at->diffForHumans() }}</time></p>
-		    			</div>
-						<div class="pull-right" style="margin-top: 15px;">
-		    				<ul class="list-unstyled list-inline">
-			    				<li><a href="#" id="like-page" data-pageid="{{ $page->id }}"><i class="fa fa-heart"></i></a> <span id="page-total-star">{{ ViewHelper::getPageStar($page->id) }}</span></li>
-			    				<li><i class="fa fa-commenting"></i> {{ $page->comments->count() }}</li>
-			    			</ul>
-		    			</div>
-				    	<div class="clearfix"></div>
-	    			</div>
-	    		</div>
-	    	</div>
+	    	<div class="row">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			        <ul class="nav nav-pills center-block" id="organization-nav" style="border-top: 1px solid #e5e5e5;">
+			            <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'wikis/{wiki_slug}') class="active" @endif>
+			            	<a href="{{ route('wikis.show', $page->wiki->slug) }}"><i class="fa fa-home"></i> Home</a>
+			            </li>
+			            <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text-o"></i> Select Page <i class="fa fa-caret-down"></i></a>
+	                        <ul class="dropdown-menu page-tree-con" style="left: -95px; top: 35px; width: 200px;">
+	                            <div id="page-tree">
+									<ul>
+										{{ ViewHelper::makeWikiPageTree($wikiPages, $page->id) }}
+									</ul>
+								</div>
+	                        </ul>
+	                    </li>
+			            <li>
+			            	<a href="{{ route('wikis.pages.create', $page->wiki->slug) }}"><i class="fa fa-plus-square"></i> New Page</a>
+			            </li>
+	                    <li><a href="#"><i class="fa fa-sort fa-lg"></i> Reorder Pages</a></li>
+	                    <ul class="nav nav-pills pull-right" id="organization-nav" style="border-bottom: 0px !important;">
+				            <li class="dropdown">
+		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download fa-lg"></i> <i class="fa fa-caret-down"></i></a>
+		                        <ul class="dropdown-menu" style="left: -163px; top: 35px;">
+		                            <li><a href="#"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
+		                            <li><a href="#"><i class="fa fa-exchange"></i> Export to Word</a></li>
+		                            <li><a href="#"><i class="fa fa-file-word-o"></i> Import Word Document</a></li>
+		                        </ul>
+		                    </li>
+		                    <li class="dropdown">
+		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear fa-lg"></i> <i class="fa fa-caret-down"></i></a>
+		                        <ul class="dropdown-menu" style="left: -110px; top: 35px;">
+		                            <li><a href="{{ route('pages.edit', [$page->wiki->id, $page->id]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+				                    <li>
+				                    	<a href="#" onclick="event.preventDefault(); document.getElementById('delete-wiki').submit();"><i class="fa fa-trash-o"></i> Delete</a>
+										<form id="delete-wiki" action="{{ route('wikis.destroy', $page->wiki->slug) }}" method="POST" style="display: none;">
+			                                {!! method_field('delete') !!}
+			                                {!! csrf_field() !!}
+			                            </form>
+				                    </li>
+		                        </ul>
+		                    </li>
+	                    </ul>
+			        </ul>
+			    </div>
+			</div>
 	    	<div class="row">
 	    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			    	<div class="page-description" style="padding-left: 20px; padding-right: 20px;">
 			    		{!! $page->description !!}
 			    	</div>
-	    		</div>
-	    	</div>
-	    	@if($page->comments->count() > 0)
+			    </div>
+			</div>
+			@if($page->comments->count() > 0)
 		    	<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<hr>
@@ -145,7 +98,7 @@
 												<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
 													<div class="comment-avatar">
                                                         <a href="#">
-                                                            <img src="/images/default.png" width="44" height="44" class="img-responsive" alt="Image" style="border-radius: 3px;">
+                                                            <img src="/images/default.png" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
                                                         </a>
 													</div>
 												</div>
@@ -190,7 +143,7 @@
 	    					<div class="row">
 	    						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                     <a href="#">
-                                        <img src="/images/default.png" width="44" height="44" class="img-responsive" alt="Image" style="border-radius: 3px;">
+                                        <img src="/images/default.png" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
                                     </a>
 	    						</div>
 	    						<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 comment-input-con">

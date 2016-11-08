@@ -16,6 +16,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         view()->composer([
             'home',
+            'help',
             'organization.invite',
             'organization.create',
             'organization.organization',

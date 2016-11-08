@@ -44,7 +44,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-                            <div class="img-rounded profile-img"></div> <i class="fa fa-caret-down"></i>
+                            <div class="profile-img" style="margin-right: 3px; border-radius: 3px;"></div> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('users.show', $loggedInUser->slug) }}">Profile</a></li>
