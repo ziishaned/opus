@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/css/simple-sidebar.css">
     <link rel="stylesheet" href="/js/fancytree-lion/ui.fancytree.min.css">
     <link rel="stylesheet" href="/js/themes/default/style.min.css">
+    <script>
+        var userSlug = "<?php echo Auth::user()->slug; ?>";
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -34,7 +37,7 @@
                         <a href="#">Discover</a>
                     </li>
                     <li>
-                        <a href="#">Help</a>
+                        <a href="{{ route('help')  }}">Help</a>
                     </li>
                     <li>
                         <a href="#">Profile Settings</a>
@@ -64,6 +67,9 @@
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/js/jquery.fancytree-all.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/keymaster.js"></script>
+<script src="/js/keymaster.sequence.min.js"></script>
+<script src="/js/app-shortcuts.js"></script>
 <script src="/js/ajax-loading.js"></script>
 <script src="/js/tinymce.min.js"></script>
 <script src="/js/validator.min.js"></script>

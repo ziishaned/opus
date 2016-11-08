@@ -212,3 +212,13 @@ Route::patch('/comments/{id}', [
     'uses'  =>  'CommentController@update',
     'as'    =>  'comments.delete',
 ]);
+
+/*
+|--------------------------------------------------------------------------
+| Help Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/help', [
+    'uses' => 'HomeController@help',
+    'as'   => 'help',
+]);

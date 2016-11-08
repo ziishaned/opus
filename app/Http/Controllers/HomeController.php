@@ -38,4 +38,8 @@ class HomeController extends Controller
         $wikis = $this->wiki->getWikis($limit = 5);
         return view('home', compact('wikis'));
     }
+
+    public function help() {
+        return view('help');
+    }
 }
