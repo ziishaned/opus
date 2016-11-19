@@ -13,10 +13,14 @@ tinymce.PluginManager.requireLangPack('codemirror');
 tinymce.PluginManager.add('codemirror', function(editor, url) {
 
 	function showSourceEditor() {
-		// Insert caret marker
-		editor.focus();
-		editor.selection.collapse(true);
-		editor.selection.setContent('<span style="display: none;" class="CmCaReT">&#x0;</span>');
+        
+        editor.focus();
+        editor.selection.collapse(true);
+        
+        // Insert caret marker
+        if (editor.settings.codemirror.saveCursorPosition) {
+            editor.selection.setContent('<span style="display: none;" class="CmCaReT">&#x0;</span>');
+        }
 
         codemirrorWidth = 800;
         if (editor.settings.codemirror.width) {

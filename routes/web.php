@@ -151,7 +151,7 @@ Route::delete('/wikis/{wiki_slug}', [
 |--------------------------------------------------------------------------
 */
 
-Route::get('/wikis/{id}/pages/{pageId}/edit', [
+Route::get('/wikis/{wiki_slug}/pages/{page_slug}/edit', [
     'uses'  =>  'WikiController@editPage',
     'as'    =>  'pages.edit',
 ]);
@@ -162,6 +162,10 @@ Route::patch('/wikis/{wiki_slug}/pages/{page_slug}', [
 Route::get('/wikis/{wiki_slug}/pages/create', [
     'uses'  =>  'WikiController@createPage',
     'as'    =>  'wikis.pages.create',
+]);
+Route::get('/wikis/{wiki_slug}/pages/reorder', [
+    'uses'  =>  'WikiController@pagesReorder',
+    'as'    =>  'wikis.pages.reorder',
 ]);
 Route::get('/wikis/{wiki_slug}/pages/{page_slug}', [
     'uses'  =>  'WikiController@showPage',
@@ -174,7 +178,7 @@ Route::post('/wikis/{wiki_slug}/pages', [
 Route::get('/wikis/{id}/pages/search/{text}', [
     'uses'  =>  'WikiController@filterWikiPages',
 ]);
-Route::delete('/wikis/{id}/pages/{pageId}', [
+Route::delete('/wikis/{wiki_slug}/pages/{page_slug}', [
     'uses'  =>  'WikiController@destroyPage',
     'as'    =>  'pages.destroy',
 ]);
@@ -185,10 +189,6 @@ Route::post('/pages/{id}/star', [
 Route::post('/wikis/{wiki_slug}/pages/{page_slug}/comments', [
     'uses'  =>  'CommentController@store',
     'as'    =>  'wikis.pages.comments.store',
-]);
-Route::get('/wikis/{id}/pages/reorder', [
-    'uses'  =>  'WikiController@pagesReorder',
-    'as'    =>  'wikis.pages.reorder',
 ]);
 Route::patch('/pages/reorder', [
     'uses'  =>  'WikiController@updatePageParent',

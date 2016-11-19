@@ -51,7 +51,7 @@
 			            <li>
 			            	<a href="{{ route('wikis.pages.create', $page->wiki->slug) }}"><i class="fa fa-plus-square"></i> New Page</a>
 			            </li>
-	                    <li><a href="#"><i class="fa fa-sort fa-lg"></i> Reorder Pages</a></li>
+	                    <li><a href="{{ route('wikis.pages.reorder', $page->wiki->slug) }}"><i class="fa fa-sort fa-lg"></i> Reorder Pages</a></li>
 	                    <ul class="nav nav-pills pull-right" id="organization-nav" style="border-bottom: 0px !important;">
 				            <li class="dropdown">
 		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download fa-lg"></i> <i class="fa fa-caret-down"></i></a>
@@ -64,10 +64,10 @@
 		                    <li class="dropdown">
 		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear fa-lg"></i> <i class="fa fa-caret-down"></i></a>
 		                        <ul class="dropdown-menu" style="left: -110px; top: 35px;">
-		                            <li><a href="{{ route('pages.edit', [$page->wiki->id, $page->id]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+		                            <li><a href="{{ route('pages.edit', [$page->wiki->slug, $page->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
 				                    <li>
-				                    	<a href="#" onclick="event.preventDefault(); document.getElementById('delete-wiki').submit();"><i class="fa fa-trash-o"></i> Delete</a>
-										<form id="delete-wiki" action="{{ route('wikis.destroy', $page->wiki->slug) }}" method="POST" style="display: none;">
+				                    	<a href="#" onclick="event.preventDefault(); document.getElementById('delete-page').submit();"><i class="fa fa-trash-o"></i> Delete</a>
+										<form id="delete-page" action="{{ route('pages.destroy', [$page->wiki->slug, $page->slug]) }}" method="POST" style="display: none;">
 			                                {!! method_field('delete') !!}
 			                                {!! csrf_field() !!}
 			                            </form>
@@ -124,6 +124,7 @@
 														<div class="comment-content" style="padding: 6px 10px 0px 10px;">
                                                             {!! $comment->content !!}
 														</div>
+														<span class="hide" id="comment-fedit" data-commentId="{{ $comment->id }}">{{ $comment->content }}</span>
 													</div>
 												</div>
 											</div>

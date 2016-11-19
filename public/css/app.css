@@ -3,6 +3,9 @@ html {
 }
 
 body {
+    /*-webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-text-stroke: 0.25px;*/
     height: 100%;
     display: none;
 }
@@ -425,7 +428,7 @@ span.fancytree-active span.fancytree-title {
     display: block;
     border-width: 10px 12px 10px 0;
     border-style: solid;
-    top: 8px;
+    top: 21px;
     border-color: transparent #c0c0c0;
     left: 3px;
 }
@@ -438,8 +441,8 @@ span.fancytree-active span.fancytree-title {
     display: block;
     border-width: 10px 12px 10px 0;
     border-style: solid;
-    border-color: transparent #f0f0f0;
-    top: 8px;
+    border-color: transparent #fbfcf7;
+    top: 21px;
     left: 4px;
 }
 
@@ -486,4 +489,10 @@ kbd {
     background-image: none;
     white-space: nowrap;
     border-left: 0px;
+}
+
+.syntaxhighlighter { 
+    overflow-y: hidden !important; 
+    overflow-x: auto !important; 
+    margin-top: 0px !important;
 }

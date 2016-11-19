@@ -41,17 +41,23 @@
 			            <li class="dropdown">
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text-o"></i> Select Page <i class="fa fa-caret-down"></i></a>
 	                        <ul class="dropdown-menu page-tree-con" style="left: -95px; top: 35px; width: 200px;">
-	                            <div id="page-tree" style="padding-left: 5px;">
-									<ul>
-										{{ ViewHelper::makeWikiPageTree($wikiPages, null) }}
+	                            @if($wikiPages->count() == 0)
+									<ul class="list-unstyled">
+					                	<li style="text-align: center; font-size: 12px;" class="text-muted"><i class="fa fa-search"></i> Nothing found</li>
 									</ul>
-								</div>
+				               	@else
+		                            <div id="page-tree" style="padding-left: 5px;">
+										<ul>
+											{{ ViewHelper::makeWikiPageTree($wikiPages, null) }}
+										</ul>
+									</div>
+								@endif
 	                        </ul>
 	                    </li>
 			            <li>
 			            	<a href="{{ route('wikis.pages.create', $wiki->slug) }}"><i class="fa fa-plus-square"></i> New Page</a>
 			            </li>
-	                    <li><a href="#"><i class="fa fa-sort fa-lg"></i> Reorder Pages</a></li>
+	                    <li><a href="{{ route('wikis.pages.reorder', $wiki->slug) }}"><i class="fa fa-sort fa-lg"></i> Reorder Pages</a></li>
 	                    <ul class="nav nav-pills pull-right" id="organization-nav" style="border-bottom: 0px !important;">
 				            <li class="dropdown">
 		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download fa-lg"></i> <i class="fa fa-caret-down"></i></a>

@@ -23,14 +23,14 @@
                 </div>
             	<div class="form-group">
             		<label for="textarea" class="control-label">Description</label>
-        			<textarea name="wiki_description" id="page-description" class="form-control">{{ $wiki->description }}</textarea>
+        			<textarea name="wiki_description" id="page-description" class="form-control">{{ htmlentities($wiki->description) }}</textarea>
             	</div>
             	<ul class="list-unstyled list-inline pull-right">
             		<li>
 		                <input type="submit" class="btn btn-primary" value="Save">
             		</li>
             		<li>
-		                <input type="submit" class="btn btn-default" value="Close">
+		                <a href="{{ route('wikis.show', $wiki->slug) }}" class="btn btn-default">Close</a>
             		</li>
             	</ul>
                 <div class="clearfix"></div>

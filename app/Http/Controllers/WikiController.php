@@ -176,7 +176,8 @@ class WikiController extends Controller
     public function createPage($wikiSlug)
     {
         $wiki = $this->wiki->getWiki($wikiSlug);
-        return view('wiki.page.create', compact('wiki'));
+        $wikiPages = $this->wikiPage->getPages($wiki->id);
+        return view('wiki.page.create', compact('wiki', 'wikiPages'));
     }
 
     /**
@@ -262,10 +263,10 @@ class WikiController extends Controller
      * @param $pageId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updatePage($wikiId, $pageId)
+    public function updatePage($wikiSlug, $pageSlug)
     {
-        $this->wikiPage->updatePage($pageId, $this->request->all());
-        return redirect()->route('wikis.pages.show', [$wikiId, $pageId])->with([
+        $this->wikiPage->updatePage($pageSlug, $this->request->all());
+        return redirect()->route('wikis.pages.show', [$wikiSlug, $pageSlug])->with([
             'alert'      => 'Page successfully updated.',
             'alert_type' => 'success'
         ]);
@@ -278,11 +279,11 @@ class WikiController extends Controller
      * @param $pageId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroyPage($wikiId, $pageId)
+    public function destroyPage($wikiSlug, $pageSlug)
     {
-        $pageDeleted = $this->wikiPage->deletePage($pageId);
+        $pageDeleted = $this->wikiPage->deletePage($pageSlug);
         if($pageDeleted) {
-            return redirect()->route('wikis.show', $wikiId)->with([
+            return redirect()->route('wikis.show', $wikiSlug)->with([
                 'alert' => 'Page successfully deleted.',
                 'alert_type' => 'success'
             ]);
@@ -317,10 +318,10 @@ class WikiController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function pagesReorder($id)
+    public function pagesReorder($wiki_slug)
     {
-        $wiki = $this->wiki->getWiki($id);        
-        $wikiPages = $this->wikiPage->getPages($id);
+        $wiki = $this->wiki->getWiki($wiki_slug);        
+        $wikiPages = $this->wikiPage->getPages($wiki->id);
 
         if($wikiPages) {
             return view('wiki.page.reorder', compact('wikiPages', 'wiki'));

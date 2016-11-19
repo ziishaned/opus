@@ -170,9 +170,9 @@ class WikiPage extends Model
      * @param  array $data
      * @return bool
      */
-    public function updatePage($id, $data)
+    public function updatePage($slug, $data)
     {
-        $this->find($id)->update([
+        $this->where('slug', '=', $slug)->update([
             'name' => $data['page_name'],
             'description' => $data['page_description'],
         ]);
@@ -186,9 +186,9 @@ class WikiPage extends Model
      * @param  int $id
      * @return bool
      */
-    public function deletePage($id)
+    public function deletePage($slug)
     {
-        $query = $this->where('id', '=', $id)->delete();
+        $query = $this->where('slug', '=', $slug)->delete();
 
         if(!$query) {
             return false;

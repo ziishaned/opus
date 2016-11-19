@@ -1,9 +1,16 @@
 /* BASICS */
 
+body {
+    height: 498px !important;
+}
+
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
   height: 300px;
+  /* Custom */
+  font-size: 13px !important;
+  font-family: 'monaco', 'consolas' !important;
 }
 .CodeMirror-scroll {
   /* Set scrolling behaviour here */

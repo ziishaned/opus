@@ -41,11 +41,17 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text-o"></i> Select Page <i class="fa fa-caret-down"></i></a>
                             <ul class="dropdown-menu page-tree-con" style="left: -95px; top: 35px; width: 200px;">
-                                <div id="page-tree">
-                                    <ul>
-                                        {{-- {{ ViewHelper::makeWikiPageTree($wikiPages, $wiki->id) }} --}}
+                                @if($wikiPages->count() == 0)
+                                    <ul class="list-unstyled">
+                                        <li style="text-align: center; font-size: 12px;" class="text-muted"><i class="fa fa-search"></i> Nothing found</li>
                                     </ul>
-                                </div>
+                                @else
+                                    <div id="page-tree">
+                                        <ul>
+                                            {{ ViewHelper::makeWikiPageTree($wikiPages, $wiki->id) }}
+                                        </ul>
+                                    </div>
+                                @endif
                             </ul>
                         </li>
                         <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'wikis/{wiki_slug}/pages/create') class="active" @endif>

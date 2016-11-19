@@ -1,0 +1,57 @@
+.mce-toolbar-grp {
+  background: none !important;
+  background-color: #fbfcf7 !important;
+}
+.mce-btn-group .mce-first,  .mce-btn-group .mce-last{
+  border: none !important;
+}
+.mce-btn-small button {
+  padding: 5px 5px !important;
+  line-height: 20px !important;
+}
+.mce-btn {
+  background-color: #fbfcf7 !important;
+  background-image: none !important;
+  border: none !important;
+}
+.mce-btn-group .mce-last {
+  border-radius: 0 !important;
+}
+.mce-active {
+  background-color: #eee !important;
+}
+.mce-menubtn.mce-btn-small span {
+  line-height: 20px !important;
+}
+.mce-btn span {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif !important;
+}
+.mce-primary button,
+.mce-primary button i {
+  text-shadow: none !important;
+}
+.mce-primary {
+  background-color: #47a447 !important;
+  border-color: #398439 !important;
+}
+.mce-menu-item:hover,
+.mce-menu-item.mce-selected,
+.mce-menu-item:focus {
+  background-color: #ebeff2 !important;
+}
+.mce-menu-item:hover span,
+.mce-menu-item.mce-selected span,
+.mce-menu-item:focus span {
+  color: #000 !important;
+}
+.mce-menu-item-normal.mce-active {
+  background-color: #ebeff2 !important;
+}
+
+.mce-tinymce {
+  border-width: 1px !important;
+  box-shadow: 1px 1px 10px #ccc !important;
+  border-radius: 5px !important;
+  overflow: hidden !important;
+  margin-top: 10px !important;
+}

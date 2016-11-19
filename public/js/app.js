@@ -45,7 +45,8 @@ var App = {
         $(document).on('click', '#edit-comment', function (e) {
             e.preventDefault();
             var curComment = this;
-            var comment = $(this).closest('.comment-box').find('.comment-content').html();
+            var comment = $(this).closest('.comment-box').find('#comment-fedit').text();
+            var commentContent = $(this).closest('.comment-box').find('.comment-content').html();
             if($('#edit-comment-form').length == 0) {
                 var commentId = $(this).attr('data-commentid');
                 var editCommentForm = `
@@ -83,12 +84,14 @@ var App = {
                     /* display statusbar */
                     menubar: false,
                     statusbar: false,
-
+                    valid_elements: '*[*]',
+                    auto_convert_smileys: true,
                     /* plugin */
                     plugins: [
                         "advlist autolink link lists charmap hr anchor pagebreak mention",
                         "searchreplace wordcount visualblocks visualchars code nonbreaking",
-                        "save table contextmenu directionality emoticons template paste textcolor codesample placeholder"
+                        "save table contextmenu directionality emoticons template paste textcolor placeholder",
+                        "leaui_code_editor"
                     ],
                     mentions: {
                         source: function (query, process, delimiter) {
@@ -108,30 +111,16 @@ var App = {
                     browser_spellcheck: true,
                     nonbreaking_force_tab: true,
                     relative_urls: false,
-                    codesample_languages: [
-                        {text: 'HTML/XML', value: 'markup'},
-                        {text: 'JavaScript', value: 'javascript'},
-                        {text: 'CSS', value: 'css'},
-                        {text: 'PHP', value: 'php'},
-                        {text: 'Ruby', value: 'ruby'},
-                        {text: 'Python', value: 'python'},
-                        {text: 'Java', value: 'java'},
-                        {text: 'C', value: 'c'},
-                        {text: 'C#', value: 'csharp'},
-                        {text: 'C++', value: 'cpp'},
-                        {text: 'SQL', value: 'sql'},
-                        {text: 'Bash', value: 'bash'}
-                    ],
-
+                
                     /* toolbar */
-                    toolbar: "bold italic underline | bullist numlist | emoticons link unlink | codesample",
+                    toolbar: "bold italic underline | bullist numlist | emoticons link unlink | leaui_code_editor",
                 });
             }
             $('#close-edit-comment-form').on('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $('#edit-comment-form').remove();
-                $(curComment).closest('.comment-box').find('.comment-content').html(comment);
+                $(curComment).closest('.comment-box').find('.comment-content').html(commentContent);
             });
         });
         $(document).find('#add-to-invite-list').on('click', function() {
@@ -402,7 +391,7 @@ $(document).ready(function() {
     tinymce.init({
         /* replace textarea having class .tinymce with tinymce editor */
         selector: "#page-description",
-        content_css : "/css/bootstrap.min.css,/css/tinymce.css", 
+        content_css : "/css/bootstrap.min.css,/css/tinymce.css,/js/plugins/leaui_code_editor/css/pre.css", 
 
         /* theme of the editor */
         theme: "modern",
@@ -414,13 +403,14 @@ $(document).ready(function() {
         
         /* display statusbar */
         menubar: false,
-        statubar: false,
-        
+        statusbar: false,
+        valid_elements: '*[*]',
         /* plugin */
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-            "save table contextmenu directionality emoticons template paste textcolor codesample placeholder smileys"
+            "save table contextmenu directionality emoticons template paste textcolor placeholder smileys",
+            "leaui_code_editor codemirror"
         ],
 		paste_webkit_styles: "all",
 		paste_retain_style_properties: "all",
@@ -428,26 +418,38 @@ $(document).ready(function() {
 		browser_spellcheck: true,
 		nonbreaking_force_tab: true,
         relative_urls: false,
-        codesample_languages: [
-            {text: 'HTML/XML', value: 'markup'},
-            {text: 'JavaScript', value: 'javascript'},
-            {text: 'CSS', value: 'css'},
-            {text: 'PHP', value: 'php'},
-            {text: 'Ruby', value: 'ruby'},
-            {text: 'Python', value: 'python'},
-            {text: 'Java', value: 'java'},
-            {text: 'C', value: 'c'},
-            {text: 'C#', value: 'csharp'},
-            {text: 'C++', value: 'cpp'},
-            {text: 'SQL', value: 'sql'},
-            {text: 'Bash', value: 'bash'}
-        ],
         auto_convert_smileys: true,
         
         /* toolbar */
         toolbar: [
-        	"styleselect | bold italic underline forecolor backcolor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | image media | link unlink table | preview smileys codesample code | undo redo | localautosave",
+        	"styleselect | bold italic underline forecolor backcolor | leaui_code_editor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | image media | link unlink table | smileys preview code | undo redo | localautosave",
         ],
+        codemirror: {
+            indentOnInit: true,
+            fullscreen: false,
+            path: 'CodeMirror',
+            config: {
+                // theme: 'monokai',
+                tabSize: 4, 
+                mode: 'htmlmixed',
+                extraKeys: {"Ctrl-Space": "autocomplete"},
+                lineNumbers: true,
+                styleActiveLine: true
+            },
+            width: 800,
+            height: 500,        
+            cssFiles: [
+                'addon/hint/show-hint.css',
+                // 'theme/monokai.css',
+            ],
+            jsFiles: [          
+               'mode/htmlmixed/htmlmixed.js',
+               'addon/hint/show-hint.js',
+               'addon/hint/html-hint.js',
+               'addon/hint/css-hint.js',
+               'addon/hint/xml-hint.js',
+            ]
+          },
     });
 
     tinymce.init({
@@ -467,12 +469,17 @@ $(document).ready(function() {
         /* display statusbar */
         menubar:false,
         statubar: false,
+        paste_webkit_styles: "all",
+        paste_retain_style_properties: "all",
+        valid_elements: '*[*]',
+        auto_convert_smileys: true,
         
         /* plugin */
         plugins: [
             "advlist autolink link lists charmap hr anchor pagebreak mention",
             "searchreplace wordcount visualblocks visualchars code nonbreaking",
-            "save table contextmenu directionality emoticons template paste textcolor codesample placeholder"
+            "save table contextmenu directionality emoticons template paste textcolor placeholder",
+            "leaui_code_editor"
         ],
         mentions: {
             source: function (query, process, delimiter) {
@@ -486,29 +493,13 @@ $(document).ready(function() {
                 return '<a href="/users/'+item.slug+'" style="font-weight: bold;">@' + item.name + '</a>';
             }
         },
-        paste_webkit_styles: "all",
-        paste_retain_style_properties: "all",
 
         browser_spellcheck: true,
         nonbreaking_force_tab: true,
         relative_urls: false,
-        codesample_languages: [
-            {text: 'HTML/XML', value: 'markup'},
-            {text: 'JavaScript', value: 'javascript'},
-            {text: 'CSS', value: 'css'},
-            {text: 'PHP', value: 'php'},
-            {text: 'Ruby', value: 'ruby'},
-            {text: 'Python', value: 'python'},
-            {text: 'Java', value: 'java'},
-            {text: 'C', value: 'c'},
-            {text: 'C#', value: 'csharp'},
-            {text: 'C++', value: 'cpp'},
-            {text: 'SQL', value: 'sql'},
-            {text: 'Bash', value: 'bash'}
-        ],
 
         /* toolbar */
-        toolbar: "bold italic underline | bullist numlist | emoticons link unlink | codesample",
+        toolbar: "bold italic underline | bullist numlist | emoticons link unlink | leaui_code_editor",
     });
 
     $("#page-tree").fancytree({
