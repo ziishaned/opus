@@ -24,8 +24,8 @@
     <div class="row" style="margin-top: 15px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <ul class="list-unstyled">
-                @foreach($activities as $activity)
-                    <li>
+                {{-- @foreach($activities as $activity) --}}
+                    {{-- <li>
                         <div class="activity">
                             <div class="row">
                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
@@ -47,14 +47,14 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
-                @endforeach
+                    </li> --}}
+                {{-- @endforeach --}}
             </ul>
         </div>
     </div>
-    <div class="row text-center">
+    {{-- <div class="row text-center">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             {{ $activities->links() }}
         </div>
-    </div>
+    </div> --}}
 @endsection

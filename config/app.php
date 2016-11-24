@@ -180,7 +180,6 @@ return [
         App\Providers\HelperServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         
-        Spatie\Activitylog\ActivitylogServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
     ],
 

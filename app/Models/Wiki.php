@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -133,7 +132,6 @@ class Wiki extends Model
             'wiki_type'       =>  !empty($data['organization_id']) ? 'organization' : 'personal',
         ]);
 
-        ActivityLogHelper::createWiki($wiki);
         return $wiki;
     }
 

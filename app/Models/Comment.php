@@ -5,7 +5,6 @@ namespace App\Models;
 use Auth;
 use Carbon\Carbon;
 use App\Models\WikiPage;
-use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -80,7 +79,6 @@ class Comment extends Model
     {
         $commentStarred = DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->first();
         if(is_null($commentStarred)) {
-            ActivityLogHelper::likeComment($id);
             DB::table('user_star')->insert([
                 'entity_id'     => $id,
                 'entity_type'   => 'comment',
@@ -104,7 +102,6 @@ class Comment extends Model
     public function storeComment($pageSlug, $data)
     {
         $page = (new wikiPage)->getPage($pageSlug);
-        ActivityLogHelper::createComment($page, $data['comment']);
         $this->create([
             'page_id'    => $page->id,
             'content'    => $data['comment'],
