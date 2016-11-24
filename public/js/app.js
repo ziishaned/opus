@@ -3,6 +3,18 @@ var App = {
         this.params = params;
         this.bindUI();
         this.initSelectize();
+        this.sideBar();
+    },
+    sideBar: function() {
+        var pin_sidebar = Cookies.get('pin_sidebar');
+        if(pin_sidebar == 'true') {
+            $('#wrapper').addClass('toggled');
+            $('#pin-sidebar').css('transform', 'rotate(0deg)');
+        } 
+        if(pin_sidebar == 'false') {
+            $('#wrapper').removeClass('toggled');
+            $('#pin-sidebar').css('transform', 'rotate(90deg)');
+        }
     },
     inviteUserToOrganization: function (userId, organizationId) {
         $.ajax({
@@ -42,6 +54,10 @@ var App = {
     },
     bindUI: function () {
         var that = this;
+        $(document).on('click', '#logout', function(event) {
+            event.preventDefault();
+            Cookies.set('pin_sidebar', 'true');
+        });
         $(document).on('click', '#edit-comment', function (e) {
             e.preventDefault();
             var curComment = this;
@@ -168,6 +184,24 @@ var App = {
             var commentId = $(this).attr('data-commentid');
             that.starComment(commentId);
         });
+
+        $(document).on('click', '#pin-sidebar', function(event) {
+            event.preventDefault();
+            that.pinSideBar();            
+        });
+    },
+    pinSideBar: function() {
+        var pin_sidebar = Cookies.get('pin_sidebar');
+        if(pin_sidebar == 'true') {
+            $('#pin-sidebar').css('transform', 'rotate(90deg)');
+            Cookies.set('pin_sidebar', 'false');
+        } else if(pin_sidebar == 'false') {
+            $('#pin-sidebar').css('transform', 'rotate(0deg)');
+            Cookies.set('pin_sidebar', 'true');
+        } else {
+            $('#pin-sidebar').css('transform', 'rotate(90deg)');
+            Cookies.set('pin_sidebar', 'false');
+        }
     },
     starComment: function(id) {
         $.ajax({
@@ -552,4 +586,20 @@ $(document).ready(function() {
             }
         },
     });
+});
+
+// Wiki Menu fix after specific srolling of page
+$(document).scroll(function() {
+    var y = $(document).scrollTop(), //get page y value 
+        header = $(".test");
+    if(y >= 80)  {
+        var sidebar = $('#wrapper').hasClass('toggled');
+        if(!sidebar) {
+            header.css('margin-left', '255px');
+        }
+        header.addClass('search')
+    } else {
+        header.css('margin-left', '0px');
+        header.removeClass('search');
+    }
 });

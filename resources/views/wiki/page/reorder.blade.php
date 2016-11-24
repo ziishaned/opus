@@ -41,7 +41,9 @@
 			            <li>
 			            	<a href="{{ route('wikis.pages.create', $wiki->slug) }}"><i class="fa fa-plus-square"></i> New Page</a>
 			            </li>
-	                    <li><a href="{{ route('wikis.pages.reorder', $wiki->slug) }}"><i class="fa fa-sort fa-lg"></i> Reorder Pages</a></li>
+	                    <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'wikis/{wiki_slug}/pages/reorder') class="active" @endif>
+	                    	<a href="{{ route('wikis.pages.reorder', $wiki->slug) }}"><i class="fa fa-sort fa-lg"></i> Reorder Pages</a>
+	                    </li>
 	                    <ul class="nav nav-pills pull-right" id="organization-nav" style="border-bottom: 0px !important;">
 				            <li class="dropdown">
 		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download fa-lg"></i> <i class="fa fa-caret-down"></i></a>
@@ -70,23 +72,19 @@
 			</div>		
 			<div class="row">
 			    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-			    	{{-- <div class="panel panel-default"> --}}
-		                {{-- <div class="panel-heading"> --}}
-		                    <h3 class="panel-title" style="margin-top: 4px;">Page Tree</h3>
-		        			<p class="text-muted" style="margin-bottom: 0;">You can move any page by dragging it to a new position in the tree. </p>
-		                {{-- </div> --}}
-		                <div class="list-group" style="padding-top: 8px; padding-bottom: 8px;">
-		                	@if($wikiPages->count() == 0)
-			                	<li class="list-group-item" style="background-color: #ffffff; text-align: center;">Nothing found</li>
-			               	@else
-			                    <div id="page-tree">
-									<ul>
-										{{ ViewHelper::makeWikiPageTree($wikiPages, null) }}
-									</ul>
-								</div>
-							@endif
-		                </div>
-		            {{-- </div> --}}
+                    <h3 class="panel-title" style="margin-top: 10px; color: #555 !important;">Page Tree</h3>
+        			<p class="text-muted" style="margin-bottom: 0;">You can move any page by dragging it to a new position in the tree. </p>
+	                <div class="list-group" style="padding-top: 8px; padding-bottom: 8px;">
+	                	@if($wikiPages->count() == 0)
+		                	<li class="list-group-item" style="background-color: #ffffff; text-align: center;">Nothing found</li>
+		               	@else
+		                    <div id="page-tree">
+								<ul>
+									{{ ViewHelper::makeWikiPageTree($wikiPages, null) }}
+								</ul>
+							</div>
+						@endif
+	                </div>
 			    </div>
 			</div>
 		</div>

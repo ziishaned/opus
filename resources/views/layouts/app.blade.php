@@ -24,32 +24,16 @@
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
-    <style>
-        .syntaxhighlighter::-webkit-scrollbar {
-            width: 8px; 
-            height: 8px;
-            background-color: rgba(0,0,0,0);
-            -webkit-border-radius: 100px;
-        }
-        .syntaxhighlighter::-webkit-scrollbar:hover {
-            background-color: rgba(0, 0, 0, 0.09);
-        }
-        .syntaxhighlighter::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.5);
-            -webkit-border-radius: 100px;
-        }
-        .syntaxhighlighter::-webkit-scrollbar-thumb:active {
-            background: rgba(0,0,0,0.61); / Some darker color when you click it */
-            -webkit-border-radius: 100px;
-        }
-    </style>
 </head>
 <body>
     <div id="wrapper">
         @if(Auth::user())
-            <div id="sidebar-wrapper">
+            <div id="sidebar-wrapper" style="margin-top: 50px;">
                 <ul class="sidebar-nav">
-                    <li>
+                    <li style="position: absolute; top: -15px; right: 22px;">
+                        <i class="fa fa-fw fa-thumb-tack fa-lg" id="pin-sidebar" style="color: #e4e4e4; cursor: pointer;" title="Pin sidebar"></i>
+                    </li>
+                    <li style="margin-top: 15px;">
                         <a href="{{ route('dashboard')  }}">Dashboard</a>
                     </li>
                     <li>
@@ -83,7 +67,7 @@
                 </div>
             @endif
 
-            <div class="main-body" id="page-content-wrapper" style="margin-top: 45px;">
+            <div class="main-body" id="page-content-wrapper" style="margin-top: 50px;">
                 <div class="container-fluid">
                     @yield('content')
                 </div>
@@ -106,6 +90,7 @@
 <script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/view.js"></script>
+<script src="/js/js.cookie.js"></script>
 
 {{-- Syntax Highlighter --}}
 

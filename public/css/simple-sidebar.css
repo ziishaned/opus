@@ -31,7 +31,7 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #666;
+    background: rgba(0, 0, 0, 0.61);
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -70,14 +70,14 @@
 }
 
 .sidebar-nav li a {
-    padding: 7px 22px;
-    font-size: 15px;
+    padding: 5px 22px;
+    font-size: 13px;
     line-height: 24px;
     display: block;
     text-decoration: none;
     font-weight: normal;
     outline: none;
-    color: #ccc;
+    color: #ffffff;
 }
 
 .sidebar-nav li a:hover {

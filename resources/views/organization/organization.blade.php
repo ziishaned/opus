@@ -1,17 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.partials.organization-nav')
-    <div class="row" style="margin-top: 20px;">
-        @if(ViewHelper::userHasOrganization($organization->slug))
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div class="row text-center">
+        <div class="center-block">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="user-profile-pic">
-                    <img src="/images/no_organization_avatar.png" class="img-responsive img-rounded" alt="Image">
+                    <img src="/images/no_organization_avatar.png" class="img-rounded" width="90" height="90" alt="Image" style="border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);">
                 </div>
                 <p style="margin-top: 5px; margin-bottom: 0; font-size: 24px; font-weight: 600;">{{'@' . $organization->name }}</p>
                 <p style="margin-top: 5px;"><i class="fa fa-clock-o"></i> Joined on {{ $organization->created_at->toFormattedDateString()  }}</p>
             </div>
-            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        </div>
+    </div>
+    @include('layouts.partials.organization-nav')
+    <div class="row" style="margin-top: 20px;">
+        @if(ViewHelper::userHasOrganization($organization->slug))
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row" style="display: flex; align-items: center;">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <h3 style="margin: 0; font-size: 19px;">All Wikis</h3>
@@ -56,7 +60,7 @@
                         @else
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <h3 style="font-size: 17px; font-weight: 600; color: #777777; box-shadow: 0 0 10px rgba(0,0,0,0.05); background-color: #ffffff; text-align: center; padding: 15px 0px 15px 0px; border: 1px solid #ccc; border-radius: 4px; margin: 0; margin-top: 5px;">Nothing found</h3>
+                                    <h3 style="font-size: 17px; font-weight: 600; color: #777777; text-align: center; padding: 15px 0px 15px 0px; margin: 0; margin-top: 5px;"><i class="fa fa-search"></i> Nothing found...</h3>
                                 </div>
                             </div>
                         @endif

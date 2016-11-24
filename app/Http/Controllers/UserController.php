@@ -156,4 +156,19 @@ class UserController extends Controller
             'message' => 'User successfully unfollowed.'
         ], Response::HTTP_CREATED);
     }
+
+    public function profileSettings()
+    {
+        return view('user.setting.profile');
+    }
+
+    public function accountSettings()
+    {
+        return view('user.setting.account');
+    }
+
+    public function emailsSettings()
+    {
+        return view('user.setting.emails');
+    }
 }

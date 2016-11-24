@@ -20,35 +20,6 @@
                 <button type="button" class="btn btn-default">Go</button>
             </div>
         </div>
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                <img src="/images/default.png" style="width: 100px;" class="img-responsive" alt="Image">
-            </div>
-            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="padding-left: 0px;">
-                <h4 style="margin: 0px;"><a href="#">John Doe</a></h4>
-                <div class="activity">
-                    <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-text-o"></i> <a href="#">What is our motive.</a></p>
-                    <p style="padding-left: 17px; margin-bottom: 0;">Updated 3 hours ago</p>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                <img src="/images/default.png" style="width: 100px;" class="img-responsive" alt="Image">
-            </div>
-            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="padding-left: 0px;">
-                <h4 style="margin: 0px;"><a href="#">John Doe</a></h4>
-                <div class="activity">
-                    <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-image-o"></i> <a href="#">Screenshot-08-10-201.png</a></p>
-                    <p style="padding-left: 17px; margin-bottom: 0;">Attached today at 3:45 PM</p>
-                </div>
-                <div class="activity">
-                    <p style="margin-top: 5px; margin-bottom: 0;"><i class="fa fa-file-image-o"></i> <a href="#">Screenshot-08-10-201.png</a></p>
-                    <p style="padding-left: 17px;">Attached today at 3:45 PM</p>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="panel panel-default">
@@ -64,10 +35,10 @@
                     @foreach($wikis as $wiki)
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                     <a href="{{ route('wikis.show', $wiki->slug) }}">{{ $wiki->name }}</a>
                                 </div>
-                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
                                     <span style="color: #888;">{{ ViewHelper::getWikiStar($wiki->id) }} <i class="fa fa-star"></i></span>
                                 </div>
                             </div>

@@ -219,6 +219,24 @@ Route::patch('/comments/{id}', [
 |--------------------------------------------------------------------------
 */
 Route::get('/help', [
-    'uses' => 'HomeController@help',
-    'as'   => 'help',
+    'uses'  =>  'HomeController@help',
+    'as'    =>  'help',
+]);
+
+/*
+|--------------------------------------------------------------------------
+| Settings Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/settings/profile', [
+    'uses'  =>  'UserController@profileSettings',
+    'as'    =>  'settings.profile',
+]);
+Route::get('/settings/account', [
+    'uses'  =>  'UserController@accountSettings',
+    'as'    =>  'settings.account',
+]);
+Route::get('/settings/emails', [
+    'uses'  =>  'UserController@emailsSettings',
+    'as'    =>  'settings.emails',
 ]);

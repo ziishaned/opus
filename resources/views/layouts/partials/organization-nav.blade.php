@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <ul class="nav nav-pills" id="organization-nav">
+        <ul class="nav nav-pills" id="organization-nav" style="display: flex; justify-content: center;">
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}') class="active" @endif><a href="{{ route('organizations.show', $organization->slug) }}">Organization</a></li>
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/members') class="active" @endif><a href="{{ route('organizations.members', $organization->slug) }}">Members</a></li>
             @if(\App\Helpers\ViewHelper::userHasOrganization($organization->slug))

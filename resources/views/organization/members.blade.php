@@ -1,18 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="row text-center">
+        <div class="center-block">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="user-profile-pic">
+                    <img src="/images/no_organization_avatar.png" class="img-rounded" width="90" height="90" alt="Image" style="border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);">
+                </div>
+                <p style="margin-top: 5px; margin-bottom: 0; font-size: 24px; font-weight: 600;">{{'@' . $organization->name }}</p>
+                <p style="margin-top: 5px;"><i class="fa fa-clock-o"></i> Joined on {{ $organization->created_at->toFormattedDateString()  }}</p>
+            </div>
+        </div>
+    </div>
     @include('layouts.partials.organization-nav')
-    <div class="row" style="margin-top: 20px;">
+    <div class="row" style="margin-top: 13px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3 style="margin: 0; font-size: 19px;">Existing users</h3>
+                    <h3 style="margin: 0; margin-top: 6px; font-size: 17px;">Existing users</h3>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <form class="project-filter-form" id="project-filter-form" action="/lundskommun" accept-charset="UTF-8" method="get">
                         <div class="row">
                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
-                                <input type="search" name="filter_wikis" id="filter_wikis" placeholder="Find existing members by name" class="wikis-list-filter form-control">
+                                <input type="search" name="filter_wikis" id="filter_wikis" placeholder="Filter by name" class="wikis-list-filter form-control">
+                                <span class="fa fa-search" style="position: absolute; top: 10px; right: 23px; color: #e7e9ed;"></span>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -26,7 +38,7 @@
                         <div class="panel-heading" style="font-size: 15px; padding: 6px 16px; line-height: 36px; color: #5c5c5c; background-color: #fafafa; border-color: #e5e5e5;">
                             <div class="row">
                                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                    Users with access to <strong>{{ $organization->name  }}</strong> <span class="badge">{{ $organization->members->count()  }}</span>
+                                    Users with access to <strong>{{ $organization->name  }}</strong> <span class="count" style="border-radius: 3px; padding: 0px 8px; color: #fff; background: #555;">{{ $organization->members->count()  }}</span>
                                 </div>
                                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right">
                                     <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border: none; background: none;">Role <i class="fa fa-caret-down"></i></a>

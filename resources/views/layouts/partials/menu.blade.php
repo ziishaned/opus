@@ -48,10 +48,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('users.show', $loggedInUser->slug) }}">Profile</a></li>
-                            <li><a href="#">Settings</a></li>
+                            <li><a href="{{ route('settings.profile') }}">Settings</a></li>
                             <li class="divider"></li>
                             <li>
-                                <a href="{{ url('/logout') }}"
+                                <a href="{{ url('/logout') }}" id="logout" 
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     Logout

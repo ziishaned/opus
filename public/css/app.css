@@ -18,11 +18,21 @@ hr {
     margin: 12px 0px 12px 0px;
 }
 
+label {
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 /*li, a, p, input, select, div {*/
 	/*font-family: "Source Sans Pro";*/
 /*}*/
 li, a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
     font-family: "Open Sans";
+}
+
+.text-muted {
+    font-size: 13px;
 }
 
 .user-invite-list {
@@ -69,6 +79,7 @@ li, a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
 
 #organization-nav>li>a, #help-tabs>li>a {
     color: #555 !important;
+    font-size: 13px;
 }
 
 #organization-nav li.active, #help-tabs li.active {
@@ -495,4 +506,77 @@ kbd {
     overflow-y: hidden !important; 
     overflow-x: auto !important; 
     margin-top: 0px !important;
+}
+
+span.fancytree-focused span.fancytree-title {
+    outline: none !important;
+}
+
+.search {
+  position: fixed;
+    top: 50px;
+    left: 20px;
+    right: 20px;
+    background: #fff;
+    z-index: 100;
+}
+
+.main-wrapper {
+    box-shadow: -0px 0px 15px #ababab;
+    min-height: 100%;
+    overflow: auto;
+}
+
+.navbar-default .navbar-toggle:hover {
+    background-color: #f8f8f8 !important;
+}
+
+.syntaxhighlighter::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px;
+    background-color: rgba(0,0,0,0);
+    -webkit-border-radius: 100px;
+}
+.syntaxhighlighter::-webkit-scrollbar:hover {
+    background-color: rgba(0, 0, 0, 0.09);
+}
+.syntaxhighlighter::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.5);
+    -webkit-border-radius: 100px;
+}
+.syntaxhighlighter::-webkit-scrollbar-thumb:active {
+    background: rgba(0,0,0,0.61); / Some darker color when you click it */
+    -webkit-border-radius: 100px;
+}
+
+#pin-sidebar {
+    transition: all 0.3s ease;
+}
+
+.activity a {
+    color: #333;
+    font-weight: 600;
+}
+
+.activity p {
+    color: #5c5c5c;
+}
+
+.dim-input {
+    background-color: #fafafa !important;
+}
+
+.dim-input:focus {
+    background-color: #fff !important;
+}
+
+#delete-account {
+    color: #911;
+}
+
+#delete-account:hover {
+    color: #fff !important;
+    background-color: #911 !important;
+    background-image: linear-gradient(#ec5757, #c71616) !important;
+    border-color: #911 !important;
 }
