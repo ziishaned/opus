@@ -202,8 +202,13 @@ class WikiPage extends Model
      */
     public function star($id)
     {
-        $pageStarred = DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->first();
-        if(is_null($pageStarred)) {
+        $star = DB::table('user_star')
+                    ->where('entity_id', '=', $id)
+                    ->where('user_id', '=', Auth::user()->id)
+                    ->where('entity_type', '=', 'page')
+                    ->first();
+
+        if(is_null($star)) {
             DB::table('user_star')->insert([
                 'entity_id'     => $id,
                 'entity_type'   => 'page',
@@ -213,7 +218,37 @@ class WikiPage extends Model
             ]);
             return true;
         }
-        DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->delete();
+        DB::table('user_star')
+            ->where('entity_id', '=', $id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'page')
+            ->delete();
+        return false;
+    }
+
+    public function watch($id)
+    {
+        $watch = DB::table('user_watch')
+                           ->where('entity_id', '=', $id)
+                           ->where('user_id', '=', Auth::user()->id)
+                           ->where('entity_type', '=', 'page')
+                           ->first();
+
+        if(is_null($watch)) {
+            DB::table('user_watch')->insert([
+                'entity_id'     => $id,
+                'entity_type'   => 'page',
+                'user_id'       => Auth::user()->id,
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
+            ]);
+            return true;
+        }
+        DB::table('user_watch')
+            ->where('entity_id', '=', $id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'page')
+            ->delete();
         return false;
     }
 

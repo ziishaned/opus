@@ -77,13 +77,23 @@ class ViewHelper
         return DB::table('user_star')->where('entity_type', '=', 'comment')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
     }
 
+    public static function getWikiStar($id)
+    {
+        return DB::table('user_star')->where('entity_type', '=', 'wiki')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
+    }
+
     public static function getPageStar($id)
     {
         return DB::table('user_star')->where('entity_type', '=', 'page')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
     }
 
-    public static function getWikiStar($id)
+    public static function getWikiWatch($id)
     {
-        return DB::table('user_star')->where('entity_type', '=', 'wiki')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
+        return DB::table('user_watch')->where('entity_type', '=', 'wiki')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
+    }
+
+    public static function getPageWatch($id)
+    {
+        return DB::table('user_watch')->where('entity_type', '=', 'page')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
     }
 }

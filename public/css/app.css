@@ -3,9 +3,9 @@ html {
 }
 
 body {
-    /*-webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    -webkit-text-stroke: 0.25px;*/
+    -webkit-text-stroke: 0.10px;
     height: 100%;
     display: none;
 }
@@ -22,6 +22,10 @@ label {
     color: #666;
     font-size: 14px;
     font-weight: 600;
+}
+
+button {
+    outline: none !important;
 }
 
 /*li, a, p, input, select, div {*/
@@ -439,7 +443,7 @@ span.fancytree-active span.fancytree-title {
     display: block;
     border-width: 10px 12px 10px 0;
     border-style: solid;
-    top: 21px;
+    top: 8px;
     border-color: transparent #c0c0c0;
     left: 3px;
 }
@@ -453,7 +457,7 @@ span.fancytree-active span.fancytree-title {
     border-width: 10px 12px 10px 0;
     border-style: solid;
     border-color: transparent #fbfcf7;
-    top: 21px;
+    top: 8px;
     left: 4px;
 }
 
@@ -579,4 +583,11 @@ span.fancytree-focused span.fancytree-title {
     background-color: #911 !important;
     background-image: linear-gradient(#ec5757, #c71616) !important;
     border-color: #911 !important;
+}
+
+button .loader {
+    float: right;
+    padding-left: 10px;
+    padding-top: 2px;
+    display: none;
 }

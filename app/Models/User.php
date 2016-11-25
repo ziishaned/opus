@@ -177,7 +177,7 @@ class User extends Authenticatable
      */
     public function getUser($userSlug)
     {
-        $user = $this->where('slug', '=', $userSlug)->with(['organization', 'organizations', 'starWikis', 'starPages', 'watchWikis', 'watchPages', 'followers', 'following', 'wikis'])->first();
+        $user = $this->where('slug', '=', $userSlug)->with(['organization', 'organizations', 'starWikis', 'watchWikis', 'followers', 'following', 'wikis'])->first();
         
         if($user) {
             return $user;

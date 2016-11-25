@@ -40,16 +40,16 @@
                         <a href="{{ route('users.organizations', Auth::user()->slug)  }}">Organizations <span class="count">{{ $loggedInUser->organizations->count()  }}</span></a>
                     </li>
                     <li>
-                        <a href="#">Favourite <span class="count">{{ $loggedInUser->starWikis->count() + $loggedInUser->starPages->count()  }}</span></a>
+                        <a href="#">Favourite <span class="count">{{ $loggedInUser->starWikis->count()  }}</span></a>
                     </li>
                     <li>
-                        <a href="#">Watch <span class="count">{{ $loggedInUser->watchWikis->count() + $loggedInUser->watchPages->count() }}</span></a>
+                        <a href="#">Watch <span class="count">{{ $loggedInUser->watchWikis->count() }}</span></a>
                     </li>
                     <li>
                         <a href="#">Discover</a>
                     </li>
                     <li>
-                        <a href="{{ route('help')  }}">Help</a>
+                        <a href="{{ route('help') }}">Help</a>
                     </li>
                     <li>
                         <a href="#">Profile Settings</a>

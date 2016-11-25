@@ -12,6 +12,7 @@ $(document).ready(function() {
                 complete : function() {
                     setTimeout(function() {
                         $(".spinner").hide();
+                        $("button .loader").hide();
                     }, 300);
                 }
             });

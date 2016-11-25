@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -183,5 +185,58 @@ class Wiki extends Model
         $query = $query->where('name', 'like', '%' . $text . '%')->get();   
 
         return $query;
+    }
+
+    public function star($id)
+    {
+        $wikiStarred = DB::table('user_star')
+                           ->where('entity_id', '=', $id)
+                           ->where('user_id', '=', Auth::user()->id)
+                           ->where('entity_type', '=', 'wiki')
+                           ->first();
+
+        if(is_null($wikiStarred)) {
+            DB::table('user_star')->insert([
+                'entity_id'     => $id,
+                'entity_type'   => 'wiki',
+                'user_id'       => Auth::user()->id,
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
+            ]);
+            return true;
+        }
+
+        DB::table('user_star')
+            ->where('entity_id', '=', $id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'wiki')
+            ->delete();
+        return false;
+    }
+
+    public function watch($id)
+    {
+        $wikiWacthed = DB::table('user_watch')
+                           ->where('entity_id', '=', $id)
+                           ->where('user_id', '=', Auth::user()->id)
+                           ->where('entity_type', '=', 'wiki')
+                           ->first();
+
+        if(is_null($wikiWacthed)) {
+            DB::table('user_watch')->insert([
+                'entity_id'     => $id,
+                'entity_type'   => 'wiki',
+                'user_id'       => Auth::user()->id,
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
+            ]);
+            return true;
+        }
+        DB::table('user_watch')
+            ->where('entity_id', '=', $id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'wiki')
+            ->delete();
+        return false;
     }
 }

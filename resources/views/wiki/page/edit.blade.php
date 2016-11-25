@@ -1,12 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <h3 style="margin: 0; margin-bottom: 10px;">Edit Page</h3>
-        </div>
-    </div>
-	<div class="row">
+    @include('layouts.partials.page-nav')
+	<div class="row" style="padding-top: 10px;">
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	    	<form action="{{ route('pages.update', [$page->wiki->slug, $page->slug]) }}" method="POST" role="form" style="margin-bottom: 10px;">
              	{!! method_field('patch') !!}

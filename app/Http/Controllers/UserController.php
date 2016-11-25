@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function show($userSlug)
     {
-        $user       = $this->user->getUser($userSlug);
+        $user = $this->user->getUser($userSlug);
 
         if($user) {
             return view('user.user', compact('user'));

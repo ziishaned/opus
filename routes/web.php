@@ -117,6 +117,12 @@ Route::get('/organizations/search/{text}', [
 |--------------------------------------------------------------------------
 */
 
+Route::post('/wikis/{id}/watch', [
+    'uses'  =>  'WikiController@watchWiki',
+]);
+Route::post('/wikis/{id}/star', [
+    'uses'  =>  'WikiController@starWiki',
+]);
 Route::get('/wikis/create', [
     'uses'  =>  'WikiController@create',
     'as'    =>  'wikis.create'
@@ -185,6 +191,9 @@ Route::delete('/wikis/{wiki_slug}/pages/{page_slug}', [
 Route::post('/pages/{id}/star', [
     'uses'  =>  'WikiController@starPage',
     'as'    =>  'pages.star',
+]);
+Route::post('/pages/{id}/watch', [
+    'uses'  =>  'WikiController@watchPage',
 ]);
 Route::post('/wikis/{wiki_slug}/pages/{page_slug}/comments', [
     'uses'  =>  'CommentController@store',

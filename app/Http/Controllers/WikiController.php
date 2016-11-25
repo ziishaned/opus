@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 use App\Models\Wiki;
 use App\Models\WikiPage;
@@ -123,8 +124,64 @@ class WikiController extends Controller
             abort('404');
         }
         
+        array_add($wiki, 'wiki_like', $this->isWikiLiked($wiki->id));
+        array_add($wiki, 'wiki_watching', $this->isWikiWatching($wiki->id));
+
         $wikiPages = $this->wikiPage->getPages($wiki->id);
         return view('wiki.wiki', compact('wikiPages', 'wiki'));
+    }
+
+    public function isWikiWatching($id)
+    {
+        $wikiWatching = DB::table('user_watch')
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'wiki')
+            ->where('entity_id', '=', $id)
+            ->first();
+        if(is_null($wikiWatching)) {
+            return false;
+        } 
+        return true;
+    }
+
+    public function isPageWatching($id)
+    {
+        $pageWatching = DB::table('user_watch')
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'page')
+            ->where('entity_id', '=', $id)
+            ->first();
+
+        if(is_null($pageWatching)) {
+            return false;
+        } 
+        return true;
+    }
+
+    public function isWikiLiked($id)
+    {
+        $likeWiki = DB::table('user_star')
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'wiki')
+            ->where('entity_id', '=', $id)
+            ->first();
+        if(is_null($likeWiki)) {
+            return false;
+        } 
+        return true;
+    }
+
+    public function isPageLiked($id)
+    {
+        $likePage = DB::table('user_star')
+            ->where('user_id', '=', Auth::user()->id)
+            ->where('entity_type', '=', 'page')
+            ->where('entity_id', '=', $id)
+            ->first();
+        if(is_null($likePage)) {
+            return false;
+        } 
+        return true;
     }
 
     /**
@@ -136,7 +193,8 @@ class WikiController extends Controller
     public function edit($nameSlug)
     {
         $wiki = $this->wiki->getWiki($nameSlug);
-        return view('wiki.edit', compact('wiki'));
+        $wikiPages = $this->wikiPage->getPages($wiki->id);
+        return view('wiki.edit', compact('wiki', 'wikiPages'));
     }
 
     /**
@@ -240,13 +298,13 @@ class WikiController extends Controller
     {
         $wiki = $this->wiki->getWiki($wikiSlug);
         $page = $this->wikiPage->getPage($pageSlug);
-        if(!$page) {
-            abort('404');
-        }
-        
         $wikiPages = $this->wikiPage->getPages($wiki->id);
+
+        array_add($page, 'page_like', $this->isPageLiked($page->id));
+        array_add($page, 'page_watching', $this->isPageWatching($page->id));
+
         if($wikiPages) {
-            return view('wiki.page.page', compact('wikiPages', 'page'));
+            return view('wiki.page.page', compact('wikiPages', 'page', 'wiki'));
         }
         return response()->json([
             'message' => 'Resource not found.'
@@ -262,8 +320,10 @@ class WikiController extends Controller
      */
     public function editPage($wikiSlug, $pageSlug)
     {
+        $wiki = $this->wiki->getWiki($wikiSlug);
         $page = $this->wikiPage->getPage($pageSlug);
-        return view('wiki.page.edit', compact('wikiSlug', 'page'));
+        $wikiPages = $this->wikiPage->getPages($wiki->id);
+        return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages'));
     }
 
     /**
@@ -352,5 +412,44 @@ class WikiController extends Controller
         return response()->json([
             'message' => 'Page parent has been changed.'
         ], Response::HTTP_OK);
+    }
+
+    public function starWiki($id)
+    {
+        $star = $this->wiki->star($id);
+        if($star) {
+            return response()->json([
+                'star' => true
+            ], Response::HTTP_CREATED);
+        }
+        return response()->json([
+            'unstar' => true
+        ], Response::HTTP_ACCEPTED);
+    }
+
+    public function watchWiki($id)
+    {
+        $watch = $this->wiki->watch($id);
+        if($watch) {
+            return response()->json([
+                'watch' => true
+            ], Response::HTTP_CREATED);
+        }
+        return response()->json([
+            'unwatch' => true
+        ], Response::HTTP_ACCEPTED);
+    }
+
+    public function watchPage($id)
+    {
+        $watch = $this->wikiPage->watch($id);
+        if($watch) {
+            return response()->json([
+                'watch' => true
+            ], Response::HTTP_CREATED);
+        }
+        return response()->json([
+            'unwatch' => true
+        ], Response::HTTP_ACCEPTED);          
     }
 }

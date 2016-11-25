@@ -54,6 +54,9 @@ var App = {
     },
     bindUI: function () {
         var that = this;
+        $(document).on('click', 'button', function() {
+            $(this).find('.loader').show();
+        });
         $(document).on('click', '#logout', function(event) {
             event.preventDefault();
             Cookies.set('pin_sidebar', 'true');
@@ -166,17 +169,28 @@ var App = {
             that.unFollowUser(followId);
         });
 
-        // $(document).on('click', '#submit-comment', function(event) {
-        //     event.preventDefault();
-        //     var comment = $(document).find('#comment-input').val();
-        //     var wikiId  = $(document).find('#wiki-id').val();
-        //     that.saveComment(comment, wikiId);
-        // });
-
-        $(document).on('click', '#like-page', function(event) {
+        $(document).on('click', '#like-wiki-btn', function(event) {
             event.preventDefault();
-            var pageId = $(this).attr('data-pageid');
+            var wikiId = $(this).attr('data-wiki-id');
+            that.starWiki(wikiId);
+        });
+
+        $(document).on('click', '#like-page-btn', function(event) {
+            event.preventDefault();
+            var pageId = $(this).attr('data-page-id');
             that.starPage(pageId);
+        });
+
+        $(document).on('click', '#watch-wiki-btn', function(event) {
+            event.preventDefault();
+            var wikiId = $(this).attr('data-wiki-id');
+            that.watchWiki(wikiId);
+        });
+
+        $(document).on('click', '#watch-page-btn', function(event) {
+            event.preventDefault();
+            var pageId = $(this).attr('data-page-id');
+            that.watchPage(pageId);
         });
 
         $(document).on('click', '#like-comment', function(event) {
@@ -227,22 +241,90 @@ var App = {
             }
         });
     },
+    watchPage: function(id) {
+        $.ajax({
+            url: '/pages/'+id+'/watch',
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if(data.watch) {
+                    var totalWatch = parseInt($(document).find('.page-watch-count').text());
+                    $(document).find('.page-watch-count').text(totalWatch+1);
+                    $(document).find('#watch-page-btn span').text('Unwatch');
+                }
+                if(data.unwatch) {
+                    var totalWatch = parseInt($(document).find('.page-watch-count').text());
+                    $(document).find('.page-watch-count').text(totalWatch-1);
+                    $(document).find('#watch-page-btn span').text('Watch');
+                }
+            },
+            error: function(error) {
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        });
+    },
+    watchWiki: function(id) {
+        $.ajax({
+            url: '/wikis/'+id+'/watch',
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if(data.watch) {
+                    var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
+                    $(document).find('.wiki-watch-count').text(totalWatch+1);
+                    $(document).find('#watch-wiki-btn span').text('Unwatch');
+                }
+                if(data.unwatch) {
+                    var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
+                    $(document).find('.wiki-watch-count').text(totalWatch-1);
+                    $(document).find('#watch-wiki-btn span').text('Watch');
+                }
+            },
+            error: function(error) {
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        });
+    },
     starPage: function(id) {
         $.ajax({
             url: '/pages/'+id+'/star',
             type: 'POST',
             dataType: 'json',
-            data: {
-                pageId: id
-            },
             success: function(data) {
                 if(data.star) {
-                    var totalStars = parseInt($(document).find('#page-total-star').text());
-                    $(document).find('#page-total-star').text(totalStars+1);
+                    var totalStars = parseInt($(document).find('.page-star-count').text());
+                    $(document).find('.page-star-count').text(totalStars+1);
+                    $(document).find('#like-page-btn span').text('Unstar');
                 }
                 if(data.unstar) {
-                    var totalStars = parseInt($(document).find('#page-total-star').text());
-                    $(document).find('#page-total-star').text(totalStars-1);
+                    var totalStars = parseInt($(document).find('.page-star-count').text());
+                    $(document).find('.page-star-count').text(totalStars-1);
+                    $(document).find('#like-page-btn span').text('Star');
+                }
+            },
+            error: function(error) {
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        });
+    },
+    starWiki: function(id) {
+        $.ajax({
+            url: '/wikis/'+id+'/star',
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if(data.star) {
+                    var totalStars = parseInt($(document).find('.wiki-star-count').text());
+                    $(document).find('.wiki-star-count').text(totalStars+1);
+                    $(document).find('#like-wiki-btn span').text('Unstar');
+                }
+                if(data.unstar) {
+                    var totalStars = parseInt($(document).find('.wiki-star-count').text());
+                    $(document).find('.wiki-star-count').text(totalStars-1);
+                    $(document).find('#like-wiki-btn span').text('Star');
                 }
             },
             error: function(error) {
@@ -592,7 +674,7 @@ $(document).ready(function() {
 $(document).scroll(function() {
     var y = $(document).scrollTop(), //get page y value 
         header = $(".test");
-    if(y >= 80)  {
+    if(y >= 30)  {
         var sidebar = $('#wrapper').hasClass('toggled');
         if(!sidebar) {
             header.css('margin-left', '255px');
