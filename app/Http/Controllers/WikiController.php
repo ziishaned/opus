@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\Wiki;
 use App\Models\WikiPage;
+use App\Models\ActivityLog;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,11 @@ class WikiController extends Controller
     protected $request;
 
     /**
+     * @var \App\Models\ActivityLog
+     */
+    protected $activityLog;
+
+    /**
      * WikiController constructor.
      *
      * @param \Illuminate\Http\Request $request
@@ -45,10 +51,11 @@ class WikiController extends Controller
      * @param \App\Models\Organization $organization
      * @param \App\Models\WikiPage     $wikiPage
      */
-    public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage) {
+    public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage, ActivityLog $activityLog) {
         $this->wiki         = $wiki;
         $this->request      = $request;
         $this->wikiPage     = $wikiPage;
+        $this->activityLog  = $activityLog;
         $this->organization = $organization;
     }
 
@@ -95,6 +102,7 @@ class WikiController extends Controller
         }
 
         $wiki = $this->wiki->saveWiki($this->request->all());
+        $this->activityLog->createActivity('wiki', 'create', $wiki);
 
         return redirect()->route('wikis.show', $wiki->slug)->with([
             'alert' => 'Wiki successfully created.',
@@ -140,7 +148,8 @@ class WikiController extends Controller
     public function update($nameSlug)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
-        $this->wiki->updateWiki($nameSlug, $this->request->all());
+        $wiki = $this->wiki->updateWiki($nameSlug, $this->request->all());
+        $this->activityLog->createActivity('wiki', 'update', $wiki);
         return redirect()->route('wikis.show', $nameSlug)->with([
             'alert' => 'Wiki successfully updated.',
             'alert_type' => 'success'
@@ -155,8 +164,9 @@ class WikiController extends Controller
      */
     public function destroy($nameSlug)
     {
-        $wikiDeleted = $this->wiki->deleteWiki($nameSlug);
-        if($wikiDeleted) {
+        $wiki = $this->wiki->deleteWiki($nameSlug);
+        $this->activityLog->createActivity('wiki', 'delete', $wiki);
+        if($wiki) {
             return redirect()->route('dashboard')->with([
                 'alert' => 'Wiki successfully deleted.',
                 'alert_type' => 'success'
