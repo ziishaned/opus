@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -133,7 +132,6 @@ class Wiki extends Model
             'wiki_type'       =>  !empty($data['organization_id']) ? 'organization' : 'personal',
         ]);
 
-        ActivityLogHelper::createWiki($wiki);
         return $wiki;
     }
 
@@ -145,12 +143,13 @@ class Wiki extends Model
      */
     public function deleteWiki($slug)
     {
+        $wiki = $this->where('slug', '=', $slug)->first();
         $query = $this->where('slug', '=', $slug)->delete();
 
         if(!$query) {
             return false;
         }
-        return true;
+        return $wiki;
     }
 
     /**
@@ -162,12 +161,13 @@ class Wiki extends Model
      */
     public function updateWiki($slug, $data)
     {
-        $this->where('slug', '=', $slug)->update([
-            'name' => $data['wiki_name'],
-            'description' => $data['wiki_description'],
-        ]);
-
-        return true;
+        $wiki              =  $this->where('slug', '=', $slug)->first();
+        $wiki->name        =  $data['wiki_name'];
+        $wiki->outline     =  $data['outline'];
+        $wiki->description =  $data['wiki_description'];
+        $wiki->save();
+        
+        return $wiki;
     }
 
     /**

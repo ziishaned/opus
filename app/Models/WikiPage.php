@@ -5,7 +5,6 @@ namespace App\Models;
 use Auth;
 use Carbon\Carbon;
 use App\Models\Wiki;
-use App\Helpers\ActivityLogHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -144,7 +143,6 @@ class WikiPage extends Model
             'wiki_id'      =>  $wiki->id,
         ]);
 
-        ActivityLogHelper::createWikiPage($page);
         return $page;
     }
 

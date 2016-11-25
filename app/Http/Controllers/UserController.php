@@ -58,10 +58,9 @@ class UserController extends Controller
     public function show($userSlug)
     {
         $user       = $this->user->getUser($userSlug);
-        $activities = DB::table('activity_log')->where('causer_id', '=', Auth::user()->id)->latest()->paginate(10);
 
         if($user) {
-            return view('user.user', compact('user', 'activities'));
+            return view('user.user', compact('user'));
         }
         return response()->json([
             'message' => 'Resource not found.'
