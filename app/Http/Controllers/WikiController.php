@@ -416,8 +416,11 @@ class WikiController extends Controller
 
     public function starWiki($id)
     {
+        $wiki = $this->wiki->find($id);
         $star = $this->wiki->star($id);
+        
         if($star) {
+            $this->activityLog->createActivity('wiki', 'star', $wiki);
             return response()->json([
                 'star' => true
             ], Response::HTTP_CREATED);
@@ -429,8 +432,11 @@ class WikiController extends Controller
 
     public function watchWiki($id)
     {
+        $wiki = $this->wiki->find($id);
         $watch = $this->wiki->watch($id);
+        
         if($watch) {
+            $this->activityLog->createActivity('wiki', 'watch', $wiki);
             return response()->json([
                 'watch' => true
             ], Response::HTTP_CREATED);

@@ -17,6 +17,9 @@ class CreateActivityLogTable extends Migration
                 'create',
                 'update',
                 'delete',
+                'star',
+                'watch',
+                'following',
             ]);
             $table->text('log_params');
             $table->timestamps();
