@@ -393,6 +393,9 @@ class WikiController extends Controller
         $wiki = $this->wiki->getWiki($wiki_slug);        
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
+        array_add($wiki, 'wiki_like', $this->isWikiLiked($wiki->id));
+        array_add($wiki, 'wiki_watching', $this->isWikiWatching($wiki->id));
+
         if($wikiPages) {
             return view('wiki.page.reorder', compact('wikiPages', 'wiki'));
         }

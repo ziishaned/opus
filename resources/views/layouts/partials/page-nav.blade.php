@@ -73,7 +73,7 @@
 	                    <ul class="dropdown-menu page-tree-con" style="left: -95px; top: 35px; width: 200px;">
 	                        @if($wikiPages->count() == 0)
 								<ul class="list-unstyled">
-				                	<li style="text-align: center; font-size: 12px;" class="text-muted"><i class="fa fa-search"></i> Nothing found</li>
+				                	<li style="text-align: center; font-size: 12px; font-weight: 600;" class="text-muted"><i class="fa fa-search"></i> Nothing found</li>
 								</ul>
 			               	@else
 	                            <div id="page-tree" style="padding-left: 5px;">

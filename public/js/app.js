@@ -171,24 +171,28 @@ var App = {
 
         $(document).on('click', '#like-wiki-btn', function(event) {
             event.preventDefault();
+            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
             var wikiId = $(this).attr('data-wiki-id');
             that.starWiki(wikiId);
         });
 
         $(document).on('click', '#like-page-btn', function(event) {
             event.preventDefault();
+            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
             var pageId = $(this).attr('data-page-id');
             that.starPage(pageId);
         });
 
         $(document).on('click', '#watch-wiki-btn', function(event) {
             event.preventDefault();
+            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
             var wikiId = $(this).attr('data-wiki-id');
             that.watchWiki(wikiId);
         });
 
         $(document).on('click', '#watch-page-btn', function(event) {
             event.preventDefault();
+            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
             var pageId = $(this).attr('data-page-id');
             that.watchPage(pageId);
         });
@@ -250,12 +254,12 @@ var App = {
                 if(data.watch) {
                     var totalWatch = parseInt($(document).find('.page-watch-count').text());
                     $(document).find('.page-watch-count').text(totalWatch+1);
-                    $(document).find('#watch-page-btn span').text('Unwatch');
+                    $(document).find('#watch-page-btn').html('<i class="fa fa-eye"></i> Unwatch');
                 }
                 if(data.unwatch) {
                     var totalWatch = parseInt($(document).find('.page-watch-count').text());
                     $(document).find('.page-watch-count').text(totalWatch-1);
-                    $(document).find('#watch-page-btn span').text('Watch');
+                    $(document).find('#watch-page-btn').html('<i class="fa fa-eye"></i> Watch');
                 }
             },
             error: function(error) {
@@ -273,12 +277,12 @@ var App = {
                 if(data.watch) {
                     var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
                     $(document).find('.wiki-watch-count').text(totalWatch+1);
-                    $(document).find('#watch-wiki-btn span').text('Unwatch');
+                    $(document).find('#watch-wiki-btn').html('<i class="fa fa-eye"></i> Unwatch');
                 }
                 if(data.unwatch) {
                     var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
                     $(document).find('.wiki-watch-count').text(totalWatch-1);
-                    $(document).find('#watch-wiki-btn span').text('Watch');
+                    $(document).find('#watch-wiki-btn').html('<i class="fa fa-eye"></i> Watch');
                 }
             },
             error: function(error) {
@@ -296,12 +300,12 @@ var App = {
                 if(data.star) {
                     var totalStars = parseInt($(document).find('.page-star-count').text());
                     $(document).find('.page-star-count').text(totalStars+1);
-                    $(document).find('#like-page-btn span').text('Unstar');
+                    $(document).find('#like-page-btn').html('<i class="fa fa-star-o"></i> Unstar');
                 }
                 if(data.unstar) {
                     var totalStars = parseInt($(document).find('.page-star-count').text());
                     $(document).find('.page-star-count').text(totalStars-1);
-                    $(document).find('#like-page-btn span').text('Star');
+                    $(document).find('#like-page-btn').html('<i class="fa fa-star-o"></i> Star');
                 }
             },
             error: function(error) {
@@ -319,12 +323,12 @@ var App = {
                 if(data.star) {
                     var totalStars = parseInt($(document).find('.wiki-star-count').text());
                     $(document).find('.wiki-star-count').text(totalStars+1);
-                    $(document).find('#like-wiki-btn span').text('Unstar');
+                    $(document).find('#like-wiki-btn').html('<i class="fa fa-star-o"></i> Unstar');
                 }
                 if(data.unstar) {
                     var totalStars = parseInt($(document).find('.wiki-star-count').text());
                     $(document).find('.wiki-star-count').text(totalStars-1);
-                    $(document).find('#like-wiki-btn span').text('Star');
+                    $(document).find('#like-wiki-btn').html('<i class="fa fa-star-o"></i> Star');
                 }
             },
             error: function(error) {

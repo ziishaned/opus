@@ -587,7 +587,5 @@ span.fancytree-focused span.fancytree-title {
 
 button .loader {
     float: right;
-    padding-left: 10px;
     padding-top: 2px;
-    display: none;
 }

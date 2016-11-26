@@ -17,7 +17,7 @@
     				@if($wiki->wiki_watching) 
 	    				<li>
 	    					<button data-wiki-id="{{ $wiki->id }}" id="watch-wiki-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-eye"></i> <span>Unwatch</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-eye"></i> Unwatch
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count wiki-watch-count" style="line-height: 11px;"> {{ ViewHelper::getWikiWatch($wiki->id) }} </span>
@@ -27,7 +27,7 @@
 	    			@else
 						<li>
 	    					<button data-wiki-id="{{ $wiki->id }}" id="watch-wiki-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-eye"></i> <span>Watch</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-eye"></i> Watch
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count wiki-watch-count" style="line-height: 11px;"> {{ ViewHelper::getWikiWatch($wiki->id) }} </span>
@@ -38,7 +38,7 @@
     				@if($wiki->wiki_like) 
 	    				<li>
 	    					<button data-wiki-id="{{ $wiki->id }}" id="like-wiki-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-star-o"></i> <span>Unstar</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-star-o"></i> Unstar
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count wiki-star-count" style="line-height: 11px;"> {{ ViewHelper::getWikiStar($wiki->id) }} </span>
@@ -48,7 +48,7 @@
     				@else 
 						<li>
 	    					<button data-wiki-id="{{ $wiki->id }}" id="like-wiki-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-star-o"></i> <span>Star</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-star-o"></i> Star
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count wiki-star-count" style="line-height: 11px;"> {{ ViewHelper::getWikiStar($wiki->id) }} </span>
@@ -73,7 +73,7 @@
 	                    <ul class="dropdown-menu page-tree-con" style="left: -95px; top: 35px; width: 200px;">
 	                        @if($wikiPages->count() == 0)
 								<ul class="list-unstyled">
-				                	<li style="text-align: center; font-size: 12px;" class="text-muted"><i class="fa fa-search"></i> Nothing found</li>
+				                	<li style="text-align: center; font-size: 12px; font-weight: 600;" class="text-muted"><i class="fa fa-search"></i> Nothing found</li>
 								</ul>
 			               	@else
 	                            <div id="page-tree" style="padding-left: 5px;">
