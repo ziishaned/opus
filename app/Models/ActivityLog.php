@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,6 +33,11 @@ class ActivityLog extends Model
         'log_params' => 'array',
     ];
 
+    public function user() 
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function createActivity($subjectType, $logType, $logContent)
     {
     	array_add($logContent, 'subject_type', $subjectType);
@@ -41,5 +47,10 @@ class ActivityLog extends Model
     		'log_params' =>  json_decode($logContent),
     	]);
     	return true;	
+    }
+
+    public function getUserActivities($userId)
+    {
+        return $this->where('user_id', '=', $userId)->latest()->paginate(10);
     }
 }

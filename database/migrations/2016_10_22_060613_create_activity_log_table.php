@@ -20,6 +20,7 @@ class CreateActivityLogTable extends Migration
                 'star',
                 'watch',
                 'following',
+                'commented',
             ]);
             $table->text('log_params');
             $table->timestamps();

@@ -4,6 +4,7 @@ var App = {
         this.bindUI();
         this.initSelectize();
         this.sideBar();
+        $('[data-toggle="tooltip"]').tooltip();
     },
     sideBar: function() {
         var pin_sidebar = Cookies.get('pin_sidebar');

@@ -17,7 +17,7 @@
     				@if($page->page_watching) 
 	    				<li>
 	    					<button data-page-id="{{ $page->id }}" id="watch-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-eye"></i> <span>Unwatch</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-eye"></i> Unwatch
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count page-watch-count" style="line-height: 11px;"> {{ ViewHelper::getPageWatch($page->id) }} </span>
@@ -27,7 +27,7 @@
 	    			@else
 						<li>
 	    					<button data-page-id="{{ $page->id }}" id="watch-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-eye"></i> <span>Watch</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-eye"></i> Watch
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count page-watch-count" style="line-height: 11px;"> {{ ViewHelper::getPageWatch($page->id) }} </span>
@@ -38,7 +38,7 @@
     				@if($page->page_like) 
 	    				<li>
 	    					<button data-page-id="{{ $page->id }}" id="like-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-star-o"></i> <span>Unstar</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-star-o"></i> Unstar
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count page-star-count" style="line-height: 11px;"> {{ ViewHelper::getPageStar($page->id) }} </span>
@@ -48,7 +48,7 @@
     				@else 
 						<li>
 	    					<button data-page-id="{{ $page->id }}" id="like-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-star-o"></i> <span>Star</span> <img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">
+						        <i class="fa fa-star-o"></i> Star
 						    </button>
 						    <div class="count-with-arrow pull-left">
 								<span class="count page-star-count" style="line-height: 11px;"> {{ ViewHelper::getPageStar($page->id) }} </span>

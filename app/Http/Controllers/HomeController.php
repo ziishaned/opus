@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Wiki;
 
 /**
@@ -36,7 +37,9 @@ class HomeController extends Controller
     public function index()
     {
         $wikis = $this->wiki->getWikis($limit = 5);
-        return view('home', compact('wikis'));
+        $activities = (new \App\Models\ActivityLog)->getUserActivities(Auth::user()->id);
+
+        return view('home', compact('wikis', 'activities'));
     }
 
     public function help() {

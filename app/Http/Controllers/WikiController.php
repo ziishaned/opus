@@ -281,6 +281,7 @@ class WikiController extends Controller
     {
         $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
         $page = $this->wikiPage->saveWikiPage($wikiSlug, $this->request->all());
+        $this->activityLog->createActivity('page', 'create', $page);
         return redirect()->route('wikis.pages.show', [$wikiSlug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success'
@@ -351,7 +352,12 @@ class WikiController extends Controller
      */
     public function destroyPage($wikiSlug, $pageSlug)
     {
+        $page = $this->wikiPage->getPage($pageSlug);
+
         $pageDeleted = $this->wikiPage->deletePage($pageSlug);
+
+        $this->activityLog->createActivity('page', 'delete', $page);
+
         if($pageDeleted) {
             return redirect()->route('wikis.show', $wikiSlug)->with([
                 'alert' => 'Page successfully deleted.',
@@ -371,8 +377,11 @@ class WikiController extends Controller
      */
     public function starPage($id)
     {
+        $page = $this->wikiPage->find($id);
         $star = $this->wikiPage->star($id);
+
         if($star) {
+            $this->activityLog->createActivity('page', 'star', $page);
             return response()->json([
                 'star' => true
             ], Response::HTTP_CREATED);          
@@ -451,8 +460,11 @@ class WikiController extends Controller
 
     public function watchPage($id)
     {
+        $page = $this->wikiPage->find($id);
         $watch = $this->wikiPage->watch($id);
+
         if($watch) {
+            $this->activityLog->createActivity('page', 'watch', $page);
             return response()->json([
                 'watch' => true
             ], Response::HTTP_CREATED);

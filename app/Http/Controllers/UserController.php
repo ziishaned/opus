@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,8 @@ class UserController extends Controller
      * @var \Illuminate\Http\Request
      */
     protected $request;
+    
+    protected $activityLog;
 
     /**
      * UserController constructor.
@@ -32,10 +35,11 @@ class UserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User         $user
      */
-    public function __construct(Request $request, User $user)
+    public function __construct(Request $request, User $user, ActivityLog $activityLog)
     {
         $this->user    = $user;
         $this->request = $request;
+        $this->activityLog = $activityLog;
     }
 
     /**
@@ -58,9 +62,10 @@ class UserController extends Controller
     public function show($userSlug)
     {
         $user = $this->user->getUser($userSlug);
+        $activities = $this->activityLog->getUserActivities($user->id);
 
         if($user) {
-            return view('user.user', compact('user'));
+            return view('user.user', compact('user', 'activities'));
         }
         return response()->json([
             'message' => 'Resource not found.'

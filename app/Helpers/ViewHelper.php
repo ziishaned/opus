@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Route;
 use App\Models\User;
 use App\Models\Wiki;
+use App\Models\WikiPage;
 use App\Models\Organization;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +36,29 @@ class ViewHelper
         return User::where('id', '=', $id)->pluck('name')->first();
     }
 
+    public static function getUserSlug($id)
+    {
+        return User::where('id', '=', $id)->pluck('slug')->first();
+    }
+
+    public static function getWikiSlug($id)
+    {
+        return Wiki::where('id', '=', $id)->pluck('slug')->first();
+    }
+
+    public static function getPageSlug($id)
+    {
+        return WikiPage::where('id', '=', $id)->pluck('slug')->first();
+    }
+
     public static function getOrganizationName($id)
     {
         return Organization::where('id', '=', $id)->pluck('name')->first();
+    }
+
+    public static function getWikiName($id)
+    {
+        return Wiki::where('id', '=', $id)->pluck('name')->first();
     }
 
     public static function isFollowing($id)

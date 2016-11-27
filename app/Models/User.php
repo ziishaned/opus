@@ -158,6 +158,11 @@ class User extends Authenticatable
         return $this->hasMany(WikiPage::class, 'user_id', 'id');
     }
 
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class, 'user_id', 'id');
+    }
+
     /**
      * DESC
      *

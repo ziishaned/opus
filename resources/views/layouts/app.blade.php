@@ -51,9 +51,6 @@
                     <li>
                         <a href="{{ route('help') }}">Help</a>
                     </li>
-                    <li>
-                        <a href="#">Profile Settings</a>
-                    </li>
                 </ul>
             </div>
         @endif
