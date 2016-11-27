@@ -27,7 +27,7 @@
                         </form>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-bell"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox fa-lg"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
                             <li><a href="#">Another action</a></li>
@@ -44,7 +44,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-                            <div class="profile-img" style="margin-right: 3px; border-radius: 3px;"></div> <i class="fa fa-caret-down"></i>
+                            <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('users.show', $loggedInUser->slug) }}">Profile</a></li>

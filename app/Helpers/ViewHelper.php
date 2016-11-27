@@ -41,6 +41,11 @@ class ViewHelper
         return User::where('id', '=', $id)->pluck('slug')->first();
     }
 
+    public static function getProfilePic($id)
+    {
+        return User::where('id', '=', $id)->pluck('profile_image')->first();
+    }
+
     public static function getWikiSlug($id)
     {
         return Wiki::where('id', '=', $id)->pluck('slug')->first();

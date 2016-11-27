@@ -38,7 +38,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'full_name',
+        'profile_image',
+        'name', 
+        'bio',
+        'url',
+        'company',
+        'location',
+        'email', 
+        'password'
     ];
 
     /**
@@ -47,6 +55,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $profileImagePath = 'images/profile-pics';
 
     /**
      * DESC
@@ -252,6 +262,21 @@ class User extends Authenticatable
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+    }
+
+    public function updateUser($slug, $data, $profile_image)
+    {
+        $this->where('slug', '=', $slug)->update([
+            'full_name'     =>  $data['full_name'],
+            'profile_image' =>  !empty($profile_image) ? $profile_image : Auth::user()->profile_image,
+            'bio'           =>  $data['bio'],
+            'url'           =>  $data['url'],
+            'company'       =>  $data['company'],
+            'location'      =>  $data['location'],
+            'email'         =>  $data['email'],
+        ]);
+        
+        return true;
     }
 
     /**

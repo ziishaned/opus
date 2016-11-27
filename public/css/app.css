@@ -349,14 +349,13 @@ a:hover {
     font-weight: normal;
 }
 
-.profile-img{
+.profile-img {
     margin-top: -5px;
     margin-right: 5px !important;
     float: left;
-    background: url(../images/default.png) 50% 50% no-repeat;
-    background-size: auto 100%;
     width: 30px;
     height: 30px;
+    border-radius: 3px;
 }
 
 .stats span {
@@ -605,3 +604,11 @@ ul.activity-list li:hover {
     margin: 0 !important;
 }
 
+.page-description h1, 
+.page-description h2, 
+.page-description h3, 
+.page-description h4,
+.page-description h5,
+.page-description h6 {
+    margin-top: 0;
+}

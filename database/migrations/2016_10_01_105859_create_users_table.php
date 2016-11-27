@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('full_name');
             $table->string('name');
+            $table->string('profile_image');
             $table->longText('bio');
             $table->string('url');
             $table->string('company');

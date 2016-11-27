@@ -29,6 +29,8 @@ class UserController extends Controller
     
     protected $activityLog;
 
+    protected $profileImagePath = 'images/profile-pics';
+
     /**
      * UserController constructor.
      *
@@ -174,5 +176,27 @@ class UserController extends Controller
     public function emailsSettings()
     {
         return view('user.setting.emails');
+    }
+
+    public function update($slug)
+    {
+        $this->validate($this->request, [
+            'email'         => 'required|unique:users,email,' . Auth::user()->id . '|email',
+            'profile_image' => 'mimes:jpeg,jpg,png|max:1000',
+        ]);
+
+        $profile_image = '';
+        if($this->request->file('profile_image')) {
+            $file = $this->request->file('profile_image');
+            $profile_image = md5(microtime() . $file->getClientOriginalName()) . "." . $file->getClientOriginalExtension();
+            $this->request->file('profile_image')->move($this->profileImagePath, $profile_image);
+        }
+
+        $this->user->updateUser($slug, $this->request->all(), $profile_image);
+
+        return redirect()->back()->with([
+            'alert' => 'Profile successfully updated.',
+            'alert_type' => 'success'
+        ]);
     }
 }

@@ -21,6 +21,10 @@ Route::get('/users/{user_slug}', [
     'uses'  =>  'UserController@show',
     'as'    =>  'users.show',
 ]);
+Route::patch('/users/{user_slug}', [
+    'uses'  =>  'UserController@update',
+    'as'    =>  'users.update',
+]);
 Route::get('/users/{user_slug}/organizations', [
     'uses'  =>  'UserController@getUserOrganizations',
     'as'    =>  'users.organizations',
