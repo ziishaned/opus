@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/css/simple-sidebar.css">
     <link rel="stylesheet" href="/js/fancytree-lion/ui.fancytree.min.css">
     <link rel="stylesheet" href="/js/themes/default/style.min.css">
+    <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
@@ -82,7 +83,10 @@
 <script src="/js/ajax-loading.js"></script>
 <script src="/js/tinymce.min.js"></script>
 <script src="/js/validator.min.js"></script>
-<script src="/js/moment-with-locales.min.js"></script>
+{{-- <script src="/js/moment-with-locales.min.js"></script> --}}
+<script src="/plugins/calendar-heatmap/moment.min.js"></script>
+<script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>
+<script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
 <script src="/js/standalone/selectize.min.js"></script>
 <script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>

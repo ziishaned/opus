@@ -14,8 +14,16 @@ Auth::routes();
 |--------------------------------------------------------------------------
 */
 
+Route::delete('/users/{user_slug}', [
+    'uses'  =>  'UserController@deleteAccount',
+    'as'    =>  'users.destroy',
+]);
 Route::get('/users/search/{text}', [
     'uses'  =>  'UserController@filterUser',
+]);
+Route::patch('/users/{user_slug}/password', [
+    'uses'  =>  'UserController@updatePassword',
+    'as'    =>  'users.password.update',
 ]);
 Route::get('/users/{user_slug}', [
     'uses'  =>  'UserController@show',

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
@@ -305,5 +306,14 @@ class User extends Authenticatable
             $query->where('name', 'like', '%' . $text . '%')
                   ->orWhere('email', 'like', '%' . $text . '%');
         })->where('id', '!=', Auth::user()->id)->get();
+    }
+
+    public function updatePassword($slug, $data)
+    {
+        $this->where('slug', '=', $slug)->update([
+            'password' => Hash::make($data['new_password']),
+        ]);
+
+        return true;
     }
 }

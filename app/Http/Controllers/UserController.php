@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Hash;
+use Session;
 use App\Models\User;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
@@ -198,5 +200,33 @@ class UserController extends Controller
             'alert' => 'Profile successfully updated.',
             'alert_type' => 'success'
         ]);
+    }
+
+    public function updatePassword($slug)
+    {
+        $this->validate($this->request, [
+            'password' => 'required|hash:' . Auth::user()->password,
+            'new_password'  => 'required|same:password_confirmation',
+            'password_confirmation'  => 'required'
+        ]);
+
+        $this->user->updatePassword($slug, $this->request->all());
+
+        return $this->logout();
+    }
+
+    public function deleteAccount($slug)
+    {
+        $this->user->where('slug', '=', $slug)->delete();
+
+        return $this->logout();
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        Session::flush();
+
+        return redirect('/');
     }
 }

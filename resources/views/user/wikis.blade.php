@@ -1,13 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row text-center">
-        <div class="center-block">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                @include('layouts.partials.profile')
-            </div>
-        </div>
-    </div>
+    @include('layouts.partials.profile')
+    @include('layouts.partials.contribution-graph')
     @include('layouts.partials.user-nav')
     <div class="row" style="margin-top: 12px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
