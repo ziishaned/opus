@@ -44,7 +44,11 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
-                            <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
+                            @if(empty(Auth::user()->profile_image))
+                                <img src="/images/default.png" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
+                            @else
+                                <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
+                            @endif
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('users.show', $loggedInUser->slug) }}">Profile</a></li>

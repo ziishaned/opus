@@ -1,10 +1,25 @@
 <div class="user-profile-pic">
-    <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" class="img-rounded" width="90" height="90" alt="Image" style="border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);">
+    @if(empty($user->profile_image))
+        <img src="/images/default.png" class="img-rounded" width="90" height="90" alt="Image" style="border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);">
+    @else
+        <img src="/images/profile-pics/{{ $user->profile_image }}" class="img-rounded" width="90" height="90" alt="Image" style="border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);">
+    @endif
 </div>
-<p style="margin-top: 8px; margin-bottom: 0px; font-size: 17px; text-transform: capitalize; font-weight: 600;" title="{{ $user->full_name }}">{{ $user->full_name  }}</p>
+@if(!empty($user->full_name))
+    <p style="margin-top: 8px; margin-bottom: 0px; font-size: 17px; text-transform: capitalize; font-weight: 600;" title="{{ $user->full_name }}">{{ $user->full_name }}</p>
+@endif    
 <p style="margin-bottom: 2px;"><span class="dot-divider" title="{{ $user->name }}">{{ '@' . $user->name }}</span> <span style="cursor: default;" data-toggle="tooltip" data-placement="bottom" title="{{ $user->created_at->toFormattedDateString() . ' at ' . $user->created_at->format('h:i A')}}"><i class="fa fa-clock-o"></i> Member since {{  $user->created_at->toFormattedDateString() }}</span></p>
-<p style="margin-bottom: 0;" title="email"><span class="dot-divider"><i class="fa fa-envelope"></i> <a href="mailto:{{ $user->email  }}">{{ $user->email  }}</a></span> <span><i class="fa fa-map-marker"></i> {{ $user->location }}</span></p>
-<p style="margin-bottom: 0; margin-top: 5px;" title="bio">{{ $user->bio }}</p>
+<p style="margin-bottom: 0;" title="email">
+    <span class="@if(!empty($user->location)) dot-divider @endif">
+        <i class="fa fa-envelope"></i> <a href="mailto:{{ $user->email  }}">{{ $user->email  }}</a>
+    </span> 
+    @if(!empty($user->location))
+        <span><i class="fa fa-map-marker"></i> {{ $user->location }}</span>
+    @endif
+</p>
+@if(!empty($user->bio))
+    <p style="margin-bottom: 0; margin-top: 5px;" title="bio">{{ $user->bio }}</p>
+@endif
 @if($user->id != Auth::user()->id)
     @if(ViewHelper::isFollowing($user->id)) 
         <button id="unfollow-button" data-follow-id="{{ $user->id }}" class="btn btn-info btn-block following-button">Following</button>

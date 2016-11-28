@@ -24,7 +24,11 @@
 												<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
 													<div class="comment-avatar">
                                                         <a href="#">
-                                                            <img src="/images/profile-pics/{{ ViewHelper::getProfilePic($comment->user->id) }}" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+	                                                        @if(empty($comment->user->profile_image))
+	                                                            <img src="/images/default.png" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+    														@else
+	                                                            <img src="/images/profile-pics/{{ $comment->user->profile_image }}" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+    														@endif
                                                         </a>
 													</div>
 												</div>

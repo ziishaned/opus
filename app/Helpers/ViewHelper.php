@@ -36,6 +36,11 @@ class ViewHelper
         return User::where('id', '=', $id)->pluck('name')->first();
     }
 
+    public static function getFullName($id)
+    {
+        return User::where('id', '=', $id)->pluck('full_name')->first();
+    }
+
     public static function getUserSlug($id)
     {
         return User::where('id', '=', $id)->pluck('slug')->first();
