@@ -4,7 +4,40 @@ var App = {
         this.bindUI();
         this.initSelectize();
         this.sideBar();
+        this.makeContributionGraph();
         $('[data-toggle="tooltip"]').tooltip();
+    },
+    makeContributionGraph: function() {
+        if($('#contribution-graph').length > 0) {
+            var userId = $('#contribution-graph').data('user-id');
+            $.ajax({
+                url: '/users/activity',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    _method: 'get',
+                    user_id: userId,
+                },
+                success: function(data) {
+                    Object.keys(data).map(function(key, index) {
+                       data[key].date =  moment(data[key].date).toDate(); 
+                    });
+
+                    var heatmap = calendarHeatmap()
+                        .data(data)
+                        .selector('#contribution-graph')
+                        .tooltipEnabled(true)
+                        .onClick(function (data) {
+                            console.log('data', data);
+                        });
+                    heatmap();  // render the chart
+                },
+                error: function(error) {
+                    var response = JSON.parse(error.responseText);
+                    console.log(response);
+                }
+            });
+        }
     },
     sideBar: function() {
         var pin_sidebar = Cookies.get('pin_sidebar');
@@ -504,24 +537,12 @@ $(document).ready(function() {
         inviteToOrganization : $('#invite-to-organization-id'),
     });
 
-    var now = moment().endOf('day').toDate();
-    var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
-    var chartData = d3.time.days(yearAgo, now).map(function (dateElement) {
-        return {
-          date: dateElement,
-          count: (dateElement.getDay() !== 0 && dateElement.getDay() !== 6) ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 10)
-        };
+    // $('#searchlist').btsListFilter('#searchinput', {itemChild: '#wiki-name'});
+    // 
+    new List('test-list', { 
+      valueNames: ['name'], 
+      plugins: [ ListFuzzySearch() ] 
     });
-
-    var heatmap = calendarHeatmap()
-                  .data(chartData)
-                  .selector('#contribution-graph')
-                  .tooltipEnabled(true)
-                  .colorRange(['#f4f7f7', '#79a8a9'])
-                  .onClick(function (data) {
-                    console.log('data', data);
-                  });
-    heatmap();  // render the chart
 
     $('.page-tree-con').on('click', function(e) {
         e.preventDefault();

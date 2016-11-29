@@ -35,7 +35,7 @@
 												<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
 													<div class="comment-box">
 														<div class="comment-head" style="padding: 0px 10px 0px 10px;">
-															<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">{{ $comment->user->name }}</a></h6>
+															<h6 class="comment-name by-author"><a href="{{ route('users.show', [$comment->user->id, ]) }}">@if(empty($comment->user->full_name)) {{ $comment->user->name }} @else {{ $comment->user->full_name }} @endif</a></h6>
 															<ul class="list-unstyled list-inline pull-right">
 																<li><i class="fa fa-clock-o"></i> <time class="timeago" datetime="{{ $comment->created_at }}">{{ $comment->created_at->diffForHumans() }}</time></li>
 																<li><a href="#" id="like-comment" data-commentid="{{ $comment->id }}"><i class="fa fa-heart"></i></a> <span id="comment-total-star" data-commentid="{{ $comment->id }}">{{ ViewHelper::getCommentStar($comment->id) }}</span></li>

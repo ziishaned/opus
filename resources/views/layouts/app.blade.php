@@ -83,6 +83,8 @@
 <script src="/js/ajax-loading.js"></script>
 <script src="/js/tinymce.min.js"></script>
 <script src="/js/validator.min.js"></script>
+<script src="/js/list.js"></script>
+<script src="/js/list.fuzzysearch.js"></script>
 {{-- <script src="/js/moment-with-locales.min.js"></script> --}}
 <script src="/plugins/calendar-heatmap/moment.min.js"></script>
 <script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>

@@ -229,4 +229,9 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function activity()
+    {
+        return $this->user->getActivity($this->request->get('user_id'));
+    }
 }

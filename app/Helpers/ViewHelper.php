@@ -31,14 +31,20 @@ class ViewHelper
         return false;
     }
 
+    // public static function getUsername($id)
+    // {
+    //     return User::where('id', '=', $id)->pluck('name')->first();
+    // }
+
     public static function getUsername($id)
     {
-        return User::where('id', '=', $id)->pluck('name')->first();
-    }
+        $fullName = User::where('id', '=', $id)->pluck('full_name')->first();
 
-    public static function getFullName($id)
-    {
-        return User::where('id', '=', $id)->pluck('full_name')->first();
+        if(empty($fullName)) {
+            return '@' . User::where('id', '=', $id)->pluck('name')->first();
+        } else {
+            return $fullName;
+        }
     }
 
     public static function getUserSlug($id)

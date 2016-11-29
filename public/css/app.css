@@ -95,9 +95,11 @@ li, a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
     color: #000;
 }
 
-#organization-nav li.active .badge {
-    color: #fff !important;
-    background-color: #777 !important;
+#organization-nav li .badge {
+    font-weight: normal;
+    background-color: #eee !important;
+    color: #8f8f8f !important;
+    vertical-align: baseline !important;
 }
 
 #member-list-item {
@@ -611,4 +613,8 @@ ul.activity-list li:hover {
 .page-description h5,
 .page-description h6 {
     margin-top: 0;
+}
+
+.activity-list .activity {
+    border-top: 1px solid #f1f1f1;
 }

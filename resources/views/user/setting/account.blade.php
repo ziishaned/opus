@@ -59,7 +59,6 @@
                 </div>
                 <div class="panel-body">
                     <p>Once you delete your account, there is no going back. Please be certain.</p>
-                    {{-- <button type="submit" class="btn btn-default" id="delete-account" style="background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">Delete your account</button> --}}
                     <a href="#" class="btn btn-default" onclick="if(confirm('Are you sure you want to delete your account?')) {event.preventDefault(); document.getElementById('delete-user-account').submit();}" id="delete-account" style="background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;"><i class="fa fa-trash-o"></i> Delete your account</a>
                     <form id="delete-user-account" action="{{ route('users.destroy', Auth::user()->slug) }}" method="POST" style="display: none;">
                         {!! method_field('delete') !!}

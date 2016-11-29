@@ -14,6 +14,9 @@ Auth::routes();
 |--------------------------------------------------------------------------
 */
 
+Route::get('/users/activity', [
+    'uses'  =>  'UserController@activity',
+]);
 Route::delete('/users/{user_slug}', [
     'uses'  =>  'UserController@deleteAccount',
     'as'    =>  'users.destroy',
