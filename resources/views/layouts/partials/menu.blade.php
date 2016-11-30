@@ -18,6 +18,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::user())
+                        
                     <li>
                         <form class="navbar-form" role="search">
                             <div class="form-group">
@@ -26,24 +27,26 @@
                             </div>
                         </form>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox fa-lg"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-plus"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ route('organizations.create') }}">Create Organization</a></li>
-                            <li><a href="{{ route('wikis.create') }}">Create Wiki</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown" title="Notifications">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox" style="font-size: 17px;"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" style="padding-left: 10px; padding-right: 10px;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus" style="font-size: 16px;"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ route('organizations.create') }}" title="Create organization">Create organization</a></li>
+                                <li><a href="{{ route('wikis.create') }}" title="Create wiki">Create wiki</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <li class="dropdown" title="{{ Auth::user()->full_name }}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @if(empty(Auth::user()->profile_image))
                                 <img src="/images/default.png" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
                             @else

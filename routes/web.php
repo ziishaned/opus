@@ -54,11 +54,11 @@ Route::get('/users/{user_slug}/wikis', [
 ]);
 Route::post('/users/follow', [
     'uses'  =>  'UserController@follow',
-    'as'    =>  'users.followUser'
+    'as'    =>  'users.follow'
 ]);
 Route::post('/users/unfollow', [
     'uses'  =>  'UserController@unfollow',
-    'as'    =>  'users.unfollowUser',
+    'as'    =>  'users.unfollow',
 ]);
 
 /*

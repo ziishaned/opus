@@ -146,10 +146,11 @@ class UserController extends Controller
      */
     public function follow()
     {
-        $this->user->followUser($this->request->get('followId'));
-        return response()->json([
-            'message' => 'User successfully followed.'
-        ], Response::HTTP_CREATED);
+        $this->user->followUser($this->request->get('user_id'));
+        return redirect()->back()->with([
+            'alert' => 'User successfully followed.',
+            'alert_type' => 'success'
+        ]);
     }
 
     /**
@@ -159,10 +160,11 @@ class UserController extends Controller
      */
     public function unfollow()
     {
-        $this->user->unfollowUser($this->request->get('followId'));
-        return response()->json([
-            'message' => 'User successfully unfollowed.'
-        ], Response::HTTP_CREATED);
+        $this->user->unfollowUser($this->request->get('user_id'));
+        return redirect()->back()->with([
+            'alert' => 'User successfully unfollowed.',
+            'alert_type' => 'success'
+        ]);
     }
 
     public function profileSettings()

@@ -12,23 +12,39 @@
                 <p style="margin-top: 8px; margin-bottom: 0px; font-size: 17px; text-transform: capitalize; font-weight: 600;" title="{{ $user->full_name }}">{{ $user->full_name }}</p>
             @endif    
             <p style="margin-bottom: 2px;"><span class="dot-divider" title="{{ $user->name }}">{{ '@' . $user->name }}</span> <span style="cursor: default;" data-toggle="tooltip" data-placement="bottom" title="{{ $user->created_at->toFormattedDateString() . ' at ' . $user->created_at->format('h:i A')}}"><i class="fa fa-clock-o"></i> Member since {{  $user->created_at->toFormattedDateString() }}</span></p>
-            <p style="margin-bottom: 0;" title="email">
-                <span class="@if(!empty($user->location)) dot-divider @endif">
+            <p style="margin-bottom: 0;">
+                <span class="@if(!empty($user->location)) dot-divider @endif" title="email">
                     <i class="fa fa-envelope"></i> <a href="mailto:{{ $user->email  }}">{{ $user->email  }}</a>
                 </span> 
                 @if(!empty($user->location))
-                    <span><i class="fa fa-map-marker"></i> {{ $user->location }}</span>
+                    <span title="location"><i class="fa fa-map-marker"></i> {{ $user->location }}</span>
                 @endif
             </p>
             @if(!empty($user->bio))
                 <p style="margin-bottom: 0; margin-top: 5px;" title="bio">{{ $user->bio }}</p>
             @endif
             @if($user->id != Auth::user()->id)
-                @if(ViewHelper::isFollowing($user->id)) 
-                    <button id="unfollow-button" data-follow-id="{{ $user->id }}" class="btn btn-info btn-block following-button">Following</button>
-                @else 
-                    <button id="follow-button" class="btn btn-default btn-block" data-follow-id="{{ $user->id }}" style="margin-top: 10px; background-color: #f5f8fa; background-image: linear-gradient(#fff,#f5f8fa); font-weight: 600;">Follow</button>
-                @endif
+                <div class="profile-btn" style="position: absolute; top: 0px; right: 0px;">
+                    <ul class="list-unstyled list-inline">
+                        <li style="padding: 0;">
+                            @if(ViewHelper::isFollowing($user->id)) 
+                                <a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Unfollow" onclick="event.preventDefault(); document.getElementById('unfollow-form').submit();"><i class="fa fa-minus"></i></a>
+                                <form id="unfollow-form" action="{{ route('users.unfollow') }}" method="POST" class="hide">
+                                    {!! method_field('post') !!}
+                                    {{ csrf_field() }}
+                                    <input type="text" name="user_id" class="hide" value="{{ $user->id }}">
+                                </form>
+                            @else 
+                                <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Follow" onclick="event.preventDefault(); document.getElementById('follow-form').submit();"><i class="fa fa-plus"></i></a>
+                                <form id="follow-form" action="{{ route('users.follow') }}" method="POST" class="hide">
+                                    {!! method_field('post') !!}
+                                    {{ csrf_field() }}
+                                    <input type="text" name="user_id" class="hide" value="{{ $user->id }}">
+                                </form>
+                            @endif
+                        </li>
+                    </ul>
+                </div>    
             @endif
             @if($user->organizations->count() > 0)
                 <ul class="list-unstyled list-inline" style="width: 260px; margin: auto; line-height: 3.5em;">

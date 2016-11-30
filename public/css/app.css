@@ -618,3 +618,7 @@ ul.activity-list li:hover {
 .activity-list .activity {
     border-top: 1px solid #f1f1f1;
 }
+
+.following-list li, .follower-list li {
+    border-bottom: 1px solid #f1f1f1;
+}

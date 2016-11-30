@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <div class="panel panel-default" id="test-list">
+        <div class="panel panel-default" id="wiki-list-con">
             <div class="panel-heading">
                 <div class="row" style="border-bottom: 1px solid #d8d8d8;">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -32,7 +32,7 @@
                 </div>
             </div>
             @if($wikis->count() > 0)
-                <ul class="list-group list">
+                <ul class="list-group list wiki-list">
                     @foreach($wikis as $wiki)
                         <li class="list-group-item">
                             <div class="row">
@@ -47,7 +47,9 @@
                     @endforeach
                 </ul>
             @else 
-                <li class="list-group-item" style="text-align: center;">Nothing found</li>
+                <ul class="list-group">
+                    <li class="list-group-item" style="text-align: center; border: none;">Nothing found</li>
+                </ul>
             @endif
         </div>
     </div>

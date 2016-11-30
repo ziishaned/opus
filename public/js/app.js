@@ -537,12 +537,12 @@ $(document).ready(function() {
         inviteToOrganization : $('#invite-to-organization-id'),
     });
 
-    // $('#searchlist').btsListFilter('#searchinput', {itemChild: '#wiki-name'});
-    // 
-    new List('test-list', { 
-      valueNames: ['name'], 
-      plugins: [ ListFuzzySearch() ] 
-    });
+    if($('.wiki-list').length > 0) {
+        new List('wiki-list-con', { 
+          valueNames: ['name'], 
+          plugins: [ ListFuzzySearch() ] 
+        });
+    }
 
     $('.page-tree-con').on('click', function(e) {
         e.preventDefault();

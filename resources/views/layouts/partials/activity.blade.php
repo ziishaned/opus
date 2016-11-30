@@ -51,7 +51,7 @@
                             @endif
                         </div>
                         <div class="time" style="display: inline-block; font-size: 12px; color: #bbb; cursor: default;">
-                            <i class="fa fa-clock-o"></i> <span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->toFormattedDateString() . ' at ' . $activity->created_at->format('h:i A')}}"><time class="timeago" datetime="{{ $activity->created_at }}">{{ $activity->created_at->diffForHumans() }}</time></span>
+                            <i class="fa fa-clock-o"></i> <span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->toFormattedDateString() . ' at ' . $activity->created_at->format('h:i A')}}"><time class="timeago" datetime="{{ $activity->created_at }}">{{ $activity->created_at->timezone('Asia/Karachi')->diffForHumans() }}</time></span>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
 @else
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h3 style="font-size: 17px; font-weight: 600; color: #777777; text-align: center; padding: 5px 0px 15px 0px; margin: 0; margin-top: 0px;"><i class="fa fa-search"></i> Nothing found...</h3>
+            <h3 style="font-size: 15px; font-weight: 400; color: #777777; text-align: center; padding: 15px 0px 15px 0px; margin: 0;">Nothing found...</h3>
         </div>
     </div>
 @endif
