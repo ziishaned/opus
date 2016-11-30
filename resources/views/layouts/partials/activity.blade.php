@@ -51,7 +51,7 @@
                             @endif
                         </div>
                         <div class="time" style="display: inline-block; font-size: 12px; color: #bbb; cursor: default;">
-                            <i class="fa fa-clock-o"></i> <span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->toFormattedDateString() . ' at ' . $activity->created_at->format('h:i A')}}"><time class="timeago" datetime="{{ $activity->created_at }}">{{ $activity->created_at->timezone('Asia/Karachi')->diffForHumans() }}</time></span>
+                            <i class="fa fa-clock-o"></i> <span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $activity->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}"><time class="timeago" datetime="{{ $activity->created_at->timezone(Session::get('user_timezone')) }}">{{ $activity->created_at->timezone(Session::get('user_timezone'))->diffForHumans() }}</time></span>
                         </div>
                     </div>
                 </div>

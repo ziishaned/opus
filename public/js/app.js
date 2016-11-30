@@ -537,6 +537,10 @@ $(document).ready(function() {
         inviteToOrganization : $('#invite-to-organization-id'),
     });
 
+    if($('#timezone').length > 0) {
+        $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    }
+
     if($('.wiki-list').length > 0) {
         new List('wiki-list-con', { 
           valueNames: ['name'], 

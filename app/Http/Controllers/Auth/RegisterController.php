@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Request;
+use App\Models\Timezone;
 use App\Models\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -62,10 +64,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        Timezone::create([
+            'user_id' => $user->id,
+            'timezone' => Request::get('timezone'),
+        ]);
+        
+        return $user;
     }
 }

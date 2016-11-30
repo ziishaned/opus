@@ -11,7 +11,7 @@
             @if(!empty($user->full_name))
                 <p style="margin-top: 8px; margin-bottom: 0px; font-size: 17px; text-transform: capitalize; font-weight: 600;" title="{{ $user->full_name }}">{{ $user->full_name }}</p>
             @endif    
-            <p style="margin-bottom: 2px;"><span class="dot-divider" title="{{ $user->name }}">{{ '@' . $user->name }}</span> <span style="cursor: default;" data-toggle="tooltip" data-placement="bottom" title="{{ $user->created_at->toFormattedDateString() . ' at ' . $user->created_at->format('h:i A')}}"><i class="fa fa-clock-o"></i> Member since {{  $user->created_at->toFormattedDateString() }}</span></p>
+            <p style="margin-bottom: 2px;"><span class="dot-divider" title="{{ $user->name }}">{{ '@' . $user->name }}</span> <span style="cursor: default;" data-toggle="tooltip" data-placement="bottom" title="{{ $user->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $user->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}"><i class="fa fa-clock-o"></i> Member since {{  $user->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }}</span></p>
             <p style="margin-bottom: 0;">
                 <span class="@if(!empty($user->location)) dot-divider @endif" title="email">
                     <i class="fa fa-envelope"></i> <a href="mailto:{{ $user->email  }}">{{ $user->email  }}</a>

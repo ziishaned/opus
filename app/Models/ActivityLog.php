@@ -51,13 +51,11 @@ class ActivityLog extends Model
 
     public function getUserActivities($userId)
     {
-        // $activity->created_at->timezone('Asia/Karachi')->diffForHumans()
-        // dd(\Carbon\Carbon::now());
-        return $this->join('user_followers', function ($join){
-                        $join->on('activity_log.user_id', '=', 'user_followers.follow_id');
-                    })
-                    ->where('activity_log.user_id', $userId)
+        return $this
+                    ->leftJoin('user_followers', 'activity_log.user_id', '=', 'user_followers.follow_id')
+                    ->where('activity_log.user_id', '=', $userId)
                     ->orwhereRaw('IFNULL(user_followers.user_id, 0) = ' . $userId . '')
+                    ->select('activity_log.*')
                     ->latest('activity_log.created_at')
                     ->paginate(10);
     }

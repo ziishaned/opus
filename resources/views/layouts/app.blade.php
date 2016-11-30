@@ -134,13 +134,13 @@
         $("body").fadeIn('slow');
         $('time.timeago').each(function(index, val) {
             var timestamp = $(val).attr('datetime');
-            $(val).text(moment.utc(timestamp).fromNow());
+            $(val).text(moment(timestamp).fromNow());
         });
     });
     window.setInterval(function(){
         $('time.timeago').each(function(index, val) {
             var timestamp = $(val).attr('datetime');
-            $(val).text(moment.utc(timestamp).fromNow());
+            $(val).text(moment(timestamp).fromNow());
         });
     }, 60000);
     $("#wrapper").toggleClass("toggled");

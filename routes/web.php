@@ -13,7 +13,6 @@ Auth::routes();
 | Users Routes
 |--------------------------------------------------------------------------
 */
-
 Route::get('/users/activity', [
     'uses'  =>  'UserController@activity',
 ]);
@@ -70,6 +69,7 @@ Route::post('/users/unfollow', [
 Route::get('/home', [
     'uses'  =>  'HomeController@index',
     'as'    =>  'dashboard',
+    'middleware'    =>  'dashboard',
 ]);
 Route::get('/', [
     'uses'  =>  'HomeController@index',
