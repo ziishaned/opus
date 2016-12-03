@@ -18,7 +18,7 @@
 						<div class="comments-container">
 							<ul id="comments-list" class="comments-list">
 								@foreach($page->comments as $comment)
-									<li>
+									<li class="comment-item">
 										<div class="comment-main-level">
 											<div class="row">
 												<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
@@ -51,7 +51,7 @@
                                                                 @endif
 															</ul>
 														</div>
-														<div class="comment-content" style="padding: 6px 10px 0px 10px;">
+														<div class="comment-content" style="padding: 10px 10px 10px 10px;">
                                                             {!! $comment->content !!}
 														</div>
 														<span class="hide" id="comment-fedit" data-commentId="{{ $comment->id }}">{{ $comment->content }}</span>
@@ -74,10 +74,10 @@
 	    					<div class="row">
 	    						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                     <a href="{{ route('users.show', [Auth::user()->slug, ]) }}">
-	                                    @if(empty($user->profile_image))
+	                                    @if(empty(Auth::user()->profile_image))
 									        <img src="/images/default.png" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
 									    @else
-									        <img src="/images/profile-pics/{{ $user->profile_image }}" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+									        <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
 									    @endif
                                     </a>
 	    						</div>

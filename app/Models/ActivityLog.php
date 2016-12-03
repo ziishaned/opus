@@ -49,14 +49,36 @@ class ActivityLog extends Model
     	return true;	
     }
 
+    /**
+     * Return activities of a user.
+     * @param  int      $userId
+     * @return object         
+     */
     public function getUserActivities($userId)
     {
         return $this
-                    ->leftJoin('user_followers', 'activity_log.user_id', '=', 'user_followers.follow_id')
                     ->where('activity_log.user_id', '=', $userId)
-                    ->orwhereRaw('IFNULL(user_followers.user_id, 0) = ' . $userId . '')
-                    ->select('activity_log.*')
+                    ->join('users', 'activity_log.user_id', '=', 'users.id')
                     ->latest('activity_log.created_at')
+                    ->select('activity_log.*', 'users.name as username', 'users.full_name as full_name', 'users.slug as user_slug')
                     ->paginate(10);
+    }
+
+    /**
+     * This funtion will return user activities plus the activities of the users he is following.
+     *  
+     * @param  int      $userId
+     * @return object
+     */
+    public function getUserAllActivities($userId)
+    {
+        return $this
+                ->leftJoin('user_followers', 'activity_log.user_id', '=', 'user_followers.follow_id')
+                ->join('users', 'activity_log.user_id', '=', 'users.id')
+                ->where('activity_log.user_id', '=', $userId)
+                ->orwhereRaw('IFNULL(user_followers.user_id, 0) = ' . $userId . '')
+                ->select('activity_log.*', 'users.name as username', 'users.full_name as full_name', 'users.slug as user_slug')
+                ->latest('activity_log.created_at')
+                ->paginate(10);
     }
 }

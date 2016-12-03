@@ -8,7 +8,7 @@
             @if($userWikis->count() > 0)
                 <div class="row" style="display: flex; align-items: center;">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <h3 style="margin: 0; font-size: 17px;">All Wikis</h3>
+                        <h3 style="margin: 0;">All Wikis</h3>
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                         <form class="project-filter-form" id="project-filter-form" action="/lundskommun" accept-charset="UTF-8" method="get">

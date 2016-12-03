@@ -66,14 +66,13 @@ class UserController extends Controller
     public function show($userSlug)
     {
         $user = $this->user->getUser($userSlug);
-        $activities = $this->activityLog->getUserActivities($user->id);
 
-        if($user) {
-            return view('user.user', compact('user', 'activities'));
+        if(!$user) {
+            return abort(404);
         }
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+        
+        $activities = $this->activityLog->getUserActivities($user->id);
+        return view('user.user', compact('user', 'activities'));
     }
 
     /**
@@ -180,6 +179,11 @@ class UserController extends Controller
     public function emailsSettings()
     {
         return view('user.setting.emails');
+    }
+
+    public function notificationsSettings()
+    {
+        return view('user.setting.notifications');
     }
 
     public function update($slug)

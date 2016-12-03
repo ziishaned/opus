@@ -1,16 +1,16 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="border-radius: 0; margin-bottom: 0;">
-    <div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: #fdfdfd;">
+    <div class="container">
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())
                 <ul class="nav navbar-nav">
                     <li>
+                        <a href="{{ route('dashboard') }}" style="padding-left: 0;">Home</a>
+                    </li>
+                    {{-- <li>
                         <div class="navbar-toggle show" id="menu-toggle" data-target="#menu-toggle" style="border: none; cursor: pointer; margin: 7px 0 0;">
                             <i class="fa fa-bars fa-lg"></i>
                         </div>
-                    </li>
-                @if(!ViewHelper::getCurrentRoute() === '/')
-                        <li><a href="{{ url('/')  }}">Wikis</a></li>
-                    @endif
+                    </li> --}}
                 </ul>
             @endif
             <div class="spinner">

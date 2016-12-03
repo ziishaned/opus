@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h3 style="margin: 0px;">Create a new wiki</h3>
-            <p class="text-muted" style="margin: 0;">A wiki contains all the pages with informative text for your project.</p>
+            <p style="margin: 0;">A wiki contains all the pages with informative text for your project.</p>
             <hr>
             <form action="{{ route('wikis.store') }}" method="POST" role="form" style="margin-bottom: 15px;">
                 <div class="form-group">

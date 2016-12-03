@@ -260,6 +260,10 @@ Route::get('/settings/account', [
     'uses'  =>  'UserController@accountSettings',
     'as'    =>  'settings.account',
 ]);
+Route::get('/settings/notifications', [
+    'uses'  =>  'UserController@notificationsSettings',
+    'as'    =>  'settings.notifications',
+]);
 Route::get('/settings/emails', [
     'uses'  =>  'UserController@emailsSettings',
     'as'    =>  'settings.emails',

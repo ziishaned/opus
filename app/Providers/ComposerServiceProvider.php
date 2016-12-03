@@ -25,6 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
             'user.setting.profile',
             'user.setting.account',
             'user.setting.emails',
+            'user.setting.notifications',
             'user.organizations',
             'user.followers',
             'user.following',

@@ -19,7 +19,7 @@
             <div class="panel-heading">
                 <div class="row" style="border-bottom: 1px solid #d8d8d8;">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <h3 class="panel-title" style="font-size: 15px; margin-bottom: 10px;">Personal Wikis</h3>    
+                        <h3 class="panel-title" style="margin-bottom: 10px;">Personal Wikis</h3>    
                     </div>
                 </div>
                 <div class="row">
@@ -40,7 +40,7 @@
                                     <a href="{{ route('wikis.show', $wiki->slug) }}" class="name">{{ $wiki->name }}</a>
                                 </div>
                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
-                                    <span style="color: #888;"><i class="fa fa-star"></i> {{ ViewHelper::getWikiStar($wiki->id) }}</span>
+                                    <p><i class="fa fa-star-o" style="color: #bbb;"></i> {{ ViewHelper::getWikiStar($wiki->id) }}</p>
                                 </div>
                             </div>
                         </li>

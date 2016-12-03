@@ -38,12 +38,7 @@ class Comment extends Model
     const COMMENT_RULES = [
         'comment' => 'required',
     ];
-
-    public function getCreatedAtAttribute($value)
-    {
-        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value, Session::get('user_timezone'));
-    }
-
+    
     /**
      * A user can post comments.
      *

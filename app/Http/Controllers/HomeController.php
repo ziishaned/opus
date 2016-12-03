@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function index()
     {
         $wikis = $this->wiki->getWikis($limit = 5);
-        $activities = (new \App\Models\ActivityLog)->getUserActivities(Auth::user()->id);
+        $activities = (new \App\Models\ActivityLog)->getUserAllActivities(Auth::user()->id);
 
         return view('home', compact('wikis', 'activities'));
     }
