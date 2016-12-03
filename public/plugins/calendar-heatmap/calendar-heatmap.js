@@ -116,11 +116,7 @@ function calendarHeatmap() {
       if (chart.tooltipEnabled()) {
         dayRects.on('mouseover', function (d, i) {
           
-          if($('#wrapper').hasClass('toggled') == true) {
-            i = i + 145;
-          } else {
-            i = i + 45;
-          }
+          i = i + 65;
 
           tooltip = d3.select(chart.selector())
             .append('div')

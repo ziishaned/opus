@@ -6,12 +6,8 @@ html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    -webkit-text-stroke: 0.10px;
-}
-
-body {
     -webkit-font-smoothing: antialiased;
-    display: none;
+    -webkit-text-stroke: 0.10px;
 }
 
 code {
@@ -65,10 +61,6 @@ h5 {
     font-size: 14px;
 }
 
-span {
-    font-size: 14px;
-}
-
 p {
     font-size: 13px;
     color: #555;
@@ -99,9 +91,17 @@ a {
 }
 
 .input {
+    margin: 0;
+    max-width: 100%;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
     display: block;
     outline: none;
-    border: 1px solid #F0F0F1;
+    background: #FFF;
+    line-height: 1.2142em;
+    border: 1px solid rgba(34,36,38,.15);
     border-radius: 3px;
     height: 45px;
     width: 100%;
@@ -116,7 +116,7 @@ a {
 .input:focus {
     background-color: white;
     box-shadow: none;
-    border-color: #F0F0F1;
+    border-color: rgba(34,36,38,.15);
 }
 
 input:-webkit-autofill {
@@ -125,7 +125,7 @@ input:-webkit-autofill {
 
 .input-label {
     background-color: white;
-    border-color: #F0F0F1;
+    border: 1px solid rgba(34,36,38,.15);
     color: #9D9DA3;
     font-size: 14px;
     width: 90px;
@@ -142,6 +142,19 @@ input:-webkit-autofill {
 
 .flat-input-con {
     width: 100%;
+}
+
+.flat-ui-select {
+    border-left: 0px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-color: #f0f0f1 !important;
+}
+
+.flat-ui-select.active {
+    box-shadow: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 }
 
 .form-group {
@@ -211,7 +224,6 @@ input:-webkit-autofill {
 
 #organization-nav li.active, #help-tabs li.active {
     border-bottom: 2px solid #4a8bee;
-    font-weight: 600;
 }
 
 #organization-nav li.active a, #help-tabs li.active a {
@@ -751,6 +763,7 @@ ul.activity-list li:hover {
 
 .activity-list .activity {
     border-top: 1px solid #f1f1f1;
+    padding-left: 0px;
 }
 
 .following-list li, .follower-list li {
@@ -798,4 +811,13 @@ ul.activity-list li:hover {
     text-decoration: none;
     font-size: 16px;
     margin-bottom: -5px;
+}
+
+.mce-tinymce {
+    border: 1px solid rgba(34,36,38,.15) !important;
+    box-shadow: none !important;
+}
+
+.mce-panel {
+    border-color: rgba(34,36,38,.15) !important;
 }

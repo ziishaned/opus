@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/prism.css">
-    <link rel="stylesheet" href="/css/selectize.css">
-    <link rel="stylesheet" href="/css/selectize.default.css">
     <link rel="stylesheet" href="/css/tinymce-lightgray.css">
     <link rel="stylesheet" href="/css/editor.css">
     <link rel="stylesheet" href="/js/fancytree-lion/ui.fancytree.min.css">
     <link rel="stylesheet" href="/js/themes/default/style.min.css">
     <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
+    <link rel="stylesheet" href="/plugins/semantic-ui/transition.min.css">
+    <link rel="stylesheet" href="/plugins/semantic-ui/dropdown.min.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
@@ -59,11 +59,11 @@
 <script src="/js/validator.min.js"></script>
 <script src="/js/list.js"></script>
 <script src="/js/list.fuzzysearch.js"></script>
-{{-- <script src="/js/moment-with-locales.min.js"></script> --}}
 <script src="/plugins/calendar-heatmap/moment.min.js"></script>
 <script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>
 <script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
-<script src="/js/standalone/selectize.min.js"></script>
+<script src="/plugins/semantic-ui/dropdown.js"></script>
+<script src="/plugins/semantic-ui/transition.min.js"></script>
 <script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/view.js"></script>
@@ -105,7 +105,7 @@
 
 <script>
     $(window).load(function() {
-        $("body").fadeIn('slow');
+        // $("body").fadeIn('slow');
         $('time.timeago').each(function(index, val) {
             var timestamp = $(val).attr('datetime');
             $(val).text(moment(timestamp).fromNow());
@@ -122,8 +122,8 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
-    SyntaxHighlighter.defaults.toolbar = false;
-    SyntaxHighlighter.all();
+    // SyntaxHighlighter.defaults.toolbar = false;
+    // SyntaxHighlighter.all();
 </script>
 </body>
 </html>

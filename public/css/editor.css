@@ -50,7 +50,7 @@
 
 .mce-tinymce {
   border-width: 1px !important;
-  box-shadow: 1px 1px 10px #ccc !important;
+  box-shadow: 1px 1px 10px #ccc;
   border-radius: 5px !important;
   overflow: hidden !important;
   margin-top: 10px !important;

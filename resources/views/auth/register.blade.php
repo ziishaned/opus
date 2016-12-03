@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <div class="input-group flat-input-con">
                         <span class="input-group-addon input-label" style="width: 138px;">Time zone</span>
-                        <select class="form-control" name="timezone" id="timezone" style="box-shadow: none; outline: none; border: 1px solid #F0F0F1; border-left: 0px;">
+                        <select class="form-control ui dropdown flat-ui-select" name="timezone" id="timezone" style="box-shadow: none; outline: none; border: 1px solid #F0F0F1; border-left: 0px;">
                             <option value="Pacific/Midway">(UTC-11:00) Midway Island</option>
                             <option value="Pacific/Samoa">(UTC-11:00) Samoa</option>
                             <option value="Pacific/Honolulu">(UTC-10:00) Hawaii</option>

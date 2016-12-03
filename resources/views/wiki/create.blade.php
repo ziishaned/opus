@@ -4,27 +4,33 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h3 style="margin: 0px;">Create a new wiki</h3>
-            <p style="margin: 0;">A wiki contains all the pages with informative text for your project.</p>
-            <hr>
+            <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
             <form action="{{ route('wikis.store') }}" method="POST" role="form" style="margin-bottom: 15px;">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                            <div class="form-group" style="margin: 0;">
-                                <label for="" class="control-label">Owner</label>
-                                <select id="organization-input" name="organization_id" placeholder="Find and select organization..">
-                                    @if(!is_null($organization))
-                                        <option value="{{ $organization->id }}" selected>{{ $organization->name }}</option>
-                                    @endif
-                                </select>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <div class="input-group flat-input-con">
+                                    <span class="input-group-addon input-label">Wiki path</span>
+                                    <select class="form-control flat-ui-select" style="box-shadow: none; outline: none; border-color: rgba(34,36,38,.15) !important; border-left: 0px; height: 45px;">
+                                        <optgroup label="Organization">
+                                            <option value="volvo">Volvo</option>
+                                            <option value="saab">Saab</option>
+                                        </optgroup>
+                                        <optgroup label="Users">
+                                            <option value="mercedes">Mercedes</option>
+                                            <option value="audi">Audi</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 separator" style="padding: 0; width: 10px; font-size: 30px; position: relative; top: 22px; font-family: 'Open Sans'; font-weight: 300;"></div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <div class="form-group{{ $errors->has('wiki_name') ? ' has-error' : '' }}" style="margin: 0;">
-                                <label for="wiki-name" class="control-label">Wiki Name</label>
-                                <input type="text" name="wiki_name" id="wiki-name" class="form-control" required="required">
-                                
+                            <div class="form-group{{ $errors->has('wiki_name') ? ' has-error' : '' }}">
+                                <div class="input-group flat-input-con">
+                                    <span class="input-group-addon input-label">Wiki name</span>
+                                    <input type="text" name="wiki_name" id="wiki-name" class="form-control input" required="required" autocomplete="off">
+                                </div>                                
                                 @if ($errors->has('wiki_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('wiki_name') }}</strong>
@@ -33,11 +39,12 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-muted">Great wiki names are short and memorable.</p>
                 </div>
                 <div class="form-group">
-                    <label for="outline">Outline</label>
-                    <input type="text" id="outline" name="outline" class="form-control">
+                    <div class="input-group flat-input-con">
+                        <span class="input-group-addon input-label" style="vertical-align: top; padding-top: 5px;">Outline</span>
+                        <textarea name="outline" id="outline" class="form-control input" rows="3" style="padding: 0;"></textarea>
+                    </div>
                 </div>
                 <div class="form-group" id="page-description-input">
                     <label for="page-description">Description</label>
