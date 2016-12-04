@@ -536,60 +536,46 @@ $(document).ready(function() {
         /* toolbar */
         toolbar: "bold italic underline | bullist numlist | emoticons link unlink | leaui_code_editor",
     });
-
-    $("#page-tree").fancytree({
-        extensions: ["dnd", "edit"],
-        icon: false,
-        dnd: {
-            draggable: {
-                zIndex: 1000,
-                scroll: false,
-                revert: "invalid",
-                appendTo: "body"
-            },
-            autoExpandMS: 400,
-            focusOnClick: true,
-            preventVoidMoves: true,
-            preventRecursiveMoves: true,
-            dragStart: function(node, data) {
-                return true;
-            },
-            dragEnter: function(node, data) {
-               return true;
-            },
-            dragDrop: function(node, data) {
-                $.ajax({
-                    url: '/pages/reorder',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        _method: 'patch',
-                        nodeId: data.otherNode.key,
-                        parentId: data.node.key,
-                    },
-                    success: function(data) {
-                        console.log(data);
-                    },
-                    error: function(error) {
-                        var response = JSON.parse(error.responseText);
-                        console.log(response);
-                    }
-                });
-                data.otherNode.moveTo(node, data.hitMode);
-            }
-        },
-        activate: function(event, data){
-            var node = data.node,
-                orgEvent = data.originalEvent;
-
-            if(node.data.href){
-                window.location.href=node.data.href;    
-            }
-        },
-    });
 });
 
 // Semantic UI
 $(function() {
     $('.ui.dropdown').dropdown();
+});
+
+// jsTree
+$(function() {
+    if($('#wiki-page-tree').length > 0 ) {
+        var wikiId = $('#wiki-page-tree').data('wiki-id');
+        $('#wiki-page-tree').jstree({
+            "core" : {
+                "themes" : {
+                    // 'stripes': true, // Background highlighted of current node or page
+                    'icons': false,
+                    'dots' : false,
+                    "variant" : "large"
+                },
+                'data' : {
+                    url: function (node) {    
+                        return node.id === '#' ?    
+                        '/wikis/'+wikiId+'/pages' : '/wikis/'+wikiId+'/pages/'+node.id;
+                    }
+                }
+            },
+            "plugins" : [ "search" ]
+        }).on("select_node.jstree", function (e, data) { 
+            document.location = data.node.a_attr.href;
+        });
+
+        var to = false;
+        $('#searchinput').keyup(function () {
+            if(to) { 
+                clearTimeout(to); 
+            }
+            to = setTimeout(function () {
+                var v = $('#searchinput').val();
+                $('#wiki-page-tree').jstree(true).search(v);
+            }, 250);
+        });
+    } 
 });

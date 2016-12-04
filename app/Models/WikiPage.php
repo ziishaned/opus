@@ -112,6 +112,28 @@ class WikiPage extends Model
         return $query;
     }
 
+    public function getWikiPages($id, $page_id)
+    {
+        if($page_id != null) {
+            $query  = $this
+                            ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
+                            ->where('wiki_page.wiki_id', '=', $id)
+                            ->where('wiki_page.parent_id', '=', $page_id)
+                            ->groupBy('wiki_page.id')
+                            ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
+                            ->get();
+        } else {   
+            $query  = $this
+                            ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
+                            ->where('wiki_page.wiki_id', '=', $id)
+                            ->where('wiki_page.parent_id', '=', null)
+                            ->groupBy('wiki_page.id')
+                            ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
+                            ->get();
+        }
+        return $query;
+    }
+
     /**
      * Filter wiki pges where wiki pages with a specific id.
      *

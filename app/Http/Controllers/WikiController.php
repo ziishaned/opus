@@ -131,6 +131,20 @@ class WikiController extends Controller
         return view('wiki.wiki', compact('wikiPages', 'wiki'));
     }
 
+    public function getWikiPages($id, $page_id = null)
+    {
+        $wiki = $this->wiki->find($id);
+        $wikiPages = $this->wikiPage->getWikiPages($id, $page_id);
+
+        $html = '<ul>';
+        foreach ($wikiPages as $wikiPage) {
+            $html .= '<li id="'.$wikiPage->id.'" class="' . ($wikiPage->child > 0 ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$wiki->slug, $wikiPage->slug]).'">'. $wikiPage->text .'</a></li>';
+        }
+        $html .= '</ul>';
+    
+        return $html;
+    }
+
     public function isWikiWatching($id)
     {
         $wikiWatching = DB::table('user_watch')

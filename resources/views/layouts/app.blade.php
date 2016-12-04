@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="/css/prism.css">
     <link rel="stylesheet" href="/css/tinymce-lightgray.css">
     <link rel="stylesheet" href="/css/editor.css">
-    <link rel="stylesheet" href="/js/fancytree-lion/ui.fancytree.min.css">
-    <link rel="stylesheet" href="/js/themes/default/style.min.css">
+    <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
     <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
     <link rel="stylesheet" href="/plugins/semantic-ui/transition.min.css">
     <link rel="stylesheet" href="/plugins/semantic-ui/dropdown.min.css">
@@ -49,7 +48,6 @@
 
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
-<script src="/js/jquery.fancytree-all.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/keymaster.js"></script>
 <script src="/js/keymaster.sequence.min.js"></script>
@@ -65,6 +63,7 @@
 <script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
 <script src="/plugins/semantic-ui/dropdown.js"></script>
 <script src="/plugins/semantic-ui/transition.min.js"></script>
+<script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
 <script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/view.js"></script>
@@ -73,7 +72,7 @@
 {{-- Syntax Highlighter --}}
 
 <link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
-<!-- <script src="/plugins/sh/scripts/shCore.js"></script>
+<script src="/plugins/sh/scripts/shCore.js"></script>
 <script src="/plugins/sh/scripts/shLegacy.js"></script>
 <script src="/plugins/sh/scripts/shAutoloader.js"></script>
 <script src="/plugins/sh/scripts/shBrushXml.js"></script>
@@ -100,7 +99,7 @@
 <script src="/plugins/sh/scripts/shBrushScala.js"></script>
 <script src="/plugins/sh/scripts/shBrushSql.js"></script>
 <script src="/plugins/sh/scripts/shBrushVb.js"></script>
-<script src="/plugins/sh/scripts/shBrushXml.js"></script> -->
+<script src="/plugins/sh/scripts/shBrushXml.js"></script>
 
 {{-- ./Syntax Highlighter --}}
 
@@ -111,8 +110,8 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
-    // SyntaxHighlighter.defaults.toolbar = false;
-    // SyntaxHighlighter.all();
+    SyntaxHighlighter.defaults.toolbar = false;
+    SyntaxHighlighter.all();
 </script>
 </body>
 </html>

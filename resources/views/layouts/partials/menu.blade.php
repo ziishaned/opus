@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: #fdfdfd;">
+<nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation" style="background-color: #ffffff;">
     <div class="container">
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())

@@ -1,4 +1,3 @@
-
 /* jsTree default dark theme */
 .jstree-node,
 .jstree-children,
@@ -287,6 +286,7 @@
   background-color: transparent;
 }
 .jstree-default-dark .jstree-anchor,
+.jstree-default-dark .jstree-animated,
 .jstree-default-dark .jstree-wholerow {
   transition: background-color 0.15s, box-shadow 0.15s;
 }
@@ -540,6 +540,17 @@
 #jstree-dnd.jstree-default-dark .jstree-er {
   background-position: -36px -68px;
 }
+.jstree-default-dark .jstree-ellipsis {
+  overflow: hidden;
+}
+.jstree-default-dark .jstree-ellipsis .jstree-anchor {
+  width: calc(100% - 29px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.jstree-default-dark .jstree-ellipsis.jstree-no-icons .jstree-anchor {
+  width: calc(100% - 5px);
+}
 .jstree-default-dark.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
 }
@@ -713,6 +724,17 @@
 #jstree-dnd.jstree-default-dark-small .jstree-er {
   background-position: -39px -71px;
 }
+.jstree-default-dark-small .jstree-ellipsis {
+  overflow: hidden;
+}
+.jstree-default-dark-small .jstree-ellipsis .jstree-anchor {
+  width: calc(100% - 23px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.jstree-default-dark-small .jstree-ellipsis.jstree-no-icons .jstree-anchor {
+  width: calc(100% - 5px);
+}
 .jstree-default-dark-small.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==");
 }
@@ -885,6 +907,17 @@
 }
 #jstree-dnd.jstree-default-dark-large .jstree-er {
   background-position: -32px -64px;
+}
+.jstree-default-dark-large .jstree-ellipsis {
+  overflow: hidden;
+}
+.jstree-default-dark-large .jstree-ellipsis .jstree-anchor {
+  width: calc(100% - 37px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.jstree-default-dark-large .jstree-ellipsis.jstree-no-icons .jstree-anchor {
+  width: calc(100% - 5px);
 }
 .jstree-default-dark-large.jstree-rtl .jstree-node {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==");
