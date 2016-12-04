@@ -132,6 +132,9 @@ Route::get('/organizations/search/{text}', [
 |--------------------------------------------------------------------------
 */
 
+Route::get('/wikis/{id}/pages/{pageId?}', [
+    'uses'  =>  'WikiController@getWikiPages',
+]);
 Route::post('/wikis/{id}/watch', [
     'uses'  =>  'WikiController@watchWiki',
 ]);

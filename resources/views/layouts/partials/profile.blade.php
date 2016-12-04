@@ -1,19 +1,16 @@
 <div class="row user-profile">
-    {{-- <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
-    </div> --}}
-    <div class="col-xs-8 col-sm-8 col-md-10 col-lg-10">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="user-profile-pic">
             @if(empty($user->profile_image))
-                <img src="/images/default.png" class="img-rounded pull-left" width="120" height="120" alt="Image">
+                <img src="/images/default.png" class="img-rounded pull-left" width="95" height="95" alt="Image">
             @else
-                <img src="/images/profile-pics/{{ $user->profile_image }}" class="img-rounded pull-left" width="120" height="120" alt="Image">
+                <img src="/images/profile-pics/{{ $user->profile_image }}" class="img-rounded pull-left" width="95" height="95" alt="Image">
             @endif
         </div>
         <div class="pull-left" style="margin-left: 15px;">
             @if(!empty($user->full_name))
                 <h3 style="text-transform: capitalize;" title="{{ $user->full_name }}">{{ $user->full_name }}</h3>
             @endif
-            <p style="cursor: default; display: inline-block;" data-toggle="tooltip" data-placement="top" title="{{ $user->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $user->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}"><i class="fa fa-clock-o"></i> Member since {{  $user->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }}</p>    
             <p>
                 <span class="@if(!empty($user->location)) dot-divider @endif">
                     <i class="fa fa-envelope"></i> <a href="mailto:{{ $user->email  }}">{{ $user->email  }}</a>

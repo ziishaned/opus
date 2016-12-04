@@ -16,7 +16,7 @@
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="panel panel-default" id="wiki-list-con">
-            <div class="panel-heading">
+            <div class="panel-heading" style="background-color: #ffffff;">
                 <div class="row" style="border-bottom: 1px solid #d8d8d8;">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <h3 class="panel-title" style="margin-bottom: 10px;">Personal Wikis</h3>    
