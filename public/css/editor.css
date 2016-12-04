@@ -42,7 +42,7 @@
 .mce-menu-item:hover span,
 .mce-menu-item.mce-selected span,
 .mce-menu-item:focus span {
-  color: #000 !important;
+  color: #fff !important;
 }
 .mce-menu-item-normal.mce-active {
   background-color: #ebeff2 !important;

@@ -10,6 +10,10 @@ html, body {
     -webkit-text-stroke: 0.10px;
 }
 
+body {
+    padding-top: 65px;
+}
+
 code {
     font-family: monaco !important;
 }
@@ -19,9 +23,9 @@ hr {
 }
 
 label {
-    color: #666;
+    color: #9D9DA3;
+    font-weight: 500;
     font-size: 14px;
-    font-weight: 600;
 }
 
 button {
@@ -111,6 +115,14 @@ a {
     box-sizing: border-box;
     box-shadow: none;
     border-left: 0px;
+}
+
+textarea.input {
+    border-radius: 4px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    padding: 0px !important; 
+    padding-left: 15px !important;
 }
 
 .input:focus {
@@ -315,7 +327,9 @@ li.comment-item {
 }
 
 .comments-list .comment-head ul {
-    margin-top: 8px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    font-size: 13px;
 }
 
 .comments-list .comment-head ul li {
@@ -436,6 +450,12 @@ li.comment-item {
 }
 
 .comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
+
+.comment-box .comment-name.by-author {
+    margin: 0px;
+    margin-top: 7px;
+    margin-bottom: 8px;
+}
 
 /** =====================
  * Responsive

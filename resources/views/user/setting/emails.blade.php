@@ -14,7 +14,7 @@
                                 <input type="text" class="form-control input" id="email" name="email" autocomplete="off">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success">Add</button>
+                        <button type="submit" class="btn btn-default">Add</button>
                     </form>
                 </div>
             </div>

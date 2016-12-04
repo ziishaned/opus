@@ -1,57 +1,50 @@
 <div class="test">	    		
 	<div class="row" style="margin-bottom: 10px;">
     	<div class="wiki-nav-con">
-    		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-    			<div class="row">
-    				<div class="pull-left" style="position: relative; top: 10px; left: 15px; margin-right: 5px;">
-    					<i class="fa fa-wikipedia-w fa-lg"></i> 
-    				</div>
-    				<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
-		    			<h2 style="margin: 0; margin-bottom: 3px; font-size: 18px; margin-top: 10px; font-weight: normal;"><a href="#" style="color:#4078c0; font-weight: normal; text-transform: capitalize;">{{ $page->name }}</a></h2>
-		    			<p style="margin-bottom: 0;" class="text-muted">Created by {{ ViewHelper::getUsername($page->user_id) }} on {{ $page->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $page->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
-    				</div>
-    			</div>
-    		</div>
-    		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right" style="margin-top: 10px;">
-    			<ul class="list-inline list-unstyled" style="margin-bottom: 0px; position: relative; top: 5px;">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+    			<h3 style="margin-bottom: 0;"><a href="#">{{ $page->name }}</a></h3>
+    			<p style="margin-bottom: 0;" class="text-muted">Created by {{ ViewHelper::getUsername($page->user_id) }} on {{ $page->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $page->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
+			</div>
+    		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
+    			<ul class="list-inline list-unstyled" style="position: relative; top: 5px;">
     				@if($page->page_watching) 
 	    				<li>
-	    					<button data-page-id="{{ $page->id }}" id="watch-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-eye"></i> Unwatch
+	    					<button data-page-id="{{ $page->id }}" id="watch-page-btn" class="btn btn-default btn-sm pull-left" style="border-radius: 3px 0px 0px 3px;">
+						        Unwatch
 						    </button>
 						    <div class="count-with-arrow pull-left">
-								<span class="count page-watch-count" style="line-height: 11px;"> {{ ViewHelper::getPageWatch($page->id) }} </span>
+								<span class="count page-watch-count" style="line-height: 9px;"> {{ ViewHelper::getPageWatch($page->id) }} </span>
 							</div>
 							<div class="clearfix"></div>
 	    				</li>
 	    			@else
 						<li>
-	    					<button data-page-id="{{ $page->id }}" id="watch-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-eye"></i> Watch
+	    					<button data-page-id="{{ $page->id }}" id="watch-page-btn" class="btn btn-default btn-sm pull-left" style="border-radius: 3px 0px 0px 3px;">
+						        Watch
 						    </button>
 						    <div class="count-with-arrow pull-left">
-								<span class="count page-watch-count" style="line-height: 11px;"> {{ ViewHelper::getPageWatch($page->id) }} </span>
+								<span class="count page-watch-count" style="line-height: 9px;"> {{ ViewHelper::getPageWatch($page->id) }} </span>
 							</div>
 							<div class="clearfix"></div>
 	    				</li>
 	    			@endif
     				@if($page->page_like) 
 	    				<li>
-	    					<button data-page-id="{{ $page->id }}" id="like-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-star-o"></i> Unstar
+	    					<button data-page-id="{{ $page->id }}" id="like-page-btn" class="btn btn-default btn-sm pull-left" style="border-radius: 3px 0px 0px 3px;">
+						        Unstar
 						    </button>
 						    <div class="count-with-arrow pull-left">
-								<span class="count page-star-count" style="line-height: 11px;"> {{ ViewHelper::getPageStar($page->id) }} </span>
+								<span class="count page-star-count" style="line-height: 9px;"> {{ ViewHelper::getPageStar($page->id) }} </span>
 							</div>
 							<div class="clearfix"></div>
 	    				</li>
     				@else 
 						<li>
-	    					<button data-page-id="{{ $page->id }}" id="like-page-btn" class="btn btn-default pull-left" style="border-radius: 3px 0px 0px 3px; background-image: linear-gradient(#fcfcfc, #eee); font-size: 13px; font-weight: 600;">
-						        <i class="fa fa-star-o"></i> Star
+	    					<button data-page-id="{{ $page->id }}" id="like-page-btn" class="btn btn-default btn-sm pull-left" style="border-radius: 3px 0px 0px 3px;">
+						        Star
 						    </button>
 						    <div class="count-with-arrow pull-left">
-								<span class="count page-star-count" style="line-height: 11px;"> {{ ViewHelper::getPageStar($page->id) }} </span>
+								<span class="count page-star-count" style="line-height: 9px;"> {{ ViewHelper::getPageStar($page->id) }} </span>
 							</div>
 							<div class="clearfix"></div>
 	    				</li>

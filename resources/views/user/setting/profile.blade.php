@@ -52,7 +52,7 @@
                             </div>                                    
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary button-primary">Update</button>
+                            <button type="submit" class="btn btn-default">Update</button>
                         </div>  
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">

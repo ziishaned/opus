@@ -128,7 +128,7 @@ class Wiki extends Model
         $wiki = $this->create([
             'name'            =>  $data['wiki_name'],
             'outline'         =>  $data['outline'],
-            'description'     =>  $data['page_description'],
+            'description'     =>  $data['wiki_description'],
             'user_id'         =>  Auth::user()->id,
             'organization_id' =>  !empty($data['organization_id']) ? $data['organization_id'] : null,
             'wiki_type'       =>  !empty($data['organization_id']) ? 'organization' : 'personal',

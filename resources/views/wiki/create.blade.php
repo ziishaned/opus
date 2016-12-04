@@ -47,10 +47,10 @@
                     </div>
                 </div>
                 <div class="form-group" id="page-description-input">
-                    <label for="page-description">Description</label>
-                    <textarea id="page-description" name="page_description"></textarea>
+                    <label for="wiki-description" class="control-label">Description</label>
+                    <textarea id="wiki-description" name="wiki_description"></textarea>
                 </div>
-                <input type="submit" class="btn btn-success pull-right" id="create-wiki-btn" value="Create Wiki">
+                <input type="submit" class="btn btn-default" id="create-wiki-btn" value="Create Wiki">
                 <div class="clearfix"></div>
             </form>
         </div>

@@ -278,12 +278,12 @@ var App = {
                 if(data.watch) {
                     var totalWatch = parseInt($(document).find('.page-watch-count').text());
                     $(document).find('.page-watch-count').text(totalWatch+1);
-                    $(document).find('#watch-page-btn').html('<i class="fa fa-eye"></i> Unwatch');
+                    $(document).find('#watch-page-btn').html('Unwatch');
                 }
                 if(data.unwatch) {
                     var totalWatch = parseInt($(document).find('.page-watch-count').text());
                     $(document).find('.page-watch-count').text(totalWatch-1);
-                    $(document).find('#watch-page-btn').html('<i class="fa fa-eye"></i> Watch');
+                    $(document).find('#watch-page-btn').html('Watch');
                 }
             },
             error: function(error) {
@@ -301,12 +301,12 @@ var App = {
                 if(data.watch) {
                     var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
                     $(document).find('.wiki-watch-count').text(totalWatch+1);
-                    $(document).find('#watch-wiki-btn').html('<i class="fa fa-eye"></i> Unwatch');
+                    $(document).find('#watch-wiki-btn').html('Unwatch');
                 }
                 if(data.unwatch) {
                     var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
                     $(document).find('.wiki-watch-count').text(totalWatch-1);
-                    $(document).find('#watch-wiki-btn').html('<i class="fa fa-eye"></i> Watch');
+                    $(document).find('#watch-wiki-btn').html('Watch');
                 }
             },
             error: function(error) {
@@ -324,12 +324,12 @@ var App = {
                 if(data.star) {
                     var totalStars = parseInt($(document).find('.page-star-count').text());
                     $(document).find('.page-star-count').text(totalStars+1);
-                    $(document).find('#like-page-btn').html('<i class="fa fa-star-o"></i> Unstar');
+                    $(document).find('#like-page-btn').html('Unstar');
                 }
                 if(data.unstar) {
                     var totalStars = parseInt($(document).find('.page-star-count').text());
                     $(document).find('.page-star-count').text(totalStars-1);
-                    $(document).find('#like-page-btn').html('<i class="fa fa-star-o"></i> Star');
+                    $(document).find('#like-page-btn').html('Star');
                 }
             },
             error: function(error) {
@@ -347,12 +347,12 @@ var App = {
                 if(data.star) {
                     var totalStars = parseInt($(document).find('.wiki-star-count').text());
                     $(document).find('.wiki-star-count').text(totalStars+1);
-                    $(document).find('#like-wiki-btn').html('<i class="fa fa-star-o"></i> Unstar');
+                    $(document).find('#like-wiki-btn').html('Unstar');
                 }
                 if(data.unstar) {
                     var totalStars = parseInt($(document).find('.wiki-star-count').text());
                     $(document).find('.wiki-star-count').text(totalStars-1);
-                    $(document).find('#like-wiki-btn').html('<i class="fa fa-star-o"></i> Star');
+                    $(document).find('#like-wiki-btn').html('Star');
                 }
             },
             error: function(error) {
@@ -425,7 +425,7 @@ $(document).ready(function() {
 
     tinymce.init({
         /* replace textarea having class .tinymce with tinymce editor */
-        selector: "#page-description",
+        selector: "#page-description, #wiki-description",
         content_css : "/css/bootstrap.min.css,/css/tinymce.css,/js/plugins/leaui_code_editor/css/pre.css", 
 
         /* theme of the editor */
@@ -588,23 +588,6 @@ $(document).ready(function() {
         },
     });
 });
-
-// Wiki Menu fix after specific srolling of page
-$(document).scroll(function() {
-    var y = $(document).scrollTop(), //get page y value 
-        header = $(".test");
-    if(y >= 30)  {
-        var sidebar = $('#wrapper').hasClass('toggled');
-        if(!sidebar) {
-            header.css('margin-left', '255px');
-        }
-        header.addClass('search')
-    } else {
-        header.css('margin-left', '0px');
-        header.removeClass('search');
-    }
-});
-
 
 // Semantic UI
 $(function() {

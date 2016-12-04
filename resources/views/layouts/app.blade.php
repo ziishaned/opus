@@ -31,7 +31,7 @@
             @include('layouts.partials.menu')
         
             @if(Session::get('alert'))
-                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-top: 51px; margin-bottom: -60px;">
+                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -15px;">
                     <div class="container">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         {{ Session::get('alert') }}
@@ -39,7 +39,7 @@
                 </div>
             @endif
 
-            <div class="main-body" id="page-content-wrapper" style="margin-top: 75px;">
+            <div class="main-body" id="page-content-wrapper">
                 <div class="container">
                     @yield('content')
                 </div>
@@ -58,6 +58,7 @@
 <script src="/js/tinymce.min.js"></script>
 <script src="/js/validator.min.js"></script>
 <script src="/js/list.js"></script>
+<script src="/js/timeago.js"></script>
 <script src="/js/list.fuzzysearch.js"></script>
 <script src="/plugins/calendar-heatmap/moment.min.js"></script>
 <script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>
@@ -104,19 +105,7 @@
 {{-- ./Syntax Highlighter --}}
 
 <script>
-    $(window).load(function() {
-        // $("body").fadeIn('slow');
-        $('time.timeago').each(function(index, val) {
-            var timestamp = $(val).attr('datetime');
-            $(val).text(moment(timestamp).fromNow());
-        });
-    });
-    window.setInterval(function(){
-        $('time.timeago').each(function(index, val) {
-            var timestamp = $(val).attr('datetime');
-            $(val).text(moment(timestamp).fromNow());
-        });
-    }, 60000);
+    new timeago().render(document.querySelectorAll('time.timeago'));
     $("#wrapper").toggleClass("toggled");
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
