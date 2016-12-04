@@ -1,12 +1,12 @@
 function calendarHeatmap() {
   // defaults
-  var width = 750;
+  var width = 850;
   var height = 110;
   var legendWidth = 150;
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   var selector = 'body';
-  var SQUARE_LENGTH = 11;
+  var SQUARE_LENGTH = 12;
   var SQUARE_PADDING = 2;
   var MONTH_LABEL_PADDING = 6;
   var now = moment().endOf('day').toDate();
@@ -116,7 +116,7 @@ function calendarHeatmap() {
       if (chart.tooltipEnabled()) {
         dayRects.on('mouseover', function (d, i) {
           
-          i = i + 65;
+          i = i + 26;
 
           tooltip = d3.select(chart.selector())
             .append('div')

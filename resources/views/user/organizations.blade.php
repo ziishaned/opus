@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.partials.profile')
-    @include('layouts.partials.user-nav')
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row">
+        @include('layouts.partials.user-nav')
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            @include('layouts.partials.profile')
+            <hr>
             @if($userOrganizations->count() > 0)
                 <div class="row" style="display: flex; align-items: center;">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -54,7 +55,7 @@
             @else 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <h3 style="font-size: 15px; font-weight: 400; color: #777777; text-align: center; padding: 15px 0px 15px 0px; margin: 0;">Nothing found...</h3>
+                        <h3 class="nothing-found">Nothing found...</h3>
                     </div>
                 </div>
             @endif

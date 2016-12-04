@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.partials.profile')
-    @include('layouts.partials.user-nav')
-    <div class="row" style="margin-top: 13px;">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row">
+        @include('layouts.partials.user-nav')
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            @include('layouts.partials.profile')
+            <hr>
             @if($userFollowers->count() > 0)
                 <div class="row" style="display: flex; align-items: center;">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -34,9 +35,9 @@
                                                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                     <a href="{{ route('users.show', [$follower->id, ]) }}">
                                                         @if(empty($follower->profile_image))
-                                                            <img src="/images/default.png" class="img-rounded" width="70" height="70" alt="Image" style="border: 1px solid rgba(0,0,0,0.1);">
+                                                            <img src="/images/default.png" class="img-rounded" width="70" height="70" alt="Image">
                                                         @else
-                                                            <img src="/images/profile-pics/{{ $follower->profile_image }}" class="img-rounded" width="70" height="70" alt="Image" style="border: 1px solid rgba(0,0,0,0.1);">
+                                                            <img src="/images/profile-pics/{{ $follower->profile_image }}" class="img-rounded" width="70" height="70" alt="Image">
                                                         @endif
                                                     </a>
                                                 </div>
@@ -70,7 +71,7 @@
                     </div>
                 </div>
             @else
-                <h3 style="font-size: 15px; font-weight: 400; color: #777777; text-align: center; padding: 15px 0px 15px 0px; margin: 0;">Nothing found...</h3>
+                <h3 class="nothing-found">Nothing found...</h3>
             @endif
         </div>
     </div>
