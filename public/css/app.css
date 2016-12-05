@@ -638,6 +638,15 @@ ul.activity-list li:hover {
     margin: 0 !important;
 }
 
+.page-description pre, .page-description code {
+    line-height: 1.45;
+    font-size: 14px;
+    background-color: #f7f7f7;
+    border-radius: 3px;
+    border: none;
+    font-family: 'consolas' !important;
+}
+
 .page-description h1, 
 .page-description h2, 
 .page-description h3, 
@@ -706,6 +715,10 @@ ul.activity-list li:hover {
     font-size: 13px;
 }
 
+.mce-toolbar button, .mce-stack-layout-item, .mce-toolbar-grp {
+    background-color: white !important;
+}
+
 .mce-tinymce {
     border: 1px solid rgba(34,36,38,.15) !important;
     box-shadow: none !important;
@@ -736,4 +749,69 @@ ul.activity-list li:hover {
 
 .jstree-icon.jstree-ocl {
     width: 28px !important;
+}
+
+
+.select2-selection.select2-selection--single {
+    display: flex !important;
+    height: 45px !important;
+    align-items: center !important;
+    border-left: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-color: #dedede !important;
+    outline: none !important;
+}
+
+.select2-selection__rendered {
+    color: #222222 !important;
+    padding-left: 15px !important;
+    font-size: 16px !important;
+}
+
+.select2-selection__arrow {
+    height: 44px !important;
+}
+
+.select2-search__field {
+    color: #222222 !important;
+    border: 1px solid rgba(34,36,38,.15) !important;
+    font-size: 14px !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+    outline: none !important;
+    margin-bottom: 11px !important;
+}
+
+.select2-search.select2-search--dropdown {
+    padding-top: 15px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+
+}
+
+#select2-wiki-path-results {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    padding-bottom: 10px !important;
+}
+
+.select2-results__option {
+    font-size: 14px !important;
+}
+
+.select2-dropdown.select2-dropdown--above {
+    position: relative !important;
+    bottom: 6px !important;
+    box-shadow: rgba(76,86,103,0.247059) 0 0 1px 0, rgba(31,37,50,0.317647) 0 2px 18px 0 !important;
+    border-radius: 4px !important;
+    border: 1px solid #aaa !important;
+}
+
+.select2-dropdown.select2-dropdown--below {
+    position: relative !important;
+    top: 6px !important;
+    box-shadow: rgba(76,86,103,0.247059) 0 0 1px 0, rgba(31,37,50,0.317647) 0 2px 18px 0 !important;
+    border-radius: 4px !important;
+    border: 1px solid #aaa !important;     
 }

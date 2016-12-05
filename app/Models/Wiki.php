@@ -42,9 +42,10 @@ class Wiki extends Model
      */
     protected $fillable = [
         'name',
-        'description',
+        'slug',
         'outline',
-        'wiki_type',
+        'description',
+        'visibilty',
         'user_id',
         'organization_id',
         'updated_at',
@@ -55,7 +56,9 @@ class Wiki extends Model
      * @const array
      */
     const WIKI_RULES = [
-        'wiki_name' => 'required|max:35|min:3',
+        'wiki_name'       => 'required|max:45|min:1',
+        'wiki_path'       => 'required',
+        'wiki_visibility' => 'required',
     ];
 
     /**
@@ -130,8 +133,8 @@ class Wiki extends Model
             'outline'         =>  $data['outline'],
             'description'     =>  $data['wiki_description'],
             'user_id'         =>  Auth::user()->id,
-            'organization_id' =>  !empty($data['organization_id']) ? $data['organization_id'] : null,
-            'wiki_type'       =>  !empty($data['organization_id']) ? 'organization' : 'personal',
+            'visibilty'       =>  $data['wiki_visibility'],
+            'organization_id' =>  ($data['wiki_path'] != 'user') ? $data['wiki_path'] : null,
         ]);
 
         return $wiki;

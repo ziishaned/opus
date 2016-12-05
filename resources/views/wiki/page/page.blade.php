@@ -82,9 +82,9 @@
 													<div class="comment-avatar">
                                                         <a href="#">
 	                                                        @if(empty($comment->user->profile_image))
-	                                                            <img src="/images/default.png" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+	                                                            <img src="/images/default.png" width="64" height="64" alt="Image" style="border-radius: 3px;">
     														@else
-	                                                            <img src="/images/profile-pics/{{ $comment->user->profile_image }}" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+	                                                            <img src="/images/profile-pics/{{ $comment->user->profile_image }}" width="64" height="64" alt="Image" style="border-radius: 3px;">
     														@endif
                                                         </a>
 													</div>
@@ -132,9 +132,9 @@
 	    						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="padding-right: 0px;">
                                     <a href="{{ route('users.show', [Auth::user()->slug, ]) }}">
 	                                    @if(empty(Auth::user()->profile_image))
-									        <img src="/images/default.png" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+									        <img src="/images/default.png" width="64" height="64" alt="Image" style="border-radius: 3px;">
 									    @else
-									        <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" width="64" height="64" class="img-responsive" alt="Image" style="border-radius: 3px;">
+									        <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" width="64" height="64" alt="Image" style="border-radius: 3px;">
 									    @endif
                                     </a>
 	    						</div>

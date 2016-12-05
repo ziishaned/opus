@@ -579,3 +579,8 @@ $(function() {
         });
     } 
 });
+
+// Select2
+$(function() {
+    $('#wiki-path, #timezone').select2();
+});

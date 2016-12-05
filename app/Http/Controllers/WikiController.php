@@ -76,15 +76,10 @@ class WikiController extends Controller
      * @param null|string $organizationSlug
      * @return \Illuminate\Http\Response
      */
-    public function create($organizationSlug = null)
-    {
-
-        if(!is_null($organizationSlug)) {
-            $organization = $this->organization->getOrganization($organizationSlug);
-        } else {
-            $organization = null;
-        }
-        return view('wiki.create', compact('organization'));
+    public function create()
+    {  
+        $organizations = $this->organization->getUserOrganizations(Auth::user()->id);
+        return view('wiki.create', compact('organizations'));
     }
 
     /**
@@ -93,15 +88,10 @@ class WikiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store()
-    {        
-        $this->validate($this->request, Wiki::WIKI_RULES);
-        if($this->request->get('organization_id')) {
-            $member = $this->organization->isMember(Auth::user()->id, $this->request->get('organization_id'));
-            if(!$member) {
-                abort(404);
-            }
-        }
+    {
 
+        $this->validate($this->request, Wiki::WIKI_RULES);
+        
         $wiki = $this->wiki->saveWiki($this->request->all());
         $this->activityLog->createActivity('wiki', 'create', $wiki);
 

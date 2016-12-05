@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="/css/editor.css">
     <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
     <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
-    <link rel="stylesheet" href="/plugins/semantic-ui/transition.min.css">
-    <link rel="stylesheet" href="/plugins/semantic-ui/dropdown.min.css">
+    <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
@@ -61,9 +60,8 @@
 <script src="/plugins/calendar-heatmap/moment.min.js"></script>
 <script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>
 <script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
-<script src="/plugins/semantic-ui/dropdown.js"></script>
-<script src="/plugins/semantic-ui/transition.min.js"></script>
 <script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
+<script src="/plugins/select2/select2.full.min.js"></script>
 <script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/view.js"></script>

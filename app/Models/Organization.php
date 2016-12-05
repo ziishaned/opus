@@ -258,4 +258,15 @@ class Organization extends Model
                        ->select('organization.*')->get();   
         return $query;
     }
+
+    public function getUserOrganizations($userId)
+    {
+        return $this
+                  ->join('user_organization', 'organization.id', '=', 'user_organization.organization_id')
+                  ->where('user_organization.user_id', '=', $userId)
+                  ->where('user_organization.user_type', '=', 'admin')
+                  ->groupBy('organization.user_id')
+                  ->select('organization.*', 'user_organization.user_type')
+                  ->get();
+    }
 }
