@@ -515,6 +515,8 @@ $(function() {
             "plugins" : [ "search" ]
         }).on("select_node.jstree", function (e, data) { 
             document.location = data.node.a_attr.href;
+        }).on("ready.jstree", function(e, data) {
+            data.instance._open_to($('#current-node').val());
         });
 
         var to = false;

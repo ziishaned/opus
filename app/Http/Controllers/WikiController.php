@@ -128,7 +128,7 @@ class WikiController extends Controller
             $wikiPages = $this->wikiPage->getWikiPages($id, $page_id);
             $html = '<ul>';
             foreach ($wikiPages as $wikiPage) {
-                $html .= '<li id="'.$wikiPage->id.'" class="' . ($wikiPage->child > 0 ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$wiki->slug, $wikiPage->slug]).'">'. $wikiPage->text .'</a></li>';
+                $html .= '<li id="'.$wikiPage['id'].'" class="' . ($wikiPage['leaf'] == false ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$wiki->slug, $wikiPage['slug']]).'">'. $wikiPage['name'] .'</a></li>';
             }
             $html .= '</ul>';
         } else {
@@ -136,7 +136,6 @@ class WikiController extends Controller
 
             $html = '';
             $this->makePageTree($wikiPages, $this->request->get('opened_node'), $html);
-            // dd($wikiPages->toArray());
         }
     
         return $html;
@@ -145,15 +144,13 @@ class WikiController extends Controller
     public static function makePageTree($wikiPages, $currentPageId, &$html)
     {
         foreach ($wikiPages as $page => $value) {
-            $class = '';
-            if($value->id == $currentPageId) {
-                $class='active';
+            foreach($value->getSiblings() as $siblings) {
+                $html .= '<li id="'.$siblings->id.'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
             }
-
-            $html .= '<li class="'.$class.'" id="'.$value->id.'"><a href="/wikis/'. $value->wiki->slug .'/pages/'. $value->slug . '">' . $value->name . '</a>';
-            if(!empty($value['pages'])) {
+            $html .= '<li id="'.$value->id.'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
+            if(!empty($value['children'])) {
                 $html .= '<ul>';
-                self::makePageTree($value['pages'], $currentPageId, $html);
+                self::makePageTree($value['children'], $currentPageId, $html);
                 $html .= '</ul></li>';
             }
         }

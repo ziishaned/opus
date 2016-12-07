@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Auth;
+use Baum\Node;
 use Carbon\Carbon;
 use App\Models\Wiki;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 /**
@@ -15,7 +15,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
  * @author Zeeshan Ahmed <ziishaned@gmail.com>
  * @package App\Models
  */
-class WikiPage extends Model
+class WikiPage extends Node
 {
     use Sluggable;
 
@@ -54,6 +54,9 @@ class WikiPage extends Model
         'wiki_id',
         'created_at',
         'updated_at',
+        'lft',
+        'rgt',
+        'depth',
     ];
 
     /**
@@ -78,22 +81,31 @@ class WikiPage extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function childs()
-    {
-        return $this->hasMany(WikiPage::class, 'parent_id', 'id');
-    }
+    // /**
+    //  * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    //  */
+    // public function childs()
+    // {
+    //     return $this->hasMany(WikiPage::class, 'parent_id', 'id');
+    // }
 
-    /**
-     * @return mixed
-     */
-    public function pages()
-    {
-        return $this->childs()->with('pages');
-    }
+    // /**
+    //  * @return mixed
+    //  */
+    // public function pages()
+    // {
+    //     return $this->childs()->with('pages');
+    // }
 
+    // public function parent() {
+    //     return $this->hasMany(WikiPage::class, 'id', 'parent_id')->with(['parent', 'childs', 'siblings']);
+    // }
+
+    // public function siblings()
+    // {
+    //     return $this->hasMany(WikiPage::class, 'parent_id', 'parent_id');
+    // }
+    
     /**
      * Retrieve a wiki from database.
      *
@@ -104,45 +116,46 @@ class WikiPage extends Model
     {
         $query = $this;
         $query = $query->where('wiki_page.wiki_id', '=', $wikiId);
-        $query = $query->where('wiki_page.parent_id', '=', null);
-        $query = $query->with(['pages', 'wiki'])->get();
+        $query = $query->with(['wiki'])->get();
         if(!$query) {
             return false;
         }
         return $query;
     }
 
-    public function parent() {
-        return $this->hasMany(WikiPage::class, 'id', 'parent_id')->with(['parent', 'childs', 'siblings']);
-    }
-
-    public function siblings()
-    {
-        return $this->hasMany(WikiPage::class, 'parent_id', 'parent_id');
-    }
 
     public function getWikiPages($id, $page_id, $openedNode = null)
     {
+        $nodes = [];
+
         if(is_null($openedNode)) {
             if(!is_null($page_id)) {
-                $query  = $this
-                                ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
-                                ->where('wiki_page.wiki_id', '=', $id)
-                                ->where('wiki_page.parent_id', '=', $page_id)
-                                ->groupBy('wiki_page.id')
-                                ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
-                                ->get();
-            } else {   
-                $query  = $this
-                                ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
-                                ->where('wiki_page.wiki_id', '=', $id)
-                                ->where('wiki_page.parent_id', '=', null)
-                                ->groupBy('wiki_page.id')
-                                ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
-                                ->get();
+                $childs = $this->find($page_id)->children()->get();
+                foreach ($childs as $key => $value) {
+                    $nodes[] = [
+                        'id'   => $value->id,
+                        'name' => $value->name,
+                        'slug' => $value->slug,
+                        'leaf' => $value->isLeaf()
+                    ];
+                }
+                return $nodes;
+                
+            } else {
+                $roots = $this->roots()->get();
+                foreach ($roots as $key => $value) {
+                    $nodes[] = [
+                        'id'   => $value->id,
+                        'name' => $value->name,
+                        'slug' => $value->slug,
+                        'leaf' => $value->isLeaf()
+                    ];
+                }
+                return $nodes;
             }
         } else {
-            $query = $this->where('id', '=', $openedNode)->with(['parent', 'childs', 'siblings', 'pages'])->get();
+            $x = $this->find($openedNode)->getAncestorsAndSelf()->toHierarchy();
+            return $x;
         }
         return $query;
     }
@@ -189,7 +202,7 @@ class WikiPage extends Model
      */
     public function getPage($slug)
     {
-        $page = $this->where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->with(['parent', 'comments', 'wiki', 'pages'])->first();
+        $page = $this->where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->with(['comments', 'wiki'])->first();
         if(is_null($page)) {
             return false;
         }

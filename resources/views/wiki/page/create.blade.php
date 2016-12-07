@@ -23,15 +23,19 @@
                                     <p class="text-muted">Great page names are short and memorable.</p>
                                 </div>
                             </div>
-                            {{-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <div class="input-group flat-input-con">
-                                    <span class="input-group-addon input-label">Page parent</span>
-                                    <select class="form-control ui dropdown flat-ui-select"  name="page_parent" style="box-shadow: none; outline: none; border: 1px solid #F0F0F1; border-left: 0px;">
-
-                                    </select>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <div class="input-group flat-input-con">
+                                        <span class="input-group-addon input-label" style="width: 90px;">Page parent</span>
+                                        <select class="form-control flat-ui-select" name="page_parent" id="timezone" style="box-shadow: none; outline: none; border: 1px solid #F0F0F1; border-left: 0px;">
+                                            @foreach($wikiPages as $wikiPage)
+                                                <option value="{{ $wikiPage->id }}">{{ $wikiPage->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <p class="text-muted">Leave it blank if this page has no parent.</p>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="form-group" id="page-description-input">
                             <label for="page-description">Description</label>

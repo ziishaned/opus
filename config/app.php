@@ -181,6 +181,7 @@ return [
         App\Providers\ComposerServiceProvider::class,
         
         Cviebrock\EloquentSluggable\ServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class,
     ],
 
     /*

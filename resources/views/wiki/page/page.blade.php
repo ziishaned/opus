@@ -19,7 +19,8 @@
 	                    </div>
 	                </div>
 	            </div>
-	        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px;">
+	        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px; padding-right: 0px;">
+	        		<input type="text" id="current-node" class="hide" value="{{ $page->id }}">
 	        		<input type="text" id="current-page-id" class="hide" value="{{ $page->id }}">
 					<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}"></div>
 	        	</div>

@@ -730,6 +730,11 @@ ul.activity-list li:hover {
 
 /*Jstree*/
 
+.jstree-selected>a {
+    color: black !important;
+    font-weight: bold !important;
+}
+
 .jstree-default .jstree-anchor {
     /*color: #3572b0 !important;*/
     font-size: 14px !important;
