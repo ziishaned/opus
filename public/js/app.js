@@ -193,20 +193,6 @@ var App = {
             that.unFollowUser(followId);
         });
 
-        $(document).on('click', '#like-wiki-btn', function(event) {
-            event.preventDefault();
-            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
-            var wikiId = $(this).attr('data-wiki-id');
-            that.starWiki(wikiId);
-        });
-
-        $(document).on('click', '#like-page-btn', function(event) {
-            event.preventDefault();
-            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
-            var pageId = $(this).attr('data-page-id');
-            that.starPage(pageId);
-        });
-
         $(document).on('click', '#watch-wiki-btn', function(event) {
             event.preventDefault();
             $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
@@ -307,52 +293,6 @@ var App = {
                     var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
                     $(document).find('.wiki-watch-count').text(totalWatch-1);
                     $(document).find('#watch-wiki-btn').html('Watch');
-                }
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
-    starPage: function(id) {
-        $.ajax({
-            url: '/pages/'+id+'/star',
-            type: 'POST',
-            dataType: 'json',
-            success: function(data) {
-                if(data.star) {
-                    var totalStars = parseInt($(document).find('.page-star-count').text());
-                    $(document).find('.page-star-count').text(totalStars+1);
-                    $(document).find('#like-page-btn').html('Unstar');
-                }
-                if(data.unstar) {
-                    var totalStars = parseInt($(document).find('.page-star-count').text());
-                    $(document).find('.page-star-count').text(totalStars-1);
-                    $(document).find('#like-page-btn').html('Star');
-                }
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
-    starWiki: function(id) {
-        $.ajax({
-            url: '/wikis/'+id+'/star',
-            type: 'POST',
-            dataType: 'json',
-            success: function(data) {
-                if(data.star) {
-                    var totalStars = parseInt($(document).find('.wiki-star-count').text());
-                    $(document).find('.wiki-star-count').text(totalStars+1);
-                    $(document).find('#like-wiki-btn').html('Unstar');
-                }
-                if(data.unstar) {
-                    var totalStars = parseInt($(document).find('.wiki-star-count').text());
-                    $(document).find('.wiki-star-count').text(totalStars-1);
-                    $(document).find('#like-wiki-btn').html('Star');
                 }
             },
             error: function(error) {
@@ -559,6 +499,16 @@ $(function() {
                     url: function (node) {    
                         return node.id === '#' ?    
                         '/wikis/'+wikiId+'/pages' : '/wikis/'+wikiId+'/pages/'+node.id;
+                    }, 
+                    data: function() {
+                        if($('#current-page-id').length > 0) {
+                            var openedNode = $('#current-page-id').val();
+                            $('#current-page-id').remove();
+
+                            return {
+                                'opened_node': openedNode 
+                            };
+                        }
                     }
                 }
             },

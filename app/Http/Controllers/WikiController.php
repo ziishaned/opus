@@ -113,8 +113,7 @@ class WikiController extends Controller
         if(!$wiki) {
             abort('404');
         }
-        
-        array_add($wiki, 'wiki_like', $this->isWikiLiked($wiki->id));
+    
         array_add($wiki, 'wiki_watching', $this->isWikiWatching($wiki->id));
 
         $wikiPages = $this->wikiPage->getPages($wiki->id);
@@ -124,15 +123,41 @@ class WikiController extends Controller
     public function getWikiPages($id, $page_id = null)
     {
         $wiki = $this->wiki->find($id);
-        $wikiPages = $this->wikiPage->getWikiPages($id, $page_id);
 
-        $html = '<ul>';
-        foreach ($wikiPages as $wikiPage) {
-            $html .= '<li id="'.$wikiPage->id.'" class="' . ($wikiPage->child > 0 ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$wiki->slug, $wikiPage->slug]).'">'. $wikiPage->text .'</a></li>';
+        if(!$this->request->get('opened_node')) {
+            $wikiPages = $this->wikiPage->getWikiPages($id, $page_id);
+            $html = '<ul>';
+            foreach ($wikiPages as $wikiPage) {
+                $html .= '<li id="'.$wikiPage->id.'" class="' . ($wikiPage->child > 0 ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$wiki->slug, $wikiPage->slug]).'">'. $wikiPage->text .'</a></li>';
+            }
+            $html .= '</ul>';
+        } else {
+            $wikiPages = $this->wikiPage->getWikiPages($id, $page_id, $this->request->get('opened_node'));
+
+            $html = '';
+            $this->makePageTree($wikiPages, $this->request->get('opened_node'), $html);
+            // dd($wikiPages->toArray());
         }
-        $html .= '</ul>';
     
         return $html;
+    }
+
+    public static function makePageTree($wikiPages, $currentPageId, &$html)
+    {
+        foreach ($wikiPages as $page => $value) {
+            $class = '';
+            if($value->id == $currentPageId) {
+                $class='active';
+            }
+
+            $html .= '<li class="'.$class.'" id="'.$value->id.'"><a href="/wikis/'. $value->wiki->slug .'/pages/'. $value->slug . '">' . $value->name . '</a>';
+            if(!empty($value['pages'])) {
+                $html .= '<ul>';
+                self::makePageTree($value['pages'], $currentPageId, $html);
+                $html .= '</ul></li>';
+            }
+        }
+        return;
     }
 
     public function isWikiWatching($id)
@@ -157,32 +182,6 @@ class WikiController extends Controller
             ->first();
 
         if(is_null($pageWatching)) {
-            return false;
-        } 
-        return true;
-    }
-
-    public function isWikiLiked($id)
-    {
-        $likeWiki = DB::table('user_star')
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'wiki')
-            ->where('entity_id', '=', $id)
-            ->first();
-        if(is_null($likeWiki)) {
-            return false;
-        } 
-        return true;
-    }
-
-    public function isPageLiked($id)
-    {
-        $likePage = DB::table('user_star')
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'page')
-            ->where('entity_id', '=', $id)
-            ->first();
-        if(is_null($likePage)) {
             return false;
         } 
         return true;
@@ -302,10 +301,15 @@ class WikiController extends Controller
     public function showPage($wikiSlug, $pageSlug)
     {
         $wiki = $this->wiki->getWiki($wikiSlug);
+     
         $page = $this->wikiPage->getPage($pageSlug);
+        
+        // $nodePath = [];
+        // $this->getNodePath($page->toArray(), $nodePath);
+        // $nodePath = $this->reverseArray($nodePath);
+
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
-        array_add($page, 'page_like', $this->isPageLiked($page->id));
         array_add($page, 'page_watching', $this->isPageWatching($page->id));
 
         if($wikiPages) {
@@ -314,6 +318,20 @@ class WikiController extends Controller
         return response()->json([
             'message' => 'Resource not found.'
         ], Response::HTTP_NOT_FOUND);
+    }
+
+    public function getNodePath($node, &$nodePath)
+    {
+        $nodePath[] = $node['id'];
+        if(!empty($node['parent'][0])) {
+            $this->getNodePath($node['parent'][0], $nodePath);
+        }
+        return;
+    }
+
+    public function reverseArray($data)
+    {
+        return array_combine(array_keys($data), array_reverse(array_values($data)));
     }
 
     /**
@@ -374,28 +392,6 @@ class WikiController extends Controller
     }
 
     /**
-     * Like or Unlike a specific page.
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function starPage($id)
-    {
-        $page = $this->wikiPage->find($id);
-        $star = $this->wikiPage->star($id);
-
-        if($star) {
-            $this->activityLog->createActivity('page', 'star', $page);
-            return response()->json([
-                'star' => true
-            ], Response::HTTP_CREATED);          
-        }
-        return response()->json([
-            'unstar' => true
-        ], Response::HTTP_ACCEPTED);          
-    }
-
-    /**
      * Get the pages reorder view.
      *
      * @param $id
@@ -406,7 +402,6 @@ class WikiController extends Controller
         $wiki = $this->wiki->getWiki($wiki_slug);        
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
-        array_add($wiki, 'wiki_like', $this->isWikiLiked($wiki->id));
         array_add($wiki, 'wiki_watching', $this->isWikiWatching($wiki->id));
 
         if($wikiPages) {
@@ -428,22 +423,6 @@ class WikiController extends Controller
         return response()->json([
             'message' => 'Page parent has been changed.'
         ], Response::HTTP_OK);
-    }
-
-    public function starWiki($id)
-    {
-        $wiki = $this->wiki->find($id);
-        $star = $this->wiki->star($id);
-        
-        if($star) {
-            $this->activityLog->createActivity('wiki', 'star', $wiki);
-            return response()->json([
-                'star' => true
-            ], Response::HTTP_CREATED);
-        }
-        return response()->json([
-            'unstar' => true
-        ], Response::HTTP_ACCEPTED);
     }
 
     public function watchWiki($id)

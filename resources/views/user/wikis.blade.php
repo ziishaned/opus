@@ -32,13 +32,6 @@
                                     <h3 style="margin: 0 0 5px; font-size: 15px; font-weight: 600; color: #4078c0;"><a href="{{ route('wikis.show', $wiki->slug)  }}">{{ $wiki->name }}</a></h3>
                                     <p style="font-size: 13px; color: #767676 margin-bottom: 0px;">{{ $wiki->outline }}</p>
                                 </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
-                                    <div class="stats" style="padding-top: 8px;">
-                            <span style="color: #767676">
-                                <i class="fa fa-heart"></i> {{ ViewHelper::getWikiStar($wiki->id) }}
-                            </span>
-                                    </div>
-                                </div>
                             </div>
                             <hr>
                         @endforeach

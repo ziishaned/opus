@@ -60,7 +60,7 @@
 <script src="/plugins/calendar-heatmap/moment.min.js"></script>
 <script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>
 <script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
-<script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
+<script src="/plugins/vakata-jstree/dist/jstree.js"></script>
 <script src="/plugins/select2/select2.full.min.js"></script>
 <script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>

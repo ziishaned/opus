@@ -35,14 +35,7 @@
                 <ul class="list-group list wiki-list">
                     @foreach($wikis as $wiki)
                         <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                    <a href="{{ route('wikis.show', $wiki->slug) }}" class="name">{{ $wiki->name }}</a>
-                                </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
-                                    <p><i class="fa fa-star-o" style="color: #bbb;"></i> {{ ViewHelper::getWikiStar($wiki->id) }}</p>
-                                </div>
-                            </div>
+                            <a href="{{ route('wikis.show', $wiki->slug) }}" class="name">{{ $wiki->name }}</a>
                         </li>
                     @endforeach
                 </ul>

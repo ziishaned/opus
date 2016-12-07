@@ -26,27 +26,6 @@
 					<div class="clearfix"></div>
 				</li>
 			@endif
-			@if($wiki->wiki_like) 
-				<li>
-					<button data-wiki-id="{{ $wiki->id }}" id="like-wiki-btn" class="btn btn-default btn-sm pull-left" style="border-radius: 3px 0px 0px 3px;">
-				        Unstar
-				    </button>
-				    <div class="count-with-arrow pull-left">
-						<span class="count wiki-star-count" style="line-height: 9px;"> {{ ViewHelper::getWikiStar($wiki->id) }} </span>
-					</div>
-					<div class="clearfix"></div>
-				</li>
-			@else 
-				<li>
-					<button data-wiki-id="{{ $wiki->id }}" id="like-wiki-btn" class="btn btn-default btn-sm pull-left" style="border-radius: 3px 0px 0px 3px;">
-				        Star
-				    </button>
-				    <div class="count-with-arrow pull-left">
-						<span class="count wiki-star-count" style="line-height: 9px;"> {{ ViewHelper::getWikiStar($wiki->id) }} </span>
-					</div>
-					<div class="clearfix"></div>
-				</li>
-			@endif
 		</ul>
 	</div>
 </div>

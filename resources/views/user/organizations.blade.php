@@ -26,7 +26,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="activity">
+                        <div class="activity" style="padding-left: 0;">
                             <ul class="list-group">
                                 @foreach($userOrganizations as $organization)
                                     <li class="list-group-item" style="line-height: 39px; border-color: #eee;; margin-bottom: 0px; border-top: none; border-radius: 0; border-left: 0; border-right: 0;">

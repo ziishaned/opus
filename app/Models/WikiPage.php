@@ -112,24 +112,37 @@ class WikiPage extends Model
         return $query;
     }
 
-    public function getWikiPages($id, $page_id)
+    public function parent() {
+        return $this->hasMany(WikiPage::class, 'id', 'parent_id')->with(['parent', 'childs', 'siblings']);
+    }
+
+    public function siblings()
     {
-        if($page_id != null) {
-            $query  = $this
-                            ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
-                            ->where('wiki_page.wiki_id', '=', $id)
-                            ->where('wiki_page.parent_id', '=', $page_id)
-                            ->groupBy('wiki_page.id')
-                            ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
-                            ->get();
-        } else {   
-            $query  = $this
-                            ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
-                            ->where('wiki_page.wiki_id', '=', $id)
-                            ->where('wiki_page.parent_id', '=', null)
-                            ->groupBy('wiki_page.id')
-                            ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
-                            ->get();
+        return $this->hasMany(WikiPage::class, 'parent_id', 'parent_id');
+    }
+
+    public function getWikiPages($id, $page_id, $openedNode = null)
+    {
+        if(is_null($openedNode)) {
+            if(!is_null($page_id)) {
+                $query  = $this
+                                ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
+                                ->where('wiki_page.wiki_id', '=', $id)
+                                ->where('wiki_page.parent_id', '=', $page_id)
+                                ->groupBy('wiki_page.id')
+                                ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
+                                ->get();
+            } else {   
+                $query  = $this
+                                ->leftJoin('wiki_page AS wp','wiki_page.id','=','wp.parent_id')
+                                ->where('wiki_page.wiki_id', '=', $id)
+                                ->where('wiki_page.parent_id', '=', null)
+                                ->groupBy('wiki_page.id')
+                                ->selectRaw('wiki_page.id, wiki_page.slug, wiki_page.name as text, COUNT(wp.id) AS child') 
+                                ->get();
+            }
+        } else {
+            $query = $this->where('id', '=', $openedNode)->with(['parent', 'childs', 'siblings', 'pages'])->get();
         }
         return $query;
     }
@@ -176,7 +189,7 @@ class WikiPage extends Model
      */
     public function getPage($slug)
     {
-        $page = $this->where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->with(['comments', 'wiki'])->first();
+        $page = $this->where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->with(['parent', 'comments', 'wiki', 'pages'])->first();
         if(is_null($page)) {
             return false;
         }
