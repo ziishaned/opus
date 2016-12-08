@@ -126,28 +126,32 @@ class WikiController extends Controller
 
         if(!$this->request->get('opened_node')) {
             $wikiPages = $this->wikiPage->getWikiPages($id, $page_id);
-            $html = '<ul>';
-            foreach ($wikiPages as $wikiPage) {
-                $html .= '<li id="'.$wikiPage['id'].'" class="' . ($wikiPage['leaf'] == false ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$wiki->slug, $wikiPage['slug']]).'">'. $wikiPage['name'] .'</a></li>';
-            }
-            $html .= '</ul>';
-        } else {
-            $wikiPages = $this->wikiPage->getWikiPages($id, $page_id, $this->request->get('opened_node'));
+            return $wikiPages;
+        } 
 
-            $html = '';
-            $this->makePageTree($wikiPages, $this->request->get('opened_node'), $html);
-        }
+        $wikiPages = $this->wikiPage->getWikiPages($id, $page_id, $this->request->get('opened_node'));
+
+        $html = '';
+        $this->makePageTree($wikiPages, $this->request->get('opened_node'), $html);
     
         return $html;
     }
 
+    /**
+     * Todo: send this in array form instead of html
+     * 
+     * @param  [type] $wikiPages     [description]
+     * @param  [type] $currentPageId [description]
+     * @param  [type] &$html         [description]
+     * @return [type]                [description]
+     */
     public static function makePageTree($wikiPages, $currentPageId, &$html)
     {
         foreach ($wikiPages as $page => $value) {
             foreach($value->getSiblings() as $siblings) {
-                $html .= '<li id="'.$siblings->id.'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
+                $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
             }
-            $html .= '<li id="'.$value->id.'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
+            $html .= '<li id="'.$value->id.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
             if(!empty($value['children'])) {
                 $html .= '<ul>';
                 self::makePageTree($value['children'], $currentPageId, $html);
@@ -301,29 +305,18 @@ class WikiController extends Controller
      
         $page = $this->wikiPage->getPage($pageSlug);
         
-        // $nodePath = [];
-        // $this->getNodePath($page->toArray(), $nodePath);
-        // $nodePath = $this->reverseArray($nodePath);
+        $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf()->implode('slug', '/');
 
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
         array_add($page, 'page_watching', $this->isPageWatching($page->id));
 
         if($wikiPages) {
-            return view('wiki.page.page', compact('wikiPages', 'page', 'wiki'));
+            return view('wiki.page.page', compact('wikiPages', 'page', 'wiki', 'pagePath'));
         }
         return response()->json([
             'message' => 'Resource not found.'
         ], Response::HTTP_NOT_FOUND);
-    }
-
-    public function getNodePath($node, &$nodePath)
-    {
-        $nodePath[] = $node['id'];
-        if(!empty($node['parent'][0])) {
-            $this->getNodePath($node['parent'][0], $nodePath);
-        }
-        return;
     }
 
     public function reverseArray($data)

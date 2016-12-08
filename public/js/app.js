@@ -488,7 +488,7 @@ $(function() {
     if($('#wiki-page-tree').length > 0 ) {
         var wikiId = $('#wiki-page-tree').data('wiki-id');
         $('#wiki-page-tree').jstree({
-            "core" : {
+            core: {
                 "themes" : {
                     // 'stripes': true, // Background highlighted of current node or page
                     'icons': false,
@@ -512,7 +512,11 @@ $(function() {
                     }
                 }
             },
-            "plugins" : [ "search" ]
+            sort: function (a, b) {
+                return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
+                // return this.get_node(a).original.px > this.get_node(b).original.px ? 1 : -1;
+            },
+            "plugins" : [ "search", "sort" ]
         }).on("select_node.jstree", function (e, data) { 
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {

@@ -33,6 +33,7 @@
 			    	<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						    <ul class="nav nav-pills center-block" id="organization-nav" style="border-top: 1px solid #e5e5e5; margin-top: 10px;">
+						        <li style="padding: 10px 15px; color: #555 !important; font-size: 13px; background: #ffffff;">{{ $pagePath }}</li>
 						        <ul class="nav nav-pills pull-right" id="organization-nav" style="border-bottom: 0px !important;">
 						            <li @if(ViewHelper::getCurrentRoute() == 'wikis/{wiki_slug}/pages/create') class="active" @endif>
 							        	<a href="{{ route('wikis.pages.create', $wiki->slug) }}"><i class="fa fa-file-text-o"></i> Create</a>

@@ -282,6 +282,11 @@ class User extends Authenticatable
             'location'      =>  $data['location'],
             'email'         =>  $data['email'],
         ]);
+
+        \App\Models\Timezone::updateOrCreate(['user_id' => Auth::user()->id], [
+            'user_id' => Auth::user()->id,
+            'timezone' => $data['timezone'],
+        ]);
         
         return true;
     }

@@ -338,7 +338,7 @@
 		 *	$('#tree').jstree({
 		 *		'core' : {
 		 *			'check_callback' : function (operation, node, node_parent, node_position, more) {
-		 *				// operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+		 *				// operation can be 'create_node', 'rename_node', 'delete_node', 'move_node', 'copy_node' or 'edit'
 		 *				// in case of 'rename_node' node_position is filled with the new node name
 		 *				return operation === 'rename_node' ? true : false;
 		 *			}
@@ -515,7 +515,7 @@
 				.remove();
 			this.element.html("<"+"ul class='jstree-container-ul jstree-children' role='group'><"+"li id='j"+this._id+"_loading' class='jstree-initial-node jstree-loading jstree-leaf jstree-last' role='tree-item'><i class='jstree-icon jstree-ocl'></i><"+"a class='jstree-anchor' href='#'><i class='jstree-icon jstree-themeicon-hidden'></i>" + this.get_string("Loading ...") + "</a></li></ul>");
 			this.element.attr('aria-activedescendant','j' + this._id + '_loading');
-			this._data.core.li_height = this.get_container_ul().children("li").first().height() || 24;
+			this._data.core.li_height = this.get_container_ul().children("li").first().outerHeight() || 24;
 			this._data.core.node = this._create_prototype_node();
 			/**
 			 * triggered after the loading text is shown and before loading starts
@@ -1405,7 +1405,13 @@
 								this.settings.core.error.call(this, this._data.core.last_error);
 							}, this));
 				}
-				t = ($.isArray(s) || $.isPlainObject(s)) ? JSON.parse(JSON.stringify(s)) : s;
+				if ($.isArray(s)) {
+					t = $.extend(true, [], s);
+				} else if ($.isPlainObject(s)) {
+					t = $.extend(true, {}, s);
+				} else {
+					t = s;
+				}
 				if(obj.id === $.jstree.root) {
 					return this._append_json_data(obj, t, function (status) {
 						callback.call(this, status);
@@ -3640,7 +3646,7 @@
 				'li_attr' : $.extend(true, {}, obj.li_attr),
 				'a_attr' : $.extend(true, {}, obj.a_attr),
 				'state' : {},
-				'data' : options && options.no_data ? false : $.extend(true, {}, obj.data)
+				'data' : options && options.no_data ? false : $.extend(true, $.isArray(obj.data)?[]:{}, obj.data)
 				//( this.get_node(obj, true).length ? this.get_node(obj, true).data() : obj.data ),
 			}, i, j;
 			if(options && options.flat) {
@@ -3708,7 +3714,11 @@
 				return this.load_node(par, function () { this.create_node(par, node, pos, callback, true); });
 			}
 			if(!node) { node = { "text" : this.get_string('New node') }; }
-			if(typeof node === "string") { node = { "text" : node }; }
+			if(typeof node === "string") {
+				node = { "text" : node };
+			} else {
+				node = $.extend(true, {}, node);
+			}
 			if(node.text === undefined) { node.text = this.get_string('New node'); }
 			var tmp, dpc, i, j;
 
@@ -3766,7 +3776,6 @@
 			par.children = tmp;
 
 			this.redraw_node(par, true);
-			if(callback) { callback.call(this, this.get_node(node)); }
 			/**
 			 * triggered when a node is created
 			 * @event
@@ -3776,6 +3785,7 @@
 			 * @param {Number} position the position of the new node among the parent's children
 			 */
 			this.trigger('create_node', { "node" : this.get_node(node), "parent" : par.id, "position" : pos });
+			if(callback) { callback.call(this, this.get_node(node)); }
 			return node.id;
 		},
 		/**
@@ -4359,8 +4369,7 @@
 			var rtl, w, a, s, t, h1, h2, fn, tmp, cancel = false;
 			obj = this.get_node(obj);
 			if(!obj) { return false; }
-			if(this.settings.core.check_callback === false) {
-				this._data.core.last_error = { 'error' : 'check', 'plugin' : 'core', 'id' : 'core_07', 'reason' : 'Could not edit node because of check_callback' };
+			if(!this.check("edit", obj, this.get_parent(obj))) {
 				this.settings.core.error.call(this, this._data.core.last_error);
 				return false;
 			}
@@ -6551,8 +6560,9 @@
 				marker.appendTo('body'); //.show();
 			})
 			.on('dnd_move.vakata.jstree', function (e, data) {
+				var isDifferentNode = data.event.target !== lastev.target;
 				if(opento) {
-					if (!data.event || data.event.type !== 'dragover' || data.event.target !== lastev.target) {
+					if (!data.event || data.event.type !== 'dragover' || isDifferentNode) {
 						clearTimeout(opento);
 					}
 				}
@@ -6651,7 +6661,10 @@
 									}
 								}
 								if(v === 'i' && ref.parent().is('.jstree-closed') && ins.settings.dnd.open_timeout) {
-									opento = setTimeout((function (x, z) { return function () { x.open_node(z); }; }(ins, ref)), ins.settings.dnd.open_timeout);
+									if (!data.event || data.event.type !== 'dragover' || isDifferentNode) {
+										if (opento) { clearTimeout(opento); }
+										opento = setTimeout((function (x, z) { return function () { x.open_node(z); }; }(ins, ref)), ins.settings.dnd.open_timeout);
+									}
 								}
 								if(ok) {
 									pn = ins.get_node(p, true);
