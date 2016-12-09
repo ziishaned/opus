@@ -3,33 +3,33 @@
         @foreach($activities as $activity)
             <div class="activity">
                 <div class="activity-con">
-                    <div class="pull-left">
+                    <div class="activity-icon pull-left" style="top: 3px; position: relative;">
+                        @if($activity->log_type == 'delete')
+                            <i class="fa fa-trash-o"></i>
+                        @elseif($activity->log_type == 'watch') 
+                            <i class="fa fa-eye"></i>
+                        @elseif($activity->log_type == 'commented')
+                            <i class="fa fa-commenting-o"></i>
+                        @elseif($activity->log_type == 'following') 
+                            <i class="fa fa-meh-o"></i>
+                        @elseif($activity->log_type == 'star') 
+                            <i class="fa fa-star-o"></i>
+                        @else
+                            <i class="fa fa-file-text-o"></i>
+                        @endif
+                    </div>
+                    <div class="pull-left" style="padding-top: 5px; padding-left: 10px;">
+                        <div class="pull-left">
                         <a href="#">
                             <?php $profile_image = ViewHelper::getProfilePic($activity->user_id); ?> 
                             @if(empty($profile_image))
-                                <img src="/images/default.png" width="32" height="32" alt="Image">
+                                <img src="/images/default.png" width="32" height="32" alt="Image" style="border-radius: 2px;">
                             @else
-                                <img src="/images/profile-pics/{{ $profile_image }}" width="32" height="32" alt="Image">
+                                <img src="/images/profile-pics/{{ $profile_image }}" width="32" height="32" alt="Image" style="border-radius: 2px;">
                             @endif
                         </a>
-                    </div>
-                    <div class="pull-left" style="padding-top: 5px; padding-left: 10px;">
-                        <div class="activity-icon" style="display: inline-block;">
-                            @if($activity->log_type == 'delete')
-                                <i class="fa fa-trash-o"></i>
-                            @elseif($activity->log_type == 'watch') 
-                                <i class="fa fa-eye"></i>
-                            @elseif($activity->log_type == 'commented')
-                                <i class="fa fa-commenting-o"></i>
-                            @elseif($activity->log_type == 'following') 
-                                <i class="fa fa-meh-o"></i>
-                            @elseif($activity->log_type == 'star') 
-                                <i class="fa fa-star-o"></i>
-                            @else
-                                <i class="fa fa-file-text-o"></i>
-                            @endif
-                        </div>
-                        <div class="activity-content">
+                    </div>    
+                        <div class="activity-content" style="margin-left: 10px;">
                             <a href="{{ route('users.show', [$activity->user_slug, ]) }}" title="{{ $activity->full_name }}">{{ $activity->full_name }}</a> 
                             @if($activity->log_type == 'create') 
                                 created
@@ -63,7 +63,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="time pull-right" style="padding-top: 5px;">
+                    <div class="time pull-right" style="padding-top: 8px;">
                         <i class="fa fa-clock-o"></i> <span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $activity->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}"><time class="timeago" datetime="{{ $activity->created_at->timezone(Session::get('user_timezone')) }}">{{ $activity->created_at->timezone(Session::get('user_timezone'))->diffForHumans() }}</time></span>
                     </div>
                 </div>

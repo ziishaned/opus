@@ -107,45 +107,51 @@ class WikiPage extends Node
             if(!is_null($page_id)) {
                 $childs = $this->find($page_id)->children()->get();
                 foreach ($childs as $key => $value) {
-                    $nodes[] = [
-                        'id'   => $value->id,
-                        'text' => $value->name,
-                        'slug' => $value->slug,
-                        'children' => ($value->isLeaf() == false) ? true : false,
-                        'data' => [
-                            'created_at' => $value->created_at,
-                        ],
-                        'state' => [
-                            'selected' => ($value->id == $openedNode) ? true : false,
-                        ],
-                        'a_attr' => [
-                            'href' => route('wikis.pages.show', [\App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
-                        ],
-                    ];
+                    if($wikiId == $value->wiki_id) {
+                        $nodes[] = [
+                            'id'   => $value->id,
+                            'wiki_id' => $value->wiki_id,
+                            'text' => $value->name,
+                            'slug' => $value->slug,
+                            'children' => ($value->isLeaf() == false) ? true : false,
+                            'data' => [
+                                'created_at' => $value->created_at,
+                            ],
+                            'state' => [
+                                'selected' => ($value->id == $openedNode) ? true : false,
+                            ],
+                            'a_attr' => [
+                                'href' => route('wikis.pages.show', [\App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                            ],
+                        ];
+                    }
                 }                
             } else {
                 $page = $this->where('wiki_id', '=', $wikiId)->first();
                 if(empty($page)) {
-                    return 'This wiki have no page';
+                    return false;
                 }
 
                 $roots = $this->find($page->id)->roots()->get();
                 foreach ($roots as $key => $value) {
-                    $nodes[] = [
-                        'id'   => $value->id,
-                        'text' => $value->name,
-                        'slug' => $value->slug,
-                        'children' => ($value->isLeaf() == false) ? true : false,
-                        'data' => [
-                            'created_at' => $value->created_at,
-                        ],
-                        'state' => [
-                            'selected' => ($value->id == $openedNode) ? true : false,
-                        ],
-                        'a_attr' => [
-                            'href' => route('wikis.pages.show', [\App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
-                        ],
-                    ];
+                    if($wikiId == $value->wiki_id) {
+                        $nodes[] = [
+                            'id'   => $value->id,
+                            'wiki_id' => $value->wiki_id,
+                            'text' => $value->name,
+                            'slug' => $value->slug,
+                            'children' => ($value->isLeaf() == false) ? true : false,
+                            'data' => [
+                                'created_at' => $value->created_at,
+                            ],
+                            'state' => [
+                                'selected' => ($value->id == $openedNode) ? true : false,
+                            ],
+                            'a_attr' => [
+                                'href' => route('wikis.pages.show', [\App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                            ],
+                        ];
+                    }
                 }
             }
         } else {

@@ -126,7 +126,7 @@ class WikiController extends Controller
 
         if(!$this->request->get('opened_node')) {
             $wikiPages = $this->wikiPage->getWikiPages($id, $page_id);
-            return $wikiPages;
+            return $this->makePageHtml($wikiPages);
         } 
 
         $wikiPages = $this->wikiPage->getWikiPages($id, $page_id, $this->request->get('opened_node'));
@@ -134,6 +134,16 @@ class WikiController extends Controller
         $html = '';
         $this->makePageTree($wikiPages, $this->request->get('opened_node'), $html);
     
+        return $html;
+    }
+
+    public function makePageHtml($pages) {
+        $html = '';
+        if($pages) {
+            foreach ($pages as $key => $value) {
+                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$this->wiki->find($value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
+            }
+        }
         return $html;
     }
 
@@ -149,7 +159,9 @@ class WikiController extends Controller
     {
         foreach ($wikiPages as $page => $value) {
             foreach($value->getSiblings() as $siblings) {
-                $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
+                if($value->wiki_id == $siblings->wiki_id) {
+                    $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
+                }
             }
             $html .= '<li id="'.$value->id.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
             if(!empty($value['children'])) {
@@ -305,7 +317,8 @@ class WikiController extends Controller
      
         $page = $this->wikiPage->getPage($pageSlug);
         
-        $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf()->implode('slug', '/');
+        // $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf()->implode('slug', '/');
+        $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf();
 
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 

@@ -16,6 +16,15 @@
             }
             .error-actions .btn { 
                 margin-right:10px; 
+            } .sad {
+                background: 0px url(images/icons/sad.png) no-repeat;
+                width: 75px;
+                height: 70px;
+                position: relative;
+                background-size: 70px;
+                left: 0px;
+                display: inline-block;
+                top: 25px;
             }
         </style>
     </head>
@@ -23,6 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="error-template">
+                    <div class="sad"></div>
                     <h1>Oops!</h1>
                     <h2>404 Not Found</h2>
                     <div class="error-details">

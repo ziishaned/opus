@@ -96,6 +96,21 @@ a {
     color: #7d7d7d;
 }
 
+.path-list li {
+    padding: 0;
+}
+
+.path-list li:after {
+    content: '/';
+    content: '/';
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.path-list li:last-child:after {
+    content: '';
+}
+
 .wiki-list a {
     font-size: 14px;
 }
@@ -364,14 +379,11 @@ li.comment-item {
  ---------------------------*/
 .comments-list .comment-box {
     position: relative;
-    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-    -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
     border-radius: 0 0 4px 4px;
 }
 
 .comment-box .comment-head, .comment-box .comment-foot {
-    background: #FCFCFC;
+    background: #ffffff;
     padding: 10px 12px;
     /*border-bottom: 1px solid #E5E5E5;*/
     border: 1px solid #ccc;
@@ -575,7 +587,7 @@ kbd {
 }
 
 .activity .activity-icon i {
-    color: #bbb;
+    color: #666;
 } 
 
 .activity .activity-content {
@@ -636,6 +648,11 @@ ul.activity-list li:hover {
 
 .pagination {
     margin: 0 !important;
+}
+
+.page-description .syntaxhighlighter {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
 }
 
 .page-description pre, .page-description code {

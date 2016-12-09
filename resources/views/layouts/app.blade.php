@@ -29,7 +29,7 @@
             @include('layouts.partials.menu')
         
             @if(Session::get('alert'))
-                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -15px;">
+                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -15px; font-size: 14px;">
                     <div class="container">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         {{ Session::get('alert') }}
