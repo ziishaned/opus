@@ -10,7 +10,6 @@ tinymce.PluginManager.add('smileys', function (editor, url) {
                             { shortcut: ':-D', url: url + '/img/grin.png', title: 'grin' }
                         ],
                         [
-                            { shortcut: ':-)', url: url + '/img/smile.png', title: 'smile' },
                             { shortcut: ":'(", url: url + '/img/cry.png', title: 'cry' },
                             { shortcut: '<3', url: url + '/img/heart.png', title: 'heart' },
                             { shortcut: '^_^', url: url + '/img/kiki.png', title: 'kiki' },

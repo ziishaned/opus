@@ -18,11 +18,11 @@
 						                	<a href="{{ route('wikis.pages.reorder', $wiki->slug) }}"><i class="fa fa-align-left"></i> Reorder Pages</a>
 						                </li>
 			                            <li>
-					                    	<a href="#" onclick="if(confirm('Are you sure you want to delete this page?')) {event.preventDefault(); document.getElementById('delete-page').submit();}"><i class="fa fa-trash-o"></i> Delete</a>
-											<form id="delete-page" action="{{ route('pages.destroy', [$wiki->slug, $page->slug]) }}" method="POST" style="display: none;">
-					                            {!! method_field('delete') !!}
-					                            {!! csrf_field() !!}
-					                        </form>
+					                    	<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}">Delete</a>
+											<form id="delete-wiki" action="{{ route('wikis.destroy', $wiki->slug) }}" method="POST" style="display: none;">
+				                                {!! method_field('delete') !!}
+				                                {!! csrf_field() !!}
+				                            </form>
 					                    </li>
 			                        </ul>
 								</div>

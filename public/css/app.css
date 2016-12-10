@@ -168,10 +168,15 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
 
+label {
+    color: #666;
+    font-size: 14px;
+}
+
 .input-label {
     background-color: white;
     border: 1px solid rgba(34,36,38,.15);
-    color: #9D9DA3;
+    color: #666;
     font-size: 14px;
     width: 90px;
     text-align: left;
@@ -312,6 +317,10 @@ a:hover {
 
 .selectize-input input {
     min-width: 50% !important;
+}
+
+.select2-results__option {
+    padding-left: 18px !important;
 }
 
 /** ====================
@@ -584,6 +593,12 @@ kbd {
 .syntaxhighlighter::-webkit-scrollbar-thumb:active {
     background: rgba(0,0,0,0.61); / Some darker color when you click it */
     -webkit-border-radius: 100px;
+}
+
+.activity-icon {
+    font-size: 22px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .activity .activity-icon i {

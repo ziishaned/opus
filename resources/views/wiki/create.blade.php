@@ -50,7 +50,7 @@
                     <div class="row">
                         <div style="border: 1px solid rgba(34,36,38,.15); height: 97px; margin-left: 15px; margin-right: 15px; border-radius: 3px;">
                             <div class="pull-left" style="padding-left: 12px; padding-right: 15px;">
-                                <p style="color: #9D9DA3; font-size: 14px;">Visibility Level</p>
+                                <p style="color: #666; font-size: 14px;">Visibility Level</p>
                             </div>
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="radio" style="margin-top: 4px;">

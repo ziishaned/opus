@@ -3,7 +3,7 @@
         @foreach($activities as $activity)
             <div class="activity">
                 <div class="activity-con">
-                    <div class="activity-icon pull-left" style="top: 3px; position: relative;">
+                    <div class="activity-icon pull-left">
                         @if($activity->log_type == 'delete')
                             <i class="fa fa-trash-o"></i>
                         @elseif($activity->log_type == 'watch') 

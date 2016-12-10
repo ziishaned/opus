@@ -20,7 +20,6 @@
                                             <strong>{{ $errors->first('page_name') }}</strong>
                                         </span>
                                     @endif
-                                    <p class="text-muted">Great page names are short and memorable.</p>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -34,7 +33,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <p class="text-muted">Leave it blank if this page has no parent.</p>
                             </div>
                         </div>
                         <div class="form-group" id="page-description-input">

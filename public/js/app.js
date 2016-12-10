@@ -444,7 +444,7 @@ $(document).ready(function() {
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-            "save table contextmenu directionality emoticons template paste textcolor placeholder smileys",
+            "save table contextmenu directionality template paste textcolor placeholder smileys",
             "leaui_code_editor codemirror"
         ],
 		paste_webkit_styles: "all",
@@ -513,7 +513,7 @@ $(document).ready(function() {
         plugins: [
             "advlist autolink link lists charmap hr anchor pagebreak mention",
             "searchreplace wordcount visualblocks visualchars code nonbreaking",
-            "save table contextmenu directionality emoticons template paste textcolor placeholder",
+            "save table contextmenu directionality smileys template paste textcolor placeholder",
             "leaui_code_editor"
         ],
         mentions: {
@@ -534,7 +534,7 @@ $(document).ready(function() {
         relative_urls: false,
 
         /* toolbar */
-        toolbar: "bold italic underline | bullist numlist | emoticons link unlink | leaui_code_editor",
+        toolbar: "bold italic underline | bullist numlist | smileys link unlink | leaui_code_editor",
     });
 });
 
