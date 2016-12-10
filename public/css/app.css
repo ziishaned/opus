@@ -636,6 +636,14 @@ button .loader {
     padding-top: 2px;
 }
 
+.loader {
+    background-image: url('../images/btn-loader.gif');
+    height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    display: none;
+}
+
 .dot-divider::after {
     content: "\00B7";
     padding: 0 6px;

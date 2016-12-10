@@ -13,6 +13,33 @@ Auth::routes();
 | Users Routes
 |--------------------------------------------------------------------------
 */
+Route::post('/users/upload/avatar', function() {
+    $image = Request::file('profile_image');
+    
+    $imageName = 'img_' . date('Y-m-d-H-s') .  '.' . Request::file('profile_image')->getClientOriginalExtension();
+
+    $path = public_path('images/profile-pics/' . $imageName);
+
+    Image::make($image->getRealPath())->save($path);
+    
+    \App\Models\User::find(Auth::user()->id)->update([
+        'profile_image' => $imageName,
+    ]);
+    
+    return response()->json([
+        'message' => 'Profile picture uploaded successfully.',
+        'image' => $imageName
+    ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
+});
+Route::post('/users/crop/avatar', function() {
+    $img = Image::make(public_path('/images/profile-pics/' . Request::get('image')));
+    $img->crop((int) Request::get('w'), (int) Request::get('h'), (int) Request::get('x'), (int) Request::get('y'));
+    $img->save();
+
+    return response()->json([
+        'message' => 'Profile picture successfully cropped.'
+    ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
+});
 Route::get('/users/activity', [
     'uses'  =>  'UserController@activity',
 ]);

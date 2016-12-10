@@ -1,11 +1,28 @@
-
 var App = {
     init: function(params = null) {
         this.params = params;
         this.bindUI();
-        this.sideBar();
         this.makeContributionGraph();
+        this.initJcrop();
         $('[data-toggle="tooltip"]').tooltip();
+    },
+    initJcrop: function() {
+        var that = this;
+        $('#cropimage').Jcrop({
+            onSelect: that.updateCropCoords,
+            bgColor: 'black',
+            bgOpacity: .6,
+            boxWidth: 300, 
+            boxHeight: 300,
+            aspectRatio: 1,
+            setSelect: [160, 160, 160, 160],
+        });
+    },
+    updateCropCoords: function(c) {
+        $('#x').val(c.x);
+        $('#y').val(c.y);
+        $('#w').val(c.w);
+        $('#h').val(c.h);
     },
     makeContributionGraph: function() {
         if($('#contribution-graph').length > 0) {
@@ -88,6 +105,49 @@ var App = {
     },
     bindUI: function () {
         var that = this;
+        $('#update-image-size').on('click', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/users/crop/avatar',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'image' : $('#crop-image-form').find('#profile-image-name').val(),
+                    'x'     : $('#crop-image-form').find('#x').val(),
+                    'y'     : $('#crop-image-form').find('#y').val(),
+                    'w'     : $('#crop-image-form').find('#w').val(),
+                    'h'     : $('#crop-image-form').find('#h').val(),
+
+                },
+                success: function(data) {
+                    $("#profile-pic-cropper").modal('hide');
+                    window.location.reload();
+                }, 
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+        $('#profile_image[type="file"]').on('change', function() {
+            var formData = new FormData($("#avatar-upload-form")[0]);
+            $.ajax({
+                url: '/users/upload/avatar',
+                type: 'POST',
+                cache:false,
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(data) {
+                    console.log(data);
+                    $("#profile-pic-cropper #cropimage").attr('src', '/images/profile-pics/' + data.image);
+                    $("#profile-pic-cropper").modal('show');
+                    $("#profile-pic-cropper").find('#profile-image-name').val(data.image);
+                }, 
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
         $(document).on('click', 'button', function() {
             $(this).find('.loader').show();
         });

@@ -205,30 +205,27 @@
                             <button type="submit" class="btn btn-default">Update</button>
                         </div>  
                     </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <h4 style="margin-bottom: 12px;">Profile Picture</h4>
-                        <div class="user-profile-pic">
-                            @if(empty(Auth::user()->profile_image))
-                                <img src="/images/default.png" class="img-rounded img-responsive" alt="Image" style="border: 1px solid rgba(0,0,0,0.1);">
-                            @else 
-                                <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" class="img-rounded img-responsive" alt="Image" style="border: 1px solid rgba(0,0,0,0.1);">
-                            @endif
-                        </div>        
-                        <div style="margin-top: 10px;">
-                            <div class="form-group{{ $errors->has('profile_image') ? ' has-error' : '' }}">
+                </form>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <h4 style="margin-bottom: 12px;">Profile Picture</h4>
+                    <div class="user-profile-pic">
+                        @if(empty(Auth::user()->profile_image))
+                            <img src="/images/default.png" class="img-rounded img-responsive" alt="Image" style="border-radius: 4px;">
+                        @else 
+                            <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" class="img-rounded img-responsive" alt="Image" style="border-radius: 4px;">
+                        @endif
+                    </div>        
+                    <div style="margin-top: 10px;">
+                        <form action="#" enctype='multipart/form-data' id="avatar-upload-form">
+                            <div class="form-group">
                                 <label class="btn btn-default btn-file btn-block">
-                                    Upload new picture <input type="file" name="profile_image" style="display: none;">
+                                    Upload new picture <input type="file" style="display: none;" name="profile_image" id="profile_image">
                                 </label>
-                                @if ($errors->has('profile_image'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('profile_image') }}</strong>
-                                    </span>
-                                @endif
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 @endsection
