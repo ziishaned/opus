@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organization;
+use Redirect;
 use App\Models\User;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -108,8 +109,8 @@ class OrganizationController extends Controller
     public function store()
     {
         $this->validate($this->request, Organization::ORGANIZATION_RULES);
-        $organization = $this->organization->postOrganization($this->request->get('organization_name'));
-        return redirect()->route('organizations.invite.show')->with('organization_id', $organization);
+        $organization = $this->organization->postOrganization($this->request->all());
+        return Redirect::route('organizations.show', $organization->slug);
     }
 
     /**

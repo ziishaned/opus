@@ -725,23 +725,35 @@ ul.activity-list li:hover {
     border-bottom: 1px solid #f1f1f1;
 }
 
-.settings ul li:first-child {
-    padding-top: 0;
+.settings ul {
+    border-right: 1px solid #ddd;
+    min-width: 180px;
+} 
+
+.settings ul li:hover {
+    background-color: #eee;
 }
 
 .settings ul li {
+    display: block;
+}
+
+.settings ul li a {
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 0px !important;
     position: relative;
-    display: block;
     padding: 10px 15px;
-    margin-bottom: -1px;
+}
+
+.settings ul li.active {
+    background-color: #428bca;
 }
 
 .settings ul li.active a {
-    color: black;
-    font-weight: bold;
+    color: white;
+    font-weight: normal;
+    text-shadow: 1px 1px 1px #666;
+    cursor: default;
 }
 
 .settings ul li:first-child a {
@@ -866,10 +878,57 @@ ul.activity-list li:hover {
     border: 1px solid #aaa !important;     
 }
 
-.wdt-emoji-picker {
-    z-index: 100;
+.sidemenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    background: #666;
+    height: 100%;
+    box-shadow: 2px 0 16px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    width: 235px;
 }
 
-.wdt-emoji-list {
-    width: 329px;
+ul.sidemenu-options {
+    margin-top: 10px;
+}
+
+ul.sidemenu-options li:hover {
+    background-color: #eee;
+}
+
+ul.sidemenu-options li:hover a {
+    color: black;
+}
+
+ul.sidemenu-options li {
+    display: block;
+}
+
+ul.sidemenu-options li a {
+    position: relative;
+    padding: 10px 20px;
+}
+
+ul.sidemenu-options li.active {
+    background-color: #428bca;
+}
+
+ul.sidemenu-options li.active a {
+    color: white;
+    font-weight: normal;
+    text-shadow: 1px 1px 1px #666;
+    cursor: default;
+}
+
+ul.sidemenu-options li:first-child a {
+    margin-top: 0;
+}
+
+ul.sidemenu-options li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
 }

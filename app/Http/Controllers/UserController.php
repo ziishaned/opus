@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Hash;
+use Image;
 use Session;
 use App\Models\User;
 use App\Models\ActivityLog;
@@ -85,6 +86,35 @@ class UserController extends Controller
     {
         return $this->user->filter($text);
     }
+
+    public function storeAvatar() {
+        $image = $this->request->file('profile_image');
+        
+        $imageName = 'img_' . date('Y-m-d-H-s') .  '.' . $this->request->file('profile_image')->getClientOriginalExtension();
+
+        $path = public_path('images/profile-pics/' . $imageName);
+
+        Image::make($image->getRealPath())->save($path);
+        
+        \App\Models\User::find(Auth::user()->id)->update([
+            'profile_image' => $imageName,
+        ]);
+        
+        return response()->json([
+            'message' => 'Profile picture uploaded successfully.',
+            'image' => $imageName
+        ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
+    }
+
+    public function cropAvatar() {
+        $img = Image::make(public_path('/images/profile-pics/' . $this->request->get('image')));
+        $img->crop((int) $this->request->get('w'), (int) $this->request->get('h'), (int) $this->request->get('x'), (int) $this->request->get('y'));
+        $img->save();
+
+        return response()->json([
+            'message' => 'Profile picture successfully cropped.'
+        ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
+    } 
 
     /**
      * Return organizations view with user organizations.

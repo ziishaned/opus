@@ -29,12 +29,12 @@ class RouteServiceProvider extends ServiceProvider
         //     'text'    =>  '[a-zA-Z0-9]+',
         // ]);
         Route::patterns([
-            'pageId'     =>  '[0-9]+',
-            'page_slug'  =>  '(\w+-*\d*)+',
-            'id'         =>  '[0-9]+',
-            'wiki_slug'  =>  '(\w+-*\d*)+',
-            'organization_slug'  =>  '(\w+-*\d*)+',
-            'text'       =>  '[a-zA-Z0-9]+',
+            'pageId'            =>  '[0-9]+',
+            'page_slug'         =>  '(\w+-*\d*)+',
+            'id'                =>  '[0-9]+',
+            'wiki_slug'         =>  '(\w+-*\d*)+',
+            'text'              =>  '[a-zA-Z0-9]+',
+            'organization_slug' =>  '(\w+-*\d*)+',
         ]);
 
         parent::boot();

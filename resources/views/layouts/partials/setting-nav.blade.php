@@ -1,5 +1,5 @@
 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    <div class="settings">        
+    <div class="settings">
         <ul class="list-unstyled">
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'settings/profile') class="active" @endif>
                 <a href="{{ route('settings.profile') }}">Profile</a>            

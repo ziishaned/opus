@@ -14,9 +14,9 @@
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                         <form class="project-filter-form" id="project-filter-form" action="/lundskommun" accept-charset="UTF-8" method="get">
                             <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-right">
-                                    <input type="search" name="filter_wikis" id="filter_wikis" placeholder="Filter by name" class="wikis-list-filter form-control">
-                                    <span class="fa fa-search" style="position: absolute; top: 10px; right: 23px; color: #e7e9ed;"></span>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pull-right">
+                                    <input type="search" name="filter_wikis" id="filter_wikis" placeholder="Filter by name" class="wikis-list-filter form-control" style="padding-right: 30px; border-radius: 2px;">
+                                    <span class="fa fa-search fa-fw" style="position: absolute; top: 8px; right: 23px; color: #e7e9ed;"></span>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

@@ -8,293 +8,83 @@
 
 Auth::routes();
 
-/*
-|--------------------------------------------------------------------------
-| Users Routes
-|--------------------------------------------------------------------------
-*/
-Route::post('/users/upload/avatar', function() {
-    $image = Request::file('profile_image');
-    
-    $imageName = 'img_' . date('Y-m-d-H-s') .  '.' . Request::file('profile_image')->getClientOriginalExtension();
-
-    $path = public_path('images/profile-pics/' . $imageName);
-
-    Image::make($image->getRealPath())->save($path);
-    
-    \App\Models\User::find(Auth::user()->id)->update([
-        'profile_image' => $imageName,
-    ]);
-    
-    return response()->json([
-        'message' => 'Profile picture uploaded successfully.',
-        'image' => $imageName
-    ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
+Route::group(['prefix' => 'users'], function () {
+    Route::get('activity', 'UserController@activity');
+    Route::delete('{user_slug}', 'UserController@deleteAccount')->name('users.destroy');
+    Route::get('search/{text}', 'UserController@filterUser');
+    Route::patch('{user_slug}/password', 'UserController@updatePassword')->name('users.password.update');
+    Route::get('{user_slug}', 'UserController@show')->name('users.show');
+    Route::patch('{user_slug}', 'UserController@update')->name('users.update');
+    Route::get('{user_slug}/organizations', 'UserController@getUserOrganizations')->name('users.organizations');
+    Route::get('{user_slug}/followers', 'UserController@getUserFollowers')->name('users.followers');
+    Route::get('{user_slug}/following', 'UserController@getUserFollowing')->name('users.following');
+    Route::get('{user_slug}/wikis', 'UserController@wikis')->name('users.wikis');
+    Route::post('follow', 'UserController@follow')->name('users.follow');
+    Route::post('unfollow', 'UserController@unfollow')->name('users.unfollow');
+    Route::post('avatar/store', 'UserController@storeAvatar');
+    Route::post('avatar/crop', 'UserController@cropAvatar');
 });
-Route::post('/users/crop/avatar', function() {
-    $img = Image::make(public_path('/images/profile-pics/' . Request::get('image')));
-    $img->crop((int) Request::get('w'), (int) Request::get('h'), (int) Request::get('x'), (int) Request::get('y'));
-    $img->save();
 
-    return response()->json([
-        'message' => 'Profile picture successfully cropped.'
-    ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
+Route::group(['prefix' => '/'], function () {
+    Route::get('', 'HomeController@index')->name('dashboard');
+    Route::get('home', 'HomeController@index')->name('dashboard')->middleware('dashboard');
+    Route::get('help', 'HomeController@help')->name('help');
 });
-Route::get('/users/activity', [
-    'uses'  =>  'UserController@activity',
-]);
-Route::delete('/users/{user_slug}', [
-    'uses'  =>  'UserController@deleteAccount',
-    'as'    =>  'users.destroy',
-]);
-Route::get('/users/search/{text}', [
-    'uses'  =>  'UserController@filterUser',
-]);
-Route::patch('/users/{user_slug}/password', [
-    'uses'  =>  'UserController@updatePassword',
-    'as'    =>  'users.password.update',
-]);
-Route::get('/users/{user_slug}', [
-    'uses'  =>  'UserController@show',
-    'as'    =>  'users.show',
-]);
-Route::patch('/users/{user_slug}', [
-    'uses'  =>  'UserController@update',
-    'as'    =>  'users.update',
-]);
-Route::get('/users/{user_slug}/organizations', [
-    'uses'  =>  'UserController@getUserOrganizations',
-    'as'    =>  'users.organizations',
-]);
-Route::get('/users/{user_slug}/followers', [
-    'uses'  =>  'UserController@getUserFollowers',
-    'as'    =>  'users.followers',
-]);
-Route::get('/users/{user_slug}/following', [
-    'uses'  =>  'UserController@getUserFollowing',
-    'as'    =>  'users.following',
-]);
-Route::get('/users/{user_slug}/wikis', [
-    'uses'  =>  'UserController@wikis',
-    'as'    =>  'users.wikis',
-]);
-Route::post('/users/follow', [
-    'uses'  =>  'UserController@follow',
-    'as'    =>  'users.follow'
-]);
-Route::post('/users/unfollow', [
-    'uses'  =>  'UserController@unfollow',
-    'as'    =>  'users.unfollow',
-]);
 
-/*
-|--------------------------------------------------------------------------
-| Mix Routes
-|--------------------------------------------------------------------------
-*/
+Route::group(['prefix' => 'organizations'], function () {
+    Route::get('create', 'OrganizationController@create')->name('organizations.create');
+    Route::get('invite', 'OrganizationController@getInvite')->name('organizations.invite.show');
+    Route::post('invite', 'OrganizationController@inviteUser')->name('organizations.invite.store');
+    Route::post('', 'OrganizationController@store')->name('organizations.store');
+    Route::delete('invite', 'OrganizationController@removeInvite')->name('organizations.invite.destroy');
+    Route::delete('{id}', 'OrganizationController@destroy')->name('organizations.destroy');
+    Route::get('{organization_slug}', 'OrganizationController@show')->name('organizations.show');
+    Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
+    Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');
+    Route::get('{organization_slug}/activity', 'OrganizationController@getActivity')->name('organizations.activity');
+    Route::get('search/{text}', 'OrganizationController@filterOrganizations');
+});
 
-Route::get('/home', [
-    'uses'  =>  'HomeController@index',
-    'as'    =>  'dashboard',
-    'middleware'    =>  'dashboard',
-]);
-Route::get('/', [
-    'uses'  =>  'HomeController@index',
-    'as'    =>  'dashboard',
-]);
+Route::group(['prefix' => 'wikis'], function () {
+    Route::get('{id}/pages/{pageId?}', 'WikiController@getWikiPages');
+    Route::post('{id}/watch', 'WikiController@watchWiki');
+    Route::post('{id}/star', 'WikiController@starWiki');
+    Route::get('create', 'WikiController@create')->name('wikis.create');
+    Route::post('/', 'WikiController@store')->name('wikis.store');
+    Route::get('{wiki_slug}', 'WikiController@show')->name('wikis.show');
+    Route::get('{wiki_slug}/edit', 'WikiController@edit')->name('wikis.edit');
+    Route::patch('{wiki_slug}', 'WikiController@update')->name('wikis.update');
+    Route::get('search/{text}', 'WikiController@filterWikis');
+    Route::delete('{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
+});
 
-/*
-|--------------------------------------------------------------------------
-| Organizations Routes
-|--------------------------------------------------------------------------
-*/
+Route::group(['prefix' => 'wikis'], function () {
+    Route::get('{wiki_slug}/pages/{page_slug}/edit', 'WikiController@editPage')->name('pages.edit');
+    Route::patch('{wiki_slug}/pages/{page_slug}', 'WikiController@updatePage')->name('pages.update');
+    Route::get('{wiki_slug}/pages/create', 'WikiController@createPage')->name('wikis.pages.create');
+    Route::get('{wiki_slug}/pages/reorder', 'WikiController@pagesReorder')->name('wikis.pages.reorder');
+    Route::get('{wiki_slug}/pages/{page_slug}', 'WikiController@showPage')->name('wikis.pages.show');
+    Route::post('{wiki_slug}/pages', 'WikiController@storePage')->name('wikis.pages.store');
+    Route::get('{id}/pages/search/{text}', 'WikiController@filterWikiPages');
+    Route::delete('{wiki_slug}/pages/{page_slug}', 'WikiController@destroyPage')->name('pages.destroy');
+    Route::post('{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('wikis.pages.comments.store');
+});
 
-Route::get('/organizations/create', [
-    'uses'  =>  'OrganizationController@create',
-    'as'    =>  'organizations.create',
-]);
-Route::get('/organizations/invite', [
-    'uses'  =>  'OrganizationController@getInvite',
-    'as'    =>  'organizations.invite.show',
-]);
-Route::post('/organizations/invite', [
-    'uses'  =>  'OrganizationController@inviteUser',
-    'as'    =>  'organizations.invite.store',
-]);
-Route::post('/organizations', [
-    'uses'  =>  'OrganizationController@store',
-    'as'    =>  'organizations.store',
-]);
-Route::delete('/organizations/invite', [
-    'uses'  =>  'OrganizationController@removeInvite',
-    'as'    =>  'organizations.invite.destroy',
-]);
-Route::delete('/organizations/{id}', [
-    'uses'  =>  'OrganizationController@destroy',
-    'as'    =>  'organizations.destroy',
-]);
-Route::get('/organizations/{organization_slug}', [
-    'uses'  =>  'OrganizationController@show',
-    'as'    =>  'organizations.show',
-]);
-Route::get('/organizations/{organization_slug}/members', [
-    'uses'  =>  'OrganizationController@getMembers',
-    'as'    =>  'organizations.members',
-]);
-Route::get('/organizations/{organization_slug}/wiki', [
-    'uses'  =>  'WikiController@create',
-    'as'    =>  'organizations.wiki.create',
-]);
-Route::get('/organizations/{organization_slug}/activity', [
-    'uses'  =>  'OrganizationController@getActivity',
-    'as'    =>  'organizations.activity',
-]);
-Route::get('/organizations/search/{text}', [
-    'uses'  =>  'OrganizationController@filterOrganizations',
-]);
+Route::group(['prefix' => 'pages'], function () {
+    Route::post('{id}/star', 'WikiController@starPage')->name('pages.star');
+    Route::post('{id}/watch', 'WikiController@watchPage');
+    Route::patch('reorder', 'WikiController@updatePageParent');
+});
 
-/*
-|--------------------------------------------------------------------------
-| Wikis Routes
-|--------------------------------------------------------------------------
-*/
+Route::group(['prefix' => 'comments'], function () {
+    Route::post('{id}/star', 'CommentController@starComment')->name('comments.star');
+    Route::delete('{id}', 'CommentController@destroy')->name('comments.delete');
+    Route::patch('{id}', 'CommentController@update')->name('comments.delete');
+});
 
-Route::get('/wikis/{id}/pages/{pageId?}', [
-    'uses'  =>  'WikiController@getWikiPages',
-]);
-Route::post('/wikis/{id}/watch', [
-    'uses'  =>  'WikiController@watchWiki',
-]);
-Route::post('/wikis/{id}/star', [
-    'uses'  =>  'WikiController@starWiki',
-]);
-Route::get('/wikis/create', [
-    'uses'  =>  'WikiController@create',
-    'as'    =>  'wikis.create'
-]);
-Route::post('/wikis', [
-    'uses'  =>  'WikiController@store',
-    'as'    =>  'wikis.store'
-]);
-Route::get('/wikis/{wiki_slug}', [
-    'uses'  =>  'WikiController@show',
-    'as'    =>  'wikis.show'
-]);
-Route::get('/wikis/{wiki_slug}/edit', [
-    'uses'  =>  'WikiController@edit',
-    'as'    =>  'wikis.edit',
-]);
-Route::patch('/wikis/{wiki_slug}', [
-    'uses'  =>  'WikiController@update',
-    'as'    =>  'wikis.update',
-]);
-Route::get('/wikis/search/{text}', [
-    'uses'  =>  'WikiController@filterWikis',
-]);
-Route::delete('/wikis/{wiki_slug}', [
-    'uses'  =>  'WikiController@destroy',
-    'as'    =>  'wikis.destroy',
-]);
-
-/*
-|--------------------------------------------------------------------------
-| Wikis Pages Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/wikis/{wiki_slug}/pages/{page_slug}/edit', [
-    'uses'  =>  'WikiController@editPage',
-    'as'    =>  'pages.edit',
-]);
-Route::patch('/wikis/{wiki_slug}/pages/{page_slug}', [
-    'uses'  =>  'WikiController@updatePage',
-    'as'    =>  'pages.update',
-]);
-Route::get('/wikis/{wiki_slug}/pages/create', [
-    'uses'  =>  'WikiController@createPage',
-    'as'    =>  'wikis.pages.create',
-]);
-Route::get('/wikis/{wiki_slug}/pages/reorder', [
-    'uses'  =>  'WikiController@pagesReorder',
-    'as'    =>  'wikis.pages.reorder',
-]);
-Route::get('/wikis/{wiki_slug}/pages/{page_slug}', [
-    'uses'  =>  'WikiController@showPage',
-    'as'    =>  'wikis.pages.show',
-]);
-Route::post('/wikis/{wiki_slug}/pages', [
-    'uses'  =>  'WikiController@storePage',
-    'as'    =>  'wikis.pages.store',
-]);
-Route::get('/wikis/{id}/pages/search/{text}', [
-    'uses'  =>  'WikiController@filterWikiPages',
-]);
-Route::delete('/wikis/{wiki_slug}/pages/{page_slug}', [
-    'uses'  =>  'WikiController@destroyPage',
-    'as'    =>  'pages.destroy',
-]);
-Route::post('/pages/{id}/star', [
-    'uses'  =>  'WikiController@starPage',
-    'as'    =>  'pages.star',
-]);
-Route::post('/pages/{id}/watch', [
-    'uses'  =>  'WikiController@watchPage',
-]);
-Route::post('/wikis/{wiki_slug}/pages/{page_slug}/comments', [
-    'uses'  =>  'CommentController@store',
-    'as'    =>  'wikis.pages.comments.store',
-]);
-Route::patch('/pages/reorder', [
-    'uses'  =>  'WikiController@updatePageParent',
-]);
-
-/*
-|--------------------------------------------------------------------------
-| Comments Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::post('/comments/{id}/star', [
-    'uses'  =>  'CommentController@starComment',
-    'as'    =>  'comments.star',
-]);
-Route::delete('/comments/{id}', [
-    'uses'  =>  'CommentController@destroy',
-    'as'    =>  'comments.delete',
-]);
-Route::patch('/comments/{id}', [
-    'uses'  =>  'CommentController@update',
-    'as'    =>  'comments.delete',
-]);
-
-/*
-|--------------------------------------------------------------------------
-| Help Routes
-|--------------------------------------------------------------------------
-*/
-Route::get('/help', [
-    'uses'  =>  'HomeController@help',
-    'as'    =>  'help',
-]);
-
-/*
-|--------------------------------------------------------------------------
-| Settings Routes
-|--------------------------------------------------------------------------
-*/
-Route::get('/settings/profile', [
-    'uses'  =>  'UserController@profileSettings',
-    'as'    =>  'settings.profile',
-]);
-Route::get('/settings/account', [
-    'uses'  =>  'UserController@accountSettings',
-    'as'    =>  'settings.account',
-]);
-Route::get('/settings/notifications', [
-    'uses'  =>  'UserController@notificationsSettings',
-    'as'    =>  'settings.notifications',
-]);
-Route::get('/settings/emails', [
-    'uses'  =>  'UserController@emailsSettings',
-    'as'    =>  'settings.emails',
-]);
+Route::group(['prefix' => 'settings'], function () {
+    Route::get('profile', 'UserController@profileSettings')->name('settings.profile');
+    Route::get('account', 'UserController@accountSettings')->name('settings.account');
+    Route::get('notifications', 'UserController@notificationsSettings')->name('settings.notifications');
+    Route::get('emails', 'UserController@emailsSettings')->name('settings.emails');
+});

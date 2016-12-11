@@ -105,10 +105,18 @@ var App = {
     },
     bindUI: function () {
         var that = this;
+        $(document).on('click', '#sidemenu-toggle', function(event) {
+            event.preventDefault();
+            if ($('.sidemenu').is(":visible") ) {
+                $('.sidemenu').stop(true,true).hide("slide", { direction: "left" }, 70);
+            } else {
+                $('.sidemenu').stop(true,true).show("slide", { direction: "left" }, 70);
+            }
+        });
         $('#update-image-size').on('click', function(event) {
             event.preventDefault();
             $.ajax({
-                url: '/users/crop/avatar',
+                url: '/users/avatar/crop',
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -131,7 +139,7 @@ var App = {
         $('#profile_image[type="file"]').on('change', function() {
             var formData = new FormData($("#avatar-upload-form")[0]);
             $.ajax({
-                url: '/users/upload/avatar',
+                url: '/users/avatar/store',
                 type: 'POST',
                 cache:false,
                 processData: false,
@@ -599,18 +607,4 @@ $(function() {
 // Select2
 $(function() {
     $('#wiki-path, #timezone').select2();
-});
-
-// wdt-empji
-$(function() {
-    wdtEmojiBundle.defaults.emojiSheets = {
-        'apple': '/plugins/wdt-emoji/img/sheet_apple_64.png'
-    };
-
-  wdtEmojiBundle.init('.wdt-emoji-bundle-enabled');
-  
-  $(document).find('.wdt-emoji-con').each(function(index, el) {
-       $(el).html(wdtEmojiBundle.render($(el).text()));
-  });
-
 });

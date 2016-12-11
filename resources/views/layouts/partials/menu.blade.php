@@ -4,13 +4,10 @@
             @if(Auth::user())
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="{{ route('dashboard') }}" style="padding-left: 0;">Home</a>
-                    </li>
-                    {{-- <li>
-                        <div class="navbar-toggle show" id="menu-toggle" data-target="#menu-toggle" style="border: none; cursor: pointer; margin: 7px 0 0;">
+                        <div id="sidemenu-toggle" style="border: none; cursor: pointer; margin: 14px 0 0;">
                             <i class="fa fa-bars fa-lg"></i>
                         </div>
-                    </li> --}}
+                    </li>
                 </ul>
             @endif
             <div class="spinner">
@@ -22,8 +19,8 @@
                     <li>
                         <form class="navbar-form" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                                <span class="fa fa-search" style="position: absolute; top: 17px; right: 23px; color: #e7e9ed;"></span>
+                                <input type="text" class="form-control" placeholder="Search" style="width: 265px; border-radius: 2px; padding-right: 30px;">
+                                <span class="fa fa-search fa-fw" style="position: absolute; top: 16px; right: 23px; color: #e7e9ed;"></span>
                             </div>
                         </form>
                     </li>

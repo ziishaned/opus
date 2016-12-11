@@ -16,6 +16,12 @@ class CreateOrganizationTable extends Migration
         Schema::create('organization', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->longText('description');
+            $table->enum('visibilty', [
+                'private',
+                'public'
+            ]);
+            
             $table->string('slug', 65535);
 
             $table->integer('user_id')->unsigned();
