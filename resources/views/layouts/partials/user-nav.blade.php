@@ -10,12 +10,6 @@
 	        <li class="@if(\App\Helpers\ViewHelper::getCurrentRoute() == 'users/{user_slug}/organizations') active @endif">
 	        	<a href="{{ route('users.organizations', $user->slug) }}">Organizations</a>
 	        </li>
-	        <li class="@if(\App\Helpers\ViewHelper::getCurrentRoute() == 'users/{user_slug}/followers') active @endif">
-	        	<a href="{{ route('users.followers', $user->slug)  }}">Followers</a>
-	        </li>
-	        <li class="@if(\App\Helpers\ViewHelper::getCurrentRoute() == 'users/{user_slug}/following') active @endif">
-	        	<a href="{{ route('users.following', $user->slug)  }}">Following</a>
-	        </li>
         </ul>
     </div>
 </div>

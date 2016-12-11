@@ -73,10 +73,8 @@ class ActivityLog extends Model
     public function getUserAllActivities($userId)
     {
         return $this
-                ->leftJoin('user_followers', 'activity_log.user_id', '=', 'user_followers.follow_id')
                 ->join('users', 'activity_log.user_id', '=', 'users.id')
                 ->where('activity_log.user_id', '=', $userId)
-                ->orwhereRaw('IFNULL(user_followers.user_id, 0) = ' . $userId . '')
                 ->select('activity_log.*', 'users.name as username', 'users.full_name as full_name', 'users.slug as user_slug')
                 ->latest('activity_log.created_at')
                 ->paginate(10);

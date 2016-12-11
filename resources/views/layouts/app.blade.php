@@ -20,13 +20,11 @@
     <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
     <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
-    <link rel="stylesheet" href="/plugins/wdt-emoji/wdt-emoji-bundle.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
 </head>
 <body>
-    @include('layouts.partials.sidemenu')
     <div class="modal fade" id="profile-pic-cropper" data-backdrop="static">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -95,8 +93,6 @@
 <script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
 <script src="/plugins/vakata-jstree/dist/jstree.js"></script>
 <script src="/plugins/select2/select2.full.min.js"></script>
-<script src="/plugins/wdt-emoji/emoji.min.js"></script>
-<script src="/plugins/wdt-emoji/wdt-emoji-bundle.js"></script>
 <script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/view.js"></script>

@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
          $this->call(UserOrganizationTableSeeder::class);
          $this->call(WikiTableSeeder::class);
          $this->call(WikiPageTableSeeder::class);
-         $this->call(UserFollowerTableSeeder::class);
          $this->call(UsersWatchTableSeeder::class);
          $this->call(UserStarTableSeeder::class);
          $this->call(CommentTableSeeder::class);

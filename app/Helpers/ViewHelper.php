@@ -77,16 +77,6 @@ class ViewHelper
         return Wiki::where('id', '=', $id)->pluck('name')->first();
     }
 
-    public static function isFollowing($id)
-    {
-        $userFollow = DB::table('user_followers')->where('user_id', '=', Auth::user()->id)->where('follow_id', '=', $id)->first();
-
-        if($userFollow) {
-            return true;
-        }
-        return false;
-    }
-
     public static function makeWikiPageTree($wikiPages, $currentPageId)
     {
         foreach ($wikiPages as $page => $value) {

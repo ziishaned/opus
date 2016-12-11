@@ -701,18 +701,6 @@ ul.activity-list li:hover {
     padding-left: 0px;
 }
 
-.following-list li, .follower-list li {
-    border-bottom: 1px solid #f1f1f1;
-}
-
-.following-list li {
-    padding-top: 15px;
-}
-
-.following-list li:first-child {
-    padding-top: 0;
-}
-
 .email-list li {
     border-top: 1px solid #f1f1f1;
 }
@@ -876,59 +864,4 @@ ul.activity-list li:hover {
     box-shadow: rgba(76,86,103,0.247059) 0 0 1px 0, rgba(31,37,50,0.317647) 0 2px 18px 0 !important;
     border-radius: 4px !important;
     border: 1px solid #aaa !important;     
-}
-
-.sidemenu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10000;
-    background: #666;
-    height: 100%;
-    box-shadow: 2px 0 16px 0 rgba(0,0,0,0.3);
-    color: #fff;
-    width: 235px;
-}
-
-ul.sidemenu-options {
-    margin-top: 10px;
-}
-
-ul.sidemenu-options li:hover {
-    background-color: #eee;
-}
-
-ul.sidemenu-options li:hover a {
-    color: black;
-}
-
-ul.sidemenu-options li {
-    display: block;
-}
-
-ul.sidemenu-options li a {
-    position: relative;
-    padding: 10px 20px;
-}
-
-ul.sidemenu-options li.active {
-    background-color: #428bca;
-}
-
-ul.sidemenu-options li.active a {
-    color: white;
-    font-weight: normal;
-    text-shadow: 1px 1px 1px #666;
-    cursor: default;
-}
-
-ul.sidemenu-options li:first-child a {
-    margin-top: 0;
-}
-
-ul.sidemenu-options li a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    font-size: 13px;
 }

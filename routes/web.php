@@ -16,11 +16,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('{user_slug}', 'UserController@show')->name('users.show');
     Route::patch('{user_slug}', 'UserController@update')->name('users.update');
     Route::get('{user_slug}/organizations', 'UserController@getUserOrganizations')->name('users.organizations');
-    Route::get('{user_slug}/followers', 'UserController@getUserFollowers')->name('users.followers');
-    Route::get('{user_slug}/following', 'UserController@getUserFollowing')->name('users.following');
     Route::get('{user_slug}/wikis', 'UserController@wikis')->name('users.wikis');
-    Route::post('follow', 'UserController@follow')->name('users.follow');
-    Route::post('unfollow', 'UserController@unfollow')->name('users.unfollow');
     Route::post('avatar/store', 'UserController@storeAvatar');
     Route::post('avatar/crop', 'UserController@cropAvatar');
 });

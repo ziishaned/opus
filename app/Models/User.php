@@ -136,26 +136,6 @@ class User extends Authenticatable
     }
 
     /**
-     * A user can have many followers.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function followers()
-    {
-        return $this->belongsToMany(User::class, 'user_followers', 'follow_id', 'user_id');
-    }
-
-    /**
-     * DESC
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function following()
-    {
-        return $this->belongsToMany(User::class, 'user_followers', 'user_id', 'follow_id');
-    }
-
-    /**
      * A user can has many wikis.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -187,7 +167,7 @@ class User extends Authenticatable
      */
     public function getUsers()
     {
-        return $this->with(['followers', 'following'])->paginate(10);
+        return $this->paginate(10);
     }
 
     /**
@@ -199,7 +179,7 @@ class User extends Authenticatable
      */
     public function getUser($userSlug)
     {
-        $user = $this->where('slug', '=', $userSlug)->with(['timezone', 'organization', 'organizations', 'starWikis', 'watchWikis', 'followers', 'following', 'wikis'])->first();
+        $user = $this->where('slug', '=', $userSlug)->with(['timezone', 'organization', 'organizations', 'starWikis', 'watchWikis', 'wikis'])->first();
         
         if($user) {
             return $user;
@@ -220,30 +200,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get followers of a user
-     *
-     * @param  string $userSlug
-     * @return \App\Models\User
-     */
-    public function getFollowers($user)
-    {
-        $userFollowers = $this->find($user->id)->followers()->paginate(10);
-        return $userFollowers;
-    }
-
-    /**
-     * Get all the user following.
-     *
-     * @param  string $userSlug
-     * @return \App\Models\User
-     */
-    public function getFollowing($user)
-    {
-        $userFollowing = $this->find($user->id)->following()->paginate(10);
-        return $userFollowing;
-    }
-
-    /**
      * Get all the wikis of a user.
      *
      * @param  string $userSlug
@@ -253,22 +209,6 @@ class User extends Authenticatable
     {        
         $userWikis = $this->find($user->id)->wikis()->paginate(10);
         return $userWikis;
-    }
-
-    /**
-     * Follow a specific user.
-     *
-     * @param  int $followId
-     * @return mixed
-     */
-    public function followUser($followId)
-    {
-        return DB::table('user_followers')->insert([
-            'user_id'    => Auth::user()->id,
-            'follow_id'  => $followId,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
     }
 
     public function updateUser($slug, $data, $profile_image)
@@ -289,20 +229,6 @@ class User extends Authenticatable
         ]);
         
         return true;
-    }
-
-    /**
-     * Unfollow a user.
-     *
-     * @param  int $followId
-     * @return mixed
-     */
-    public function unfollowUser($followId)
-    {
-        return DB::table('user_followers')->where([
-            'user_id'    => Auth::user()->id,
-            'follow_id'  => $followId,
-        ])->delete();
     }
 
     /**

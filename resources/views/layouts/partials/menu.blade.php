@@ -3,11 +3,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())
                 <ul class="nav navbar-nav">
-                    <li>
-                        <div id="sidemenu-toggle" style="border: none; cursor: pointer; margin: 14px 0 0;">
-                            <i class="fa fa-bars fa-lg"></i>
-                        </div>
-                    </li>
+                    
                 </ul>
             @endif
             <div class="spinner">

@@ -27,8 +27,6 @@ class ComposerServiceProvider extends ServiceProvider
             'user.setting.emails',
             'user.setting.notifications',
             'user.organizations',
-            'user.followers',
-            'user.following',
             'user.user',
             'user.wikis',
             'wiki.create',

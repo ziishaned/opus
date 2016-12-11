@@ -130,32 +130,6 @@ class UserController extends Controller
     }
 
     /**
-     * Return followers view with the list of a specific user followers.
-     *
-     * @param $userSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getUserFollowers($userSlug)
-    {
-        $user          = $this->user->getUser($userSlug);
-        $userFollowers = $this->user->getFollowers($user);
-        return view('user.followers', compact('user', 'userFollowers'));
-    }
-
-    /**
-     * Return following view with the list of a specific user following.
-     *
-     * @param $userSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getUserFollowing($userSlug)
-    {
-        $user          = $this->user->getUser($userSlug);
-        $userFollowing = $this->user->getFollowing($user);
-        return view('user.following', compact('user', 'userFollowing'));
-    }
-
-    /**
      * Get all the wikis of a specific user and return them on user wikis view.
      *
      * @param $userSlug
@@ -166,34 +140,6 @@ class UserController extends Controller
         $user       = $this->user->getUser($userSlug);
         $userWikis  = $this->user->getWikis($user);
         return view('user.wikis', compact('user', 'userWikis'));
-    }
-
-    /**
-     * Follow a user.
-     *
-     * @return mixed
-     */
-    public function follow()
-    {
-        $this->user->followUser($this->request->get('user_id'));
-        return redirect()->back()->with([
-            'alert' => 'User successfully followed.',
-            'alert_type' => 'success'
-        ]);
-    }
-
-    /**
-     * Unfollow a user.
-     *
-     * @return mixed
-     */
-    public function unfollow()
-    {
-        $this->user->unfollowUser($this->request->get('user_id'));
-        return redirect()->back()->with([
-            'alert' => 'User successfully unfollowed.',
-            'alert_type' => 'success'
-        ]);
     }
 
     public function profileSettings()
