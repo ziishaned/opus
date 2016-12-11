@@ -22,29 +22,6 @@
             @if(!empty($user->bio))
                 <p>{{ $user->bio }}</p>
             @endif
-            @if($user->id != Auth::user()->id)
-                <div class="profile-btn">
-                    <ul class="list-unstyled list-inline">
-                        <li style="padding: 0;">
-                            @if(ViewHelper::isFollowing($user->id)) 
-                                <a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Unfollow" onclick="event.preventDefault(); document.getElementById('unfollow-form').submit();"><i class="fa fa-minus"></i></a>
-                                <form id="unfollow-form" action="{{ route('users.unfollow') }}" method="POST" class="hide">
-                                    {!! method_field('post') !!}
-                                    {{ csrf_field() }}
-                                    <input type="text" name="user_id" class="hide" value="{{ $user->id }}">
-                                </form>
-                            @else 
-                                <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Follow" onclick="event.preventDefault(); document.getElementById('follow-form').submit();"><i class="fa fa-plus"></i></a>
-                                <form id="follow-form" action="{{ route('users.follow') }}" method="POST" class="hide">
-                                    {!! method_field('post') !!}
-                                    {{ csrf_field() }}
-                                    <input type="text" name="user_id" class="hide" value="{{ $user->id }}">
-                                </form>
-                            @endif
-                        </li>
-                    </ul>
-                </div>    
-            @endif
         </div>
         <div class="clearfix"></div>
     </div>

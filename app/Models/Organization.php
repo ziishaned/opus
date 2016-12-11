@@ -37,7 +37,6 @@ class Organization extends Model
      */
     const ORGANIZATION_RULES = [
         'organization_name' => 'required|max:55|unique:organization,name',
-        'organization_visibility' => 'required',
     ];
 
     /**
@@ -82,7 +81,7 @@ class Organization extends Model
      */
     public function wikis()
     {
-        return $this->hasMany(Wiki::class, 'organization_id', 'id');
+        return $this->hasMany(Wiki::class, 'organization_id', 'id')->latest();
     }
 
     /**
@@ -131,7 +130,6 @@ class Organization extends Model
             'name'          =>  $data['organization_name'],
             'user_id'       =>  Auth::user()->id,
             'description'   =>  $data['description'],
-            'visibilty'     =>  $data['organization_visibility'],
         ]);
         DB::table('user_organization')->insert([
             'user_type'        => 'admin',

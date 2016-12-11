@@ -110,7 +110,10 @@ class OrganizationController extends Controller
     {
         $this->validate($this->request, Organization::ORGANIZATION_RULES);
         $organization = $this->organization->postOrganization($this->request->all());
-        return Redirect::route('organizations.show', $organization->slug);
+        return Redirect::route('organizations.show', $organization->slug)->with([
+            'alert' => 'Organization successfully created.',
+            'alert_type' => 'success'
+        ]);
     }
 
     /**
@@ -152,7 +155,8 @@ class OrganizationController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function getActivity($organizationSlug) {
+    public function getActivity($organizationSlug) 
+    {
         $organization = $this->organization->getOrganization($organizationSlug);
         return view('organization.activity', compact('organization'));
     }
@@ -163,10 +167,30 @@ class OrganizationController extends Controller
      * @param $organizationSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getWikis($organizationSlug)
+    public function getWikisView($organizationSlug)
     {
         $organization = $this->organization->getWikis($organizationSlug);
         return view('organization.wikis', compact('organization'));
+    }
+
+    public function getWikis() 
+    {
+        $organization = $this->organization->where('id', '=', $this->request->get('organization_id'))->with(['wikis'])->first();
+        $wikis = [];
+
+        foreach($organization->wikis as $key => $wiki) {
+            
+            if(count($wikis) >= 5) {
+                break;
+            }
+
+            $wikis[] = [
+                'url'  => route('wikis.show', [$wiki->slug]),
+                'name' => $wiki->name
+            ];
+        }
+
+        return $wikis;
     }
 
     /**

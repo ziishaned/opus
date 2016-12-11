@@ -9,13 +9,14 @@
 Auth::routes();
 
 Route::group(['prefix' => 'users'], function () {
+    Route::get('organizations', 'UserController@getOrganizations');
     Route::get('activity', 'UserController@activity');
     Route::delete('{user_slug}', 'UserController@deleteAccount')->name('users.destroy');
     Route::get('search/{text}', 'UserController@filterUser');
     Route::patch('{user_slug}/password', 'UserController@updatePassword')->name('users.password.update');
     Route::get('{user_slug}', 'UserController@show')->name('users.show');
     Route::patch('{user_slug}', 'UserController@update')->name('users.update');
-    Route::get('{user_slug}/organizations', 'UserController@getUserOrganizations')->name('users.organizations');
+    Route::get('{user_slug}/organizations', 'UserController@getOrganizationsView')->name('users.organizations');
     Route::get('{user_slug}/wikis', 'UserController@wikis')->name('users.wikis');
     Route::post('avatar/store', 'UserController@storeAvatar');
     Route::post('avatar/crop', 'UserController@cropAvatar');
@@ -28,6 +29,7 @@ Route::group(['prefix' => '/'], function () {
 });
 
 Route::group(['prefix' => 'organizations'], function () {
+    Route::get('wikis', 'OrganizationController@getWikis');
     Route::get('create', 'OrganizationController@create')->name('organizations.create');
     Route::get('invite', 'OrganizationController@getInvite')->name('organizations.invite.show');
     Route::post('invite', 'OrganizationController@inviteUser')->name('organizations.invite.store');

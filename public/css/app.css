@@ -1,8 +1,6 @@
 html, body {
     margin: 0px;
     font-family: 'Lato';
-    font-size: 16px;
-    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -12,6 +10,24 @@ html, body {
 
 .header-menu .navbar-nav>.open>a, .header-menu .navbar-nav>.open>a:focus, .header-menu .navbar-nav>.open>a:hover {
     background-color: #ffffff;
+}
+
+.header-menu ul li a {
+    color: #222222 !important;
+}
+
+.li-loader {
+    text-align: center;
+}
+
+.loader:before {
+    content: url(../images/loader.gif);
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    position: relative;
+    top: 3px;
+    left: -5px;
 }
 
 @media (min-width: 1200px) {
@@ -646,19 +662,6 @@ kbd {
     border-color: #911 !important;
 }
 
-button .loader {
-    float: right;
-    padding-top: 2px;
-}
-
-.loader {
-    background-image: url('../images/btn-loader.gif');
-    height: 16px;
-    width: 16px;
-    background-repeat: no-repeat;
-    display: none;
-}
-
 .dot-divider::after {
     content: "\00B7";
     padding: 0 6px;
@@ -864,4 +867,8 @@ ul.activity-list li:hover {
     box-shadow: rgba(76,86,103,0.247059) 0 0 1px 0, rgba(31,37,50,0.317647) 0 2px 18px 0 !important;
     border-radius: 4px !important;
     border: 1px solid #aaa !important;     
+}
+
+.header-menu {
+    background-color: #ffffff;
 }

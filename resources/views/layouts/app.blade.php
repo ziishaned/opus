@@ -55,24 +55,20 @@
             </div>
         </div>
     </div>
-    <div id="wrapper">
-        <div class="main-wrapper">
-            @include('layouts.partials.menu')
-        
-            @if(Session::get('alert'))
-                <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -15px; font-size: 14px;">
-                    <div class="container">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{ Session::get('alert') }}
-                    </div>
-                </div>
-            @endif
+    @include('layouts.partials.menu')
 
-            <div class="main-body" id="page-content-wrapper">
-                <div class="container">
-                    @yield('content')
-                </div>
+    @if(Session::get('alert'))
+        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -15px; font-size: 14px;">
+            <div class="container">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ Session::get('alert') }}
             </div>
+        </div>
+    @endif
+
+    <div class="main-body" id="page-content-wrapper">
+        <div class="container">
+            @yield('content')
         </div>
     </div>
 
@@ -135,11 +131,6 @@
 
 <script>
     new timeago().render(document.querySelectorAll('time.timeago'));
-    $("#wrapper").toggleClass("toggled");
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
     SyntaxHighlighter.defaults.toolbar = false;
     SyntaxHighlighter.all();
 </script>

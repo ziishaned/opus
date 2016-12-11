@@ -13,14 +13,9 @@
                                 <div class="input-group flat-input-con">
                                     <span class="input-group-addon input-label">Wiki path</span>
                                     <select class="form-control flat-ui-select" name="wiki_path" id="wiki-path" style="box-shadow: none; outline: none; border-color: rgba(34,36,38,.15) !important; border-left: 0px; height: 45px;">
-                                        <optgroup label="User">
-                                            <option value="user">{{ Auth::user()->full_name }}</option>
-                                        </optgroup>
-                                        <optgroup label="Organizations">
-                                            @foreach($organizations as $organization)
-                                                <option value="{{ $organization->id }}">{{ $organization->name }}</option>
-                                            @endforeach
-                                        </optgroup>
+                                        @foreach($organizations as $organization)
+                                            <option value="{{ $organization->id }}">{{ $organization->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -73,7 +68,7 @@
                     <label for="wiki-description" class="control-label">Description</label>
                     <textarea id="wiki-description" name="wiki_description"></textarea>
                 </div>
-                <input type="submit" class="btn btn-default" id="create-wiki-btn" value="Create Wiki">
+                <input type="submit" class="btn btn-primary pull-right" id="create-wiki-btn" value="Create Wiki">
                 <div class="clearfix"></div>
             </form>
         </div>

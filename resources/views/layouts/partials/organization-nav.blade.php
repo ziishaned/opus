@@ -1,9 +1,9 @@
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <ul class="nav nav-pills" id="organization-nav" style="display: flex; justify-content: center;">
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <div class="settings">        
+        <ul class="list-unstyled affix">
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}') class="active" @endif><a href="{{ route('organizations.show', $organization->slug) }}">Organization</a></li>
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/members') class="active" @endif><a href="{{ route('organizations.members', $organization->slug) }}">Members</a></li>
-            @if(\App\Helpers\ViewHelper::userHasOrganization($organization->slug))
+            <!-- @if(\App\Helpers\ViewHelper::userHasOrganization($organization->slug))
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="manage-wiki-dropdown" style="color: #333;"><i class="fa fa-gear fa-lg"></i> <span class="caret"></span></a>
                     <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu2" style="top: 37px; right: 10px;">
@@ -17,7 +17,7 @@
                         </li>
                     </ul>
                 </li>
-            @endif
+            @endif -->
         </ul>
     </div>
 </div>

@@ -23,9 +23,9 @@
                         <a href="#">
                             <?php $profile_image = ViewHelper::getProfilePic($activity->user_id); ?> 
                             @if(empty($profile_image))
-                                <img src="/images/default.png" width="32" height="32" alt="Image" style="border-radius: 2px;">
+                                <img src="/images/default.png" width="28" height="28" alt="Image" style="border-radius: 2px;">
                             @else
-                                <img src="/images/profile-pics/{{ $profile_image }}" width="32" height="32" alt="Image" style="border-radius: 2px;">
+                                <img src="/images/profile-pics/{{ $profile_image }}" width="28" height="28" alt="Image" style="border-radius: 2px;">
                             @endif
                         </a>
                     </div>    

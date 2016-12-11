@@ -30,7 +30,7 @@
                             <div class="row">
                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                     <h3 style="margin: 0 0 5px; font-size: 15px; font-weight: 600; color: #4078c0;"><a href="{{ route('wikis.show', $wiki->slug)  }}">{{ $wiki->name }}</a></h3>
-                                    <p style="font-size: 13px; color: #767676 margin-bottom: 0px;" class="wdt-emoji-con">{{ $wiki->outline }}</p>
+                                    <p style="font-size: 13px; color: #767676 margin-bottom: 0px;">{{ $wiki->outline }}</p>
                                 </div>
                             </div>
                             <hr>

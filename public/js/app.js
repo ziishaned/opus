@@ -56,17 +56,6 @@ var App = {
             });
         }
     },
-    sideBar: function() {
-        var pin_sidebar = Cookies.get('pin_sidebar');
-        if(pin_sidebar == 'true') {
-            $('#wrapper').addClass('toggled');
-            $('#pin-sidebar').css('transform', 'rotate(0deg)');
-        } 
-        if(pin_sidebar == 'false') {
-            $('#wrapper').removeClass('toggled');
-            $('#pin-sidebar').css('transform', 'rotate(90deg)');
-        }
-    },
     inviteUserToOrganization: function (userId, organizationId) {
         $.ajax({
             url: '/organizations/invite',
@@ -103,14 +92,60 @@ var App = {
             }
         });
     },
+    getOrganizations: function() {
+        $.ajax({
+            url: '/users/organizations',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var html = '';
+                $(data).each(function(index, el) {
+                    html += '<li><a href="'+el.url+'">'+el.name+'</a></li>'
+                });
+                $('.header-menu').find('#organizations-list .li-loader').replaceWith(html);
+            }, 
+            error: function(error) {
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        });
+    },
+    getWikis: function(organizationId) {
+        $.ajax({
+            url: '/organizations/wikis',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                organization_id: organizationId
+            },
+            success: function(data) {
+                var html = '';
+                $(data).each(function(index, el) {
+                    html += '<li><a href="'+el.url+'">'+el.name+'</a></li>'
+                });
+                $('.header-menu').find('#wikis-list .li-loader').replaceWith(html);
+            }, 
+            error: function(error) {
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        });
+    },
     bindUI: function () {
         var that = this;
-        $(document).on('click', '#sidemenu-toggle', function(event) {
-            event.preventDefault();
-            if ($('.sidemenu').is(":visible") ) {
-                $('.sidemenu').stop(true,true).hide("slide", { direction: "left" }, 70);
-            } else {
-                $('.sidemenu').stop(true,true).show("slide", { direction: "left" }, 70);
+        $(document).on('click', '#get-organizations', function(event) {
+            event.preventDefault();            
+            if($('#get-organizations').attr('data-appended') == 'false') {
+                $(this).attr('data-appended', true);
+                that.getOrganizations();
+            }
+        });
+        $(document).on('click', '#get-wikis', function(event) {
+            event.preventDefault();            
+            if($('#get-wikis').attr('data-appended') == 'false') {
+                $(this).attr('data-appended', true);
+                var organizationId = $(this).attr('data-organizationId');
+                that.getWikis(organizationId);
             }
         });
         $('#update-image-size').on('click', function(event) {
@@ -285,19 +320,6 @@ var App = {
             event.preventDefault();
             that.pinSideBar();            
         });
-    },
-    pinSideBar: function() {
-        var pin_sidebar = Cookies.get('pin_sidebar');
-        if(pin_sidebar == 'true') {
-            $('#pin-sidebar').css('transform', 'rotate(90deg)');
-            Cookies.set('pin_sidebar', 'false');
-        } else if(pin_sidebar == 'false') {
-            $('#pin-sidebar').css('transform', 'rotate(0deg)');
-            Cookies.set('pin_sidebar', 'true');
-        } else {
-            $('#pin-sidebar').css('transform', 'rotate(90deg)');
-            Cookies.set('pin_sidebar', 'false');
-        }
     },
     starComment: function(id) {
         $.ajax({

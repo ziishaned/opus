@@ -1,9 +1,37 @@
-<nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation" style="background-color: #ffffff;">
-    <div class="container">
+<nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation">
+    <div class="container" style="padding-left: 0px; padding-right: 0px;">
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())
                 <ul class="nav navbar-nav">
-                    
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-appended="false" data-toggle="dropdown" id="get-organizations"><i class="fa fa-bars"></i></a>
+                        <ul class="dropdown-menu" id="organizations-list" style="margin-left: -15px;">
+                            <li class="li-loader">
+                                <span class="loader"></span> Loading
+                            </li>
+                        </ul>
+                    </li>
+                    @if(preg_match('/organizations/', ViewHelper::getCurrentRoute())) 
+                        <li style="padding: 15px;">
+                            <i class="fa fa-question fa-fw fa-lg"></i> {{ $organization->name }}
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-organizationId="{{ $organization->id }}" data-appended="false" data-toggle="dropdown" id="get-wikis">Wikis <i class="fa fa-caret-down fa-fw"></i></a>
+                            <ul class="dropdown-menu" id="wikis-list">
+                                <li class="dropdown-header" style="font-size: 15px;">Recent Wikis</li>
+                                <li class="li-loader">
+                                    <span class="loader">Loading</span>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">Create wiki</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Members</a> 
+                        </li>
+                    @endif
                 </ul>
             @endif
             <div class="spinner">
@@ -22,7 +50,7 @@
                     </li>
                     <ul class="nav navbar-nav">
                         <li class="dropdown" title="Notifications">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox" style="font-size: 17px;"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Action</a></li>
                                 <li><a href="#">Another action</a></li>
@@ -31,7 +59,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" style="padding-left: 10px; padding-right: 10px;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus" style="font-size: 16px;"></i></a>
+                            <a href="#" style="padding-left: 10px; padding-right: 10px;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('organizations.create') }}" title="Create organization">Create organization</a></li>
                                 <li><a href="{{ route('wikis.create') }}" title="Create wiki">Create wiki</a></li>

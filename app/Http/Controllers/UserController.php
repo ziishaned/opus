@@ -122,11 +122,27 @@ class UserController extends Controller
      * @param $userSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getUserOrganizations($userSlug)
+    public function getOrganizationsView($userSlug)
     {
         $user               = $this->user->getUser($userSlug);
         $userOrganizations  = $this->user->getOrganizations($user);
         return view('user.organizations', compact('user', 'userOrganizations'));
+    }
+
+    public function getOrganizations() 
+    {
+        $userId        =  Auth::user()->id;
+        $user          =  $this->user->find($userId)->with(['organizations'])->first();
+        $organizations =  [];
+
+        foreach ($user->organizations as $key => $organization) {
+            $organizations[] = [
+                'url'  => route('organizations.show', [$organization->slug]),
+                'name' => $organization->name
+            ];
+        }
+
+        return $organizations;
     }
 
     /**
