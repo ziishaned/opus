@@ -865,3 +865,11 @@ ul.activity-list li:hover {
     border-radius: 4px !important;
     border: 1px solid #aaa !important;     
 }
+
+.wdt-emoji-picker {
+    z-index: 100;
+}
+
+.wdt-emoji-list {
+    width: 329px;
+}

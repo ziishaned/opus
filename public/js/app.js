@@ -600,3 +600,17 @@ $(function() {
 $(function() {
     $('#wiki-path, #timezone').select2();
 });
+
+// wdt-empji
+$(function() {
+    wdtEmojiBundle.defaults.emojiSheets = {
+        'apple': '/plugins/wdt-emoji/img/sheet_apple_64.png'
+    };
+
+  wdtEmojiBundle.init('.wdt-emoji-bundle-enabled');
+  
+  $(document).find('.wdt-emoji-con').each(function(index, el) {
+       $(el).html(wdtEmojiBundle.render($(el).text()));
+  });
+
+});
