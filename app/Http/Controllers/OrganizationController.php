@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Redirect;
 use App\Models\User;
+use App\Models\ActivityLog;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,8 @@ class OrganizationController extends Controller
      */
     private $user;
 
+    private $activity;
+
     /**
      * OrganizationController constructor.
      *
@@ -40,12 +43,13 @@ class OrganizationController extends Controller
      * @param \App\Models\Organization $organization
      * @param \App\Models\User         $user
      */
-    public function __construct(Request $request, Organization $organization, User $user)
+    public function __construct(Request $request, Organization $organization, User $user, ActivityLog $activity)
     {
         $this->middleware('auth');
         $this->request      = $request;
         $this->organization = $organization;
         $this->user         = $user;
+        $this->activity     = $activity;
     }
 
     /**
@@ -66,11 +70,12 @@ class OrganizationController extends Controller
      */
     public function show($organizationSlug)
     {
-        $organization       = $this->organization->getOrganization($organizationSlug);
-        $organizationWikis  = $this->organization->getWikis($organization);
-
+        $organization  = $this->organization->getOrganization($organizationSlug);
+        $wikis         = $this->organization->getWikis($organization);
+        // $activities    = $this->activity->getOrganizationActivity($organization->id);   
+        
         if($organization) {
-            return view('organization.organization', compact('organization', 'organizationWikis'));
+            return view('organization.organization', compact('organization', 'wikis'));
         }
 
         return abort(404);

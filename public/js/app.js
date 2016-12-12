@@ -629,4 +629,10 @@ $(function() {
 // Select2
 $(function() {
     $('#wiki-path, #timezone').select2();
+    
+    $("#outline").emojioneArea({
+        pickerPosition: "bottom",
+        tones: false,
+        autoHideFilters: true
+    });
 });

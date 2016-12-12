@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
     <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
+    <link rel="stylesheet" href="/plugins/emojionearea/emojione.sprites.css">
+    <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
+    <link rel="stylesheet" href="/plugins/emojionearea/emojionearea.min.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
@@ -75,9 +78,9 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/keymaster.js"></script>
-<script src="/js/keymaster.sequence.min.js"></script>
-<script src="/js/app-shortcuts.js"></script>
+{{-- <script src="/js/keymaster.js"></script>
+<script src="/js/keymaster.sequence.min.js"></script> --}}
+{{-- <script src="/js/app-shortcuts.js"></script> --}}
 <script src="/js/ajax-loading.js"></script>
 <script src="/js/tinymce.min.js"></script>
 <script src="/js/validator.min.js"></script>
@@ -94,6 +97,9 @@
 <script src="/js/modules/view.js"></script>
 <script src="/js/js.cookie.js"></script>
 <script src="/plugins/jcrop/Jcrop.min.js"></script>
+<script src="/plugins/emojionearea/emojione.min.js"></script>
+<script src="/plugins/emojionearea/emojionearea.min.js"></script>
+<script src="/plugins/emojionearea/jquery.textcomplete.js"></script>
 
 {{-- Syntax Highlighter --}}
 

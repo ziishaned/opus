@@ -36,6 +36,7 @@ Route::group(['prefix' => 'organizations'], function () {
     Route::post('', 'OrganizationController@store')->name('organizations.store');
     Route::delete('invite', 'OrganizationController@removeInvite')->name('organizations.invite.destroy');
     Route::delete('{id}', 'OrganizationController@destroy')->name('organizations.destroy');
+    Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
     Route::get('{organization_slug}', 'OrganizationController@show')->name('organizations.show');
     Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
     Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');

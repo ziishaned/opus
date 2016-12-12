@@ -1,5 +1,6 @@
 html, body {
     margin: 0px;
+    height: 100%;
     font-family: 'Lato';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -14,6 +15,11 @@ html, body {
 
 .header-menu ul li a {
     color: #222222 !important;
+}
+
+.header-menu .navbar-nav>li>a {
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .li-loader {
@@ -154,16 +160,25 @@ a {
     outline: none;
     background: #FFF;
     line-height: 1.2142em;
-    border: 1px solid rgba(34,36,38,.15);
-    border-radius: 3px;
+    border: 1px solid rgba(34,36,38,.15) !important;
+    border-radius: 3px !important;
     height: 45px;
     width: 100%;
     color: #222222;
     font-size: 16px;
     padding: 12px 15px;
     box-sizing: border-box;
-    box-shadow: none;
-    border-left: 0px;
+    box-shadow: none !important;
+    border-left: 0px !important;
+}
+
+.input .emojionearea-editor {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.textcomplete-dropdown .textcomplete-item a {
+    cursor: pointer !important;
 }
 
 textarea.input {
@@ -716,10 +731,15 @@ ul.activity-list li:hover {
     border-bottom: 1px solid #f1f1f1;
 }
 
-.settings ul {
+.settings {
     border-right: 1px solid #ddd;
     min-width: 180px;
 } 
+
+.settings h4 {
+    padding-left: 15px;
+    font-weight: bold;
+}
 
 .settings ul li:hover {
     background-color: #eee;

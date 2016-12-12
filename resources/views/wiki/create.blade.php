@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <div class="input-group flat-input-con">
                         <span class="input-group-addon input-label" style="vertical-align: top; padding-top: 5px;">Outline</span>
-                        <textarea name="outline" id="outline" class="form-control input wdt-emoji-bundle-enabled" rows="3" style="padding: 0;"></textarea>
+                        <textarea name="outline" id="outline" class="form-control input" rows="3" style="padding: 0;"></textarea>
                     </div>
                 </div>
                 <div class="form-group">

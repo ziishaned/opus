@@ -79,4 +79,9 @@ class ActivityLog extends Model
                 ->latest('activity_log.created_at')
                 ->paginate(10);
     }
+
+    public function getOrganizationActivity($organizationId) 
+    {
+        dd($organizationId);
+    }
 }
