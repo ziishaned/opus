@@ -172,9 +172,14 @@ a {
     border-left: 0px !important;
 }
 
+.emojionearea {
+    border-radius: 0px !important;
+}
+
 .input .emojionearea-editor {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    min-height: 78px !important;
 }
 
 .textcomplete-dropdown .textcomplete-item a {
@@ -731,10 +736,10 @@ ul.activity-list li:hover {
     border-bottom: 1px solid #f1f1f1;
 }
 
-.settings {
-    border-right: 1px solid #ddd;
+.settings ul {
+    /*border-right: 1px solid #ddd;*/
     min-width: 180px;
-} 
+}
 
 .settings h4 {
     padding-left: 15px;

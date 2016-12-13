@@ -630,9 +630,10 @@ $(function() {
 $(function() {
     $('#wiki-path, #timezone').select2();
     
-    $("#outline").emojioneArea({
+    $("#outline, #organization-description").emojioneArea({
         pickerPosition: "bottom",
         tones: false,
-        autoHideFilters: true
+        autoHideFilters: true,
+        useSprite: false,
     });
 });

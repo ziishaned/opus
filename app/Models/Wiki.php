@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use Emojione;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -128,10 +129,11 @@ class Wiki extends Model
      */
     public function saveWiki($data)
     {
+        Emojione::$imagePathPNG = '/images/png/';
         $wiki = $this->create([
             'name'            =>  $data['wiki_name'],
-            'outline'         =>  $data['outline'],
-            'description'     =>  $data['wiki_description'],
+            'outline'         =>  Emojione::toImage($data['outline']),
+            'description'     =>  Emojione::toImage($data['wiki_description']),
             'user_id'         =>  Auth::user()->id,
             'visibilty'       =>  $data['wiki_visibility'],
             'organization_id' =>  ($data['wiki_path'] != 'user') ? $data['wiki_path'] : null,

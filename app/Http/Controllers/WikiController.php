@@ -89,7 +89,6 @@ class WikiController extends Controller
      */
     public function store()
     {
-
         $this->validate($this->request, Wiki::WIKI_RULES);
         
         $wiki = $this->wiki->saveWiki($this->request->all());

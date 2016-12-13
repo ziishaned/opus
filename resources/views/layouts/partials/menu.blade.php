@@ -11,7 +11,7 @@
                             </li>
                         </ul>
                     </li>
-                    @if(preg_match('/organizations/', ViewHelper::getCurrentRoute())) 
+                    @if(isset($organization))
                         <li>
                             <a href="#"><i class="fa fa-question fa-fw fa-lg"></i> {{ $organization->name }}</a>
                         </li>

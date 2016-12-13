@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b84f247fe1ad3d8ff91b3902d50f66ea",
-    "content-hash": "ca8bf553bc2d87a1970d063749804ac8",
+    "hash": "908cf3a44c6e25e3eb705e344326f4a0",
+    "content-hash": "df23290672161fecf71df0f07f965135",
     "packages": [
         {
             "name": "baum/baum",
@@ -330,6 +330,50 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "emojione/emojione",
+            "version": "v2.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ranks/emojione.git",
+                "reference": "0aad7f9f7969f0187e4f50d12fdc113541a34ac3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ranks/emojione/zipball/0aad7f9f7969f0187e4f50d12fdc113541a34ac3",
+                "reference": "0aad7f9f7969f0187e4f50d12fdc113541a34ac3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.6 || ~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Emojione\\": "lib/php/src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(CC-BY-4.0 and MIT)"
+            ],
+            "description": "Emoji One is a complete set of emojis designed for the web. It includes libraries to easily convert unicode characters to shortnames (:smile:) and shortnames to our custom emoji images. PNG and SVG formats provided for the emoji images.",
+            "homepage": "http://www.emojione.com",
+            "keywords": [
+                "Emoji One",
+                "emoji",
+                "emojione",
+                "emojis",
+                "emoticons",
+                "smileys",
+                "smilies",
+                "unicode"
+            ],
+            "time": "2016-12-03 01:19:25"
         },
         {
             "name": "guzzlehttp/psr7",

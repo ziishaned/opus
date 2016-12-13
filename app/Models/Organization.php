@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Emojione;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -126,10 +127,11 @@ class Organization extends Model
      */
     public function postOrganization($data)
     {
+        Emojione::$imagePathPNG = '/images/png/';
         $organization = $this->create([
             'name'          =>  $data['organization_name'],
             'user_id'       =>  Auth::user()->id,
-            'description'   =>  $data['description'],
+            'description'   =>  Emojione::toImage($data['description']),
         ]);
         DB::table('user_organization')->insert([
             'user_type'        => 'admin',

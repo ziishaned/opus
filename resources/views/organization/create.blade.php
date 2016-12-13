@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <div class="input-group flat-input-con">
                         <span class="input-group-addon input-label" style="vertical-align: top; padding-top: 5px; width: 142px;">Description</span>
-                        <textarea name="description" id="description" class="form-control input" rows="4" style="padding: 0;"></textarea>
+                        <textarea name="description" id="organization-description" class="form-control input" rows="4" style="padding: 0;"></textarea>
                     </div>
                 </div>
                 <input type="submit" class="btn btn-primary pull-right" id="create-organization-btn" value="Create Organization">

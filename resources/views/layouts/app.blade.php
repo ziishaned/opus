@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
     <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
-    <link rel="stylesheet" href="/plugins/emojionearea/emojione.sprites.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojionearea.min.css">
     <script>
