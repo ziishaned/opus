@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojionearea.min.css">
+    <link rel="stylesheet" href="/plugins/at-who/jquery.atwho.min.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
@@ -99,6 +100,8 @@
 <script src="/plugins/emojionearea/emojione.min.js"></script>
 <script src="/plugins/emojionearea/emojionearea.min.js"></script>
 <script src="/plugins/emojionearea/jquery.textcomplete.js"></script>
+<script src="/plugins/at-who/jquery.caret.min.js"></script>
+<script src="/plugins/at-who/jquery.atwho.min.js"></script>
 
 {{-- Syntax Highlighter --}}
 
