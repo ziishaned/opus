@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Redirect;
 use App\Models\User;
 use App\Models\ActivityLog;
@@ -45,7 +46,6 @@ class OrganizationController extends Controller
      */
     public function __construct(Request $request, Organization $organization, User $user, ActivityLog $activity)
     {
-        $this->middleware('auth');
         $this->request      = $request;
         $this->organization = $organization;
         $this->user         = $user;
@@ -100,10 +100,9 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create($step)
     {
-        $user  = $this->user->getUser(Auth::user()->id);
-        return view('organization.create', compact('user'));
+        return view('organization.create.'.$step, compact('step'));
     }
 
     /**
@@ -111,14 +110,105 @@ class OrganizationController extends Controller
      *
      * @return mixed
      */
-    public function store()
+    public function store($step)
     {
-        $this->validate($this->request, Organization::ORGANIZATION_RULES);
-        $organization = $this->organization->postOrganization($this->request->all());
-        return Redirect::route('organizations.show', $organization->slug)->with([
-            'alert' => 'Organization successfully created.',
-            'alert_type' => 'success'
-        ]);
+        switch ($step)
+        {
+            case 1:
+                $rules = ['email' => 'required|email'];
+                break;
+            case 2:
+                $rules = [
+                    'input_1' => 'required',
+                    'input_2' => 'required',
+                    'input_3' => 'required',
+                    'input_4' => 'required',
+                    'input_5' => 'required',
+                    'input_6' => 'required',
+                ];
+                break;
+            case 3:
+                $rules = [
+                    'first_name' => 'required|max:15',
+                    'last_name' => 'required|max:15',
+                    'password' => 'required|min:6|confirmed',
+                ];
+                break;
+            case 4:
+                $rules = [
+                    'organization_name' => 'required|unique:organization,name',
+                ];
+                break;
+            default:
+                abort(404);
+        }
+
+        $this->validate($this->request, $rules);
+
+        switch ($step)
+        {
+            case 1:
+                $validation_key = mt_rand(100000, 999999);
+                Session::put('email', $this->request->get('email'));
+                Session::put('validation_key', $validation_key);
+
+                // $title = "Validate your email";
+
+                // Mail::send('emails.email-validation', ['title' => $title, 'validation_code' => $validation_key], function ($message)
+                // {
+                //     $message->from('wiki@info.com', 'Wiki');
+
+                //     $message->to($this->request->get('email'));
+
+                // });
+                break;
+            case 2:
+                $validationKey = '';
+                foreach ($this->request->all() as $value) {
+                    $validationKey .= $value;
+                }
+
+                if($validationKey == Session::get('validation_key')) {
+                    break;
+                }
+                return redirect()->back()->with([
+                    'alert' => 'Validation key mismatch.',
+                    'alert_type' => 'danger'
+                ]);
+                break;
+            case 3:
+                Session::put('first_name', $this->request->get('first_name'));
+                Session::put('last_name', $this->request->get('last_name'));
+                Session::put('password', $this->request->get('password'));
+                break;
+            case 4:
+                $userInfo = [
+                    'first_name' => Session::get('first_name'),
+                    'last_name' => Session::get('last_name'),
+                    'password' => Session::get('password'),
+                    'email' => Session::get('email'),
+                ];
+                $user = (new \App\Models\User)->createUser($userInfo);
+                
+                $organization = [
+                    'organization_name' => $this->request->get('organization_name'),
+                    'description' => $this->request->get('description'),
+                    'user_id' => $user->id,
+                ];
+                (new \App\Models\Organization)->postOrganization($organization);
+                break;
+            default:
+                abort(404);
+        }
+
+        if ($step == 4) {
+            return redirect()->route('home')->with([
+                                            'alert'      => 'Organization created successfully. Now sign in to your organization!',
+                                            'alert_type' => 'success'
+                                        ]);
+        }
+
+        return redirect()->action('OrganizationController@create', ['step' => $step+1]);
     }
 
     /**

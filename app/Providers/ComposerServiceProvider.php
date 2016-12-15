@@ -15,10 +15,9 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer([
-            'home',
+            'dashboard',
             'help',
             'organization.invite',
-            'organization.create',
             'organization.organization',
             'organization.members',
             'organization.activity',

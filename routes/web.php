@@ -8,6 +8,7 @@
 
 Auth::routes();
 
+Route::get('/', 'HomeController@home')->name('home');
 Route::group(['prefix' => 'users'], function () {
     Route::get('organizations', 'UserController@getOrganizations');
     Route::get('activity', 'UserController@activity');
@@ -23,25 +24,29 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::group(['prefix' => '/'], function () {
-    Route::get('', 'HomeController@index')->name('dashboard');
-    Route::get('home', 'HomeController@index')->name('dashboard')->middleware('dashboard');
+    Route::get('dashboard', 'HomeController@dashboard')->name('dashboard')->middleware('dashboard');
     Route::get('help', 'HomeController@help')->name('help');
 });
 
 Route::group(['prefix' => 'organizations'], function () {
-    Route::get('wikis', 'OrganizationController@getWikis');
-    Route::get('create', 'OrganizationController@create')->name('organizations.create');
-    Route::get('invite', 'OrganizationController@getInvite')->name('organizations.invite.show');
-    Route::post('invite', 'OrganizationController@inviteUser')->name('organizations.invite.store');
-    Route::post('', 'OrganizationController@store')->name('organizations.store');
-    Route::delete('invite', 'OrganizationController@removeInvite')->name('organizations.invite.destroy');
-    Route::delete('{id}', 'OrganizationController@destroy')->name('organizations.destroy');
-    Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
+    Route::group(['middleware' => 'auth'], function() {
+        Route::get('wikis', 'OrganizationController@getWikis');
+        Route::get('invite', 'OrganizationController@getInvite')->name('organizations.invite.show');
+        Route::post('invite', 'OrganizationController@inviteUser')->name('organizations.invite.store');
+        Route::delete('invite', 'OrganizationController@removeInvite')->name('organizations.invite.destroy');
+        Route::delete('{id}', 'OrganizationController@destroy')->name('organizations.destroy');
+        Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
+        Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
+        Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');
+        Route::get('{organization_slug}/activity', 'OrganizationController@getActivity')->name('organizations.activity');
+        Route::get('search/{text}', 'OrganizationController@filterOrganizations');
+    });
+    Route::group(['middleware' => 'guest'], function() {
+        Route::post('signin/', 'OrganizationController@signin')->name('organizations.signin');
+        Route::get('create/{step}', 'OrganizationController@create')->name('organizations.create')->where(['step' => '[1-4]']);
+        Route::post('create/{step}', 'OrganizationController@store')->name('organizations.store')->where(['step' => '[1-4]']);
+    });
     Route::get('{organization_slug}', 'OrganizationController@show')->name('organizations.show');
-    Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
-    Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');
-    Route::get('{organization_slug}/activity', 'OrganizationController@getActivity')->name('organizations.activity');
-    Route::get('search/{text}', 'OrganizationController@filterOrganizations');
 });
 
 Route::group(['prefix' => 'wikis'], function () {

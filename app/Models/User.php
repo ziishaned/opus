@@ -31,7 +31,8 @@ class User extends Authenticatable
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => ['first_name', 'last_name'],
+                'separator' => '_'
             ]
         ];
     }
@@ -40,13 +41,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'full_name',
+        'first_name',
+        'last_name',
         'profile_image',
-        'name', 
-        'bio',
-        'url',
-        'company',
-        'location',
         'email', 
         'password'
     ];
@@ -252,6 +249,17 @@ class User extends Authenticatable
         ]);
 
         return true;
+    }
+
+    public function createUser($data) 
+    {
+        $user = $this->create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'password' => Hash::make($data['password']),
+            'email' => $data['email'],
+        ]);
+        return $user;
     }
 
     public function getActivity($userId)

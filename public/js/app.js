@@ -474,9 +474,42 @@ $(document).ready(function() {
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-            "save table contextmenu directionality template paste textcolor placeholder smileys",
-            "leaui_code_editor codemirror"
+            "save table contextmenu directionality template paste textcolor placeholder",
+            "leaui_code_editor codemirror mention jbimages"
         ],
+        mentions: {
+            delimiter: ':',
+            queryBy: 'name',
+            source: function (query, process, delimiter) {
+                if (delimiter === ':') {
+                    $.ajax({
+                        url: '/js/emoji.json',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            var ok = [];
+                            $(data).each(function(index, el) {
+                                if(el.name.indexOf( query ) > -1) {
+                                    ok.push(el);
+                                }
+                            });   
+                            process(ok);
+                        }, 
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            },
+            insert: function(item) {
+                return item.code;
+            },
+            render: function(item) {
+                return '<li>'+
+                            '<a><img alt="👍" class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
+                        '</li>';
+            }
+        },
 		paste_webkit_styles: "all",
 		paste_retain_style_properties: "all",
 
@@ -487,7 +520,7 @@ $(document).ready(function() {
         
         /* toolbar */
         toolbar: [
-        	"styleselect | bold italic underline forecolor backcolor | leaui_code_editor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | image media | link unlink table | smileys preview code | undo redo | localautosave",
+        	"styleselect | bold italic underline forecolor backcolor | leaui_code_editor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | jbimages media | link unlink table | preview code | undo redo | localautosave",
         ],
         codemirror: {
             indentOnInit: true,
@@ -543,7 +576,7 @@ $(document).ready(function() {
         plugins: [
             "advlist autolink link lists charmap hr anchor pagebreak mention",
             "searchreplace wordcount visualblocks visualchars code nonbreaking",
-            "save table contextmenu directionality smileys template paste textcolor placeholder",
+            "save table contextmenu directionality template paste textcolor placeholder",
             "leaui_code_editor"
         ],
         mentions: {
@@ -564,7 +597,7 @@ $(document).ready(function() {
         relative_urls: false,
 
         /* toolbar */
-        toolbar: "bold italic underline | bullist numlist | smileys link unlink | leaui_code_editor",
+        toolbar: "bold italic underline | bullist numlist | link unlink | leaui_code_editor",
     });
 });
 

@@ -37,7 +37,7 @@ class Organization extends Model
      * @const array
      */
     const ORGANIZATION_RULES = [
-        'organization_name' => 'required|max:55|unique:organization,name',
+        'organization_name' => 'required|unique:organization,name',
     ];
 
     /**
@@ -130,12 +130,12 @@ class Organization extends Model
         Emojione::$imagePathPNG = '/images/png/';
         $organization = $this->create([
             'name'          =>  $data['organization_name'],
-            'user_id'       =>  Auth::user()->id,
+            'user_id'       =>  $data['user_id'],
             'description'   =>  Emojione::toImage($data['description']),
         ]);
         DB::table('user_organization')->insert([
             'user_type'        => 'admin',
-            'user_id'          => Auth::user()->id,
+            'user_id'          => $data['user_id'],
             'organization_id'  => $organization->id,
             'created_at'       => Carbon::now(),
             'updated_at'       => Carbon::now(),

@@ -23,9 +23,9 @@
                                     <span class="loader">Loading</span>
                                 </li>
                                 <li class="divider"></li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('organizations.wikis.create', [$organization->name ]) }}">Create wiki</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
                         <li>
@@ -63,7 +63,7 @@
                         <a href="#" style="padding-left: 10px; padding-right: 10px;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('organizations.create') }}" title="Create organization">Create organization</a></li>
-                            <li><a href="{{ route('wikis.create') }}" title="Create wiki">Create wiki</a></li>
+                            {{-- <li><a href="{{ route('wikis.create') }}" title="Create wiki">Create wiki</a></li> --}}
                         </ul>
                     </li>
                     <li class="dropdown" title="{{ Auth::user()->full_name }}">
@@ -92,8 +92,11 @@
                         </ul>
                     </li>
                 @else
-                    <li @if(ViewHelper::getCurrentRoute() === 'login') class="active" @endif><a href="{{ url('login')  }}">Login</a></li>
-                    <li @if(ViewHelper::getCurrentRoute() === 'register') class="active" @endif><a href="{{ url('register')  }}">Register</a></li>
+                    <li>
+                        <a href="#">Pricing</a>
+                    </li>
+                    {{-- <li @if(ViewHelper::getCurrentRoute() === 'login') class="active" @endif><a href="{{ url('login')  }}">Login</a></li>
+                    <li @if(ViewHelper::getCurrentRoute() === 'register') class="active" @endif><a href="{{ url('register')  }}">Register</a></li> --}}
                 @endif
             </ul>
         </div>

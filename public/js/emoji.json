@@ -1,0 +1,97 @@
+[
+	{
+		"name": "grinning",
+		"unicode": "1f600",
+		"code": ":grinning:"
+	},
+	{
+		"name": "joy",
+		"unicode": "1f602",
+		"code": ":joy:"
+	},
+	{
+		"name": "persevere",
+		"unicode": "1f623",
+		"code": ":persevere:"
+	},
+	{
+		"name": "frowning",
+		"unicode": "2639",
+		"code": ":frowning:"
+	},
+	{
+		"name": "victory",
+		"unicode": "270c-1f3fb",
+		"code": ":v_tone1:"
+	},
+	{
+		"name": "relaxed",
+		"unicode": "263a",
+		"code": ":relaxed:"
+	},
+	{
+		"name": "horns",
+		"unicode": "1f918-1f3fb",
+		"code": ":metal_tone1:"
+	},
+	{
+		"name": "hugging",
+		"unicode": "1f917",
+		"code": ":hugging:"
+	},
+	{
+		"name": "head bandage",
+		"unicode": "1f915",
+		"code": ":head_bandage:"
+	},
+	{
+		"name": "thinking",
+		"unicode": "1f914",
+		"code": ":thinking:"
+	},
+	{
+		"name": "nerd",
+		"unicode": "1f913",
+		"code": ":nerd:"
+	},
+	{
+		"name": "thermometer face",
+		"unicode": "1f912",
+		"code": ":thermometer_face:"
+	},
+	{
+		"name": "money mouth",
+		"unicode": "1f911",
+		"code": ":money_mouth:"
+	},
+	{
+		"name": "zipper mouth",
+		"unicode": "1f910",
+		"code": ":zipper_mouth:"
+	},
+	{
+		"name": "hash",
+		"unicode": "0023-20e3",
+		"code": ":hash:"
+	},
+	{
+		"name": "zero",
+		"unicode": "0030-20e3",
+		"code": ":zero:"
+	},
+	{
+		"name": "one",
+		"unicode": "0031-20e3",
+		"code": ":one:"
+	},
+	{
+		"name": "two",
+		"unicode": "0032-20e3",
+		"code": ":two:"
+	},
+	{
+		"name": "three",
+		"unicode": "0033-20e3",
+		"code": ":three:"
+	}
+]

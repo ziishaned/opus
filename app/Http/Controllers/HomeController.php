@@ -26,7 +26,13 @@ class HomeController extends Controller
     public function __construct(Wiki $wiki)
     {
         $this->wiki = $wiki;
-        $this->middleware(['dashboard', 'auth']);
+        // $this->middleware(['dashboard', 'auth']);
+        $this->middleware(['dashboard']);
+    }
+
+    public function home() 
+    {
+        return view('home');
     }
 
     /**
@@ -34,12 +40,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function dashboard()
     {
         $wikis = $this->wiki->getWikis($limit = 5);
         $activities = (new \App\Models\ActivityLog)->getUserAllActivities(Auth::user()->id);
 
-        return view('home', compact('wikis', 'activities'));
+        return view('dashboard', compact('wikis', 'activities'));
     }
 
     public function help() {
