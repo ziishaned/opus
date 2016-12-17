@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/prism.css">
     <link rel="stylesheet" href="/css/tinymce-lightgray.css">
     <link rel="stylesheet" href="/css/editor.css">
     <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
@@ -22,7 +21,6 @@
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojionearea.min.css">
-    <link rel="stylesheet" href="/plugins/at-who/jquery.atwho.min.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
@@ -78,10 +76,6 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-{{-- <script src="/js/keymaster.js"></script>
-<script src="/js/keymaster.sequence.min.js"></script> --}}
-{{-- <script src="/js/app-shortcuts.js"></script> --}}
-<script src="/js/ajax-loading.js"></script>
 <script src="/js/tinymce.min.js"></script>
 <script src="/js/validator.min.js"></script>
 <script src="/js/list.js"></script>
@@ -92,20 +86,15 @@
 <script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
 <script src="/plugins/vakata-jstree/dist/jstree.js"></script>
 <script src="/plugins/select2/select2.full.min.js"></script>
-<script src="/js/prism.js"></script>
 <script src="/js/app.js"></script>
-<script src="/js/modules/view.js"></script>
-<script src="/js/js.cookie.js"></script>
 <script src="/plugins/jcrop/Jcrop.min.js"></script>
 <script src="/plugins/emojionearea/emojione.min.js"></script>
 <script src="/plugins/emojionearea/emojionearea.min.js"></script>
 <script src="/plugins/emojionearea/jquery.textcomplete.js"></script>
-<script src="/plugins/at-who/jquery.caret.min.js"></script>
-<script src="/plugins/at-who/jquery.atwho.min.js"></script>
 
 {{-- Syntax Highlighter --}}
 
-<link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
+{{-- <link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
 <script src="/plugins/sh/scripts/shCore.js"></script>
 <script src="/plugins/sh/scripts/shLegacy.js"></script>
 <script src="/plugins/sh/scripts/shAutoloader.js"></script>
@@ -133,14 +122,14 @@
 <script src="/plugins/sh/scripts/shBrushScala.js"></script>
 <script src="/plugins/sh/scripts/shBrushSql.js"></script>
 <script src="/plugins/sh/scripts/shBrushVb.js"></script>
-<script src="/plugins/sh/scripts/shBrushXml.js"></script>
+<script src="/plugins/sh/scripts/shBrushXml.js"></script> --}}
 
 {{-- ./Syntax Highlighter --}}
 
 <script>
     new timeago().render(document.querySelectorAll('time.timeago'));
-    SyntaxHighlighter.defaults.toolbar = false;
-    SyntaxHighlighter.all();
+    // SyntaxHighlighter.defaults.toolbar = false;
+    // SyntaxHighlighter.all();
 </script>
 </body>
 </html>

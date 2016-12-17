@@ -1,4 +1,4 @@
-@if($activities->count() > 0)
+@if(count($activities) > 0)
     <div class="activity-list">
         @foreach($activities as $activity)
             <div class="activity">
@@ -30,7 +30,7 @@
                         </a>
                     </div>    
                         <div class="activity-content" style="margin-left: 10px;">
-                            <a href="{{ route('users.show', [$activity->user_slug, ]) }}" title="{{ $activity->full_name }}">{{ $activity->full_name }}</a> 
+                            <a href="{{ route('users.show', [$activity->user_slug, ]) }}" title="{{ $activity->first_name . " " . $activity->last_name }}">{{ $activity->first_name .' '. $activity->last_name }}</a> 
                             @if($activity->log_type == 'create') 
                                 created
                             @elseif($activity->log_type == 'update') 
@@ -78,7 +78,7 @@
 @else
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h3 style="color: #777777; text-align: center; padding: 15px 0px 15px 0px; margin: 0;">Nothing found...</h3>
+            <h3 class="nothing-found">Nothing found...</h3>
         </div>
     </div>
 @endif

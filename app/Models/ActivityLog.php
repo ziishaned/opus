@@ -18,6 +18,7 @@ class ActivityLog extends Model
      */
     protected $fillable = [
         'user_id',
+        'orgainzation_id',
         'log_type',
         'log_params',
         'created_at',
@@ -60,7 +61,7 @@ class ActivityLog extends Model
                     ->where('activity_log.user_id', '=', $userId)
                     ->join('users', 'activity_log.user_id', '=', 'users.id')
                     ->latest('activity_log.created_at')
-                    ->select('activity_log.*', 'users.name as username', 'users.full_name as full_name', 'users.slug as user_slug')
+                    ->select('activity_log.*', 'users.first_name', 'users.last_name', 'users.slug as user_slug')
                     ->paginate(10);
     }
 
@@ -75,13 +76,18 @@ class ActivityLog extends Model
         return $this
                 ->join('users', 'activity_log.user_id', '=', 'users.id')
                 ->where('activity_log.user_id', '=', $userId)
-                ->select('activity_log.*', 'users.name as username', 'users.full_name as full_name', 'users.slug as user_slug')
+                ->select('activity_log.*', 'users.first_name', 'users.last_name', 'users.slug as user_slug')
                 ->latest('activity_log.created_at')
                 ->paginate(10);
     }
 
-    public function getOrganizationActivity($organizationId) 
+    public function getOrganizationActivity($id) 
     {
-        dd($organizationId);
+        return $this
+                ->join('users', 'activity_log.user_id', '=', 'users.id')
+                ->where('activity_log.organization_id', '=', $id)
+                ->select('activity_log.*', 'users.first_name', 'users.last_name', 'users.slug as user_slug')
+                ->latest('activity_log.created_at')
+                ->paginate(10);   
     }
 }

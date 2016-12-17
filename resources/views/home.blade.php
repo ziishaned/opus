@@ -15,7 +15,7 @@
 							<a href="{{ route('organizations.create', [1]) }}" class="btn btn-default" style="padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px; font-size: 16px;">Create a organization</a>
 						</li>
 					</div>
-					<p style="margin-top: 5px; font-size: 16px;">Already joined a organization? <a href="{{ route('organizations.signin') }}">sign in</a></p>
+					<p style="margin-top: 5px; font-size: 16px;">Already joined a organization? <a href="{{ route('organizations.signin', [1]) }}">sign in</a></p>
 				</div>
 			</div>		
 		</div>

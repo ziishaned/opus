@@ -194,10 +194,6 @@ var App = {
         $(document).on('click', 'button', function() {
             $(this).find('.loader').show();
         });
-        $(document).on('click', '#logout', function(event) {
-            event.preventDefault();
-            Cookies.set('pin_sidebar', 'true');
-        });
         $(document).on('click', '#edit-comment', function (e) {
             e.preventDefault();
             var curComment = this;
@@ -314,11 +310,6 @@ var App = {
             event.preventDefault();
             var commentId = $(this).attr('data-commentid');
             that.starComment(commentId);
-        });
-
-        $(document).on('click', '#pin-sidebar', function(event) {
-            event.preventDefault();
-            that.pinSideBar();            
         });
     },
     starComment: function(id) {
@@ -661,7 +652,9 @@ $(function() {
 
 // Select2
 $(function() {
-    $('#wiki-path, #timezone').select2();
+    $('#timezone, #wiki_visibility').select2({
+        minimumResultsForSearch: 5
+    });
     
     $("#outline, #organization-description").emojioneArea({
         pickerPosition: "bottom",

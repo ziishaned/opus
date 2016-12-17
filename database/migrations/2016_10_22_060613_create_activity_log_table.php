@@ -13,6 +13,7 @@ class CreateActivityLogTable extends Migration
         Schema::create('activity_log', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('organization_id')->unsigned();
             $table->enum('log_type', [
                 'create',
                 'update',

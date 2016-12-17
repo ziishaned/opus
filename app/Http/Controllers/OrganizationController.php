@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Mail;
 use Redirect;
 use App\Models\User;
@@ -60,25 +61,6 @@ class OrganizationController extends Controller
     public function index()
     {
         return $this->organization->getOrganizations();
-    }
-
-    /**
-     * Get a specific organization.
-     *
-     * @param  string $organizationSlug
-     * @return mixed
-     */
-    public function show($organizationSlug)
-    {
-        $organization  = $this->organization->getOrganization($organizationSlug);
-        $wikis         = $this->organization->getWikis($organization);
-        // $activities    = $this->activity->getOrganizationActivity($organization->id);   
-        
-        if($organization) {
-            return view('organization.organization', compact('organization', 'wikis'));
-        }
-
-        return abort(404);
     }
 
     /**
@@ -211,63 +193,6 @@ class OrganizationController extends Controller
         return redirect()->action('OrganizationController@create', ['step' => $step+1]);
     }
 
-    /**
-     * Get the invite user to organization view.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function getInvite() {
-        if(!Session::get('organization_id')) {
-            return redirect()->route('dashboard');
-        }
-
-        $organizationId = Session::get('organization_id');
-        $user  = $this->user->getUser(Auth::user()->id);
-        return view('organization.invite', compact('user', 'organizationId'));
-    }
-
-    /**
-     * Invite user to organization.
-     *
-     * @return mixed
-     */
-    public function inviteUser() {
-        $this->organization->inviteUser($this->request->all());
-        return response()->json([
-            'message' => 'User successfully Invited to organization.'
-        ], Response::HTTP_CREATED);
-    }
-
-    /**
-     * Remove a user from organization.
-     *
-     * @return mixed
-     */
-    public function removeInvite() {
-        $this->organization->removeInvite($this->request->all());
-        return response()->json([
-            'message' => 'User removed from organization invitation.'
-        ], Response::HTTP_CREATED);
-    }
-
-    public function getActivity($organizationSlug) 
-    {
-        $organization = $this->organization->getOrganization($organizationSlug);
-        return view('organization.activity', compact('organization'));
-    }
-
-    /**
-     * Return view with all the wikis of an organization.
-     *
-     * @param $organizationSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getWikisView($organizationSlug)
-    {
-        $organization = $this->organization->getWikis($organizationSlug);
-        return view('organization.wikis', compact('organization'));
-    }
-
     public function getWikis() 
     {
         $organization = $this->organization->where('id', '=', $this->request->get('organization_id'))->with(['wikis'])->first();
@@ -338,14 +263,72 @@ class OrganizationController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * Filter the organization.
-     *
-     * @param mixed $text
-     * @return \App\Models\Organization
-     */
-    public function filterOrganizations($text)
+    public function signin($step) 
     {
-        return $this->organization->filterOrganizations($text);
+        return view('organization.signin.'.$step, compact('step'));
+    }
+
+    /**
+     * Creates a new organization.
+     *
+     * @return mixed
+     */
+    public function postSignin($step)
+    {
+        $validationMessage = [];
+        switch ($step)
+        {
+            case 1:
+                $rules = [
+                    'organization_name' => 'required|exists:organization,name',
+                ];
+                $validationMessage = [
+                    'exists' => 'Specified organization does\'t exists.'
+                ];
+                break;
+            case 2:
+                $rules = [
+                    'email' => 'required|email',
+                    'password' => 'required',
+                ];
+                break;
+            default:
+                abort(404);
+        }
+
+        $this->validate($this->request, $rules, $validationMessage);
+
+        switch ($step)
+        {
+            case 1:
+                Session::put('organization_name', $this->request->get('organization_name'));
+                break;
+            case 2:
+                break;
+            default:
+                abort(404);
+        }
+
+        if ($step == 2) {
+            $userInfo = [
+                'email' => $this->request->get('email'),
+                'password' => $this->request->get('password'),
+                'organization' => Session::get('organization_name'),
+            ];
+            
+            $user = (new \App\Models\User)->validate($userInfo);
+            if($user) {
+                Auth::login($user, $this->request->get('remember'));
+                return redirect()->route('dashboard', [Session::get('organization_name'), ]);
+            }
+
+
+            return redirect()->back()->with([
+                                        'alert'      => 'Email or password is not valid.',
+                                        'alert_type' => 'danger'
+                                    ]);
+        }
+
+        return redirect()->action('OrganizationController@signin', ['step' => $step+1]);
     }
 }

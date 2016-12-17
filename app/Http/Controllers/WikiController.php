@@ -76,10 +76,10 @@ class WikiController extends Controller
      * @param null|string $organizationSlug
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($organizationSlug)
     {  
-        $organizations = $this->organization->getUserOrganizations(Auth::user()->id);
-        return view('wiki.create', compact('organizations'));
+        $organization = $this->organization->getOrganization($organizationSlug);
+        return view('wiki.create', compact('organization'));
     }
 
     /**

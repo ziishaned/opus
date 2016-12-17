@@ -4,42 +4,34 @@
             @if(Auth::user())
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#" class="dropdown-toggle" data-appended="false" data-toggle="dropdown" id="get-organizations"><i class="fa fa-bars"></i></a>
-                        <ul class="dropdown-menu" id="organizations-list" style="margin-left: -15px;">
+                        <a href="#" class="dropdown-toggle" data-organizationId="{{ $organization->id }}" data-appended="false" data-toggle="dropdown" id="get-wikis"><i class="fa fa-bars"></i></a>
+                        <ul class="dropdown-menu" id="wikis-list" style="padding: 10px;">
+                            <li>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div style="width: 270px;">
+                                            <input class="form-control input-sm fuzzy-search" id="searchinput" type="search" placeholder="Find a wiki...">
+                                            <span class="fa fa-search" style="position: absolute; top: 7px; right: 23px; color: #e7e9ed;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header" style="padding: 0px;"><i class="fa fa-clock-o fa-fw"></i> Recent Wikis</li>
                             <li class="li-loader">
                                 <span class="loader"></span> Loading
                             </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{{ route('organizations.wikis.create', [$organization->slug]) }}" class="btn btn-default btn-block" style="padding-top: 5px; padding-bottom: 5px;">Create new wiki</a>
+                            </li>
                         </ul>
                     </li>
-                    @if(isset($organization))
-                        <li>
-                            <a href="#"><i class="fa fa-question fa-fw fa-lg"></i> {{ $organization->name }}</a>
-                        </li>
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-organizationId="{{ $organization->id }}" data-appended="false" data-toggle="dropdown" id="get-wikis">Wikis <i class="fa fa-caret-down fa-fw"></i></a>
-                            <ul class="dropdown-menu" id="wikis-list">
-                                <li class="dropdown-header" style="font-size: 15px;">Recent Wikis</li>
-                                <li class="li-loader">
-                                    <span class="loader">Loading</span>
-                                </li>
-                                <li class="divider"></li>
-                                {{-- <li>
-                                    <a href="{{ route('organizations.wikis.create', [$organization->name ]) }}">Create wiki</a>
-                                </li> --}}
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Members</a> 
-                        </li>
-                        <li>
-                            <a href="{{ route('organizations.wikis.create', [$organization->name ]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px; margin-top: 8.5px; margin-left: 5px;">Create</a>
-                        </li>
-                    @endif
+                    <li>
+                        <a href="#">Members</a> 
+                    </li>
                 </ul>
             @endif
-            <div class="spinner">
-                <img src="/images/ajax-loader.gif" class="img-responsive" alt="Image">
-            </div>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::user())    
                     <li>
@@ -62,7 +54,7 @@
                     <li class="dropdown">
                         <a href="#" style="padding-left: 10px; padding-right: 10px;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('organizations.create') }}" title="Create organization">Create organization</a></li>
+                            {{-- <li><a href="{{ route('organizations.create') }}" title="Create organization">Create organization</a></li> --}}
                             {{-- <li><a href="{{ route('wikis.create') }}" title="Create wiki">Create wiki</a></li> --}}
                         </ul>
                     </li>
@@ -95,8 +87,6 @@
                     <li>
                         <a href="#">Pricing</a>
                     </li>
-                    {{-- <li @if(ViewHelper::getCurrentRoute() === 'login') class="active" @endif><a href="{{ url('login')  }}">Login</a></li>
-                    <li @if(ViewHelper::getCurrentRoute() === 'register') class="active" @endif><a href="{{ url('register')  }}">Register</a></li> --}}
                 @endif
             </ul>
         </div>

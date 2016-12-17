@@ -98,12 +98,13 @@ class Wiki extends Model
      * @param null $limit
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getWikis($limit = null)
+    public function getOrganizationWikis($id)
     {
-        if(!is_null($limit)) {
-            return $this->where('user_id', '=', Auth::user()->id)->with(['organization', 'pages', 'user'])->latest()->limit(5)->get();
-        }
-        return $this->where('user_id', '=', Auth::user()->id)->with(['organization', 'pages', 'user'])->get();
+        return $this
+                    ->where('user_id', '=', Auth::user()->id)
+                    ->where('organization_id', '=', $id)
+                    ->latest()
+                    ->get();
     }
 
     /**

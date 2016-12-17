@@ -22,10 +22,12 @@ class MenuComposer {
     }
 
     public function compose(View $view) {
-        $user  = $this->user->getUser(Auth::user()->slug);
-        
-        $view->with([
-            'loggedInUser' => $user,
-        ]);
+        if(\Auth::user()) {
+            $user  = $this->user->getUser(Auth::user()->slug);
+            
+            $view->with([
+                'loggedInUser' => $user,
+            ]);
+        }
     }
 }

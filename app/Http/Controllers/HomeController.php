@@ -40,15 +40,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function dashboard()
+    public function dashboard($organizationSlug)
     {
-        $wikis = $this->wiki->getWikis($limit = 5);
-        $activities = (new \App\Models\ActivityLog)->getUserAllActivities(Auth::user()->id);
-
-        return view('dashboard', compact('wikis', 'activities'));
-    }
-
-    public function help() {
-        return view('help');
+        $organization  = (new \App\Models\Organization)->getOrganization($organizationSlug);
+        $wikis         = (new \App\Models\Organization)->getWikis($organization);
+        $activities    = (new \App\Models\ActivityLog)->getOrganizationActivity($organization->id);   
+        return view('dashboard', compact('wikis', 'activities', 'organization'));
     }
 }

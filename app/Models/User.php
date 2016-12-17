@@ -276,4 +276,21 @@ class User extends Authenticatable
 
         return $activities; 
     }
+
+    public function validate($data) 
+    {
+        $user = $this
+                    ->join('organization', 'organization.user_id', '=', 'users.id')
+                    ->join('user_organization', 'user_organization.user_id', '=', 'users.id')
+                    ->where('organization.name', '=', $data['organization'])
+                    ->where('users.email', '=', $data['email'])
+                    // ->where('users.password', '=', \Hash::make($this->request->get('password')))
+                    ->select('users.*')
+                    ->first();
+                    
+        if($user && \Hash::check($data['password'], $user->password)) {
+            return $user;
+        }
+        return false;
+    }
 }

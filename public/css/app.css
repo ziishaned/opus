@@ -9,10 +9,6 @@ html, body {
     -webkit-text-stroke: 0.10px;
 }
 
-/*.header-menu ul li a {
-    color: #222222 !important;
-}*/
-
 .header-menu .navbar-nav>li>a {
     padding-left: 12px;
     padding-right: 12px;
@@ -293,15 +289,6 @@ label {
     display: none;
 }
 
-.spinner {
-    position: absolute;
-    left: 50%;
-    margin-left: -50px !important;
-    align-items: center;
-    display: none;
-    margin-top: 9px;
-}
-
 #organization-nav, #help-tabs {
     border-bottom: 1px solid #e5e5e5;
 }
@@ -363,6 +350,10 @@ a:hover {
 
 .select2-results__option {
     padding-left: 18px !important;
+}
+
+.select2-container--open .select2-selection {
+    border-bottom: 0px !important;
 }
 
 .comments-container h1 {
@@ -710,7 +701,7 @@ ul.activity-list li:hover {
 }
 
 .activity-list .activity {
-    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
     padding-left: 0px;
 }
 
@@ -824,9 +815,6 @@ ul.activity-list li:hover {
     display: flex !important;
     height: 45px !important;
     align-items: center !important;
-    border-left: 0px !important;
-    border-top-left-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
     border-color: #dedede !important;
     outline: none !important;
 }
@@ -834,7 +822,6 @@ ul.activity-list li:hover {
 .select2-selection__rendered {
     color: #222222 !important;
     padding-left: 15px !important;
-    font-size: 16px !important;
 }
 
 .select2-selection__arrow {
@@ -844,7 +831,6 @@ ul.activity-list li:hover {
 .select2-search__field {
     color: #222222 !important;
     border: 1px solid rgba(34,36,38,.15) !important;
-    font-size: 14px !important;
     box-shadow: none !important;
     border-radius: 3px !important;
     outline: none !important;
@@ -864,24 +850,14 @@ ul.activity-list li:hover {
     padding-bottom: 10px !important;
 }
 
-.select2-results__option {
-    font-size: 14px !important;
-}
-
 .select2-dropdown.select2-dropdown--above {
-    position: relative !important;
-    bottom: 6px !important;
-    box-shadow: rgba(76,86,103,0.247059) 0 0 1px 0, rgba(31,37,50,0.317647) 0 2px 18px 0 !important;
-    border-radius: 4px !important;
-    border: 1px solid #aaa !important;
+    border: 1px solid #dedede !important;
+    border-bottom: 0px !important;
 }
 
 .select2-dropdown.select2-dropdown--below {
-    position: relative !important;
-    top: 6px !important;
-    box-shadow: rgba(76,86,103,0.247059) 0 0 1px 0, rgba(31,37,50,0.317647) 0 2px 18px 0 !important;
-    border-radius: 4px !important;
-    border: 1px solid #aaa !important;     
+    border: 1px solid #dedede !important;
+    border-top: 0px !important;
 }
 
 .header-menu {
