@@ -8,7 +8,7 @@
             <p style="margin-bottom: 7px;">Once you successfully change your password you will be logout and after that you can login to your account with your new password.</p>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <form action="{{ route('users.password.update', Auth::user()->slug) }}" method="POST" role="form">
+                    <form action="{{ route('users.password.update', [$organization->slug, Auth::user()->slug]) }}" method="POST" role="form">
                         {!! method_field('patch') !!}
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">  
                             <label for="password">Old password</label>
@@ -48,7 +48,7 @@
                 <h2>Delete account</h2>
                 <p style="margin-bottom: 7px;">Once you delete your account, there is no going back. Please be certain.</p>
                 <a href="#" class="btn btn-default" onclick="if(confirm('Are you sure you want to delete your account?')) {event.preventDefault(); document.getElementById('delete-user-account').submit();}" id="delete-account"><i class="fa fa-trash-o"></i> Delete your account</a>
-                <form id="delete-user-account" action="{{ route('users.destroy', Auth::user()->slug) }}" method="POST" style="display: none;">
+                <form id="delete-user-account" action="{{ route('users.destroy', [$organization->slug, Auth::user()->slug]) }}" method="POST" style="display: none;">
                     {!! method_field('delete') !!}
                     {!! csrf_field() !!}
                 </form>

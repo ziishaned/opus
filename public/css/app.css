@@ -119,21 +119,6 @@ a, a:link, a:visited {
     color: #7d7d7d;
 }
 
-.path-list li {
-    padding: 0;
-}
-
-.path-list li:after {
-    content: '/';
-    content: '/';
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.path-list li:last-child:after {
-    content: '';
-}
-
 .button-primary {
     background-color: #24CC82;
     color: #fff;
@@ -842,6 +827,10 @@ ul.activity-list li:hover {
     padding-left: 15px !important;
     padding-right: 15px !important;
 
+}
+
+.page-path li.active {
+    border-bottom: none !important;
 }
 
 #select2-wiki-path-results {

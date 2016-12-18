@@ -79,7 +79,7 @@ class CommentController extends Controller
      * @param string $pageSlug
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($wikiSlug, $pageSlug)
+    public function store($organizationSlug, $wikiSlug, $pageSlug)
     {
         $this->validate($this->request, Comment::COMMENT_RULES);
         $this->comment->storeComment($pageSlug, $this->request->all());
@@ -87,7 +87,7 @@ class CommentController extends Controller
         $page = $this->wikiPage->where('slug', '=', $pageSlug)->first();
         $this->activityLog->createActivity('page', 'commented', $page);
         
-        return redirect()->route('wikis.pages.show', [$wikiSlug, $pageSlug])->with([
+        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
             'alert'      => 'Comment successfully posted.',
             'alert_type' => 'success'
         ]);

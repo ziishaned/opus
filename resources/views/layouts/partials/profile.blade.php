@@ -18,7 +18,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <h3>Company</h3>
+        <h3>Organization</h3>
         <ul class="list-unstyled">
             <li>
                 <tt>Position:</tt>

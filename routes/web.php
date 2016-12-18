@@ -13,7 +13,6 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::group(['prefix' => 'organizations'], function () {
-    
     Route::group(['middleware' => 'auth'], function() {
         Route::group(['prefix' => '{organization_slug}/users'], function () {
             Route::get('activity', 'UserController@activity');
@@ -42,13 +41,13 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');
         Route::get('{organization_slug}/activity', 'OrganizationController@getActivity')->name('organizations.activity');
         Route::get('search/{text}', 'OrganizationController@filterOrganizations');
-        
+
         Route::post('{organization_slug}/wikis', 'WikiController@store')->name('wikis.store');
         Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
         Route::get('{organization_slug}/wikis/{wiki_slug}', 'WikiController@show')->name('wikis.show');
         Route::get('{organization_slug}/wikis/{wiki_slug}/pages/reorder', 'WikiController@pagesReorder')->name('wikis.pages.reorder');
         Route::delete('{organization_slug}/wikis/{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
-    
+
         Route::delete('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'WikiController@destroyPage')->name('pages.destroy');
         Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/edit', 'WikiController@editPage')->name('pages.edit');
         Route::post('{organization_slug}/wikis/{wiki_slug}/pages', 'WikiController@storePage')->name('wikis.pages.store');
@@ -57,17 +56,21 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::delete('{organization_slug}/wikis/{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
         Route::get('{organization_id}/wikis/{wiki_id}/pages/{pageId?}', 'WikiController@getWikiPages');
         Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'WikiController@showPage')->name('wikis.pages.show');
-    
+
         Route::post('{organization_id}/wikis/{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('wikis.pages.comments.store');
     });
-    
+
     Route::group(['middleware' => 'guest'], function() {
         Route::get('signin/{step}', 'OrganizationController@signin')->name('organizations.signin')->where(['step' => '[1-2]']);
         Route::post('signin/{step}', 'OrganizationController@postSignin')->name('organizations.postsignin')->where(['step' => '[1-2]']);
         Route::get('create/{step}', 'OrganizationController@create')->name('organizations.create')->where(['step' => '[1-4]']);
         Route::post('create/{step}', 'OrganizationController@store')->name('organizations.store')->where(['step' => '[1-4]']);
     });
-    
+
+    Route::post('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('wikis.pages.comments.store');
+    Route::post('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{id}/star', 'CommentController@starComment')->name('comments.star');
+    Route::delete('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{comment_id}', 'CommentController@destroy')->name('comments.delete');
+    Route::patch('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{comment_id}', 'CommentController@update')->name('comments.delete');
 });
 
 // Route::group(['prefix' => '/', 'domain' => '{organization}.wiki.dev'], function () {
