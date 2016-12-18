@@ -5,6 +5,7 @@
         <title>Wiki</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/app.css">
         <style>
             .error-template {
                 padding: 40px 15px;

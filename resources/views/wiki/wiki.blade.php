@@ -7,7 +7,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<h3 style="margin-bottom: 0;"><a href="{{ route('wikis.show', [$wiki->slug, ]) }}">{{ $wiki->name }}</a> 
+							<h3 style="margin-bottom: 0;"><a href="{{ route('wikis.show', [$organization->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a> 
 								<div class="dropdown pull-right">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 10px; color: #555;"><i class="fa fa-gear"></i></a>
 			                        <ul class="dropdown-menu">
@@ -15,11 +15,11 @@
 						                	<a href="#"><i class="fa fa-lock"></i> Permissions</a>
 						                </li>
 			                            <li>
-						                	<a href="{{ route('wikis.pages.reorder', $wiki->slug) }}"><i class="fa fa-align-left"></i> Reorder Pages</a>
+						                	<a href="{{ route('wikis.pages.reorder', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-align-left"></i> Reorder Pages</a>
 						                </li>
 			                            <li>
 					                    	<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}">Delete</a>
-											<form id="delete-wiki" action="{{ route('wikis.destroy', $wiki->slug) }}" method="POST" style="display: none;">
+											<form id="delete-wiki" action="{{ route('wikis.destroy', [$organization->slug, $wiki->slug]) }}" method="POST" style="display: none;">
 				                                {!! method_field('delete') !!}
 				                                {!! csrf_field() !!}
 				                            </form>
@@ -28,7 +28,7 @@
 								</div>
 								<div class="clearfix"></div>
 							</h3>
-							<p style="margin-bottom: 0px;" class="text-muted">Created by {{ ViewHelper::getUsername($wiki->user_id) }} on {{ $wiki->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $wiki->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }}</p>
+							<p style="margin-bottom: 0px;" class="text-muted">Created by {{ $wiki->user->first_name . ' ' . $wiki->user->last_name }} on {{ $wiki->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $wiki->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }}</p>
 						</div>
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 			                        <h3 class="panel-title" style="margin-bottom: 10px;">Page Tree</h3>    
 			                    </div>
 			                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-						        	<a href="{{ route('wikis.pages.create', $wiki->slug) }}" style="font-size: 14px; position: relative; top: -4px;"><i class="fa fa-file-text-o"></i> Create</a>
+						        	<a href="{{ route('wikis.pages.create', [$organization->slug, $wiki->slug]) }}" style="font-size: 14px; position: relative; top: -4px;"><i class="fa fa-file-text-o"></i> Create</a>
 			                    </div>
 			                </div>
 			                <div class="row">
@@ -55,7 +55,7 @@
 			                </div>
 			            </div>
 			        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px; padding-right: 0px;">
-							<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}"></div>
+							<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}" data-organization-id="{{ $organization->id }}"></div>
 			        	</div>
 			        </div>
 				</div>
@@ -68,22 +68,7 @@
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						    <ul class="nav nav-pills center-block" id="organization-nav" style="border: none;">
 						        <ul class="nav nav-pills pull-right" id="organization-nav" style="border-bottom: 0px !important;">
-						            <!-- @if($wiki->wiki_watching) 
-										<li>
-											<button data-wiki-id="{{ $wiki->id }}" id="watch-wiki-btn" class="btn btn-link" style="margin-top: 2px; color: #555;">
-										        Unwatch
-										    </button>
-											<div class="clearfix"></div>
-										</li>
-									@else
-										<li>
-											<button data-wiki-id="{{ $wiki->id }}" id="watch-wiki-btn" class="btn btn-link" style="margin-top: 2px; color: #555;">
-										        Watch
-										    </button>
-											<div class="clearfix"></div>
-										</li>
-									@endif -->
-						            <li><a href="{{ route('wikis.edit', [$wiki->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+						            <li><a href="{{ route('wikis.edit', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
 						            <li class="dropdown">
 						                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download fa-lg"></i> <i class="fa fa-caret-down"></i></a>
 						                <ul class="dropdown-menu" style="left: -115px; top: 35px;">
@@ -96,7 +81,7 @@
 						                <ul class="dropdown-menu" style="left: -110px; top: 35px;">
 						                    <li>
 						                    	<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}">Delete</a>
-												<form id="delete-wiki" action="{{ route('wikis.destroy', $wiki->slug) }}" method="POST" style="display: none;">
+												<form id="delete-wiki" action="{{ route('wikis.destroy', [$organization->slug, $wiki->slug]) }}" method="POST" style="display: none;">
 					                                {!! method_field('delete') !!}
 					                                {!! csrf_field() !!}
 					                            </form>

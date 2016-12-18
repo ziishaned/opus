@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
 use Hash;
 use Image;
 use Session;
@@ -61,11 +62,14 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string  $userSlug
+     * @param         $organizationSlug
+     * @param  string $userSlug
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($userSlug)
+    public function show($organizationSlug, $userSlug)
     {
+        $organization = (new Organization)->getOrganization($organizationSlug);
         $user = $this->user->getUser($userSlug);
 
         if(!$user) {
@@ -73,7 +77,7 @@ class UserController extends Controller
         }
         
         $activities = $this->activityLog->getUserActivities($user->id);
-        return view('user.user', compact('user', 'activities'));
+        return view('user.user', compact('user', 'activities', 'organization'));
     }
 
     /**
@@ -158,24 +162,28 @@ class UserController extends Controller
         return view('user.wikis', compact('user', 'userWikis'));
     }
 
-    public function profileSettings()
+    public function profileSettings($organizationSlug)
     {
-        return view('user.setting.profile');
+        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
+        return view('user.setting.profile', compact('organization'));
     }
 
-    public function accountSettings()
+    public function accountSettings($organizationSlug)
     {
-        return view('user.setting.account');
+        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
+        return view('user.setting.account', compact('organization'));
     }
 
-    public function emailsSettings()
+    public function emailsSettings($organizationSlug)
     {
-        return view('user.setting.emails');
+        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
+        return view('user.setting.emails', compact('organization'));
     }
 
-    public function notificationsSettings()
+    public function notificationsSettings($organizationSlug)
     {
-        return view('user.setting.notifications');
+        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
+        return view('user.setting.notifications', compact('organization'));
     }
 
     public function update($slug)

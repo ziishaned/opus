@@ -87,14 +87,16 @@ class WikiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store($organizationSlug)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
-        
-        $wiki = $this->wiki->saveWiki($this->request->all());
+     
+        $organization = $this->organization->getOrganization($organizationSlug);
+
+        $wiki = $this->wiki->saveWiki($this->request->all(), $organization->id);
         $this->activityLog->createActivity('wiki', 'create', $wiki);
 
-        return redirect()->route('wikis.show', $wiki->slug)->with([
+        return redirect()->route('wikis.show', [$organization->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully created.',
             'alert_type' => 'success'
         ]);
@@ -106,41 +108,43 @@ class WikiController extends Controller
      * @param  string  $nameSlug
      * @return \Illuminate\Http\Response
      */
-    public function show($nameSlug)
+    public function show($organizationSlug, $nameSlug)
     {
-        $wiki = $this->wiki->getWiki($nameSlug);
+        $organization = $this->organization->getOrganization($organizationSlug);
+        $wiki = $this->wiki->getWiki($nameSlug, $organization->id);
         if(!$wiki) {
             abort('404');
         }
-    
-        array_add($wiki, 'wiki_watching', $this->isWikiWatching($wiki->id));
 
         $wikiPages = $this->wikiPage->getPages($wiki->id);
-        return view('wiki.wiki', compact('wikiPages', 'wiki'));
+        return view('wiki.wiki', compact('wikiPages', 'wiki', 'organization'));
     }
 
-    public function getWikiPages($id, $page_id = null)
+    // Todo: compare also organizationId
+    public function getWikiPages($organizationId, $id, $page_id = null)
     {
+        $organization = \App\Models\Organization::find($organizationId)->first();
+
         $wiki = $this->wiki->find($id);
 
         if(!$this->request->get('opened_node')) {
-            $wikiPages = $this->wikiPage->getWikiPages($id, $page_id);
-            return $this->makePageHtml($wikiPages);
+            $wikiPages = $this->wikiPage->getWikiPages($organization, $id, $page_id);
+            return $this->makePageHtml($wikiPages, $organization);
         } 
 
-        $wikiPages = $this->wikiPage->getWikiPages($id, $page_id, $this->request->get('opened_node'));
+        $wikiPages = $this->wikiPage->getWikiPages($organization, $id, $page_id, $this->request->get('opened_node'));
 
         $html = '';
-        $this->makePageTree($wikiPages, $this->request->get('opened_node'), $html);
+        $this->makePageTree($organization, $wikiPages, $this->request->get('opened_node'), $html);
     
         return $html;
     }
 
-    public function makePageHtml($pages) {
+    public function makePageHtml($pages, $organization) {
         $html = '';
         if($pages) {
             foreach ($pages as $key => $value) {
-                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$this->wiki->find($value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
+                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$organization->slug, $this->wiki->find($value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
             }
         }
         return $html;
@@ -154,49 +158,22 @@ class WikiController extends Controller
      * @param  [type] &$html         [description]
      * @return [type]                [description]
      */
-    public static function makePageTree($wikiPages, $currentPageId, &$html)
+    public static function makePageTree($organization, $wikiPages, $currentPageId, &$html)
     {
         foreach ($wikiPages as $page => $value) {
             foreach($value->getSiblings() as $siblings) {
                 if($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
+                    $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$organization->slug, $siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="'.$value->id.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
+            $html .= '<li id="'.$value->id.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$organization->slug, $value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
             if(!empty($value['children'])) {
                 $html .= '<ul>';
-                self::makePageTree($value['children'], $currentPageId, $html);
+                self::makePageTree($organization, $value['children'], $currentPageId, $html);
                 $html .= '</ul></li>';
             }
         }
         return;
-    }
-
-    public function isWikiWatching($id)
-    {
-        $wikiWatching = DB::table('user_watch')
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'wiki')
-            ->where('entity_id', '=', $id)
-            ->first();
-        if(is_null($wikiWatching)) {
-            return false;
-        } 
-        return true;
-    }
-
-    public function isPageWatching($id)
-    {
-        $pageWatching = DB::table('user_watch')
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'page')
-            ->where('entity_id', '=', $id)
-            ->first();
-
-        if(is_null($pageWatching)) {
-            return false;
-        } 
-        return true;
     }
 
     /**
@@ -256,11 +233,14 @@ class WikiController extends Controller
      * @param $wikiSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function createPage($wikiSlug)
+    public function createPage($organizationSlug, $wikiSlug)
     {
-        $wiki = $this->wiki->getWiki($wikiSlug);
+        $organization = $this->organization->getOrganization($organizationSlug);
+
+        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
         $wikiPages = $this->wikiPage->getPages($wiki->id);
-        return view('wiki.page.create', compact('wiki', 'wikiPages'));
+        
+        return view('wiki.page.create', compact('wiki', 'wikiPages', 'organization'));
     }
 
     /**
@@ -292,12 +272,16 @@ class WikiController extends Controller
      * @param string $wikiSlug
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storePage($wikiSlug)
+    public function storePage($organizationSlug, $wikiSlug)
     {
         $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
-        $page = $this->wikiPage->saveWikiPage($wikiSlug, $this->request->all());
+        
+        $wiki = \App\Models\Wiki::where('slug', '=', $wikiSlug)->first();
+
+        $page = $this->wikiPage->saveWikiPage($wiki->id, $this->request->all());
         $this->activityLog->createActivity('page', 'create', $page);
-        return redirect()->route('wikis.pages.show', [$wikiSlug, $page->slug])->with([
+        
+        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success'
         ]);
@@ -310,21 +294,19 @@ class WikiController extends Controller
      * @param string $pageSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showPage($wikiSlug, $pageSlug)
+    public function showPage($organizationSlug, $wikiSlug, $pageSlug)
     {
-        $wiki = $this->wiki->getWiki($wikiSlug);
-     
+        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
+        $wiki = \App\Models\Wiki::where('slug', '=', $wikiSlug)->first();
+
         $page = $this->wikiPage->getPage($pageSlug);
         
-        // $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf()->implode('slug', '/');
         $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf();
 
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
-        array_add($page, 'page_watching', $this->isPageWatching($page->id));
-
         if($wikiPages) {
-            return view('wiki.page.page', compact('wikiPages', 'page', 'wiki', 'pagePath'));
+            return view('wiki.page.page', compact('organization', 'wikiPages', 'page', 'wiki', 'pagePath'));
         }
         return response()->json([
             'message' => 'Resource not found.'
@@ -403,8 +385,6 @@ class WikiController extends Controller
     {
         $wiki = $this->wiki->getWiki($wiki_slug);        
         $wikiPages = $this->wikiPage->getPages($wiki->id);
-
-        array_add($wiki, 'wiki_watching', $this->isWikiWatching($wiki->id));
 
         if($wikiPages) {
             return view('wiki.page.reorder', compact('wikiPages', 'wiki'));

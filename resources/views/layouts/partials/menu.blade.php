@@ -51,13 +51,6 @@
                             <li><a href="#">Separated link</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" style="padding-left: 10px; padding-right: 10px;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
-                        <ul class="dropdown-menu">
-                            {{-- <li><a href="{{ route('organizations.create') }}" title="Create organization">Create organization</a></li> --}}
-                            {{-- <li><a href="{{ route('wikis.create') }}" title="Create wiki">Create wiki</a></li> --}}
-                        </ul>
-                    </li>
                     <li class="dropdown" title="{{ Auth::user()->full_name }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @if(empty(Auth::user()->profile_image))
@@ -67,8 +60,8 @@
                             @endif
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('users.show', $loggedInUser->slug) }}">Profile</a></li>
-                            <li><a href="{{ route('settings.profile') }}">Settings</a></li>
+                            <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}">Profile</a></li>
+                            <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}">Settings</a></li>
                             <li class="divider"></li>
                             <li>
                                 <a href="{{ url('/logout') }}" id="logout" 

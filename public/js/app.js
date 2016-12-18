@@ -28,7 +28,7 @@ var App = {
         if($('#contribution-graph').length > 0) {
             var userId = $('#contribution-graph').data('user-id');
             $.ajax({
-                url: '/users/activity',
+                url: '/organizations/'+Cookies.get('organization_slug')+'/users/activity',
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -151,7 +151,7 @@ var App = {
         $('#update-image-size').on('click', function(event) {
             event.preventDefault();
             $.ajax({
-                url: '/users/avatar/crop',
+                url: '/organizations/'+Cookies.get('organization_slug')+'/users/avatar/crop',
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -174,7 +174,7 @@ var App = {
         $('#profile_image[type="file"]').on('change', function() {
             var formData = new FormData($("#avatar-upload-form")[0]);
             $.ajax({
-                url: '/users/avatar/store',
+                url: '/organizations/'+Cookies.get('organization_slug')+'/users/avatar/store',
                 type: 'POST',
                 cache:false,
                 processData: false,
@@ -601,6 +601,7 @@ $(function() {
 $(function() {
     if($('#wiki-page-tree').length > 0 ) {
         var wikiId = $('#wiki-page-tree').data('wiki-id');
+        var organizationId = $('#wiki-page-tree').data('organization-id');
         $('#wiki-page-tree').jstree({
             core: {
                 "themes" : {
@@ -612,7 +613,7 @@ $(function() {
                 'data' : {
                     url: function (node) {    
                         return node.id === '#' ?    
-                        '/wikis/'+wikiId+'/pages' : '/wikis/'+wikiId+'/pages/'+node.id;
+                        '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages' : '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages/'+node.id;
                     }, 
                     data: function() {
                         if($('#current-page-id').length > 0) {
@@ -652,7 +653,7 @@ $(function() {
 
 // Select2
 $(function() {
-    $('#timezone, #wiki_visibility').select2({
+    $('#timezone, #wiki_visibility, #page-parent').select2({
         minimumResultsForSearch: 5
     });
     

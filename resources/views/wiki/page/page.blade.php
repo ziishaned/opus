@@ -7,7 +7,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<h3 style="margin-bottom: 0;"><a href="{{ route('wikis.show', [$wiki->slug, ]) }}">{{ $wiki->name }}</a> 
+							<h3 style="margin-bottom: 0;"><a href="{{ route('wikis.show', [$organization->slug, $wiki->slug ]) }}">{{ $wiki->name }}</a> 
 								<div class="dropdown pull-right">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 10px; color: #555;"><i class="fa fa-gear"></i></a>
 			                        <ul class="dropdown-menu">
@@ -15,11 +15,11 @@
 						                	<a href="#"><i class="fa fa-lock"></i> Permissions</a>
 						                </li>
 			                            <li>
-						                	<a href="{{ route('wikis.pages.reorder', $wiki->slug) }}"><i class="fa fa-align-left"></i> Reorder Pages</a>
+						                	<a href="{{ route('wikis.pages.reorder', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-align-left"></i> Reorder Pages</a>
 						                </li>
 			                            <li>
 					                    	<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}">Delete</a>
-											<form id="delete-wiki" action="{{ route('wikis.destroy', $wiki->slug) }}" method="POST" style="display: none;">
+											<form id="delete-wiki" action="{{ route('wikis.destroy', [$organization->slug, $wiki->slug]) }}" method="POST" style="display: none;">
 				                                {!! method_field('delete') !!}
 				                                {!! csrf_field() !!}
 				                            </form>
@@ -28,7 +28,7 @@
 								</div>
 								<div class="clearfix"></div>
 							</h3>
-							<p style="margin-bottom: 0px;" class="text-muted">Created by {{ ViewHelper::getUsername($wiki->user_id) }} on {{ $wiki->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $wiki->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
+							<p style="margin-bottom: 0px;" class="text-muted">Created by {{ $wiki->user->first_name }} on {{ $wiki->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $wiki->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
 						</div>
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 			                        <h3 class="panel-title" style="margin-bottom: 10px;">Page Tree</h3>    
 			                    </div>
 			                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-						        	<a href="{{ route('wikis.pages.create', $wiki->slug) }}" style="font-size: 14px; position: relative; top: -4px;"><i class="fa fa-file-text-o"></i> Create</a>
+						        	<a href="{{ route('wikis.pages.create', [$organization->slug, $wiki->slug]) }}" style="font-size: 14px; position: relative; top: -4px;"><i class="fa fa-file-text-o"></i> Create</a>
 			                    </div>
 			                </div>
 			                <div class="row">
@@ -57,7 +57,7 @@
 			        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px; padding-right: 0px;">
 			        		<input type="text" id="current-node" class="hide" value="{{ $page->id }}">
 			        		<input type="text" id="current-page-id" class="hide" value="{{ $page->id }}">
-							<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}"></div>
+							<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}" data-organization-id="{{ $organization->id }}"></div>
 			        	</div>
 			        </div>
 				</div>
@@ -92,7 +92,7 @@
 											<div class="clearfix"></div>
 										</li>
 									@endif -->
-						            <li><a href="{{ route('pages.edit', [$wiki->slug, $page->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+						            <li><a href="{{ route('pages.edit', [$organization->slug, $wiki->slug, $page->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
 						            <li class="dropdown">
 						                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download fa-lg"></i> <i class="fa fa-caret-down"></i></a>
 						                <ul class="dropdown-menu" style="left: -115px; top: 35px;">
@@ -105,7 +105,7 @@
 						                <ul class="dropdown-menu" style="left: -110px; top: 35px;">
 						                    <li>
 						                    	<a href="#" onclick="if(confirm('Are you sure you want to delete this page?')) {event.preventDefault(); document.getElementById('delete-page').submit();}">Delete</a>
-												<form id="delete-page" action="{{ route('pages.destroy', [$wiki->slug, $page->slug]) }}" method="POST" style="display: none;">
+												<form id="delete-page" action="{{ route('pages.destroy', [$organization->slug, $wiki->slug, $page->slug]) }}" method="POST" style="display: none;">
 						                            {!! method_field('delete') !!}
 						                            {!! csrf_field() !!}
 						                        </form>
@@ -118,8 +118,8 @@
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<h3 style="margin-bottom: 0;"><a href="{{ route('wikis.pages.show', [$wiki->slug, $page->slug]) }}">{{ $page->name }}</a></h3>
-							<p style="margin-bottom: 0px;" class="text-muted">Created by {{ ViewHelper::getUsername($page->user_id) }} on {{ $page->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $page->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
+							<h3 style="margin-bottom: 0;"><a href="{{ route('wikis.pages.show', [$organization->slug, $wiki->slug, $page->slug]) }}">{{ $page->name }}</a></h3>
+							<p style="margin-bottom: 0px;" class="text-muted">Created by {{ $page->user->first_name }} on {{ $page->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $page->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
 						</div>
 					</div>
 			    	<div class="row">
@@ -157,7 +157,7 @@
 														<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
 															<div class="comment-box">
 																<div class="comment-head" style="padding: 0px 10px 0px 10px;">
-																	<h6 class="comment-name by-author"><a href="{{ route('users.show', [$comment->user->id, ]) }}">@if(empty($comment->user->full_name)) {{ $comment->user->name }} @else {{ $comment->user->full_name }} @endif</a></h6>
+																	<h6 class="comment-name by-author"><a href="{{ route('users.show', [$comment->user->id, ]) }}">@if(empty($comment->user->first_name)) {{ $comment->user->name }} @else {{ $comment->user->first_name }} @endif</a></h6>
 																	<ul class="list-unstyled list-inline pull-right">
 																		<li><i class="fa fa-clock-o"></i> <time class="timeago" datetime="{{ $comment->created_at->timezone(Session::get('user_timezone')) }}">{{ $comment->created_at->timezone(Session::get('user_timezone'))->diffForHumans() }}</time></li>
 																		<li><a href="#" id="like-comment" data-commentid="{{ $comment->id }}"><i class="fa fa-heart"></i></a> <span id="comment-total-star" data-commentid="{{ $comment->id }}">{{ ViewHelper::getCommentStar($comment->id) }}</span></li>
@@ -191,7 +191,7 @@
 					<hr>
 					<div class="row" style="margin-bottom: 15px;">
 			    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    			<form action="{{ route('wikis.pages.comments.store', [$page->wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
+			    			<form action="{{ route('wikis.pages.comments.store', [$organization->slug, $page->wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
 			    				<div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}" style="margin-bottom: 0;">
 			    					<div class="row">
 			    						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="padding-right: 0px;">

@@ -30,7 +30,7 @@
                         </a>
                     </div>    
                         <div class="activity-content" style="margin-left: 10px;">
-                            <a href="{{ route('users.show', [$activity->user_slug, ]) }}" title="{{ $activity->first_name . " " . $activity->last_name }}">{{ $activity->first_name .' '. $activity->last_name }}</a> 
+                            <a href="{{ route('users.show', [$organization->slug, $activity->user_slug, ]) }}" title="{{ $activity->first_name . " " . $activity->last_name }}">{{ $activity->first_name .' '. $activity->last_name }}</a>
                             @if($activity->log_type == 'create') 
                                 created
                             @elseif($activity->log_type == 'update') 
@@ -53,13 +53,13 @@
                                 @else
                                     on
                                 @endif
-                                page <a href="@if($activity->log_params['subject_type'] == 'wiki') {{ route('wikis.show', [ViewHelper::getWikiSlug($activity->log_params['id']), ]) }} @else {{ route('wikis.pages.show', [ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ViewHelper::getPageSlug($activity->log_params['id'])]) }} @endif" title="{{ $activity->log_params['name'] }}">{{ $activity->log_params['name'] }}</a>
+                                page <a href="@if($activity->log_params['subject_type'] == 'wiki') {{ route('wikis.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['id']), ]) }} @else {{ route('wikis.pages.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ViewHelper::getPageSlug($activity->log_params['id'])]) }} @endif" title="{{ $activity->log_params['name'] }}">{{ $activity->log_params['name'] }}</a>
                             @else 
-                                <a href="@if($activity->log_params['subject_type'] == 'wiki') {{ route('wikis.show', [ViewHelper::getWikiSlug($activity->log_params['id']), ]) }} @else {{ route('wikis.pages.show', [ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ViewHelper::getPageSlug($activity->log_params['id'])]) }} @endif" title="{{ $activity->log_params['name'] }}">{{ $activity->log_params['name'] }}</a>
+                                <a href="@if($activity->log_params['subject_type'] == 'wiki') {{ route('wikis.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['id']), ]) }} @else {{ route('wikis.pages.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ViewHelper::getPageSlug($activity->log_params['id'])]) }} @endif" title="{{ $activity->log_params['name'] }}">{{ $activity->log_params['name'] }}</a>
                             @endif
                             @if($activity->log_params['subject_type'] == 'page' || $activity->log_params['subject_type'] == 'comment') 
                                 at wiki 
-                                <a href="{{ route('wikis.show', [ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ]) }}" title="{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}">{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}</a>
+                                <a href="{{ route('wikis.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ]) }}" title="{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}">{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}</a>
                             @endif
                         </div>
                     </div>

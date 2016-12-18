@@ -34,7 +34,7 @@
                 <ul class="list-group list wiki-list">
                     @foreach($wikis as $wiki)
                         <li class="list-group-item">
-                            <a href="{{ route('wikis.show', $wiki->slug) }}" class="name">{{ $wiki->name }}</a>
+                            <a href="{{ route('wikis.show', [$organization->slug, $wiki->slug]) }}" class="name">{{ $wiki->name }}</a>
                         </li>
                     @endforeach
                 </ul>

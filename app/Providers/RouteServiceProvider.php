@@ -23,11 +23,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Route::patterns([
-        //     'id'      =>  '[0-9]+',
-        //     'pageId'  =>  '[0-9]+',
-        //     'text'    =>  '[a-zA-Z0-9]+',
-        // ]);
         Route::patterns([
             'pageId'            =>  '[0-9]+',
             'page_slug'         =>  '(\w+-*\d*)+',
@@ -35,6 +30,8 @@ class RouteServiceProvider extends ServiceProvider
             'wiki_slug'         =>  '(\w+-*\d*)+',
             'text'              =>  '[a-zA-Z0-9]+',
             'organization_slug' =>  '(\w+-*\d*)+',
+            'organization_id'   =>  '[0-9]+',
+            'wiki_id'           =>  '[0-9]+',
         ]);
 
         parent::boot();

@@ -6,15 +6,15 @@
             @include('layouts.partials.wiki-nav')
             <div class="row" style="margin-top: 10px;">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <form action="{{ route('wikis.pages.store', $wiki->slug) }}" method="POST" role="form" style="margin-bottom: 15px;">
+                    <h3 style="margin: 0px;">New page</h3>
+                    <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
+                    <form action="{{ route('wikis.pages.store', [$organization->slug, $wiki->slug]) }}" method="POST" role="form" style="margin-bottom: 15px;">
                         <input type="text" class="hide" name="wiki_id" value="{{ $wiki->id }}">
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group{{ $errors->has('page_name') ? ' has-error' : '' }}">
-                                    <div class="input-group flat-input-con">
-                                        <span class="input-group-addon input-label">Page Name</span>
-                                        <input type="text" class="form-control input" name="page_name" required="required">
-                                    </div>
+                                    <label for="page-name">Page Name</label>
+                                    <input type="text" id="page-name" class="form-control input" name="page_name" required="required">
                                     @if ($errors->has('page_name'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('page_name') }}</strong>
@@ -24,14 +24,12 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <div class="input-group flat-input-con">
-                                        <span class="input-group-addon input-label" style="width: 90px;">Page parent</span>
-                                        <select class="form-control flat-ui-select" name="page_parent" id="timezone" style="box-shadow: none; outline: none; border: 1px solid #F0F0F1; border-left: 0px;">
-                                            @foreach($wikiPages as $wikiPage)
-                                                <option value="{{ $wikiPage->id }}">{{ $wikiPage->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <label for="page-parent">Page parent</label>
+                                    <select class="form-control" name="page_parent" id="page-parent">
+                                        @foreach($wikiPages as $wikiPage)
+                                            <option value="{{ $wikiPage->id }}">{{ $wikiPage->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>

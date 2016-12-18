@@ -316,9 +316,14 @@ class OrganizationController extends Controller
                 'organization' => Session::get('organization_name'),
             ];
             
-            $user = (new \App\Models\User)->validate($userInfo);
+            $user = $this->user->validate($userInfo);
+
             if($user) {
                 Auth::login($user, $this->request->get('remember'));
+
+                // Set the cookie having organization slug
+                setcookie('organization_slug', Session::get('organization_name'), time() + (86400 * 30), "/");
+
                 return redirect()->route('dashboard', [Session::get('organization_name'), ]);
             }
 

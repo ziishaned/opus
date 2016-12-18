@@ -99,7 +99,7 @@ class WikiPage extends Node
     }
 
 
-    public function getWikiPages($wikiId, $page_id, $openedNode = null)
+    public function getWikiPages($organization, $wikiId, $page_id, $openedNode = null)
     {
         $nodes = [];
 
@@ -121,7 +121,7 @@ class WikiPage extends Node
                                 'selected' => ($value->id == $openedNode) ? true : false,
                             ],
                             'a_attr' => [
-                                'href' => route('wikis.pages.show', [\App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                                'href' => route('wikis.pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
                             ],
                         ];
                     }
@@ -148,7 +148,7 @@ class WikiPage extends Node
                                 'selected' => ($value->id == $openedNode) ? true : false,
                             ],
                             'a_attr' => [
-                                'href' => route('wikis.pages.show', [\App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                                'href' => route('wikis.pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
                             ],
                         ];
                     }
@@ -180,15 +180,14 @@ class WikiPage extends Node
      * @param  array  $data
      * @return static
      */
-    public function saveWikiPage($wikiSlug, $data)
+    public function saveWikiPage($wikiId, $data)
     {
-        $wiki = (new Wiki)->getWiki($wikiSlug);
         $page = $this->create([
             'name'         =>  $data['page_name'],
             'description'  =>  !empty($data['page_description']) ? $data['page_description'] : null,
             'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
             'user_id'      =>  Auth::user()->id,
-            'wiki_id'      =>  $wiki->id,
+            'wiki_id'      =>  $wikiId,
         ]);
 
         return $page;

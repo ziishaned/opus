@@ -9,10 +9,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <form action="" method="POST" role="form">                            
                         <div class="form-group">
-                            <div class="input-group flat-input-con">
-                                <span class="input-group-addon input-label" style="width: 45px;">Email</span>
-                                <input type="text" class="form-control input" id="email" name="email" autocomplete="off">
-                            </div>
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control input" id="email" name="email" autocomplete="off">
                         </div>
                         <button type="submit" class="btn btn-default">Add</button>
                     </form>

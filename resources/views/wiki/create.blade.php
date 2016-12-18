@@ -5,7 +5,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h3 style="margin: 0px;">New wiki</h3>
             <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
-            <form action="{{ route('wikis.store') }}" method="POST" role="form" style="margin-bottom: 15px;">
+            <form action="{{ route('wikis.store', [$organization->slug]) }}" method="POST" role="form" style="margin-bottom: 15px;">
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group{{ $errors->has('wiki_name') ? ' has-error' : '' }}">

@@ -58,7 +58,6 @@ class Wiki extends Model
      */
     const WIKI_RULES = [
         'wiki_name'       => 'required|max:45|min:1',
-        'wiki_path'       => 'required',
         'wiki_visibility' => 'required',
     ];
 
@@ -113,9 +112,9 @@ class Wiki extends Model
      * @param  string $nameSlug
      * @return bool
      */
-    public function getWiki($nameSlug)
+    public function getWiki($wikiSlug, $organizationId)
     {
-        $wiki = $this->where('slug', '=', $nameSlug)->where('user_id', '=', Auth::user()->id)->first();
+        $wiki = $this->where('slug', '=', $wikiSlug)->where('organization_id', '=', $organizationId)->with('user')->first();
         if(is_null($wiki)) {
             return false;
         }
@@ -128,7 +127,7 @@ class Wiki extends Model
      * @param  array $data
      * @return bool
      */
-    public function saveWiki($data)
+    public function saveWiki($data, $organizationId)
     {
         Emojione::$imagePathPNG = '/images/png/';
         $wiki = $this->create([
@@ -137,7 +136,7 @@ class Wiki extends Model
             'description'     =>  Emojione::toImage($data['wiki_description']),
             'user_id'         =>  Auth::user()->id,
             'visibilty'       =>  $data['wiki_visibility'],
-            'organization_id' =>  ($data['wiki_path'] != 'user') ? $data['wiki_path'] : null,
+            'organization_id' =>  $organizationId,
         ]);
 
         return $wiki;
