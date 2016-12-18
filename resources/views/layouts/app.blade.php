@@ -80,7 +80,6 @@
 <script src="/js/validator.min.js"></script>
 <script src="/js/list.js"></script>
 <script src="/js/timeago.js"></script>
-<script src="/js/js.cookie.js"></script>
 <script src="/js/list.fuzzysearch.js"></script>
 <script src="/plugins/calendar-heatmap/moment.min.js"></script>
 <script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>

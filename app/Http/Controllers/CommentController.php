@@ -81,11 +81,13 @@ class CommentController extends Controller
      */
     public function store($organizationSlug, $wikiSlug, $pageSlug)
     {
+        $organization = (new \App\Models\Organization)->getOrganization($organizationSlug);
+
         $this->validate($this->request, Comment::COMMENT_RULES);
         $this->comment->storeComment($pageSlug, $this->request->all());
 
         $page = $this->wikiPage->where('slug', '=', $pageSlug)->first();
-        $this->activityLog->createActivity('page', 'commented', $page);
+        $this->activityLog->createActivity('page', 'commented', $page, $organization->id);
         
         return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
             'alert'      => 'Comment successfully posted.',

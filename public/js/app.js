@@ -608,7 +608,7 @@ $(function() {
                     // 'stripes': true, // Background highlighted of current node or page
                     'icons': false,
                     'dots' : false,
-                    "variant" : "large"
+                    // "variant" : "large"
                 },
                 'data' : {
                     url: function (node) {    

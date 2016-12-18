@@ -18,7 +18,7 @@ class ActivityLog extends Model
      */
     protected $fillable = [
         'user_id',
-        'orgainzation_id',
+        'organization_id',
         'log_type',
         'log_params',
         'created_at',
@@ -39,13 +39,14 @@ class ActivityLog extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function createActivity($subjectType, $logType, $logContent)
+    public function createActivity($subjectType, $logType, $logContent, $organizationId)
     {
     	array_add($logContent, 'subject_type', $subjectType);
     	$this->create([
-    		'user_id' 	 =>  Auth::user()->id,
-    		'log_type' 	 =>	 $logType,
-    		'log_params' =>  json_decode($logContent),
+    		'user_id' 	      =>  Auth::user()->id,
+    		'log_type' 	      =>  $logType,
+    		'log_params'      =>  json_decode($logContent),
+    		'organization_id' =>  $organizationId,
     	]);
     	return true;	
     }

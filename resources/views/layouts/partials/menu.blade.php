@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation">
-    <div class="container" style="padding-left: 0px; padding-right: 0px;">
+    <div class="container" style="padding-left: 5px; padding-right: 5px;">
         <div class="collapse navbar-collapse">
             @if(Auth::user())
                 <ul class="nav navbar-nav">

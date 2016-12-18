@@ -4,7 +4,7 @@
     @include('layouts.partials.page-nav')
 	<div class="row" style="padding-top: 10px;">
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    	<form action="{{ route('pages.update', [$page->wiki->slug, $page->slug]) }}" method="POST" role="form" style="margin-bottom: 10px;">
+	    	<form action="{{ route('pages.update', [$organization->slug, $wiki->slug, $page->slug]) }}" method="POST" role="form" style="margin-bottom: 10px;">
              	{!! method_field('patch') !!}
              	{!! csrf_field() !!}
                 <div class="form-group @if($errors->has('page_name')) has-error  @endif">

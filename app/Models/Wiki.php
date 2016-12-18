@@ -109,8 +109,11 @@ class Wiki extends Model
     /**
      * Get a specific resource.
      *
-     * @param  string $nameSlug
+     * @param $wikiSlug
+     * @param $organizationId
+     *
      * @return bool
+     * @internal param string $nameSlug
      */
     public function getWiki($wikiSlug, $organizationId)
     {

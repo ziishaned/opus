@@ -67,10 +67,12 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::post('create/{step}', 'OrganizationController@store')->name('organizations.store')->where(['step' => '[1-4]']);
     });
 
+    Route::patch('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'WikiController@updatePage')->name('pages.update');
     Route::post('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('wikis.pages.comments.store');
     Route::post('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{id}/star', 'CommentController@starComment')->name('comments.star');
     Route::delete('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{comment_id}', 'CommentController@destroy')->name('comments.delete');
-    Route::patch('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{comment_id}', 'CommentController@update')->name('comments.delete');
+    Route::patch('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{comment_
+    }', 'CommentController@update')->name('comments.delete');
 });
 
 // Route::group(['prefix' => '/', 'domain' => '{organization}.wiki.dev'], function () {

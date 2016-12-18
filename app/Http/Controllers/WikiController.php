@@ -94,7 +94,7 @@ class WikiController extends Controller
         $organization = $this->organization->getOrganization($organizationSlug);
 
         $wiki = $this->wiki->saveWiki($this->request->all(), $organization->id);
-        $this->activityLog->createActivity('wiki', 'create', $wiki);
+        $this->activityLog->createActivity('wiki', 'create', $wiki, $organization->id);
 
         return redirect()->route('wikis.show', [$organization->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully created.',
@@ -274,12 +274,14 @@ class WikiController extends Controller
      */
     public function storePage($organizationSlug, $wikiSlug)
     {
+        $organization = $this->organization->getOrganization($organizationSlug);
+
         $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
         
         $wiki = \App\Models\Wiki::where('slug', '=', $wikiSlug)->first();
 
         $page = $this->wikiPage->saveWikiPage($wiki->id, $this->request->all());
-        $this->activityLog->createActivity('page', 'create', $page);
+        $this->activityLog->createActivity('page', 'create', $page, $organization->id);
         
         return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
@@ -296,8 +298,8 @@ class WikiController extends Controller
      */
     public function showPage($organizationSlug, $wikiSlug, $pageSlug)
     {
-        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
-        $wiki = \App\Models\Wiki::where('slug', '=', $wikiSlug)->first();
+        $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
+        $wiki = $this->wiki->where('slug', '=', $wikiSlug)->first();
 
         $page = $this->wikiPage->getPage($pageSlug);
         
@@ -325,25 +327,32 @@ class WikiController extends Controller
      * @param string $pageSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function editPage($wikiSlug, $pageSlug)
+    public function editPage($organizationSlug, $wikiSlug, $pageSlug)
     {
-        $wiki = $this->wiki->getWiki($wikiSlug);
+        $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
+
+        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
         $page = $this->wikiPage->getPage($pageSlug);
         $wikiPages = $this->wikiPage->getPages($wiki->id);
-        return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages'));
+
+        return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages', 'organization'));
     }
 
     /**
      * Update a specific resource.
      *
-     * @param $wikiId
-     * @param $pageId
+     * @param $organizationSlug
+     * @param $wikiSlug
+     * @param $pageSlug
+     *
      * @return \Illuminate\Http\RedirectResponse
+     * @internal param $wikiId
+     * @internal param $pageId
      */
-    public function updatePage($wikiSlug, $pageSlug)
+    public function updatePage($organizationSlug, $wikiSlug, $pageSlug)
     {
         $this->wikiPage->updatePage($pageSlug, $this->request->all());
-        return redirect()->route('wikis.pages.show', [$wikiSlug, $pageSlug])->with([
+        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
             'alert'      => 'Page successfully updated.',
             'alert_type' => 'success'
         ]);
