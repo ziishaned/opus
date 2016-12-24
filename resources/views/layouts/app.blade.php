@@ -78,6 +78,7 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/tinymce.min.js"></script>
 <script src="/js/validator.min.js"></script>
+<script src="/js/js.cookie.js"></script>
 <script src="/js/list.js"></script>
 <script src="/js/timeago.js"></script>
 <script src="/js/list.fuzzysearch.js"></script>

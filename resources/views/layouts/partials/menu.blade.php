@@ -28,7 +28,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('dashboard', [$organization->slug])  }}"><img src="/images/no_organization_avatar.png" width="18" height="18" alt="Image"> {{ $organization->name }}</a>
+                        <a href="{{ route('dashboard', [$organization->slug])  }}">{{ $organization->name }}</a>
                     </li>
                     <li>
                         <a href="#">Members</a> 

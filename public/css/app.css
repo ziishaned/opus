@@ -1,18 +1,30 @@
 html, body {
     margin: 0px;
     height: 100%;
-    font-family: 'Lato';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke: 0.10px;
+    font-family: 'Open Sans';
+    background-color: #ffffff;
+    color: #fff;
 }
 
+.header-menu {
+    border-bottom: 0px;
+    background-color: #ffffff;
+    color: #ddd;
+}
+/*
 .header-menu .navbar-nav>li>a {
     padding-left: 12px;
     padding-right: 12px;
-}
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #fff;
+    text-shadow: 0 1px 1px #333;
+}*/
+
+./*header-menu .navbar-nav>li>a:hover {
+    color: #fff;
+}*/
 
 .li-loader {
     text-align: center;
@@ -60,11 +72,11 @@ button {
 	/*font-family: "Source Sans Pro";*/
 /*}*/
 li, a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lato', 'Open Sans', 'source sans pro', 'segoe ui';
+    font-family: 'Open Sans', 'source sans pro', 'segoe ui';
+    color: #fff;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #222222;
     margin: 0;
 }
 
@@ -90,7 +102,6 @@ h5 {
 
 p {
     font-size: 12px;
-    color: #555;
     line-height: 24px;
     margin-bottom: 0;
 }
@@ -129,104 +140,17 @@ a, a:link, a:visited {
     color: #fff;
 }
 
-.input {
-    margin: 0;
-    max-width: 100%;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 0 auto;
-    -ms-flex: 1 0 auto;
-    flex: 1 0 auto;
-    display: block;
-    outline: none;
-    background: #FFF;
-    line-height: 1.2142em;
-    border: 1px solid rgba(34,36,38,.15) !important;
-    border-radius: 3px !important;
-    height: 45px;
-    width: 100%;
-    color: #222222;
-    font-size: 16px;
-    padding: 12px 15px;
-    box-sizing: border-box;
-    box-shadow: none !important;
-}
-
-.input.form-control[readonly] {
-    background-color: #eee;
-}
-
 .has-error.has-danger label {
     color: #a94442;
 }
 
-.has-error.has-danger .input {
-    border-color: #a94442 !important;
-}
-
-.input .emojionearea-editor {
+.emojionearea-editor {
     border-radius: 3px !important;
     min-height: 78px !important;
 }
 
 .textcomplete-dropdown .textcomplete-item a {
     cursor: pointer !important;
-}
-
-textarea.input {
-    border-radius: 4px !important;
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    padding: 0px !important; 
-    padding-left: 15px !important;
-}
-
-.input:focus {
-    background-color: white;
-    box-shadow: none;
-    border-color: rgba(34,36,38,.15);
-}
-
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px white inset;
-}
-
-label {
-    color: #666;
-    font-size: 14px;
-}
-
-.input-label {
-    background-color: white;
-    border: 1px solid rgba(34,36,38,.15);
-    color: #666;
-    font-size: 14px;
-    width: 90px;
-    text-align: left;
-}
-
-.has-error .input-label {
-    background-color: white;
-}
-
-.has-error .input, .has-error .input:focus {
-    box-shadow: none;
-}
-
-.flat-input-con {
-    width: 100%;
-}
-
-.flat-ui-select {
-    border-left: 0px !important;
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-color: #f0f0f1 !important;
-}
-
-.flat-ui-select.active {
-    box-shadow: none !important;
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
 }
 
 .form-group {
@@ -809,10 +733,6 @@ ul.activity-list li:hover {
 .select2-dropdown.select2-dropdown--below {
     border: 1px solid #dedede !important;
     border-top: 0px !important;
-}
-
-.header-menu {
-    background-color: #ffffff;
 }
 
 .rte-autocomplete li a {
