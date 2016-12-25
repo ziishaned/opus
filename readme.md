@@ -25,21 +25,11 @@ $ git clone git@gitlab.com:zeeshanu/wiki.git
 
 ```shell
 $ php artisan migrate
-```
-
-* Fill database with dummy data - optional
-
-```shell
 $ php artisan db:seed
+$ php artisan serve
 ```
 
-* Create a virtual host or just run the following command in your project root directory:
-
-```shell
-$ php artisan serve	
-```
-
-* Lastly in your favourite browser open following url 
+Now go to this url
 
 ```
 localhost:8000
