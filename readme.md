@@ -35,7 +35,7 @@ $ php artisan db:seed
 
 * Create a virtual host or just run the following command in your project root directory:
 
-```shello
+```shell
 $ php artisan serve	
 ```
 
