@@ -13,17 +13,11 @@
 
 ## Installation
 
-* Clone this repo:
-
-```shell
-$ git clone git@gitlab.com:zeeshanu/wiki.git
 ```
+$ git clone git@gitlab.com:zeeshanu/wiki.git
 
-* Create following database `wiki` 
+# Create following database `wiki`
 
-* Run migration with the following command
-
-```shell
 $ php artisan migrate
 $ php artisan db:seed
 $ php artisan serve

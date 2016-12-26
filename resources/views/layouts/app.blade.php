@@ -56,10 +56,12 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.menu')
+    <div style="min-height: 50px; margin-bottom: 20px;">
+        @include('layouts.partials.menu')
+    </div>
 
     @if(Session::get('alert'))
-        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -14px; font-size: 14px;">
+        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -19px; font-size: 13px;">
             <div class="container">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 {{ Session::get('alert') }}

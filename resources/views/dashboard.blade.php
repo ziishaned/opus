@@ -1,7 +1,118 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
+<h1 class="text-center" style="margin-top: 50px; margin-bottom: 20px;">{{ $organization->name }}</h1>
+<div class="row wikis-categories-con">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Backend</h3>
+                <ul class="list-unstyled wiki-category">
+                    <li>
+                        <a href="#">A - Laravel</a>
+                    </li>
+                    <li>                        
+                        <a href="#">B - Laravel Dev</a>
+                    </li>
+                    <li>
+                        <a href="#">C - Laravel Pro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Backend</h3>
+                <ul class="list-unstyled wiki-category">
+                    <li>
+                        <a href="#">A - Laravel</a>
+                    </li>
+                    <li>                        
+                        <a href="#">B - Laravel Dev</a>
+                    </li>
+                    <li>
+                        <a href="#">C - Laravel Pro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Backend</h3>
+                <ul class="list-unstyled wiki-category">
+                    <li>
+                        <a href="#">A - Laravel</a>
+                    </li>
+                    <li>                        
+                        <a href="#">B - Laravel Dev</a>
+                    </li>
+                    <li>
+                        <a href="#">C - Laravel Pro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Backend</h3>
+                <ul class="list-unstyled wiki-category">
+                    <li>
+                        <a href="#">A - Laravel</a>
+                    </li>
+                    <li>                        
+                        <a href="#">B - Laravel Dev</a>
+                    </li>
+                    <li>
+                        <a href="#">C - Laravel Pro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Backend</h3>
+                <ul class="list-unstyled wiki-category">
+                    <li>
+                        <a href="#">A - Laravel</a>
+                    </li>
+                    <li>                        
+                        <a href="#">B - Laravel Dev</a>
+                    </li>
+                    <li>
+                        <a href="#">C - Laravel Pro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Backend</h3>
+                <ul class="list-unstyled wiki-category">
+                    <li>
+                        <a href="#">A - Laravel</a>
+                    </li>
+                    <li>                        
+                        <a href="#">B - Laravel Dev</a>
+                    </li>
+                    <li>
+                        <a href="#">C - Laravel Pro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+</div>
+{{-- <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="panel panel-default" id="wiki-list-con">
             <div class="panel-heading" style="background-color: #ffffff; padding-top: 0;">
@@ -41,5 +152,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection

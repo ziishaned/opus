@@ -6,8 +6,7 @@
             @include('layouts.partials.wiki-nav')
             <div class="row" style="margin-top: 10px;">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h3 style="margin: 0px;">New page</h3>
-                    <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
+                    <h3>New page</h3>
                     <form action="{{ route('wikis.pages.store', [$organization->slug, $wiki->slug]) }}" method="POST" role="form" style="margin-bottom: 15px;">
                         <input type="text" class="hide" name="wiki_id" value="{{ $wiki->id }}">
                         <div class="row">
@@ -26,6 +25,7 @@
                                 <div class="form-group">
                                     <label for="page-parent">Page parent</label>
                                     <select class="form-control" name="page_parent" id="page-parent">
+                                        <option></option>
                                         @foreach($wikiPages as $wikiPage)
                                             <option value="{{ $wikiPage->id }}">{{ $wikiPage->name }}</option>
                                         @endforeach
