@@ -37,9 +37,6 @@
                         <a href="{{ route('dashboard', [$organization->slug])  }}">{{ $organization->name }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('organizations.activity', [$organization->slug]) }}">Activity</a>
-                    </li>
-                    <li>
                         <a href="#">Members</a> 
                     </li>
                     <li>

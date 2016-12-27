@@ -76,11 +76,12 @@
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/tinymce.min.js"></script>
+<script src="/js/moment.min.js"></script>
 <script src="/js/validator.min.js"></script>
 <script src="/js/masonry.min.js"></script>
 <script src="/js/js.cookie.js"></script>
 <script src="/js/timeago.js"></script>
-<script src="/plugins/vakata-jstree/dist/jstree.js"></script>
+<script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
 <script src="/plugins/select2/select2.full.min.js"></script>
 <script src="/js/app.js"></script>
 <script src="/plugins/jcrop/Jcrop.min.js"></script>

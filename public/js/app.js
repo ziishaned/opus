@@ -624,9 +624,11 @@ $(function() {
         useSprite: false,
     });
 
-    var container = document.querySelector('#ms-container');
-    var msnry = new Masonry( container, {
-        itemSelector: '.ms-item',
-        columnWidth: '.ms-item',                
-    });      
+    if($('#ms-container').length > 0) {
+        var container = document.querySelector('#ms-container');
+        var msnry = new Masonry( container, {
+            itemSelector: '.ms-item',
+            columnWidth: '.ms-item',                
+        });      
+    }
 });

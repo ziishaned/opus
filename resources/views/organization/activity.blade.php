@@ -1,11 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">   
-        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-            <h2>All activities</h2>
-            <hr>
-            @include('layouts.partials.activity')
+	<div class="subnav" style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
+        <div class="container">
+            <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
+                <li class="active">
+                    <a href="{{ route('organizations.activity', [$organization->slug]) }}">Activity</a>
+                </li>
+                <li>
+                    <a href="#">Wikis</a>
+                </li>
+            </ul>
         </div>
+    </div>
+    <div class="container">
+	    <div style="margin-bottom: 10px; margin-top: 10px; height: 50px;">
+            <div class="site-breadcrumb">
+                <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
+                    <li>
+                        <a href="#">Facebook</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Activity</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+	    <div class="row">   
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	            @include('layouts.partials.activity')
+	        </div>
+	    </div>
     </div>
 @endsection
