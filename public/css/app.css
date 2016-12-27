@@ -705,53 +705,10 @@ kbd {
     -webkit-border-radius: 100px;
 }
 
-.activity-icon {
-    font-size: 22px;
-    padding-left: 2px;
-    padding-right: 2px;
-    color: #5c5c5c;
-}
-
-.activity .activity-content {
-    padding: 0; 
-    display: inline-block; 
-    margin-left: 5px;
-    color: #5c5c5c;
-    font-weight: 600;
-    vertical-align: top;
-}
-
-.activity .activity-content a {
-    color: #333;
-}
-
-.activity-con {
-    padding: 1em 0 0; 
-    overflow: hidden; 
-    font-size: 14px; 
-    border-bottom: 0;
-    color: #666;
-}
-
-.activity-con .time {
-    color: #5c5c5c;
-    display: inline-block; 
-    font-size: 12px; 
-    cursor: default;
-}
-
-.activity {
-    padding: 0 0 1em 45px;
-}
-
 .dot-divider::after {
     content: "\00B7";
     padding: 0 6px;
     font-weight: bold;
-}
-
-ul.activity-list li:hover {
-    background-color: #f5f5f5;
 }
 
 .pagination {
