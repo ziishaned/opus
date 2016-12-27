@@ -1,9 +1,18 @@
 <nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation">
     <div class="container">
-        <div class="collapse navbar-collapse">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand hidden-lg hidden-md hidden-sm" href="#">Wiki Stack</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())
                 <ul class="nav navbar-nav">
-                    <li>
+                    <li class="hidden-xs">
                         <a href="#" class="dropdown-toggle" data-organizationId="{{ $organization->id }}" data-appended="false" data-toggle="dropdown" id="get-wikis"><i class="fa fa-bars fa-lg"></i></a>
                         <ul class="dropdown-menu" id="wikis-list" style="padding: 10px;">
                             <li>
@@ -27,7 +36,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="organization-name">
                         <a href="{{ route('dashboard', [$organization->slug])  }}">{{ $organization->name }}</a>
                     </li>
                     <li>
@@ -43,15 +52,15 @@
             @endif
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::user())    
-                    <li>
+                    <li class="hidden-xs hidden-sm">
                         <form class="navbar-form" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" style="width: 265px; padding-right: 30px; border: 1px solid white; box-shadow: none;">
-                                <span class="fa fa-search fa-fw" style="position: absolute; top: 16px; right: 23px; color: #e7e9ed;"></span>
+                                <input type="text" class="form-control" placeholder="Search" style="width: 265px; padding-right: 30px; border: 1px solid #ccc; box-shadow: none;">
+                                <span class="fa fa-search fa-fw" style="position: absolute; top: 16px; right: 23px; color: #9E9E9E; font-weight: bold;"></span>
                             </div>
                         </form>
                     </li>
-                    <li class="dropdown" title="Notifications">
+                    <li class="dropdown hidden-xs" title="Notifications">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
@@ -60,7 +69,7 @@
                             <li><a href="#">Separated link</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" title="{{ Auth::user()->full_name }}">
+                    <li class="dropdown hidden-xs" title="{{ Auth::user()->full_name }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @if(empty(Auth::user()->profile_image))
                                 <img src="/images/default.png" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
@@ -84,6 +93,27 @@
                                 </form>
                             </li>
                         </ul>
+                    </li>
+                    <li class="hidden-lg hidden-md hidden-sm">
+                        <form class="navbar-form" role="search" style="margin: 0; margin-bottom: 7px;">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search" style="padding-right: 30px; border: 1px solid #ccc; box-shadow: none;">
+                                <span class="fa fa-search fa-fw" style="position: absolute; top: 20px; right: 23px; color: #9E9E9E; font-weight: bold;"></span>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="hidden-lg hidden-md hidden-sm"><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}">Profile</a></li>
+                    <li class="hidden-lg hidden-md hidden-sm"><a href="{{ route('settings.profile', [$organization->slug, ]) }}">Settings</a></li>
+                    <li class="hidden-lg hidden-md hidden-sm">
+                        <a href="{{ url('/logout') }}" id="logout" 
+                           onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
                     </li>
                 @else
                     <li>

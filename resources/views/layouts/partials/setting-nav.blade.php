@@ -7,9 +7,6 @@
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/settings/account') class="active" @endif>
                 <a href="{{ route('settings.account', [$organization->slug, ]) }}">Account</a>        
             </li>
-            <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/settings/emails') class="active" @endif>
-                <a href="{{ route('settings.emails', [$organization->slug, ]) }}">Email</a>            
-            </li>
             <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/settings/notifications') class="active" @endif>
                 <a href="{{ route('settings.notifications', [$organization->slug, ]) }}">Notifications</a>            
             </li>

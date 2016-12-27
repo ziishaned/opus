@@ -1,28 +1,46 @@
 html, body {
     margin: 0px;
     height: 100%;
-    font-family: 'Open Sans';
+    font-family: 'segoe ui';
     background-color: #ffffff;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .header-menu .organization-name a {
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        text-align: center;
+    }
+
+    .navbar-default .navbar-nav>li>a:hover {
+        background-color: #BDBDBD !important;
+        color: #fff !important;
+    }
+}
+
+.navbar-fixed-top .navbar-collapse {
+    max-height: 370px;
 }
 
 .header-menu {
     border-bottom: 0px;
-    background-color: #009688;
     box-shadow: 0 2px 5px rgba(0,0,0,.26);
 }
 
 .navbar-default .navbar-nav>li>a {
-    color: #fff;
-    font-weight: 500;
+    color: #424242;
+    font-weight: 400;
+    font-size: 13px;
 }
 
 .navbar-default .navbar-nav>li>a:hover {
-    color: #fff;
+    color: #424242;
 }
 
 .navbar-default .navbar-nav>.open>a {
-    background-color: #009688 !important;
-    color: #fff !important;
+    background-color: #f8f8f8 !important;
+    color: #424242 !important;
 }
 
 .li-loader {
@@ -143,9 +161,43 @@ label {
 }
 
 .wikis-categories-con .wiki-category li {
-    border-radius: 0px;
-    font-size: 15px;
-    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.site-breadcrumb {
+    line-height: 50px;
+    font-weight: 600;
+}
+
+.site-breadcrumb ul li {
+    font-size: 18px;
+}
+
+.site-breadcrumb ul li a {
+    margin-left: 10px;
+    color: #9E9E9E;
+}
+
+.site-breadcrumb ul li.active a {
+    color: #212121;
+}
+
+.site-breadcrumb ul li:first-child a {
+    margin-left: 0;
+}
+
+.site-breadcrumb ul li:before {
+    content: ">";
+    font-family: "consolas";
+    position: relative;
+    top: -1px;
+    color: #9E9E9E;
+}
+
+.site-breadcrumb ul li:first-child:before {
+    content: none;
 }
 
 .wikis-categories-con .wiki-category li:last-child {
@@ -165,7 +217,8 @@ button {
 }
 
 li, a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans', 'source sans pro', 'segoe ui';
+    font-family: 'segoe ui', 'Open Sans', 'source sans pro';
+    color: #424242;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -194,7 +247,6 @@ h5 {
 }
 
 p {
-    font-size: 13px;
     margin-bottom: 0;
 }
 
@@ -239,6 +291,11 @@ a, a:link, a:visited {
 .emojionearea-editor {
     border-radius: 3px !important;
     min-height: 78px !important;
+}
+
+.emojionearea h1{
+    font-family: "segoe ui" !important;
+    font-size: 15px !important;
 }
 
 .textcomplete-dropdown .textcomplete-item a {

@@ -432,13 +432,6 @@ $(document).ready(function() {
         $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
     }
 
-    if($('.wiki-list').length > 0) {
-        new List('wiki-list-con', { 
-          valueNames: ['name'], 
-          plugins: [ ListFuzzySearch() ] 
-        });
-    }
-
     $('.page-tree-con').on('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -663,4 +656,10 @@ $(function() {
         autoHideFilters: true,
         useSprite: false,
     });
+
+    var container = document.querySelector('#ms-container');
+    var msnry = new Masonry( container, {
+        itemSelector: '.ms-item',
+        columnWidth: '.ms-item',                
+    });      
 });

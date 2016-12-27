@@ -174,12 +174,6 @@ class UserController extends Controller
         return view('user.setting.account', compact('organization'));
     }
 
-    public function emailsSettings($organizationSlug)
-    {
-        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
-        return view('user.setting.emails', compact('organization'));
-    }
-
     public function notificationsSettings($organizationSlug)
     {
         $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();

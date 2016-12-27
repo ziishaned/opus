@@ -31,7 +31,6 @@ Route::group(['prefix' => 'organizations'], function () {
             Route::get('profile', 'UserController@profileSettings')->name('settings.profile');
             Route::get('account', 'UserController@accountSettings')->name('settings.account');
             Route::get('notifications', 'UserController@notificationsSettings')->name('settings.notifications');
-            Route::get('emails', 'UserController@emailsSettings')->name('settings.emails');
         });
 
         Route::get('{organization_slug}', 'HomeController@dashboard')->name('dashboard')->middleware('dashboard');
