@@ -2,7 +2,6 @@ var App = {
     init: function(params = null) {
         this.params = params;
         this.bindUI();
-        this.makeContributionGraph();
         this.initJcrop();
         $('[data-toggle="tooltip"]').tooltip();
     },
@@ -23,38 +22,6 @@ var App = {
         $('#y').val(c.y);
         $('#w').val(c.w);
         $('#h').val(c.h);
-    },
-    makeContributionGraph: function() {
-        if($('#contribution-graph').length > 0) {
-            var userId = $('#contribution-graph').data('user-id');
-            $.ajax({
-                url: '/organizations/'+Cookies.get('organization_slug')+'/users/activity',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    _method: 'get',
-                    user_id: userId,
-                },
-                success: function(data) {
-                    Object.keys(data).map(function(key, index) {
-                       data[key].date =  moment(data[key].date).toDate(); 
-                    });
-
-                    var heatmap = calendarHeatmap()
-                        .data(data)
-                        .selector('#contribution-graph')
-                        .tooltipEnabled(true)
-                        .onClick(function (data) {
-                            console.log('data', data);
-                        });
-                    heatmap();  // render the chart
-                },
-                error: function(error) {
-                    var response = JSON.parse(error.responseText);
-                    console.log(response);
-                }
-            });
-        }
     },
     inviteUserToOrganization: function (userId, organizationId) {
         $.ajax({

@@ -336,4 +336,11 @@ class OrganizationController extends Controller
 
         return redirect()->action('OrganizationController@signin', ['step' => $step+1]);
     }
+
+    public function getActivity($organizationSlug) 
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);   
+        $activities   = $this->activity->getOrganizationActivity($organization->id);
+        return view('organization.activity', compact('activities', 'organization'));        
+    }
 }

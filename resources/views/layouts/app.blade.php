@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/css/tinymce-lightgray.css">
     <link rel="stylesheet" href="/css/editor.css">
     <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
-    <link rel="stylesheet" href="/plugins/calendar-heatmap/calendar-heatmap.css">
     <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
@@ -56,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div style="min-height: 50px; margin-bottom: 20px;">
+    <div style="min-height: 50px;">
         @include('layouts.partials.menu')
     </div>
 
@@ -70,9 +69,7 @@
     @endif
 
     <div class="main-body" id="page-content-wrapper">
-        <div class="container">
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
 
 <script src="/js/jquery.js"></script>
@@ -83,9 +80,6 @@
 <script src="/js/masonry.min.js"></script>
 <script src="/js/js.cookie.js"></script>
 <script src="/js/timeago.js"></script>
-<script src="/plugins/calendar-heatmap/moment.min.js"></script>
-<script src="/plugins/calendar-heatmap/d3.v3.min.js"></script>
-<script src="/plugins/calendar-heatmap/calendar-heatmap.js"></script>
 <script src="/plugins/vakata-jstree/dist/jstree.js"></script>
 <script src="/plugins/select2/select2.full.min.js"></script>
 <script src="/js/app.js"></script>
