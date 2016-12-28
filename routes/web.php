@@ -36,8 +36,7 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::get('{organization_slug}', 'OrganizationController@getActivity')->name('dashboard')->middleware('dashboard');
         Route::get('{organization_slug}/activity', 'OrganizationController@getActivity')->name('dashboard')->middleware('dashboard');
         Route::get('{organization_slug}/activity/user', 'OrganizationController@getUserActivity')->name('dashboard.user.activity');
-        Route::get('{organization_slug}/wikis', 'HomeController@dashboard')->name('dashboard.wikis')->middleware('dashboard');
-        Route::get('wikis', 'OrganizationController@getWikis');
+        Route::get('{organization_slug}/wikis', 'OrganizationController@getWikis')->name('organizations.wikis');
         Route::delete('{id}', 'OrganizationController@destroy')->name('organizations.destroy');
         Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
         Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');

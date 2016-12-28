@@ -193,24 +193,34 @@ class OrganizationController extends Controller
         return redirect()->action('OrganizationController@create', ['step' => $step+1]);
     }
 
-    public function getWikis() 
+    public function isContentTypeJson()
     {
-        $organization = $this->organization->where('id', '=', $this->request->get('organization_id'))->with(['wikis'])->first();
-        $wikis = [];
+        return $this->request->header('content-type') == 'application/json'; 
+    }
 
-        foreach($organization->wikis as $key => $wiki) {
-            
-            if(count($wikis) >= 5) {
-                break;
+    public function getWikis($organizationSlug) 
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);
+        
+        if($this->isContentTypeJson()) {
+            $wikis = [];
+
+            foreach($organization->wikis as $key => $wiki) {
+                
+                if(count($wikis) >= 5) {
+                    break;
+                }
+
+                $wikis[] = [
+                    'url'  => route('wikis.show', [$organization->slug, $wiki->slug]),
+                    'name' => $wiki->name
+                ];
             }
 
-            $wikis[] = [
-                'url'  => route('wikis.show', [$wiki->slug]),
-                'name' => $wiki->name
-            ];
+            return $wikis;
         }
 
-        return $wikis;
+        return view('organization.wikis', compact('organization'));
     }
 
     /**

@@ -100,12 +100,10 @@ var App = {
     },
     getWikis: function(organizationId) {
         $.ajax({
-            url: '/organizations/wikis',
+            url: '/organizations/'+Cookies.get('organization_slug')+'/wikis',
             type: 'GET',
             dataType: 'json',
-            data: {
-                organization_id: organizationId
-            },
+            contentType: 'application/json',
             success: function(data) {
                 var html = '';
                 $(data).each(function(index, el) {

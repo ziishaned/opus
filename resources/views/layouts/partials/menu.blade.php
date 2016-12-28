@@ -40,7 +40,7 @@
                         <a href="{{ route('dashboard', [$organization->slug]) }}">Activities</a>
                     </li>
                     <li>
-                        <a href="{{ route('dashboard.wikis', [$organization->slug, ]) }}">Wikis</a>
+                        <a href="{{ route('organizations.wikis', [$organization->slug, ]) }}">Wikis</a>
                     </li>
                     <li>
                         <a href="#">Members</a> 

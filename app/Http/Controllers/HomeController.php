@@ -34,17 +34,4 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
-    /**
-     * Get the home view.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function dashboard($organizationSlug)
-    {
-        $organization  = (new \App\Models\Organization)->getOrganization($organizationSlug);
-        $wikis         = (new \App\Models\Organization)->getWikis($organization);
-        $activities    = (new \App\Models\ActivityLog)->getOrganizationActivity($organization->id);   
-        return view('dashboard', compact('wikis', 'activities', 'organization'));
-    }
 }

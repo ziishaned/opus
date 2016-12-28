@@ -1,11 +1,11 @@
 @if(count($activities) > 0)
     <ul class="activity-con" style="padding: 0; list-style: none; margin-bottom: 0px;">
         @foreach($activities as $activity)
-            <li class="activity-item" style="border-bottom: 1px dotted #e6e6e6; padding: 8px 0; padding-bottom: 15px; padding-top: 15px;">
+            <li class="activity-item" style="border-bottom: 1px solid #efefef; padding: 8px 0; padding-bottom: 15px; padding-top: 15px;">
                 <?php $profile_image = ViewHelper::getProfilePic($activity->user_id); ?> 
                 <img src="/images/profile-pics/{{ $profile_image }}" class="img-responsive avatar hidden-xs hidden-sm" alt="Avatar" style="height: 75px; width: 75px; float: left; display: inline-block; border-radius: 3px; margin-right: 25px;">
                 <div class="message_date" style="float: right; text-align: right; color: #31708f;">
-                    <i class="fa fa-clock-o"></i> <span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $activity->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}"><time class="timeago" datetime="{{ $activity->created_at->timezone(Session::get('user_timezone')) }}">{{ $activity->created_at->timezone(Session::get('user_timezone'))->diffForHumans() }}</time></span>
+                    <i class="fa fa-clock-o"></i> <span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $activity->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}"><time class="timeago" datetime="{{ $activity->created_at->timezone(Session::get('user_timezone')) }}">{{ $activity->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }}</time></span>
                 </div>
                 <div class="message_wrapper">
                     <h3 class="heading" style="font-weight: 600; margin: 0; cursor: pointer; margin-bottom: 12px; line-height: 100%;">{{ $activity->first_name .' '. $activity->last_name }}</h3>
