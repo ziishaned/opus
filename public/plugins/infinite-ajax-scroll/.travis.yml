@@ -1,0 +1,30 @@
+sudo: false
+
+before_script:
+  - npm install
+  - npm install -g bower
+  - bower install --production
+  - bower install --force jquery#$JQUERY_VERSION
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 5
+  - ./node_modules/.bin/grunt buster::server:block &
+  - sleep 5
+  - firefox http://localhost:1111/capture &
+  - sleep 5
+
+script:
+  - "./node_modules/.bin/grunt buster::test"
+
+language: node_js
+
+node_js:
+  - 0.10
+
+env:
+  - JQUERY_VERSION=1.10.*
+  - JQUERY_VERSION=1.11.*
+  - JQUERY_VERSION=1.12.*
+  - JQUERY_VERSION=2.0.*
+  - JQUERY_VERSION=2.1.*
+  - JQUERY_VERSION=2.2.*

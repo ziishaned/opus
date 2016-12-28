@@ -1,0 +1,16 @@
+{
+  "name": "jquery-ias",
+  "version": "2.2.2",
+  "homepage": "http://infiniteajaxscroll.com",
+  "main": "src/jquery-ias.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "dist"
+  ],
+  "dependencies": {
+    "jquery": "git://github.com/components/jquery.git#>=1.7"
+  }
+}

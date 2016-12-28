@@ -6,6 +6,15 @@ html, body {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
+.ias-noneleft {
+    font-weight: 400;
+    margin: 20px 0px;
+}
+
+.ias-spinner {
+    margin: 20px 0px;
+}
+
 .subnav ul li.active a {
     background-color: #f8f8f8; 
     border-bottom: 2px solid #757575;

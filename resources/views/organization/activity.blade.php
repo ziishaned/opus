@@ -5,10 +5,10 @@
         <div class="container">
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                 <li class="active">
-                    <a href="{{ route('organizations.activity', [$organization->slug]) }}">Activity</a>
+                    <a href="{{ route('dashboard', [$organization->slug]) }}">All activities</a>
                 </li>
                 <li>
-                    <a href="#">Wikis</a>
+                    <a href="#">My activities</a>
                 </li>
             </ul>
         </div>
@@ -21,15 +21,15 @@
                         <a href="#">Facebook</a>
                     </li>
                     <li class="active">
-                        <a href="#">Activity</a>
+                        <a href="#">All activities</a>
                     </li>
                 </ul>
             </div>
         </div>
 	    <div class="row">   
-	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	            @include('layouts.partials.activity')
-	        </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @include('layouts.partials.activity')
+            </div>
 	    </div>
     </div>
 @endsection

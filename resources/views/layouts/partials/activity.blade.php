@@ -1,7 +1,7 @@
 @if(count($activities) > 0)
-    <ul class="messages" style="padding: 0; list-style: none;">
+    <ul class="activity-con" style="padding: 0; list-style: none; margin-bottom: 0px;">
         @foreach($activities as $activity)
-            <li style="border-bottom: 1px dotted #e6e6e6; padding: 8px 0; padding-bottom: 15px; padding-top: 15px;">
+            <li class="activity-item" style="border-bottom: 1px dotted #e6e6e6; padding: 8px 0; padding-bottom: 15px; padding-top: 15px;">
                 <?php $profile_image = ViewHelper::getProfilePic($activity->user_id); ?> 
                 <img src="/images/profile-pics/{{ $profile_image }}" class="img-responsive avatar hidden-xs hidden-sm" alt="Avatar" style="height: 75px; width: 75px; float: left; display: inline-block; border-radius: 3px; margin-right: 25px;">
                 <div class="message_date" style="float: right; text-align: right; color: #31708f;">
@@ -47,9 +47,21 @@
             </li>
         @endforeach
     </ul>
-    <div class="row text-center" style="margin-top: 15px;">
+    <div class="row text-center activity-pagination-con hide" style="margin-top: 15px; margin-bottom: 10px;">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            {{ $activities->links() }}
+            <ul class="pagination">
+                <?php
+                    $currentPage = $activities->currentPage(); 
+                ?>
+                @while($currentPage <= $activities->lastPage())
+                    <li class="{{ ($currentPage == 2) ? 'next' : '' }}">
+                        <a href="http://wiki.dev/organizations/facebook/activity?page={{ $currentPage }}">{{ $currentPage }}</a>
+                    </li>
+                    <?php
+                        $currentPage++;
+                    ?>
+                @endwhile
+            </ul>
         </div>
     </div>
 @else

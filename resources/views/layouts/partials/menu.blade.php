@@ -37,10 +37,16 @@
                         <a href="{{ route('dashboard', [$organization->slug])  }}">{{ $organization->name }}</a>
                     </li>
                     <li>
+                        <a href="{{ route('dashboard', [$organization->slug]) }}">Activities</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard.wikis', [$organization->slug, ]) }}">Wikis</a>
+                    </li>
+                    <li>
                         <a href="#">Members</a> 
                     </li>
                     <li>
-                        <a href="#">Tools</a> 
+                        <a href="#" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
                     </li>
                 </ul>
             @endif

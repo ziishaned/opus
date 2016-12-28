@@ -5,10 +5,16 @@
         <div class="container">
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                 <li>
-                    <a href="{{ route('organizations.activity', [$organization->slug]) }}">Activity</a>
+                    <a href="{{ route('dashboard', [$organization->slug, ]) }}">All wikis</a>
                 </li>
                 <li class="active">
-                    <a href="#">Wikis</a>
+                    <a href="{{ route('dashboard.wikis', [$organization->slug, ]) }}">My contributions</a>
+                </li>
+                <li>
+                    <a href="#">Read list</a>
+                </li>
+                <li>
+                    <a href="#" title="Jis py zyada comment or viaitor hon">Trending</a>
                 </li>
             </ul>
         </div>
