@@ -56,10 +56,11 @@ class ActivityLog extends Model
      * @param  int      $userId
      * @return object         
      */
-    public function getUserActivities($userId)
+    public function getUserActivity($userId, $organizationId)
     {
         return $this
                     ->where('activity_log.user_id', '=', $userId)
+                    ->where('activity_log.organization_id', '=', $organizationId)
                     ->join('users', 'activity_log.user_id', '=', 'users.id')
                     ->latest('activity_log.created_at')
                     ->select('activity_log.*', 'users.first_name', 'users.last_name', 'users.slug as user_slug')

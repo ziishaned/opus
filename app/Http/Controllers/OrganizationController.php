@@ -343,4 +343,11 @@ class OrganizationController extends Controller
         $activities   = $this->activity->getOrganizationActivity($organization->id);
         return view('organization.activity', compact('activities', 'organization'));        
     }
+
+    public function getUserActivity($organizationSlug) 
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);   
+        $activities   = $this->activity->getUserActivity(Auth::user()->id, $organization->id);
+        return view('organization.user-activity', compact('activities', 'organization'));   
+    }
 }

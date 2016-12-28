@@ -8,7 +8,7 @@ var App = {
     },
     loadOrganizationActivites: function() {
         var ias = $.ias({
-            delay: 800,
+            delay: 1000,
             container: ".activity-con",
             item: ".activity-item",
             pagination: ".activity-pagination-con .pagination",
