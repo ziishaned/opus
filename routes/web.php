@@ -34,6 +34,7 @@ Route::group(['prefix' => 'organizations'], function () {
         });
 
         Route::group(['prefix' => '{organization_slug}/categories'], function () {
+            Route::get('', 'CategoryConroller@index')->name('organizations.categories.index');
             Route::get('create', 'CategoryConroller@create')->name('organizations.categories.create');
         });
 

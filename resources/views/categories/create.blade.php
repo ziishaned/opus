@@ -5,10 +5,10 @@
         <div class="container">
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                 <li>
-                    <a href="#">Categories</a>
+                    <a href="{{ route('organizations.categories.index', [$organization->slug, ]) }}">Categories</a>
                 </li>
                 <li class="active">
-                    <a href="#">Create category</a>
+                    <a href="{{ route('organizations.categories.create', [$organization->slug, ]) }}">Create category</a>
                 </li>
             </ul>
         </div>

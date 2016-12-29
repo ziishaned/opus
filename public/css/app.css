@@ -6,6 +6,28 @@ html, body {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
+table.categories th, table.categories .categories-actions {
+    text-align: center;
+}
+
+table.categories td {
+    padding-left: 15px !important;
+}
+
+.btn-xs {
+    padding: 1px 5px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    border-radius: 3px !important;
+}
+
+.btn-sm {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    border-radius: 3px !important;
+}
+
 .category-input-con li {
     margin-bottom: 20px;
 }
@@ -48,6 +70,10 @@ a:focus {
 }
 
 @media (max-width: 768px) {
+    .subnav {
+        margin-bottom: 30px !important;
+    }
+
     .invitations-input-con li {
         padding: 10px 0px; 
         border-top: 1px solid #ccc;

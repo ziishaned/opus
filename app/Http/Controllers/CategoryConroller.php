@@ -23,6 +23,12 @@ class CategoryConroller extends Controller
     	$this->organization = $organization;
     }
 
+    public function index($organizationSlug)
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);
+        return view('categories.index', compact('organization'));
+    }
+
     public function create($organizationSlug) 
     {
     	$organization = $this->organization->getOrganization($organizationSlug);
