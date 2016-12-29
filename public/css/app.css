@@ -537,8 +537,14 @@ a:hover {
     padding-left: 18px !important;
 }
 
-.select2-container--open .select2-selection {
+.select2-container--above.select2-container--open .select2-selection {
+    border-top: 0px !important;
+    box-shadow: none !important;
+}
+
+.select2-container--below.select2-container--open .select2-selection {
     border-bottom: 0px !important;
+    box-shadow: none !important;   
 }
 
 .comments-container h1 {
@@ -951,7 +957,6 @@ kbd {
     border-color: #ccc !important;
     outline: none !important;
     border-radius: 2px !important;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
 }
 
 .select2-selection__rendered {
@@ -990,12 +995,12 @@ kbd {
 }
 
 .select2-dropdown.select2-dropdown--above {
-    border: 1px solid #dedede !important;
+    border: 1px solid #ccc !important;
     border-bottom: 0px !important;
 }
 
 .select2-dropdown.select2-dropdown--below {
-    border: 1px solid #dedede !important;
+    border: 1px solid #ccc !important;
     border-top: 0px !important;
 }
 
