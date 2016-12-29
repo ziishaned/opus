@@ -38,6 +38,8 @@ Route::group(['prefix' => 'organizations'], function () {
             Route::get('create', 'CategoryConroller@create')->name('organizations.categories.create');
         });
 
+        Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
+
         Route::get('{organization_slug}/invite', 'OrganizationController@inviteUsers')->name('invite.users');
         Route::get('{organization_slug}', 'OrganizationController@getActivity')->name('dashboard')->middleware('dashboard');
         Route::get('{organization_slug}/activity', 'OrganizationController@getActivity')->name('dashboard')->middleware('dashboard');

@@ -70,6 +70,11 @@ a:focus {
 }
 
 @media (max-width: 768px) {
+    .total-members {
+        margin-bottom: 25px !important;
+        text-align: center !important;
+    }
+
     .subnav {
         margin-bottom: 30px !important;
     }
