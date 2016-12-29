@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div style="min-height: 50px;">
+    <div style="min-height: 55px;">
         @include('layouts.partials.menu')
     </div>
 

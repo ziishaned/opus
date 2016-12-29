@@ -223,6 +223,12 @@ class OrganizationController extends Controller
         return view('organization.wikis', compact('organization'));
     }
 
+    public function getUserContributedWikis($organizationSlug) 
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);
+        return view('organization.wikis.user-contributions', compact('organization'));
+    }
+
     /**
      * Get the edit organization view.
      *
@@ -359,5 +365,11 @@ class OrganizationController extends Controller
         $organization = $this->organization->getOrganization($organizationSlug);   
         $activities   = $this->activity->getUserActivity(Auth::user()->id, $organization->id);
         return view('organization.user-activity', compact('activities', 'organization'));   
+    }
+
+    public function inviteUsers($organizationSlug) 
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);   
+        return view('organization.users.invite', compact('organization'));
     }
 }

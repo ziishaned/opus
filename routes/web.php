@@ -33,10 +33,16 @@ Route::group(['prefix' => 'organizations'], function () {
             Route::get('notifications', 'UserController@notificationsSettings')->name('settings.notifications');
         });
 
+        Route::group(['prefix' => '{organization_slug}/categories'], function () {
+            Route::get('create', 'UserController@profileSettings')->name('organizations.categories.create');
+        });
+
+        Route::get('{organization_slug}/invite', 'OrganizationController@inviteUsers')->name('invite.users');
         Route::get('{organization_slug}', 'OrganizationController@getActivity')->name('dashboard')->middleware('dashboard');
         Route::get('{organization_slug}/activity', 'OrganizationController@getActivity')->name('dashboard')->middleware('dashboard');
         Route::get('{organization_slug}/activity/user', 'OrganizationController@getUserActivity')->name('dashboard.user.activity');
         Route::get('{organization_slug}/wikis', 'OrganizationController@getWikis')->name('organizations.wikis');
+        Route::get('{organization_slug}/wikis/user-contributions', 'OrganizationController@getUserContributedWikis')->name('organizations.wikis.user-contributions');
         Route::delete('{id}', 'OrganizationController@destroy')->name('organizations.destroy');
         Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
         Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');

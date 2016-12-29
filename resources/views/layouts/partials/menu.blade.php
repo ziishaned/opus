@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" style="border: none; background-color: #f8f8f8; cursor: pointer;">
                 <i class="fa fa-bars fa-lg"></i>
             </button>
             <a class="navbar-brand hidden-lg hidden-md hidden-sm" href="#">Wiki Stack</a>
@@ -55,10 +55,19 @@
                     <li class="hidden-xs hidden-sm">
                         <form class="navbar-form" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" style="width: 265px; padding-right: 30px; border: 1px solid #ccc; box-shadow: none;">
-                                <span class="fa fa-search fa-fw" style="position: absolute; top: 16px; right: 23px; color: #9E9E9E; font-weight: bold;"></span>
+                                <input type="text" class="form-control input" placeholder="Search" style="width: 265px; padding-right: 30px;">
+                                <span class="fa fa-search fa-fw" style="position: absolute; top: 17px; right: 23px; color: #adadad; font-weight: bold;"></span>
                             </div>
                         </form>
+                    </li>
+                    <li class="dropdown hidden-xs" title="Notifications">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-plus"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">Create wiki</a></li>
+                            <li><a href="{{ route('organizations.categories.create', [$organization->slug]) }}">Create category</a></li>
+                            <li class="nav-divider"></li>
+                            <li><a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a></li>
+                        </ul>
                     </li>
                     <li class="dropdown hidden-xs" title="Notifications">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox"></i></a>
@@ -97,8 +106,8 @@
                     <li class="hidden-lg hidden-md hidden-sm">
                         <form class="navbar-form" role="search" style="margin: 0; margin-bottom: 7px;">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" style="padding-right: 30px; border: 1px solid #ccc; box-shadow: none;">
-                                <span class="fa fa-search fa-fw" style="position: absolute; top: 20px; right: 23px; color: #9E9E9E; font-weight: bold;"></span>
+                                <input type="text" class="form-control input" placeholder="Search" style="padding-right: 30px;">
+                                <span class="fa fa-search fa-fw" style="position: absolute; top: 20px; right: 23px; color: #adadad; font-weight: bold;"></span>
                             </div>
                         </form>
                     </li>

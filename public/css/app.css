@@ -6,6 +6,11 @@ html, body {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
+a:focus {
+    outline: none;
+    text-decoration: none;
+}
+
 .ias-noneleft {
     font-weight: 400;
     margin: 20px 0px;
@@ -13,6 +18,12 @@ html, body {
 
 .ias-spinner {
     margin: 20px 0px;
+}
+
+.subnav ul {
+    overflow: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
 }
 
 .subnav ul li.active a {
@@ -29,6 +40,20 @@ html, body {
 }
 
 @media (max-width: 768px) {
+    .invitations-input-con li {
+        padding: 10px 0px; 
+        border-top: 1px solid #ccc;
+    }
+
+    .invitations-input-con li:first-child {
+        padding-top: 0px;
+        border-top: 0px;
+    }
+
+    .invitations-input-con li:last-child {
+        padding-bottom: 0;
+    }
+
     .header-menu .organization-name a {
         font-size: 20px !important;
         font-weight: 600 !important;
@@ -38,6 +63,30 @@ html, body {
     .navbar-default .navbar-nav>li>a:hover {
         background-color: #BDBDBD !important;
         color: #fff !important;
+    }
+}
+
+.emojionearea.focused {
+    border-color: #66afe9 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 350px) {
+    .site-breadcrumb ul li {
+        font-size: 16px !important;
+    }
+
+    .site-breadcrumb ul li:first-child {
+        display: inline-block !important;
+    }
+
+    .site-breadcrumb ul li:last-child {
+        display: inline-block !important;
+    }
+
+    .site-breadcrumb ul li {
+        display: none !important;
     }
 }
 
@@ -121,6 +170,14 @@ input:focus {
     box-shadow: none !important;
 }
 
+.select2-results__option, .btn, ::selection, .fa {
+    -webkit-text-stroke: 0px !important;
+}
+
+::selection {
+    background-color: #ACCEF7;
+    color: #222;
+}
 /*Button*/
 .btn {
     display: inline-block;

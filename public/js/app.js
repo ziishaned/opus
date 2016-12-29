@@ -3,8 +3,11 @@ var App = {
         this.params = params;
         this.bindUI();
         this.initJcrop();
-        $('[data-toggle="tooltip"]').tooltip();
+        this.initTooltip();
         this.loadOrganizationActivites();
+    },
+    initTooltip: function() {
+        $('[data-toggle="tooltip"]').tooltip();
     },
     loadOrganizationActivites: function() {
         var ias = $.ias({
@@ -43,24 +46,6 @@ var App = {
         $('#y').val(c.y);
         $('#w').val(c.w);
         $('#h').val(c.h);
-    },
-    inviteUserToOrganization: function (userId, organizationId) {
-        $.ajax({
-            url: '/organizations/invite',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                userId          : userId,
-                organizationId  : organizationId
-            },
-            success: function(data) {
-                console.log(data);
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
     },
     removeUserFromOrganization: function (userId, organizationId) {
         $.ajax({
@@ -119,6 +104,51 @@ var App = {
     },
     bindUI: function () {
         var that = this;
+        $(document).on('click', '#add-invitation-input', function(event) {
+            event.preventDefault();
+            var invitationInput = `<li>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 hidden-md hidden-lg">
+                                                <div class="remove-invitation-input-con">
+                                                    <button type="button" class="btn-link" id="remove-invitation-input" style="font-size: 17px; font-size: 17px; width: 100%;"><i class="fa fa-close"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                                                <div class="form-group">
+                                                    <label for="">Email Address</label>
+                                                    <input type="text" class="form-control input" id="" placeholder="example@example.com">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">First Name</label>
+                                                    <input type="text" class="form-control input" id="" placeholder="Optional">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="">Last Name</label>
+                                                    <input type="text" class="form-control input" id="" placeholder="Optional">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 hidden-sm hidden-xs">
+                                                <div class="remove-invitation-input-con" style="text-align: center; position: relative; top: 24px;">
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Remove invitation" class="btn-link" id="remove-invitation-input" style="font-size: 17px;"><i class="fa fa-close"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>`;
+            $('#user-invitation-form .invitations-input-con').append(invitationInput);
+            $('.total-invitations').text($('.invitations-input-con li').length);
+            that.initTooltip();
+        });
+        $(document).on('click', '#remove-invitation-input', function(event) {
+            event.preventDefault();
+            if($('.invitations-input-con li').length > 1) {
+                $(this).closest('li').remove();
+            }
+            $('.total-invitations').text($('.invitations-input-con li').length);
+        });
         $(document).on('click', '#get-organizations', function(event) {
             event.preventDefault();            
             if($('#get-organizations').attr('data-appended') == 'false') {
@@ -229,8 +259,9 @@ var App = {
                         "advlist autolink link lists charmap hr anchor pagebreak mention",
                         "searchreplace wordcount visualblocks visualchars code nonbreaking",
                         "save table contextmenu directionality emoticons template paste textcolor placeholder",
-                        "leaui_code_editor"
+                        "leaui_code_editor autoresize"
                     ],
+                    autoresize_min_height: 400,
                     mentions: {
                         source: function (query, process, delimiter) {
                             if (delimiter === '@') {
@@ -445,8 +476,9 @@ $(document).ready(function() {
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
             "save table contextmenu directionality template paste textcolor placeholder",
-            "leaui_code_editor codemirror mention jbimages"
+            "leaui_code_editor codemirror mention jbimages autoresize"
         ],
+        autoresize_min_height: 400,
         mentions: {
             delimiter: ':',
             queryBy: 'name',
@@ -547,8 +579,9 @@ $(document).ready(function() {
             "advlist autolink link lists charmap hr anchor pagebreak mention",
             "searchreplace wordcount visualblocks visualchars code nonbreaking",
             "save table contextmenu directionality template paste textcolor placeholder",
-            "leaui_code_editor"
+            "leaui_code_editor autoresize"
         ],
+        autoresize_min_height: 400,
         mentions: {
             source: function (query, process, delimiter) {
                 if (delimiter === '@') {
@@ -632,8 +665,9 @@ $(function() {
 
 // Select2
 $(function() {
-    $('#timezone, #wiki_visibility, #page-parent').select2({
-        minimumResultsForSearch: 5
+    $('#timezone, #wiki_visibility, #page-parent, #category').select2({
+        minimumResultsForSearch: 5,
+        width: "100%"
     });
     
     $("#outline, #organization-description").emojioneArea({
