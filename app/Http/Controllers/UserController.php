@@ -76,7 +76,7 @@ class UserController extends Controller
             return abort(404);
         }
         
-        $activities = $this->activityLog->getUserActivities($user->id);
+        $activities = $this->activityLog->getUserActivity($user->id, $organization->id);
         return view('user.user', compact('user', 'activities', 'organization'));
     }
 
