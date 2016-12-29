@@ -49,7 +49,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 hidden-sm hidden-xs">
-                                        <div class="remove-invitation-input-con" style="text-align: center; position: relative; top: 24px;">
+                                        <div class="remove-invitation-input-con" style="text-align: center; position: relative; top: 18px;">
                                             <a href="#" data-toggle="tooltip" data-placement="top" title="Remove invitation" class="btn-link" id="remove-invitation-input" style="font-size: 17px;"><i class="fa fa-close"></i></a>
                                         </div>
                                     </div>

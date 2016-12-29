@@ -34,7 +34,7 @@ Route::group(['prefix' => 'organizations'], function () {
         });
 
         Route::group(['prefix' => '{organization_slug}/categories'], function () {
-            Route::get('create', 'UserController@profileSettings')->name('organizations.categories.create');
+            Route::get('create', 'CategoryConroller@create')->name('organizations.categories.create');
         });
 
         Route::get('{organization_slug}/invite', 'OrganizationController@inviteUsers')->name('invite.users');

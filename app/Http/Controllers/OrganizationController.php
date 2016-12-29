@@ -24,12 +24,12 @@ class OrganizationController extends Controller
     /**
      * @var \Illuminate\Http\Request
      */
-    protected $request;
+    private $request;
 
     /**
      * @var \App\Models\Organization
      */
-    protected $organization;
+    private $organization;
 
     /**
      * @var \App\Http\Controllers\UserController
