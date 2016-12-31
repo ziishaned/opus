@@ -46,7 +46,7 @@
                         <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members</a> 
                     </li>
                     <li>
-                        <a href="#" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
+                        <a href="{{ route('organizations.reports.index', [$organization->slug, ]) }}" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
                     </li>
                 </ul>
             @endif

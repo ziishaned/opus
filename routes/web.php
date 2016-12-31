@@ -38,6 +38,7 @@ Route::group(['prefix' => 'organizations'], function () {
             Route::get('create', 'CategoryConroller@create')->name('organizations.categories.create');
         });
 
+        Route::get('{organization_slug}/reports', 'ReportConroller@index')->name('organizations.reports.index');
         Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
 
         Route::get('{organization_slug}/invite', 'OrganizationController@inviteUsers')->name('invite.users');

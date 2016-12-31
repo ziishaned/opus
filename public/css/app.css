@@ -6,6 +6,23 @@ html, body {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
+.highcharts-title, .highcharts-axis-title, .highcharts-axis-labels text, .highcharts-tooltip {
+    font-family: 'segoe ui' !important;
+}
+
+.highcharts-drilldown-axis-label {
+    color: #424242 !important;
+    fill: #424242 !important;
+    font-family: 'segoe ui' !important;
+    text-decoration: none !important;
+    font-size: 12px !important;
+}
+
+.highcharts-label text {
+    font-family: 'segoe ui' !important;
+    text-decoration: none !important;
+}
+
 table.categories th, table.categories .categories-actions {
     text-align: center;
 }
@@ -230,8 +247,6 @@ input:focus {
     vertical-align: middle;
     cursor: pointer;
     background-color: #d1dade;
-    -webkit-border-radius: 3px;
-    -webkit-border-radius: 3px;
     -webkit-border-radius: 3px;
     background-image: none !important;
     /*border: none;*/

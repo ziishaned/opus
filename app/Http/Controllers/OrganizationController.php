@@ -47,10 +47,10 @@ class OrganizationController extends Controller
      */
     public function __construct(Request $request, Organization $organization, User $user, ActivityLog $activity)
     {
-        $this->request      = $request;
-        $this->organization = $organization;
         $this->user         = $user;
+        $this->request      = $request;
         $this->activity     = $activity;
+        $this->organization = $organization;
     }
 
     /**
