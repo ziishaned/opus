@@ -45,7 +45,7 @@
   color: #fff !important;
 }
 .mce-menu-item-normal.mce-active {
-  background-color: #ebeff2 !important;
+  background-color: #ebeff2;
 }
 
 .mce-tinymce {

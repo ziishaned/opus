@@ -46,15 +46,21 @@
                     <div role="tabpanel" class="tab-pane active" id="Visits">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-group period-dropdown" style="width: 300px; margin-top: 11px; margin-left: 17px;">
-                                    <label for="input" class="control-label">Select Period</label>
-                                    <select name="" id="input" class="form-control" required="required">
-                                        <option value="">Daily</option>
-                                        <option value="">Weekly</option>
-                                        <option value="">Monthly</option>
-                                    </select>     
+                                <div class="form-group period-dropdown hidden-xs" style="position: absolute; right: 15px; z-index: 100; top: -45px;">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-default active">Daily</button>
+                                        <button type="button" class="btn btn-default">Weekly</button>
+                                        <button type="button" class="btn btn-default">Monthly</button>
+                                    </div>
                                 </div>
-                                <div id="highchart-wikis" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                <div class="form-group period-dropdown text-center hidden-sm hidden-lg hidden-md" style="margin: 0; position: relative; top: 12px;">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-default active">Daily</button>
+                                        <button type="button" class="btn btn-default">Weekly</button>
+                                        <button type="button" class="btn btn-default">Monthly</button>
+                                    </div>
+                                </div>
+                                <div id="highchart-wikis" style="margin-top: 12px; min-width: 310px; height: 400px;"></div>
                             </div>
                         </div>          
                     </div>

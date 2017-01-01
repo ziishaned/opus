@@ -1,18 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="subnav" style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
-        <div class="container">
-            <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
-                <li class="active">
-                    <a href="#">All Members</a>            
-                </li>
-                <li>
-                    <a href="#">Top Contributors</a>        
-                </li>
-            </ul>
-        </div>
-    </div>
     <div class="container">
         <div style="margin-bottom: 10px; margin-top: 10px; height: 50px;" class="hidden-xs">
             <div class="site-breadcrumb">
@@ -27,9 +15,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
+            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 hidden-xs hidden-sm">
                 <div class="total-members" style="font-size: 17px; font-weight: 400; position: relative; top: 5px;">
-                    Users with access to <strong>{{ $organization->name  }}</strong> <span class="count" style="border-radius: 3px; padding: 0px 8px; color: #fff; background: #555;">{{ $organization->members->count()  }}</span>
+                    Users with access to <strong>{{ $organization->name  }}</strong> <span class="label label-default">{{ $organization->members->count()  }}</span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 hidden-lg hidden-md">
+                <div class="total-members" style="font-size: 17px; font-weight: 400; position: relative; top: 12px;">
+                    Users with access to <strong>{{ $organization->name  }}</strong> <span class="label label-default">{{ $organization->members->count()  }}</span>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-right">

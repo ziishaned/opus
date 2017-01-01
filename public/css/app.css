@@ -234,6 +234,7 @@ input:focus {
     background-color: #ACCEF7;
     color: #222;
 }
+
 /*Button*/
 .btn {
     display: inline-block;
@@ -1026,4 +1027,72 @@ kbd {
 
 .rte-autocomplete li a {
     cursor: pointer !important;
+}
+
+.mce-floatpanel .mce-text, .mce-tooltip {
+    -webkit-text-stroke: 0px !important;
+}
+
+.mce-tooltip {
+    font-family: 'segoe ui' !important;
+}
+
+.mce-menu-item-normal.mce-active {
+    background-color: #3498db !important;
+}
+
+.highcharts-button-box {
+    color: #333 !important;
+    fill: #fff !important;
+    height: 30px !important;
+    stroke: #ccc !important;
+}
+
+text tspan {
+    font-family: "segoe ui" !important;
+    font-size: 14px !important;
+}
+
+.dropdown-menu::before {
+    top: -16px;
+    right: 9px;
+    left: auto;
+    border: 8px solid transparent;
+    border-bottom-color: rgba(0,0,0,0.15);
+    
+}
+  .dropdown-menu::after {
+    top: -14px;
+    right: 10px;
+    left: auto;
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+}
+
+.dropdown-menu::before, .dropdown-menu::after {
+    position: absolute;
+    display: inline-block;
+    content: "";
+}
+
+.dropdown-menu-left::before {
+    top: -16px;
+    right: auto;
+    left: 14px;
+    border: 8px solid transparent;
+    border-bottom-color: rgba(0,0,0,0.15);
+    
+}
+  .dropdown-menu-left::after {
+    top: -14px;
+    right: auto;
+    left: 15px;
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+}
+
+.dropdown-menu-left::before, .dropdown-menu-left::after {
+    position: absolute;
+    display: inline-block;
+    content: "";
 }

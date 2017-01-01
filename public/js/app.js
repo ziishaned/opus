@@ -239,7 +239,7 @@ var App = {
                 tinymce.remove("#edit-comment-input");
                 tinymce.init({
                     selector: "#edit-comment-input",
-                    content_css: "/css/bootstrap.min.css,/css/tinymce.css",
+                    content_css: "/css/tinymce.css",
 
                     /* theme of the editor */
                     theme: "modern",
@@ -457,7 +457,7 @@ $(document).ready(function() {
     tinymce.init({
         /* replace textarea having class .tinymce with tinymce editor */
         selector: "#page-description, #wiki-description",
-        content_css : "/css/bootstrap.min.css,/css/tinymce.css,/js/plugins/leaui_code_editor/css/pre.css", 
+        content_css : "/css/tinymce.css,/js/plugins/leaui_code_editor/css/pre.css", 
 
         /* theme of the editor */
         theme: "modern",
@@ -474,9 +474,9 @@ $(document).ready(function() {
         /* plugin */
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
-            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
             "save table contextmenu directionality template paste textcolor placeholder",
-            "leaui_code_editor codemirror mention jbimages autoresize"
+            "leaui_code_editor codemirror mention autoresize"
         ],
         autoresize_min_height: 400,
         mentions: {
@@ -522,7 +522,7 @@ $(document).ready(function() {
         
         /* toolbar */
         toolbar: [
-        	"styleselect | bold italic underline forecolor backcolor | leaui_code_editor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | jbimages media | link unlink table | preview code | undo redo | localautosave",
+        	"styleselect | bold italic underline forecolor backcolor | leaui_code_editor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | link unlink table | preview code | undo redo | localautosave",
         ],
         codemirror: {
             indentOnInit: true,
@@ -555,7 +555,7 @@ $(document).ready(function() {
     tinymce.init({
         /* replace textarea having class .tinymce with tinymce editor */
         selector: "#comment-input",
-        content_css : "/css/bootstrap.min.css,/css/tinymce.css",
+        content_css : "/css/tinymce.css",
         statusbar: false,
 
         /* theme of the editor */

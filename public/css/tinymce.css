@@ -7,8 +7,72 @@
 }
 
 body {
-	font-family: 'Open Sans', sans-serif, arial;
-	padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
+	font-family: 'segoe ui', 'Open Sans', sans-serif, arial !important;
+    padding: 6px 12px !important;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2) !important;
+}
+
+code {
+    font-family: monaco !important;
+}
+
+::selection {
+    -webkit-text-stroke: 0px !important;
+}
+
+::selection {
+    background-color: #ACCEF7 !important;
+    color: #222 !important;
+}
+
+li, a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
+    font-family: 'segoe ui', 'Open Sans', 'source sans pro';
+    color: #424242;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0 !important;
+    margin-bottom: 5px !important;
+}
+
+h1 {
+    font-size: 30px !important;
+}
+
+h2 {
+    font-size: 21px !important;
+}
+
+h3 {
+    font-size: 18px !important;
+}
+
+h4 {
+    font-size: 16px !important;
+}
+
+h5 {
+    font-size: 14px !important;
+}
+
+p {
+    font-size: 14px !important;
+    margin: 0px !important;
+}
+
+.mce-toolbar {
+	-webkit-text-stroke: 0px !important;
+}
+
+a:active, a:focus, a:hover {
+    color: #439fe0 !important;
+}
+
+a {
+    color: #08c !important;
+    text-decoration: none !important;
+}
+
+a, a:link, a:visited {
+    color: #2a80b9 !important;
 }

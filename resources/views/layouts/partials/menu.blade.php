@@ -11,7 +11,7 @@
                 <ul class="nav navbar-nav">
                     <li class="hidden-xs">
                         <a href="#" class="dropdown-toggle" data-organizationId="{{ $organization->id }}" data-appended="false" data-toggle="dropdown" id="get-wikis"><i class="fa fa-bars fa-lg"></i></a>
-                        <ul class="dropdown-menu" id="wikis-list" style="padding: 10px;">
+                        <ul class="dropdown-menu dropdown-menu-left" id="wikis-list" style="padding: 10px;">
                             <li>
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -61,21 +61,21 @@
                         </form>
                     </li>
                     <li class="dropdown hidden-xs" title="Notifications">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-plus"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">Create wiki</a></li>
-                            <li><a href="{{ route('organizations.categories.create', [$organization->slug]) }}">Create category</a></li>
-                            <li class="nav-divider"></li>
-                            <li><a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown hidden-xs" title="Notifications">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox fa-fw"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown hidden-xs" title="Notifications">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-plus fa-fw"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">Create wiki</a></li>
+                            <li><a href="{{ route('organizations.categories.create', [$organization->slug]) }}">Create category</a></li>
+                            <li class="nav-divider"></li>
+                            <li><a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a></li>
                         </ul>
                     </li>
                     <li class="dropdown hidden-xs" title="{{ Auth::user()->full_name }}">
