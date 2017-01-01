@@ -30,4 +30,9 @@ class Category extends Model
     	]);
     	return true;
     }
+
+    public function getCategories($organizationId)
+    {
+        return $this->where('organization_id', '=', $organizationId)->paginate(10);
+    }
 }

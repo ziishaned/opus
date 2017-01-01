@@ -24,7 +24,10 @@ class CategoryConroller extends Controller
     public function index($organizationSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
-        return view('categories.index', compact('organization'));
+        
+        $categories = $this->category->getCategories($organization->id);
+        
+        return view('categories.index', compact('organization', 'categories'));
     }
 
     public function create($organizationSlug) 

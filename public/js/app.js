@@ -4,31 +4,52 @@ var App = {
         this.bindUI();
         this.initJcrop();
         this.initTooltip();
-        this.loadOrganizationActivites();
+        // this.loadOrganizationActivites();
+        this.loadCategories();
     },
     initTooltip: function() {
         $('[data-toggle="tooltip"]').tooltip();
     },
-    loadOrganizationActivites: function() {
+    loadCategories: function() {
         var ias = $.ias({
             delay: 1000,
-            container: ".activity-con",
-            item: ".activity-item",
-            pagination: ".activity-pagination-con .pagination",
-            next: ".activity-pagination-con .next a"
+            container: ".categories-con",
+            item: ".categories-item",
+            pagination: ".categories-pagination-con .pagination",
+            next: ".categories-pagination-con .next a"
         }).on('loaded', function(data, items) {
-            $('.activity-pagination-con .next').next('li').addClass('next');
-            $('.activity-pagination-con .next').first().removeClass('next');
+            $('.categories-pagination-con .next').next('li').addClass('next');
+            $('.categories-pagination-con .next').first().removeClass('next');
         }).on('load', function(event) {
-            event.url = $(".activity-pagination-con .next a").attr('href');
+            event.url = $(".categories-pagination-con .next a").attr('href');
+        }).on('scroll', function() {
+            
         });
 
         ias.extension(new IASSpinnerExtension({
             src: '/images/loader.gif',
         }));
-        ias.extension(new IASTriggerExtension({offset: 3}));
-        ias.extension(new IASNoneLeftExtension({text: 'No more activities left to load.'}));
+        // ias.extension(new IASTriggerExtension({offset: 3}));
     },
+    // loadOrganizationActivites: function() {
+    //     var ias = $.ias({
+    //         delay: 1000,
+    //         container: ".activity-con",
+    //         item: ".activity-item",
+    //         pagination: ".activity-pagination-con .pagination",
+    //         next: ".activity-pagination-con .next a"
+    //     }).on('loaded', function(data, items) {
+    //         $('.activity-pagination-con .next').next('li').addClass('next');
+    //         $('.activity-pagination-con .next').first().removeClass('next');
+    //     }).on('load', function(event) {
+    //         event.url = $(".activity-pagination-con .next a").attr('href');
+    //     });
+
+    //     ias.extension(new IASSpinnerExtension({
+    //         src: '/images/loader.gif',
+    //     }));
+    //     ias.extension(new IASTriggerExtension({offset: 3}));
+    // },
     initJcrop: function() {
         var that = this;
         $('#cropimage').Jcrop({

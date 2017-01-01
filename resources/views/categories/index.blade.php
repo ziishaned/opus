@@ -35,63 +35,46 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Engineering</td>
-                            <td>
-                                <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
-                                    <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
-                                    <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>New Employee Onboarding</td>
-                            <td>
-                                <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
-                                    <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
-                                    <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Product</td>
-                            <td>
-                                <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
-                                    <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
-                                    <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Marketing</td>
-                            <td>
-                                <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
-                                    <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
-                                    <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Human Resuorces</td>
-                            <td>
-                                <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
-                                    <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
-                                    <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sales</td>
-                            <td>
-                                <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
-                                    <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
-                                    <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
-                                </ul>
-                            </td>
-                        </tr>
+                    <tbody class="categories-con">
+                        @foreach($categories as $category)
+                            <tr class="categories-item">
+                                <td>{{ $category->name }}</td>
+                                <td>
+                                    <ul class="list-unstyled list-inline categories-actions hidden-md hidden-sm hidden-lg" style="margin-bottom: 0;">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear fa-lg fa-fw" style="color: #424242;"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right" style="margin-top: 8px;">
+                                                <li><a href="#">Edit</a></li>
+                                                <li><a href="#">Delete</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled list-inline categories-actions hidden-xs" style="margin-bottom: 0;">
+                                        <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
+                                        <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="row text-center categories-pagination-con hide" style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="pagination">
+                    <?php
+                        $currentPage = $categories->currentPage(); 
+                    ?>
+                    @while($currentPage <= $categories->lastPage())
+                        <li class="{{ ($currentPage == 2) ? 'next' : '' }}">
+                            <a href="http://wiki.dev/organizations/{{ $organization->slug }}/categories?page={{ $currentPage }}">{{ $currentPage }}</a>
+                        </li>
+                        <?php
+                            $currentPage++;
+                        ?>
+                    @endwhile
+                </ul>
             </div>
         </div>
     </div>
