@@ -35,6 +35,15 @@ class CategoryConroller extends Controller
 
     public function store($organizationSlug)
     {
-           
+        $this->validate($this->request, Category::CATEGORY_RULES);
+
+        $organization = $this->organization->getOrganization($organizationSlug);
+        
+        $this->category->createCategory($this->request->all(), $organization->id);
+
+        return redirect()->back()->with([
+            'alert' => 'Category successfully created.',
+            'alert_type' => 'success'
+        ]);
     }
 }

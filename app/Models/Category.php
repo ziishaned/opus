@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
     const CATEGORY_RULES = [
-        'name' => 'required',
+        'category_name' => 'required',
     ];
 
     protected $table = 'category';
@@ -19,4 +20,14 @@ class Category extends Model
     	'created_at',
     	'updated_at',
     ];
+
+    public function createCategory($data, $organizationId)
+    {
+    	$this->create([
+    		'name' 			  => $data['category_name'],
+	    	'user_id' 		  => Auth::user()->id,
+	    	'organization_id' => $organizationId,
+    	]);
+    	return true;
+    }
 }

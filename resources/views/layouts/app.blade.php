@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer" style="padding-bottom: 0px; margin-top: -15px;">
+                        <div class="modal-footer" style="padding-bottom: 0px; margin-top: 15px;">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" id="update-image-size">Update</button>
                         </div>
@@ -55,7 +55,7 @@
     </div>
 
     @if(Session::get('alert'))
-        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 10px; margin-top: -19px; font-size: 13px;">
+        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 0px; margin-top: -4px; font-size: 13px;">
             <div class="container">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 {{ Session::get('alert') }}

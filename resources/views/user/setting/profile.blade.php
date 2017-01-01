@@ -30,27 +30,6 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 hidden-md hidden-lg">
-                <h2 style="margin-bottom: 15px;">Profile Picture</h2>
-                <div style="width: 195px;" class="center-block">
-                    <div class="user-profile-pic">
-                        @if(empty(Auth::user()->profile_image))
-                            <img src="/images/default.png" class="img-rounded img-responsive" alt="Image" style="border-radius: 4px; max-width: 195px;">
-                        @else 
-                            <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" class="img-rounded img-responsive" alt="Image" style="border-radius: 4px; max-width: 195px;">
-                        @endif
-                    </div>        
-                    <div style="margin-top: 10px;">
-                        <form action="#" enctype='multipart/form-data' id="avatar-upload-form">
-                            <div class="form-group">
-                                <label class="btn btn-default btn-file btn-block" style="min-width: 195px; max-width: 195px;">
-                                    Upload new picture <input type="file" style="display: none;" name="profile_image" id="profile_image">
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h2>Profile</h2>
                 <p style="margin-bottom: 6px;">This information will appear on your profile.</p>
