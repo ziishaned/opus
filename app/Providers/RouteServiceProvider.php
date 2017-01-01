@@ -25,6 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::patterns([
             'pageId'            =>  '[0-9]+',
+            'categoryId'        =>  '[0-9]+',
             'page_slug'         =>  '(\w+-*\d*)+',
             'id'                =>  '[0-9]+',
             'wiki_slug'         =>  '(\w+-*\d*)+',

@@ -25,7 +25,14 @@ var App = {
             navSelector : ".categories-pagination-con .pagination",
             nextSelector : ".categories-pagination-con .pagination li.active + li a",
             itemSelector : ".categories-item",
+        }, function() {
+            if($('.categories-con').hasClass('category-form-active')) {
+                $('.categories-con #edit-category').each(function(index, el) {
+                    $(el).addClass('disabled'); 
+                });
+            }
         });
+
     },
     initJcrop: function() {
         var that = this;
@@ -102,6 +109,38 @@ var App = {
     },
     bindUI: function () {
         var that = this;
+        $(document).on('click', '#edit-category', function(event) {
+            event.preventDefault();
+            if(!$(this).hasClass('disabled')) {
+                
+                $(this).closest('tbody').addClass('category-form-active');
+                
+                var element = $(this).closest('tr');
+                var categoryName = $(element).find('#category_name').text();
+
+                $(element).find('#category_actions').replaceWith(`<td>
+                                                        <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0; position: relative; top: 8px;">
+                                                            <li><button type="button" class="btn btn-success btn-xs">Save</button></li>
+                                                            <li><button type="button" class="btn btn-default btn-xs">Cancel</button></li>
+                                                        </ul>
+                                                    </td>`);
+                $(element).find('#category_name').replaceWith(`<td>
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                            <form action="" method="POST" role="form">
+                                                                                <div class="form-group" style="margin-bottom: 0;">
+                                                                                    <input type="text" class="form-control input-sm" style="margin: 5px; border-radius: 0px !important; border-color: #66afe9; outline: 0; position: relative; right: 10px;" id="" placeholder="Enter category name" value="`+categoryName+`">
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>`);
+
+                $('.categories-con #edit-category').each(function(index, el) {
+                    $(el).addClass('disabled'); 
+                });
+            }
+        });
         $(document).on('click', '#add-invitation-input', function(event) {
             event.preventDefault();
             var invitationInput = `<li>

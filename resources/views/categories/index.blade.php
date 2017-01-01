@@ -38,20 +38,17 @@
                     <tbody class="categories-con">
                         @foreach($categories as $category)
                             <tr class="categories-item">
-                                <td>{{ $category->name }}</td>
-                                <td>
-                                    <ul class="list-unstyled list-inline categories-actions hidden-md hidden-sm hidden-lg" style="margin-bottom: 0;">
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear fa-lg fa-fw" style="color: #424242;"></i></a>
-                                            <ul class="dropdown-menu dropdown-menu-right" style="margin-top: 8px;">
-                                                <li><a href="#">Edit</a></li>
-                                                <li><a href="#">Delete</a></li>
-                                            </ul>
+                                <td id="category_name">{{ $category->name }}</td>
+                                <td id="category_actions">
+                                    <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
+                                        <li><button type="button" class="btn btn-primary btn-xs" id="edit-category"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
+                                        <li>
+                                            <a href="#" class="btn btn-danger btn-xs" style="color: #fff;" onclick="if(confirm('Wikis having this category will also be deleted. Are you sure you want to delete this category?')) {event.preventDefault(); document.getElementById('delete-category').submit();}"><i class="fa fa-trash-o hidden-xs"></i> Delete</a>
+                                            <form id="delete-category" action="{{ route('organizations.categories.destroy', [$organization->slug, $category->id]) }}" method="POST" style="display: none;">
+                                                {!! method_field('delete') !!}
+                                                {!! csrf_field() !!}
+                                            </form>
                                         </li>
-                                    </ul>
-                                    <ul class="list-unstyled list-inline categories-actions hidden-xs" style="margin-bottom: 0;">
-                                        <li><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>
-                                        <li><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o hidden-xs"></i> Delete</button></li>
                                     </ul>
                                 </td>
                             </tr>

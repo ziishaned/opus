@@ -35,4 +35,10 @@ class Category extends Model
     {
         return $this->where('organization_id', '=', $organizationId)->paginate(15);
     }
+
+    public function deleteCategory($categoryId, $organizationId)
+    {
+        $this->where('id', '=', $categoryId)->where('organization_id', '=', $organizationId)->delete();
+        return true;
+    }
 }

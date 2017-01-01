@@ -49,4 +49,16 @@ class CategoryConroller extends Controller
             'alert_type' => 'success'
         ]);
     }
+
+    public function destroy($organizationSlug, $categoryId) 
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);
+        
+        $this->category->deleteCategory($categoryId, $organization->id);
+
+        return redirect()->back()->with([
+            'alert' => 'Category successfully deleted.',
+            'alert_type' => 'success'
+        ]);
+    }
 }
