@@ -393,7 +393,7 @@ button {
     outline: none !important;
 }
 
-li, a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
+a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
     font-family: 'segoe ui', 'Open Sans', 'source sans pro';
     color: #424242;
 }

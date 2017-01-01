@@ -27,25 +27,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div style="padding: 30px 0px; border-bottom: 1px solid #ccc;">
-                    <h1 class="text-center" style="font-weight: 300; margin-bottom: 14px;">Create a new <span style="font-weight: 500;">Category</span></h1>
-                    <p class="text-center" style="font-size: 17px;">Wikis are divided into categories so you can interact with wikis more conveniently.</p>
-                </div>
-                <div style="margin-top: 20px;">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-                            <form action="" method="POST" role="form" id="create-category-form">
-                                <div class="form-group">
-                                    <label for="" class="control-label">Category name</label>
-                                    <input type="text" class="form-control input" id="">
-                                </div>
-                                <div class="pull-right" style="margin-top: 20px;">
-                                    <button type="button" class="btn btn-success">Create</button>
-                                </div>
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="text-center" style="font-weight: 300; margin-bottom: 5px;">Create a new <span style="font-weight: 500;">Category</span></h2>
+                        <p class="text-center">Wikis are divided into categories so you can interact with wikis more conveniently.</p>
+                    </div>
+                    <div class="panel-body">
+                        <form action="{{ route('organizations.categories.store', [$organization->slug]) }}" method="POST" role="form" id="create-category-form" data-toggle="validator">
+                            <div class="form-group">
+                                <label for="category-name" class="control-label">Category name</label>
+                                <input type="text" name="category_name" class="form-control input" id="category-name" data-error="Category name is required." required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group pull-right" style="margin-bottom: 0;">
+                                <button type="submit" class="btn btn-success">Create</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
                     </div>
                 </div>
             </div>

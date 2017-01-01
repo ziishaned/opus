@@ -34,4 +34,9 @@ class CategoryConroller extends Controller
     	$organization = $this->organization->getOrganization($organizationSlug);
     	return view('categories.create', compact('organization'));
     }
+
+    public function store($organizationSlug)
+    {
+        
+    }
 }
