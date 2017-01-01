@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Organization;
 
 class CategoryConroller extends Controller
 {
-	/**
-     * @var \Illuminate\Http\Request
-     */
 	private $request;
 
-	/**
-     * @var \App\Models\Organization
-     */
     private $organization;
 
-    public function __construct(Request $request, Organization $organization)
+    private $category;
+
+    public function __construct(Request $request, Organization $organization, Category $category)
     {
-    	$this->request 		= $request;
-    	$this->organization = $organization;
+    	$this->category = $category;
+        $this->request      = $request;
+        $this->organization = $organization;
     }
 
     public function index($organizationSlug)
@@ -37,6 +35,6 @@ class CategoryConroller extends Controller
 
     public function store($organizationSlug)
     {
-        
+           
     }
 }
