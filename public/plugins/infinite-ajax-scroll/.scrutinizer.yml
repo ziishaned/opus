@@ -1,5 +1,0 @@
-tools:
-    js_hint:
-        enabled: true
-        filter:
-            paths: ['src/']
