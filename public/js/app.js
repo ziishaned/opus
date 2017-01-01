@@ -11,45 +11,22 @@ var App = {
         $('[data-toggle="tooltip"]').tooltip();
     },
     loadCategories: function() {
-        var ias = $.ias({
-            delay: 1000,
-            container: ".categories-con",
-            item: ".categories-item",
-            pagination: ".categories-pagination-con .pagination",
-            next: ".categories-pagination-con .next a"
-        }).on('loaded', function(data, items) {
-            $('.categories-pagination-con .next').next('li').addClass('next');
-            $('.categories-pagination-con .next').first().removeClass('next');
-        }).on('load', function(event) {
-            event.url = $(".categories-pagination-con .next a").attr('href');
-        }).on('scroll', function() {
-            
+        $('.categories-con').infinitescroll({
+            loading : {
+                finished: undefined,
+                finishedMsg: null,
+                msg: '',
+                msgText: '',
+                speed: 0,
+                start: undefined,
+                img: "/images/loader.gif",
+                selector: ".infinitescroll-loader-con",
+            },
+            navSelector : ".categories-pagination-con .pagination",
+            nextSelector : ".categories-pagination-con .pagination li.active + li a",
+            itemSelector : ".categories-item",
         });
-
-        ias.extension(new IASSpinnerExtension({
-            src: '/images/loader.gif',
-        }));
-        // ias.extension(new IASTriggerExtension({offset: 3}));
     },
-    // loadOrganizationActivites: function() {
-    //     var ias = $.ias({
-    //         delay: 1000,
-    //         container: ".activity-con",
-    //         item: ".activity-item",
-    //         pagination: ".activity-pagination-con .pagination",
-    //         next: ".activity-pagination-con .next a"
-    //     }).on('loaded', function(data, items) {
-    //         $('.activity-pagination-con .next').next('li').addClass('next');
-    //         $('.activity-pagination-con .next').first().removeClass('next');
-    //     }).on('load', function(event) {
-    //         event.url = $(".activity-pagination-con .next a").attr('href');
-    //     });
-
-    //     ias.extension(new IASSpinnerExtension({
-    //         src: '/images/loader.gif',
-    //     }));
-    //     ias.extension(new IASTriggerExtension({offset: 3}));
-    // },
     initJcrop: function() {
         var that = this;
         $('#cropimage').Jcrop({

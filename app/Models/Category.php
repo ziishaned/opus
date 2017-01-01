@@ -33,6 +33,6 @@ class Category extends Model
 
     public function getCategories($organizationId)
     {
-        return $this->where('organization_id', '=', $organizationId)->paginate(10);
+        return $this->where('organization_id', '=', $organizationId)->paginate(15);
     }
 }

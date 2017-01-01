@@ -60,22 +60,7 @@
                 </table>
             </div>
         </div>
-        <div class="row text-center categories-pagination-con hide" style="margin-top: 15px; margin-bottom: 10px;">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <ul class="pagination">
-                    <?php
-                        $currentPage = $categories->currentPage(); 
-                    ?>
-                    @while($currentPage <= $categories->lastPage())
-                        <li class="{{ ($currentPage == 2) ? 'next' : '' }}">
-                            <a href="http://wiki.dev/organizations/{{ $organization->slug }}/categories?page={{ $currentPage }}">{{ $currentPage }}</a>
-                        </li>
-                        <?php
-                            $currentPage++;
-                        ?>
-                    @endwhile
-                </ul>
-            </div>
-        </div>
+        <div class="infinitescroll-loader-con" style="text-align: center; margin-bottom: 20px;"></div>
+        <div class="categories-pagination-con" style="display: none;">{!! $categories->render() !!}</div>
     </div>
 @endsection

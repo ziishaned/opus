@@ -83,14 +83,15 @@
 <script src="/plugins/emojionearea/emojione.min.js"></script>
 <script src="/plugins/emojionearea/emojionearea.min.js"></script>
 <script src="/plugins/emojionearea/jquery.textcomplete.js"></script>
-<script src="/plugins/infinite-ajax-scroll/src/jquery-ias.js"></script>
+{{-- <script src="/plugins/infinite-ajax-scroll/src/jquery-ias.js"></script>
 <script src="/plugins/infinite-ajax-scroll/src/callbacks.js"></script>
 <script src="/plugins/infinite-ajax-scroll/src/extension/spinner.js"></script>
 <script src="/plugins/infinite-ajax-scroll/src/extension/trigger.js"></script>
-<script src="/plugins/infinite-ajax-scroll/src/extension/noneleft.js"></script>
+<script src="/plugins/infinite-ajax-scroll/src/extension/noneleft.js"></script> --}}
 <script src="/plugins/highchart/highcharts.js"></script>
 <script src="/plugins/highchart/data.js"></script>
 <script src="/plugins/highchart/drilldown.js"></script>
+<script src="/plugins/jquery-infinitescroll/jquery.infinitescroll.min.js"></script>
 
 {{-- Syntax Highlighter --}}
 
