@@ -695,15 +695,7 @@ $(function() {
 });
 
 // Select2
-$(function() {
-    $('#timezone, #wiki_visibility, #page-parent, #category').select2({
-        placeholder: "",
-        minimumResultsForSearch: 5,
-        width: "100%",
-        allowClear: true
-
-    });
-    
+$(function() {    
     $("#outline, #organization-description").emojioneArea({
         pickerPosition: "bottom",
         tones: false,

@@ -217,17 +217,13 @@ a:focus {
     text-align: center;
 }
 
-input {
+input, select, .input {
     border-radius: 2px !important;
     transition: all 0.12s linear 0s !important;
 }
 
-input:focus {
+input:focus, select:focus, .input:focus {
     box-shadow: none !important;
-}
-
-.select2-results__option, .btn, ::selection, .fa {
-    -webkit-text-stroke: 0px !important;
 }
 
 ::selection {
@@ -544,20 +540,6 @@ a:hover {
 
 .selectize-input input {
     min-width: 50% !important;
-}
-
-.select2-results__option {
-    padding-left: 18px !important;
-}
-
-.select2-container--above.select2-container--open .select2-selection {
-    border-top: 0px !important;
-    box-shadow: none !important;
-}
-
-.select2-container--below.select2-container--open .select2-selection {
-    border-bottom: 0px !important;
-    box-shadow: none !important;   
 }
 
 .comments-container h1 {
@@ -963,59 +945,8 @@ kbd {
     box-shadow: none !important;
 }
 
-.select2-selection.select2-selection--single {
-    display: flex !important;
-    height: 34px !important;
-    align-items: center !important;
-    border-color: #ccc !important;
-    outline: none !important;
-    border-radius: 2px !important;
-}
-
-.select2-selection__rendered {
-    width: 100% !important;
-    color: #222222 !important;
-    padding-left: 15px !important;
-}
-
-.select2-selection__arrow {
-    height: 34px !important;
-}
-
-.select2-search__field {
-    color: #222222 !important;
-    border: 1px solid rgba(34,36,38,.15) !important;
-    box-shadow: none !important;
-    border-radius: 3px !important;
-    outline: none !important;
-    margin-bottom: 11px !important;
-}
-
-.select2-search.select2-search--dropdown {
-    padding-top: 15px !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-
-}
-
 .page-path li.active {
     border-bottom: none !important;
-}
-
-#select2-wiki-path-results {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-    padding-bottom: 10px !important;
-}
-
-.select2-dropdown.select2-dropdown--above {
-    border: 1px solid #ccc !important;
-    border-bottom: 0px !important;
-}
-
-.select2-dropdown.select2-dropdown--below {
-    border: 1px solid #ccc !important;
-    border-top: 0px !important;
 }
 
 .rte-autocomplete li a {

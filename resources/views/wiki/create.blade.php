@@ -27,33 +27,36 @@
                             <div class="form-group{{ $errors->has('wiki_name') ? ' has-error' : '' }}">
                                 <label for="wiki-name" class="control-label">Wiki name</label>
                                 <input type="text" name="wiki_name" id="wiki-name" class="form-control input" required="required" autocomplete="off">          
-                                @if ($errors->has('wiki_name'))
-                                    <span class="help-block">
+                                <div class="help-block with-errors">
+                                    @if ($errors->has('wiki_name'))
                                         <strong>{{ $errors->first('wiki_name') }}</strong>
-                                    </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="wiki-visibility" class="control-label">Visibility Level</label>
-                            <select name="wiki_visibility" id="wiki_visibility" class="form-control" required="required">
-                                <option></option>
+                            <select name="wiki_visibility" id="wiki_visibility" class="form-control input" required="required">
                                 <option value="private">Private</option>
                                 <option value="public">Public</option>
                             </select>    
+                            <div class="help-block with-errors">
+                                @if ($errors->has('wiki_visibility'))
+                                    <strong>{{ $errors->first('wiki_visibility') }}</strong>
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label for="outline" class="control-label">Short Description</label>
-                                <input type="text" name="outline" id="outline" class="form-control input">
+                                <input type="text" name="outline" id="outline" class="form-control input" required="required">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="wiki-visibility" class="control-label">Category</label>
-                            <select name="category" id="category" class="form-control" placeholder="Select a category" required="required">
-                               <option></option>
+                            <select name="category" id="category" class="form-control input" placeholder="Select a category" required="required">
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach

@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/css/tinymce-lightgray.css">
     <link rel="stylesheet" href="/css/editor.css">
     <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
-    <link rel="stylesheet" href="/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojionearea.min.css">
@@ -77,7 +76,6 @@
 <script src="/js/js.cookie.js"></script>
 <script src="/js/timeago.js"></script>
 <script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
-<script src="/plugins/select2/select2.full.min.js"></script>
 <script src="/js/app.js"></script>
 <script src="/plugins/jcrop/Jcrop.min.js"></script>
 <script src="/plugins/emojionearea/emojione.min.js"></script>
