@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="wiki-visibility" class="control-label">Category</label>
-                            <select name="category" id="category" class="form-control input" placeholder="Select a category" required="required">
+                            <select name="category" id="category" class="form-control input" required="required">
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach

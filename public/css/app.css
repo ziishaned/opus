@@ -233,6 +233,7 @@ input:focus, select:focus, .input:focus {
 
 /*Button*/
 .btn {
+    -webkit-text-stroke: 0px !important;
     display: inline-block;
     padding: 9px 12px;
     padding-top: 7px;

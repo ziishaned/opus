@@ -86,6 +86,13 @@ class WikiController extends Controller
 
         $categories = $this->category->getOrganizationCategories($organization->id);
 
+        if($categories->count() == 0) {
+            return redirect()->route('organizations.categories.create', [$organization->slug, ])->with([
+                'alert' => 'You need to create category before creating wiki!',
+                'alert_type' => 'info'
+            ]);
+        }
+
         return view('wiki.create', compact('organization', 'categories'));
     }
 
