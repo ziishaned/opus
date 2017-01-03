@@ -6,7 +6,7 @@
             <div class="site-breadcrumb">
                 <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
                     <li>
-                        <a href="#">Facebook</a>
+                        <a href="#">{{ $organization->name }}</a>
                     </li>
                     <li>
                         <a href="#">Wikis</a>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="wiki-visibility" class="control-label">Category</label>
-                            <select name="category" id="category" class="form-control input" required="required">
+                            <select name="category_id" id="category" class="form-control input" required="required">
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach

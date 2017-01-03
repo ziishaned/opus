@@ -55,6 +55,7 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');
         Route::get('search/{text}', 'OrganizationController@filterOrganizations');
 
+        Route::patch('{organization_slug}/wikis/{wiki_slug}', 'WikiController@update')->name('wikis.update');
         Route::post('{organization_slug}/wikis', 'WikiController@store')->name('wikis.store');
         Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
         Route::get('{organization_slug}/wikis/{wiki_slug}', 'WikiController@show')->name('wikis.show');

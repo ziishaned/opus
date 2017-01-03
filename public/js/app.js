@@ -672,29 +672,20 @@ $(function() {
             },
             sort: function (a, b) {
                 return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
-                // return this.get_node(a).original.px > this.get_node(b).original.px ? 1 : -1;
             },
             "plugins" : [ "search", "sort" ]
         }).on("select_node.jstree", function (e, data) { 
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
+            if(data.instance._cnt == 0) {
+                var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="/organizations/`+$('body').data('organization')+`/wikis/`+$('body').data('wiki')+`/pages/create">create one here</a>.</p>`;
+                $('#wiki-page-tree').replaceWith(html);
+            };
             data.instance._open_to($('#current-node').val());
-        });
-
-        var to = false;
-        $('#searchinput').keyup(function () {
-            if(to) { 
-                clearTimeout(to); 
-            }
-            to = setTimeout(function () {
-                var v = $('#searchinput').val();
-                $('#wiki-page-tree').jstree(true).search(v);
-            }, 250);
         });
     } 
 });
 
-// Select2
 $(function() {    
     $("#outline, #organization-description").emojioneArea({
         pickerPosition: "bottom",

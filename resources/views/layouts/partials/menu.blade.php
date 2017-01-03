@@ -56,7 +56,7 @@
                         <form class="navbar-form" role="search">
                             <div class="form-group">
                                 <input type="text" class="form-control input" placeholder="Search" style="width: 265px; padding-right: 30px;">
-                                <span class="fa fa-search fa-fw" style="position: absolute; top: 17px; right: 23px; color: #adadad; font-weight: bold;"></span>
+                                <span class="fa fa-search fa-fw" style="position: absolute; top: 17px; right: 23px; color: #adadad;"></span>
                             </div>
                         </form>
                     </li>

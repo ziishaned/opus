@@ -44,6 +44,7 @@ class Wiki extends Model
     protected $fillable = [
         'name',
         'slug',
+        'category_id',
         'outline',
         'description',
         'visibilty',
@@ -135,6 +136,7 @@ class Wiki extends Model
         Emojione::$imagePathPNG = '/images/png/';
         $wiki = $this->create([
             'name'            =>  $data['wiki_name'],
+            'category_id'     =>  $data['category_id'],
             'outline'         =>  Emojione::toImage($data['outline']),
             'description'     =>  Emojione::toImage($data['wiki_description']),
             'user_id'         =>  Auth::user()->id,

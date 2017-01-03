@@ -18,7 +18,7 @@
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
 </head>
-<body>
+<body @if(isset($organization)) data-organization="{{ $organization->slug }}" @endif @if(isset($wiki)) data-wiki="{{ $wiki->slug }}" @endif>
     <div class="modal fade" id="profile-pic-cropper" data-backdrop="static">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -80,19 +80,12 @@
 <script src="/plugins/emojionearea/emojione.min.js"></script>
 <script src="/plugins/emojionearea/emojionearea.min.js"></script>
 <script src="/plugins/emojionearea/jquery.textcomplete.js"></script>
-{{-- <script src="/plugins/infinite-ajax-scroll/src/jquery-ias.js"></script>
-<script src="/plugins/infinite-ajax-scroll/src/callbacks.js"></script>
-<script src="/plugins/infinite-ajax-scroll/src/extension/spinner.js"></script>
-<script src="/plugins/infinite-ajax-scroll/src/extension/trigger.js"></script>
-<script src="/plugins/infinite-ajax-scroll/src/extension/noneleft.js"></script> --}}
 <script src="/plugins/highchart/highcharts.js"></script>
 <script src="/plugins/highchart/data.js"></script>
 <script src="/plugins/highchart/drilldown.js"></script>
 <script src="/plugins/jquery-infinitescroll/jquery.infinitescroll.min.js"></script>
 
-{{-- Syntax Highlighter --}}
-
-{{-- <link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
+<link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
 <script src="/plugins/sh/scripts/shCore.js"></script>
 <script src="/plugins/sh/scripts/shLegacy.js"></script>
 <script src="/plugins/sh/scripts/shAutoloader.js"></script>
@@ -120,14 +113,12 @@
 <script src="/plugins/sh/scripts/shBrushScala.js"></script>
 <script src="/plugins/sh/scripts/shBrushSql.js"></script>
 <script src="/plugins/sh/scripts/shBrushVb.js"></script>
-<script src="/plugins/sh/scripts/shBrushXml.js"></script> --}}
-
-{{-- ./Syntax Highlighter --}}
+<script src="/plugins/sh/scripts/shBrushXml.js"></script>
 
 <script>
     new timeago().render(document.querySelectorAll('time.timeago'));
-    // SyntaxHighlighter.defaults.toolbar = false;
-    // SyntaxHighlighter.all();
+    SyntaxHighlighter.defaults.toolbar = false;
+    SyntaxHighlighter.all();
     
     // HighChart
     $(function() {

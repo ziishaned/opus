@@ -196,11 +196,12 @@ class WikiController extends Controller
      * @param $nameSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($nameSlug)
+    public function edit($organizationSlug, $nameSlug)
     {
-        $wiki = $this->wiki->getWiki($nameSlug);
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
-        return view('wiki.edit', compact('wiki', 'wikiPages'));
+        $organization = $this->organization->getOrganization($organizationSlug);
+        $wiki = $this->wiki->getWiki($nameSlug, $organization->id);
+
+        return view('wiki.edit', compact('wiki', 'organization'));
     }
 
     /**
