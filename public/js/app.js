@@ -270,7 +270,7 @@ var App = {
                 tinymce.remove("#edit-comment-input");
                 tinymce.init({
                     selector: "#edit-comment-input",
-                    content_css: "/css/tinymce.css",
+                    content_css: "/plugins/tinymce/tinymce.css",
 
                     /* theme of the editor */
                     theme: "modern",
@@ -488,7 +488,7 @@ $(document).ready(function() {
     tinymce.init({
         /* replace textarea having class .tinymce with tinymce editor */
         selector: "#page-description, #wiki-description",
-        content_css : "/css/tinymce.css,/js/plugins/leaui_code_editor/css/pre.css", 
+        content_css : "/plugins/tinymce/tinymce.css,/plugins/tinymce/plugins/leaui_code_editor/css/pre.css", 
 
         /* theme of the editor */
         theme: "modern",
@@ -586,7 +586,7 @@ $(document).ready(function() {
     tinymce.init({
         /* replace textarea having class .tinymce with tinymce editor */
         selector: "#comment-input",
-        content_css : "/css/tinymce.css",
+        content_css : "/plugins/tinymce/tinymce.css",
         statusbar: false,
 
         /* theme of the editor */

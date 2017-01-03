@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/tinymce-lightgray.css">
-    <link rel="stylesheet" href="/css/editor.css">
+    <link rel="stylesheet" href="/plugins/tinymce/tinymce-lightgray.css">
+    <link rel="stylesheet" href="/plugins/tinymce/editor.css">
     <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
     <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
@@ -69,7 +69,7 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/tinymce.min.js"></script>
+<script src="/plugins/tinymce/tinymce.min.js"></script>
 <script src="/js/moment.min.js"></script>
 <script src="/js/masonry.min.js"></script>
 <script src="/js/js.cookie.js"></script>
