@@ -38,7 +38,7 @@
                     <tbody class="categories-con">
                         @foreach($categories as $category)
                             <tr class="categories-item">
-                                <td id="category_name">{{ $category->name }}</td>
+                                <td id="category_name" data-category-id="{{ $category->id }}" data-organization="{{ $organization->slug }}">{{ $category->name }}</td>
                                 <td id="category_actions">
                                     <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0;">
                                         <li><button type="button" class="btn btn-primary btn-xs" id="edit-category"><i class="fa fa-pencil hidden-xs"></i> Edit</button></li>

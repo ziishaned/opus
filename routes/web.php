@@ -38,6 +38,7 @@ Route::group(['prefix' => 'organizations'], function () {
             Route::get('create', 'CategoryConroller@create')->name('organizations.categories.create');
             Route::post('', 'CategoryConroller@store')->name('organizations.categories.store');
             Route::delete('{categoryId}', 'CategoryConroller@destroy')->name('organizations.categories.destroy');
+            Route::patch('{categoryId}', 'CategoryConroller@update')->name('organizations.categories.update');
         });
 
         Route::get('{organization_slug}/reports', 'ReportConroller@index')->name('organizations.reports.index');

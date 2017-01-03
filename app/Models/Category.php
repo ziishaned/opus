@@ -41,4 +41,14 @@ class Category extends Model
         $this->where('id', '=', $categoryId)->where('organization_id', '=', $organizationId)->delete();
         return true;
     }
+
+    public function updateCategory($data, $categoryId, $organizationId)
+    {
+        $this->where('id', '=', $categoryId)
+             ->where('organization_id', '=', $organizationId)
+             ->update([
+                    'name' => $data['category_name'],
+             ]);
+        return true;
+    }
 }

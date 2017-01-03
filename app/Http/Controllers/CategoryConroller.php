@@ -61,4 +61,18 @@ class CategoryConroller extends Controller
             'alert_type' => 'success'
         ]);
     }
+
+    public function update($organizationSlug, $categoryId)
+    {
+        $this->validate($this->request, Category::CATEGORY_RULES);
+        
+        $organization = $this->organization->getOrganization($organizationSlug);
+        
+        $this->category->updateCategory($this->request->all(), $categoryId, $organization->id);
+
+        return redirect()->back()->with([
+            'alert' => 'Category successfully updated.',
+            'alert_type' => 'success'
+        ]);
+    }
 }

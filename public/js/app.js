@@ -1,9 +1,10 @@
 var App = {
     init: function(params = null) {
-        this.params = params;
         this.bindUI();
         this.initJcrop();
         this.initTooltip();
+        this.params         = params;
+        this.categoryBackup = '';
         // this.loadOrganizationActivites();
         this.loadCategories();
     },
@@ -25,12 +26,6 @@ var App = {
             navSelector : ".categories-pagination-con .pagination",
             nextSelector : ".categories-pagination-con .pagination li.active + li a",
             itemSelector : ".categories-item",
-        }, function() {
-            if($('.categories-con').hasClass('category-form-active')) {
-                $('.categories-con #edit-category').each(function(index, el) {
-                    $(el).addClass('disabled'); 
-                });
-            }
         });
 
     },
@@ -109,37 +104,36 @@ var App = {
     },
     bindUI: function () {
         var that = this;
-        $(document).on('click', '#edit-category', function(event) {
+        $(document).on('click', '#edit-category, #cancel-category-edit', function(event) {
             event.preventDefault();
-            if(!$(this).hasClass('disabled')) {
-                
-                $(this).closest('tbody').addClass('category-form-active');
-                
-                var element = $(this).closest('tr');
-                var categoryName = $(element).find('#category_name').text();
 
-                $(element).find('#category_actions').replaceWith(`<td>
-                                                        <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0; position: relative; top: 8px;">
-                                                            <li><button type="button" class="btn btn-success btn-xs">Save</button></li>
-                                                            <li><button type="button" class="btn btn-default btn-xs">Cancel</button></li>
-                                                        </ul>
-                                                    </td>`);
-                $(element).find('#category_name').replaceWith(`<td>
-                                                                    <div class="row">
-                                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                                            <form action="" method="POST" role="form">
-                                                                                <div class="form-group" style="margin-bottom: 0;">
-                                                                                    <input type="text" class="form-control input-sm" style="margin: 5px; border-radius: 0px !important; border-color: #66afe9; outline: 0; position: relative; right: 10px;" id="" placeholder="Enter category name" value="`+categoryName+`">
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>`);
-
-                $('.categories-con #edit-category').each(function(index, el) {
-                    $(el).addClass('disabled'); 
-                });
+            if($('.categories-con').find('.edit-active').length > 0) {
+                $('.categories-con').find('.edit-active').replaceWith(that.categoryBackup);
             }
+
+            that.categoryBackup = $(this).closest('tr').clone();
+            var tableRow = $(this).closest('tr');
+
+            $(tableRow).addClass('edit-active');
+            var categoryName = $(tableRow).find('#category_name').text();
+            var categoryId = $(tableRow).find('#category_name').data('category-id');
+            var organizationSlug = $(tableRow).find('#category_name').data('organization');
+
+            var html = `<td>
+                            <form action="/organizations/`+organizationSlug+`/categories/`+categoryId+`" method="POST" role="form" id="category-edit-form">
+                                <input type="hidden" name="_method" value="PATCH">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <input type="text" name="category_name" class="form-control input-sm" style="width: 98.5% !important; border-radius: 0px !important; border-color: #66afe9; outline: 0; width: 100%; box-sizing: border-box; -webkit-box-sizing:border-box; -moz-box-sizing: border-box;" placeholder="Enter category name" value="`+categoryName+`">
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0; position: relative; top: 3px;">
+                                <li><button type="button" class="btn btn-success btn-xs" onclick="event.preventDefault(); document.getElementById('category-edit-form').submit();" style="margin-right: 8px;">Save</button></li>
+                                <li><button type="button" class="btn btn-default btn-xs" id="cancel-category-edit">Cancel</button></li>
+                            </ul>
+                        </td>`;
+            $(tableRow).empty().append(html);
         });
         $(document).on('click', '#add-invitation-input', function(event) {
             event.preventDefault();
