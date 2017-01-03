@@ -57,7 +57,7 @@
                 </table>
             </div>
         </div>
-        <div class="infinitescroll-loader-con" style="text-align: center; margin-bottom: 20px;"></div>
+        <div class="infinitescroll-loader-con" style="text-align: center; margin-bottom: 30px;"></div>
         <div class="categories-pagination-con" style="display: none;">{!! $categories->render() !!}</div>
     </div>
 @endsection

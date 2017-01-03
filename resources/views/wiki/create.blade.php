@@ -37,7 +37,8 @@
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="wiki-visibility" class="control-label">Visibility Level</label>
                             <select name="wiki_visibility" id="wiki_visibility" class="form-control" required="required">
-                                <option value="private" selected>Private</option>
+                                <option></option>
+                                <option value="private">Private</option>
                                 <option value="public">Public</option>
                             </select>    
                         </div>
@@ -51,8 +52,11 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="wiki-visibility" class="control-label">Category</label>
-                            <select name="category" id="category" class="form-control" required="required">
-                                <option value=""></option>
+                            <select name="category" id="category" class="form-control" placeholder="Select a category" required="required">
+                               <option></option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
                             </select>    
                         </div>
                     </div>

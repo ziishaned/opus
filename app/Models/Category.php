@@ -51,4 +51,9 @@ class Category extends Model
              ]);
         return true;
     }
+
+    public function getOrganizationCategories($id)
+    {
+        return $this->where('organization_id', '=', $id)->get();
+    }
 }

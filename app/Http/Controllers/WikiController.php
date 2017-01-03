@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use App\Models\Wiki;
 use App\Models\WikiPage;
+use App\Models\Category;
 use App\Models\ActivityLog;
 use App\Models\Organization;
 use Illuminate\Http\Request;
@@ -44,6 +45,8 @@ class WikiController extends Controller
      */
     protected $activityLog;
 
+    protected $category;
+
     /**
      * WikiController constructor.
      *
@@ -52,10 +55,11 @@ class WikiController extends Controller
      * @param \App\Models\Organization $organization
      * @param \App\Models\WikiPage     $wikiPage
      */
-    public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage, ActivityLog $activityLog) {
+    public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage, ActivityLog $activityLog, Category $category) {
         $this->wiki         = $wiki;
         $this->request      = $request;
         $this->wikiPage     = $wikiPage;
+        $this->category     = $category;
         $this->activityLog  = $activityLog;
         $this->organization = $organization;
     }
@@ -78,8 +82,11 @@ class WikiController extends Controller
      */
     public function create($organizationSlug)
     {  
-        $organization = $this->organization->getOrganization($organizationSlug);
-        return view('wiki.create', compact('organization'));
+        $organization = $this->organization->getOrganization($organizationSlug);    
+
+        $categories = $this->category->getOrganizationCategories($organization->id);
+
+        return view('wiki.create', compact('organization', 'categories'));
     }
 
     /**

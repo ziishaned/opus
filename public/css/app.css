@@ -981,6 +981,7 @@ kbd {
 }
 
 .select2-selection__rendered {
+    width: 100% !important;
     color: #222222 !important;
     padding-left: 15px !important;
 }

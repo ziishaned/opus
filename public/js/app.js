@@ -697,8 +697,11 @@ $(function() {
 // Select2
 $(function() {
     $('#timezone, #wiki_visibility, #page-parent, #category').select2({
+        placeholder: "",
         minimumResultsForSearch: 5,
-        width: "100%"
+        width: "100%",
+        allowClear: true
+
     });
     
     $("#outline, #organization-description").emojioneArea({
