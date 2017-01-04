@@ -21,6 +21,7 @@ class CreateWikiPageTable extends Migration
             $table->integer('depth')->nullable();
             $table->string('name');
             $table->string('slug', 65535);
+            $table->string('outline')->longText();
             $table->longText('description')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('wiki_id')->unsigned();
