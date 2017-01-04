@@ -1,16 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="subnav" style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
+    <div style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
         <div class="container">
-            <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
-                <li class="active">
-                    <a href="{{ route('dashboard', [$organization->slug, ]) }}">All activities</a>
-                </li>
-                <li>
-                    <a href="{{ route('dashboard.user.activity', [$organization->slug, ]) }}">My activities</a>
-                </li>
-            </ul>
+            <div class="subnav">
+                <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
+                    <li class="active">
+                        <a href="{{ route('dashboard', [$organization->slug, ]) }}">All activities</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard.user.activity', [$organization->slug, ]) }}">My activities</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="container">

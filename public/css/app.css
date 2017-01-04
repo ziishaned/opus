@@ -71,11 +71,24 @@ a:focus {
     margin: 20px 0px;
 }
 
-.subnav .navbar-nav>li>a, .page-subnav .navbar-nav>li>a {
+.subnav ul li.active a {
+    background-color: #f8f8f8; 
+    border-bottom: 2px solid #757575;
+}
+
+.subnav ul>li>a {
+    color: #424242;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 15px;
+    line-height: 50px;
+}
+
+.wiki-subnav .navbar-nav>li>a, .page-subnav .navbar-nav>li>a {
     color: #424242;
 }
 
-.subnav .navbar-nav>li>a:hover, .subnav .navbar-nav .open>a {
+.wiki-subnav .navbar-nav>li>a:hover, .wiki-subnav .navbar-nav .open>a {
     background: #f8f8f8;
 } 
 

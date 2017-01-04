@@ -11,7 +11,7 @@
         			</div>
         		</div>
         		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-			        <div class="navbar subnav" style="margin-bottom: 0;">
+			        <div class="navbar wiki-subnav" style="margin-bottom: 0;">
 		        		<ul class="nav navbar-nav">
 		        			<li>
 		        				<a href="#">Overview</a>
