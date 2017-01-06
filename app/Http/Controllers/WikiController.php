@@ -20,41 +20,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class WikiController extends Controller
 {
-    /**
-     * @var \App\Models\Wiki
-     */
     protected $wiki;
 
-    /**
-     * @var \App\Models\WikiPage
-     */
     protected $wikiPage;
 
-    /**
-     * @var \App\Models\Organization
-     */
     protected $organization;
 
-    /**
-     * @var \Illuminate\Http\Request
-     */
     protected $request;
 
-    /**
-     * @var \App\Models\ActivityLog
-     */
     protected $activityLog;
 
     protected $category;
 
-    /**
-     * WikiController constructor.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Wiki         $wiki
-     * @param \App\Models\Organization $organization
-     * @param \App\Models\WikiPage     $wikiPage
-     */
     public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage, ActivityLog $activityLog, Category $category) {
         $this->wiki         = $wiki;
         $this->request      = $request;
@@ -64,22 +41,11 @@ class WikiController extends Controller
         $this->organization = $organization;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
     public function index()
     {
         return $this->wiki->getWikis();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param null|string $organizationSlug
-     * @return \Illuminate\Http\Response
-     */
     public function create($organizationSlug)
     {  
         $organization = $this->organization->getOrganization($organizationSlug);    
@@ -96,11 +62,6 @@ class WikiController extends Controller
         return view('wiki.create', compact('organization', 'categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function store($organizationSlug)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
@@ -116,12 +77,6 @@ class WikiController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $nameSlug
-     * @return \Illuminate\Http\Response
-     */
     public function show($organizationSlug, $nameSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
@@ -242,22 +197,6 @@ class WikiController extends Controller
     }
 
     /**
-     * Returns the view to create a wiki page.
-     *
-     * @param $wikiSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function createPage($organizationSlug, $wikiSlug)
-    {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
-        
-        return view('wiki.page.create', compact('wiki', 'wikiPages', 'organization'));
-    }
-
-    /**
      * Filter wikis.
      *
      * @param string $text
@@ -280,137 +219,11 @@ class WikiController extends Controller
         return $this->wikiPage->filterWikiPages($wikiId, $text);
     }
 
-    /**
-     * Create a new resource.
-     *
-     * @param string $wikiSlug
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storePage($organizationSlug, $wikiSlug)
-    {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
-        $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
-        
-        $wiki = \App\Models\Wiki::where('slug', '=', $wikiSlug)->first();
-
-        $page = $this->wikiPage->saveWikiPage($wiki->id, $this->request->all());
-        $this->activityLog->createActivity('page', 'create', $page, $organization->id);
-        
-        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $page->slug])->with([
-            'alert'      => 'Page successfully created.',
-            'alert_type' => 'success'
-        ]);
-    }
-
-    /**
-     * Return a view with a specific wiki page.
-     *
-     * @param string $wikiSlug
-     * @param string $pageSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showPage($organizationSlug, $wikiSlug, $pageSlug)
-    {
-        $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
-
-        $wiki = $this->wiki->where('slug', '=', $wikiSlug)->first();
-        
-        $page = $this->wikiPage->getPage($pageSlug);
-
-        $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf();
-
-        return view('wiki.page.page', compact('organization', 'page', 'wiki', 'pagePath'));
-    }
-
     public function reverseArray($data)
     {
         return array_combine(array_keys($data), array_reverse(array_values($data)));
     }
 
-    /**
-     * Edit a specific resource.
-     *
-     * @param string $wikiSlug
-     * @param string $pageSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editPage($organizationSlug, $wikiSlug, $pageSlug)
-    {
-        $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
-
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
-        
-        $page = $this->wikiPage->getPage($pageSlug);
-        
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
-
-        return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages', 'organization'));
-    }
-
-    /**
-     * Update a specific resource.
-     *
-     * @param $organizationSlug
-     * @param $wikiSlug
-     * @param $pageSlug
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     * @internal param $wikiId
-     * @internal param $pageId
-     */
-    public function updatePage($organizationSlug, $wikiSlug, $pageSlug)
-    {
-        $this->wikiPage->updatePage($pageSlug, $this->request->all());
-        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
-            'alert'      => 'Page successfully updated.',
-            'alert_type' => 'success'
-        ]);
-    }
-
-    /**
-     * Remove a specific resource.
-     *
-     * @param $wikiId
-     * @param $pageId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroyPage($organizationSlug, $wikiSlug, $pageSlug)
-    {
-        $pageDeleted = $this->wikiPage->deletePage($pageSlug);
-
-        $this->activityLog->createActivity('page', 'delete', $page);
-
-        return redirect()->back()->with([
-            'alert' => 'Page successfully deleted.',
-            'alert_type' => 'success'
-        ]);
-    }
-
-    /**
-     * Get the pages reorder view.
-     *
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function pagesReorder($wiki_slug)
-    {
-        $wiki = $this->wiki->getWiki($wiki_slug);        
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
-
-        if($wikiPages) {
-            return view('wiki.page.reorder', compact('wikiPages', 'wiki'));
-        }
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);        
-    }
-
-    /**
-     * Update the page parent.
-     *
-     * @return mixed
-     */
     public function updatePageParent()
     {
         $this->wikiPage->changeParent($this->request->all());

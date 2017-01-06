@@ -59,20 +59,18 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::post('{organization_slug}/wikis', 'WikiController@store')->name('wikis.store');
         Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
         Route::get('{organization_slug}/wikis/{wiki_slug}', 'WikiController@show')->name('wikis.show');
-        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/reorder', 'WikiController@pagesReorder')->name('wikis.pages.reorder');
+        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/reorder', 'PageController@pagesReorder')->name('wikis.pages.reorder');
         Route::delete('{organization_slug}/wikis/{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
 
-        Route::delete('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'WikiController@destroyPage')->name('pages.destroy');
-        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/edit', 'WikiController@editPage')->name('pages.edit');
-        Route::post('{organization_slug}/wikis/{wiki_slug}/pages', 'WikiController@storePage')->name('wikis.pages.store');
-        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/create', 'WikiController@createPage')->name('wikis.pages.create');
+        Route::delete('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'PageController@destroy')->name('pages.destroy');
+        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/edit', 'PageController@edit')->name('pages.edit');
+        Route::post('{organization_slug}/wikis/{wiki_slug}/pages', 'PageController@store')->name('wikis.pages.store');
+        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/create', 'PageController@create')->name('wikis.pages.create');
         Route::get('{organization_slug}/wikis/{wiki_slug}/edit', 'WikiController@edit')->name('wikis.edit');
         Route::get('{organization_id}/wikis/{wiki_id}/pages/{pageId?}', 'WikiController@getWikiPages');
-        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'WikiController@showPage')->name('wikis.pages.show');
-        Route::patch('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'WikiController@updatePage')->name('pages.update');
+        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'PageController@show')->name('wikis.pages.show');
+        Route::patch('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'PageController@update')->name('pages.update');
 
-        Route::post('{organization_id}/wikis/{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('wikis.pages.comments.store');
-        
         Route::post('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('wikis.pages.comments.store');
         Route::delete('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}/{comment_id}', 'CommentController@destroy')->name('comments.delete');
         Route::patch('{organization_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.delete');
