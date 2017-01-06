@@ -222,8 +222,11 @@ class WikiPage extends Node
         $this->where('slug', '=', $slug)->update([
             'name' => $data['page_name'],
             'description' => $data['page_description'],
+            'outline' => $data['outline'],
+            'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
+            
         ]);
-
+    
         return true;
     }
 

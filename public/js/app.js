@@ -211,9 +211,12 @@ var App = {
             var comment = $(this).closest('.comment-box').find('#comment-fedit').text();
             var commentContent = $(this).closest('.comment-box').find('.comment-content').html();
             if($('#edit-comment-form').length == 0) {
-                var commentId = $(this).attr('data-commentid');
+                var commentId = $(this).attr('data-comment-id');
+                var organizationId = $(this).attr('data-organization-id');
+                var wikiId = $(this).attr('data-wiki-id');
+                var pageId = $(this).attr('data-page-id');
                 var editCommentForm = `
-                                       <form action="/comments/`+commentId+`" method="POST" id="edit-comment-form" role="form" data-toggle="validator">
+                                       <form action="/organizations/`+organizationId+`/wikis/`+wikiId+`/pages/`+pageId+`/comments/`+commentId+`" method="POST" id="edit-comment-form" role="form">
                                             <input type="hidden" name="_method" value="patch">
                                             <div class="form-group">
                                                 <div class="row">
@@ -247,7 +250,6 @@ var App = {
                     menubar: false,
                     statusbar: false,
                     valid_elements: '*[*]',
-                    auto_convert_smileys: true,
                     /* plugin */
                     plugins: [
                         "advlist autolink link lists charmap hr anchor pagebreak mention",
@@ -257,15 +259,36 @@ var App = {
                     ],
                     autoresize_min_height: 100,
                     mentions: {
+                        delimiter: ':',
+                        queryBy: 'name',
                         source: function (query, process, delimiter) {
-                            if (delimiter === '@') {
-                                $.getJSON('/users/search/' + query, function (data) {
-                                    process(data)
+                            if (delimiter === ':') {
+                                $.ajax({
+                                    url: '/js/emoji.json',
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        var ok = [];
+                                        $(data).each(function(index, el) {
+                                            if(el.name.indexOf( query ) > -1) {
+                                                ok.push(el);
+                                            }
+                                        });   
+                                        process(ok);
+                                    }, 
+                                    error: function(error) {
+                                        console.log(error);
+                                    }
                                 });
                             }
                         },
-                        insert: function (item) {
-                            return '<a href="/users/' + item.slug + '" style="font-weight: bold;">@' + item.name + '</a>';
+                        insert: function(item) {
+                            return '<img style="max-width: 23px; max-height: 22px; min-width: 23px; min-height: 22px; position: relative; top: 5px;" class="emojioneemoji" src="/images/png/'+item.unicode+'.png">';
+                        },
+                        render: function(item) {
+                            return '<li>'+
+                                        '<a><img alt="👍" class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
+                                    '</li>';
                         }
                     },
                     paste_webkit_styles: "all",
@@ -464,11 +487,11 @@ $(document).ready(function() {
                 }
             },
             insert: function(item) {
-                return item.code;
+                return '<img style="max-width: 23px; max-height: 22px; min-width: 23px; min-height: 22px; position: relative; top: 5px;" class="emojioneemoji" src="/images/png/'+item.unicode+'.png">';
             },
             render: function(item) {
                 return '<li>'+
-                            '<a><img alt="👍" class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
+                            '<a><img class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
                         '</li>';
             }
         },
@@ -478,7 +501,6 @@ $(document).ready(function() {
 		browser_spellcheck: true,
 		nonbreaking_force_tab: true,
         relative_urls: false,
-        auto_convert_smileys: true,
         
         /* toolbar */
         toolbar: [
@@ -509,7 +531,7 @@ $(document).ready(function() {
                'addon/hint/css-hint.js',
                'addon/hint/xml-hint.js',
             ]
-          },
+        },
     });
 
     $('#comment-input').on('focus', function() {
@@ -531,7 +553,6 @@ $(document).ready(function() {
             paste_webkit_styles: "all",
             paste_retain_style_properties: "all",
             valid_elements: '*[*]',
-            auto_convert_smileys: true,
             
             /* plugin */
             plugins: [
@@ -540,19 +561,40 @@ $(document).ready(function() {
                 "save table contextmenu directionality template paste textcolor",
                 "leaui_code_editor autoresize"
             ],
-            autoresize_min_height: 100,
             mentions: {
+                delimiter: ':',
+                queryBy: 'name',
                 source: function (query, process, delimiter) {
-                    if (delimiter === '@') {
-                        $.getJSON('/users/search/' + query, function (data) {
-                            process(data)
+                    if (delimiter === ':') {
+                        $.ajax({
+                            url: '/js/emoji.json',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                var ok = [];
+                                $(data).each(function(index, el) {
+                                    if(el.name.indexOf( query ) > -1) {
+                                        ok.push(el);
+                                    }
+                                });   
+                                process(ok);
+                            }, 
+                            error: function(error) {
+                                console.log(error);
+                            }
                         });
                     }
                 },
                 insert: function(item) {
-                    return '<a href="/users/'+item.slug+'" style="font-weight: bold;">@' + item.name + '</a>';
+                    return '<img style="max-width: 23px; max-height: 22px; min-width: 23px; min-height: 22px; position: relative; top: 5px;" class="emojioneemoji" src="/images/png/'+item.unicode+'.png">';
+                },
+                render: function(item) {
+                    return '<li>'+
+                                '<a><img class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
+                            '</li>';
                 }
             },
+            autoresize_min_height: 100,
 
             browser_spellcheck: true,
             nonbreaking_force_tab: true,
@@ -578,7 +620,6 @@ $(function() {
         $('#wiki-page-tree').jstree({
             core: {
                 "themes" : {
-                    // 'stripes': true, // Background highlighted of current node or page
                     'icons': false,
                     'dots' : false,
                     // "variant" : "large"

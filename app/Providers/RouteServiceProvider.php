@@ -24,14 +24,13 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         Route::patterns([
-            'pageId'            =>  '[0-9]+',
-            'categoryId'        =>  '[0-9]+',
             'page_slug'         =>  '(\w+-*\d*)+',
             'id'                =>  '[0-9]+',
             'wiki_slug'         =>  '(\w+-*\d*)+',
             'text'              =>  '[a-zA-Z0-9]+',
             'organization_slug' =>  '(\w+-*\d*)+',
             'organization_id'   =>  '[0-9]+',
+            'page_id'           =>  '[0-9]+',
             'wiki_id'           =>  '[0-9]+',
         ]);
 

@@ -136,7 +136,6 @@ class WikiController extends Controller
     
     public function getWikiPages($organizationId, $id, $page_id = null)
     {
-        dd($id);
         $organization = \App\Models\Organization::find($organizationId)->first();
 
         $wiki = $this->wiki->find($id);
@@ -341,7 +340,9 @@ class WikiController extends Controller
         $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
 
         $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
+        
         $page = $this->wikiPage->getPage($pageSlug);
+        
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
         return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages', 'organization'));

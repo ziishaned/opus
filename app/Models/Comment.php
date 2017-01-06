@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use Emojione;
 use Carbon\Carbon;
 use App\Models\WikiPage;
 use Illuminate\Support\Facades\DB;
@@ -101,10 +102,12 @@ class Comment extends Model
      */
     public function storeComment($pageSlug, $data)
     {
+        Emojione::$imagePathPNG = '/images/png/';
+
         $page = (new wikiPage)->getPage($pageSlug);
         $this->create([
             'page_id'    => $page->id,
-            'content'    => $data['comment'],
+            'content'    => Emojione::toImage($data['comment']),
             'user_id'    => Auth::user()->id,
             'updated_at' => Carbon::now(),
             'created_at' => Carbon::now(),

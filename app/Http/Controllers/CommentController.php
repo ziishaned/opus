@@ -110,14 +110,15 @@ class CommentController extends Controller
         ]);
     }
 
-    public function update($id) {
-        $page = $this->wikiPage->find($this->comment->find($id)->pluck('page_id')->first());
+    public function update($organizationId, $wikiId, $pageId, $commentId) {
+        $page = $this->wikiPage->find($pageId);
+
 
         $this->validate($this->request, Comment::COMMENT_RULES);
         
-        $this->comment->updateComment($id, $this->request->all());
+        $this->comment->updateComment($commentId, $this->request->all());
 
-        $this->activityLog->createActivity('comment', 'update', $page);
+        $this->activityLog->createActivity('comment', 'update', $page, $organizationId);
 
         return redirect()->back()->with([
             'alert'       => 'Comment successfully updated.',

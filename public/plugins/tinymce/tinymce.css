@@ -8,7 +8,8 @@
 
 body {
 	font-family: 'segoe ui', 'Open Sans', sans-serif, arial !important;
-    padding: 6px 12px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2) !important;
 }
 
@@ -75,4 +76,11 @@ a {
 
 a, a:link, a:visited {
     color: #2a80b9 !important;
+}
+
+.emojione {
+    width: 23px !important;
+    height: 22px !important;
+    position: relative;
+    top: 5px;
 }

@@ -46,7 +46,6 @@
 		            <div class="panel-heading">Page Tree</div>
 		        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px; padding-right: 0px;">
 						<div id="current-page-id" class="hide">{{ $page->id }}</div>
-						{{ var_dump($wiki->toArray()) }}
 						<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}" data-organization-id="{{ $organization->id }}" data-current-page="{{ $page->id }}"></div>
 		        	</div>
 		        </div>
@@ -69,7 +68,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     	<div class="navbar page-subnav">
 	                    	<ul class="nav navbar-nav navbar-right">
-				    			<li><a href="http://wiki.dev/organizations/facebook/wikis/git-semver/edit"><i class="fa fa-pencil"></i> Edit</a></li>
+				    			<li><a href="{{ route('pages.edit', [$organization->slug, $wiki->slug, $page->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
 				    			<li><a href="#"><i class="fa fa-check-square-o"></i> Add to read list</a></li>
 					            <li class="dropdown">
 					                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear fa-lg"></i> <i class="fa fa-caret-down"></i></a>
@@ -95,7 +94,7 @@
                 </div>
 		    	<div class="row" style="margin-top: 10px; margin-bottom: 10px;">
 		    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				    	<div class="page-description" style="min-height: 260px;">
+				    	<div class="page-description" style="min-height: 245px;">
 				    		@if(str_word_count($page->description) > 0)
 					    		{!! $page->description !!}
 				    		@else 
@@ -129,7 +128,7 @@
 															<ul class="list-unstyled list-inline pull-right">
 																<li><i class="fa fa-clock-o"></i> <time class="timeago" datetime="{{ $comment->created_at->timezone(Session::get('user_timezone')) }}">{{ $comment->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }}</time></li>
                                                                 @if($comment->user->id == Auth::user()->id)
-                                                                    <li><a href="#" id="edit-comment" data-commentid="{{ $comment->id  }}"><i class="fa fa-pencil"></i></a></li>
+                                                                    <li><a href="#" id="edit-comment" data-comment-id="{{ $comment->id  }}" data-organization-id="{{ $organization->id  }}" data-wiki-id="{{ $wiki->id  }}" data-page-id="{{ $page->id  }}"><i class="fa fa-pencil"></i></a></li>
                                                                     <li>
                                                                         <a href="#" onclick="if(confirm('Are you sure you want to delete comment?')) {event.preventDefault(); document.getElementById('delete-comment').submit();}"><i class="fa fa-trash-o"></i></a>
                                                                         <form id="delete-comment" action="{{ route('comments.delete', [$organization->slug, $wiki->slug, $page->slug, $comment->id]) }}" method="POST" style="display: none;">

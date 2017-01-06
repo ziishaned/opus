@@ -88,6 +88,7 @@
                             <div class="form-group">
                                 <label for="page-parent" class="control-label">Page parent</label>
                                 <select class="form-control input" name="page_parent" id="page-parent">
+                                    <option value=""></option>
                                     @foreach($wikiPages as $wikiPage)
                                         <option value="{{ $wikiPage->id }}">{{ $wikiPage->name }}</option>
                                     @endforeach

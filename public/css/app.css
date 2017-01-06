@@ -370,6 +370,10 @@ label {
     margin-bottom: 6px;
 }
 
+.breadcrumb .active a {
+    color: #777;
+}
+
 .site-breadcrumb {
     line-height: 50px;
     font-weight: 600;
@@ -466,6 +470,7 @@ a, a:link, a:visited, a:active, a:focus, a:hover {
     margin: 0;
     font-size: 14px;
     color: #7d7d7d;
+    font-weight: normal;
 }
 
 .button-primary {
@@ -700,6 +705,11 @@ li.comment-item {
     margin-bottom: 0;
 }
 
+.comment-box .comment-content .emojione, .comment-box .comment-content .emojioneemoji, .page-description .emojioneemoji {
+    position: relative;
+    top: -2px !important;
+}
+
 .comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
 
 .comment-box .comment-name.by-author {
@@ -753,59 +763,12 @@ a#manage-wiki-dropdown {
    text-decoration: none;
 }
 
-.rte-autocomplete:before {
-    right: unset;
-    left: 9px;
-}
-
-.rte-autocomplete:after {
-    right: unset;
-    left: 10px;
-}
-
 ul.comments-list li:last-child {
     margin-bottom: 0px;
 }
 
 ul.comments-list {
     margin-bottom: 0px;
-}
-
-kbd {
-    padding: 3px 8px 3px 8px !important;
-    color: #333;
-    background: #fff url(/images/key_bg.png) repeat-x scroll 0 100%;
-    border: 1px solid #ddd;
-    -moz-border-radius: .166em;
-    -webkit-border-radius: .166em;
-    border-radius: .166em;
-    display: inline-block;
-    font-family: Arial,FreeSans,Helvetica,sans-serif;
-    padding: 0 6px;
-    text-align: center;
-}
-
-.count-with-arrow .count {
-    background-color: #fafafa;
-    border-color: #dcdcdc;
-    color: #313236;
-    display: inline-block;
-    background: white;
-    border-radius: 0px 3px 3px 0px;
-    border-width: 1px;
-    border-style: solid;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 13px;
-    padding: 6px 16px;
-    letter-spacing: .4px;
-    padding: 10px 12px 9px 12px;
-    text-align: center;
-    vertical-align: middle;
-    touch-action: manipulation;
-    background-image: none;
-    white-space: nowrap;
-    border-left: 0px;
 }
 
 .syntaxhighlighter { 
@@ -968,10 +931,10 @@ kbd {
 }
 
 .jstree-default .jstree-hovered {
-    background-color: white !important;
+    /*background-color: white !important;*/
     border: none !important;
     box-shadow: none !important;
-    text-decoration: underline !important;
+    /*text-decoration: underline !important;*/
 }
 
 .jstree-default .jstree-clicked {
@@ -988,8 +951,12 @@ kbd {
     cursor: pointer !important;
 }
 
-.mce-floatpanel .mce-text, .mce-tooltip {
+.mce-floatpanel .mce-text, .mce-tooltip, .rte-autocomplete .active a {
     -webkit-text-stroke: 0px !important;
+}
+
+.rte-autocomplete::before, .rte-autocomplete::after {
+    border: none !important;
 }
 
 .mce-tooltip {
