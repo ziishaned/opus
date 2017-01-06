@@ -18,7 +18,7 @@ class CreateWikiTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug', 65535);
-            $table->string('outline')->longText();
+            $table->string('outline', 1000);
             $table->longText('description')->nullable();
             $table->enum('visibilty', [
                 'private',

@@ -31,9 +31,9 @@ class Category extends Model
         return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 
-    public function wiki()
+    public function wikis()
     {
-        return $this->belongsTo(Wiki::class);
+        return $this->hasMany(Wiki::class, 'category_id', 'id');
     }
 
     public function createCategory($data, $organizationId)

@@ -6,6 +6,7 @@ use DB;
 use Mail;
 use Redirect;
 use App\Models\User;
+use App\Models\Category;
 use App\Models\ActivityLog;
 use App\Models\Organization;
 use Illuminate\Http\Request;
@@ -21,34 +22,25 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class OrganizationController extends Controller
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
     private $request;
 
-    /**
-     * @var \App\Models\Organization
-     */
     private $organization;
 
-    /**
-     * @var \App\Http\Controllers\UserController
-     */
     private $user;
 
     private $activity;
 
-    /**
-     * OrganizationController constructor.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Organization $organization
-     * @param \App\Models\User         $user
-     */
-    public function __construct(Request $request, Organization $organization, User $user, ActivityLog $activity)
+    private $category;
+
+    public function __construct(Request $request, 
+                                Organization $organization, 
+                                User $user, 
+                                ActivityLog $activity,
+                                Category $category)
     {
         $this->user         = $user;
         $this->request      = $request;
+        $this->category     = $category;
         $this->activity     = $activity;
         $this->organization = $organization;
     }
@@ -220,7 +212,9 @@ class OrganizationController extends Controller
             return $wikis;
         }
 
-        return view('organization.wikis', compact('organization'));
+        $categories = $this->category->where('organization_id', '=', $organization->id)->with(['wikis'])->get();
+
+        return view('organization.wikis', compact('organization', 'categories'));
     }
 
     public function getUserContributedWikis($organizationSlug) 

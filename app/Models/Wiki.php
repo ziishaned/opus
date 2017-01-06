@@ -71,7 +71,7 @@ class Wiki extends Model
 
     public function category()
     {
-        return $this->hasOne(Category::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     public function user() {

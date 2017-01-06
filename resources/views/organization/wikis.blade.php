@@ -37,7 +37,30 @@
         </div>
         <div class="clearfix"></div>
         <div class="row wikis-categories-con" id="ms-container">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ms-item">
+            @foreach($categories as $category)
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ms-item">
+                    <div class="panel panel-default">
+                        <div class="panel-body{{ ($category->wikis->count() == 0) ? ' has-no-wikis' : '' }}">
+                            <h2 class="category-name"><i class="fa fa-sitemap fa-lg fa-fw"></i> {{ $category->name }}</h2>
+                            <div class="list-group">
+                                @if($category->wikis->count() > 0) 
+                                    @foreach($category->wikis as $wiki)
+                                        <a href="#" class="list-group-item">
+                                            <h3 class="list-group-item-heading">{{ $wiki->name }}</h3>
+                                            <p class="list-group-item-text">{!! $wiki->outline !!}</p>
+                                        </a>
+                                    @endforeach
+                                @else 
+                                    <div style="margin-left: 35px; margin-bottom: 35px; margin-right: 35px;">
+                                        No pages yet. You can <a href="#">create one here</a>.
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            {{-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ms-item">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h2 class="category-name"><i class="fa fa-sitemap fa-lg fa-fw"></i> Engineering</h2>
@@ -107,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
