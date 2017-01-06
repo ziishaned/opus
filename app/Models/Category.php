@@ -21,6 +21,21 @@ class Category extends Model
     	'updated_at',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
+    }
+
+    public function wiki()
+    {
+        return $this->belongsTo(Wiki::class);
+    }
+
     public function createCategory($data, $organizationId)
     {
     	$this->create([

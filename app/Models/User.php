@@ -57,6 +57,11 @@ class User extends Authenticatable
 
     protected $profileImagePath = 'images/profile-pics';
 
+    public function category()
+    {
+        return $this->hasMany(Category::class, 'user_id', 'id');
+    }
+
     /**
      * DESC
      *

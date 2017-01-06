@@ -69,9 +69,11 @@ class Wiki extends Model
         'page_name' => 'required|max:35|min:3',
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'category_id', 'id');
+    }
+
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

@@ -55,6 +55,11 @@ class Organization extends Model
         'created_at',
     ];
 
+    public function categories()
+    {
+        $this->hasMany(Category::class, 'organization_id', 'id');
+    }
+
     /**
      * User can join organization.
      *
