@@ -20,10 +20,10 @@
 		        				<a href="#">Permissions</a>
 		        			</li>
 		        			<li>
-			                    <a href="{{ route('wikis.pages.reorder', [$organization->slug, $wiki->slug]) }}">Reorder pages</a>
+			                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->slug]) }}">Reorder pages</a>
 			                </li>
 			                <li style="position: relative; top: 10px;">
-			                	<a href="{{ route('wikis.pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
+			                	<a href="{{ route('pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
 			                </li>
 		        		</ul>
 		                <ul class="nav navbar-nav navbar-right">

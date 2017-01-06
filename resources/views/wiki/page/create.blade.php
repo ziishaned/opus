@@ -20,10 +20,10 @@
                                 <a href="#">Permissions</a>
                             </li>
                             <li>
-                                <a href="{{ route('wikis.pages.reorder', [$organization->slug, $wiki->slug]) }}">Reorder pages</a>
+                                <a href="{{ route('pages.reorder', [$organization->slug, $wiki->slug]) }}">Reorder pages</a>
                             </li>
                             <li style="position: relative; top: 10px;">
-                                <a href="{{ route('wikis.pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
+                                <a href="{{ route('pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -62,7 +62,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h3>New page</h3>
                 <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
-                <form action="{{ route('wikis.pages.store', [$organization->slug, $wiki->slug]) }}" method="POST" role="form" style="margin-bottom: 15px;">
+                <form action="{{ route('pages.store', [$organization->slug, $wiki->slug]) }}" method="POST" role="form" style="margin-bottom: 15px;">
                     <input type="text" class="hide" name="wiki_id" value="{{ $wiki->id }}">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

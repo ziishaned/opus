@@ -20,10 +20,10 @@
 		        				<a href="#">Permissions</a>
 		        			</li>
 		        			<li>
-			                    <a href="{{ route('wikis.pages.reorder', [$organization->slug, $wiki->slug]) }}">Reorder pages</a>
+			                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->slug]) }}">Reorder pages</a>
 			                </li>
 			                <li style="position: relative; top: 10px;">
-			                	<a href="{{ route('wikis.pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
+			                	<a href="{{ route('pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
 			                </li>
 		        		</ul>
 		                <ul class="nav navbar-nav navbar-right">
@@ -62,7 +62,7 @@
 		        </div>
                 <div class="row" style="margin-top: 12px;">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <h4 class="page-name-head"><a href="{{ route('wikis.pages.show', [$organization->slug, $wiki->slug, $page->slug]) }}">{{ $page->name }}</a></h4>
+                        <h4 class="page-name-head"><a href="{{ route('pages.show', [$organization->slug, $wiki->slug, $page->slug]) }}">{{ $page->name }}</a></h4>
                         <p class="text-muted">Created by {{ $page->user->first_name }} {{ $page->user->last_name }} on {{ $page->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $page->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -156,7 +156,7 @@
 				<hr>
 				<div class="row" style="margin-bottom: 15px;">
 		    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		    			<form action="{{ route('wikis.pages.comments.store', [$organization->slug, $page->wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
+		    			<form action="{{ route('comments.store', [$organization->slug, $page->wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
 		    				<div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
 		    					<div class="row">
 		    						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-input-con">

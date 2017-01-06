@@ -112,7 +112,7 @@ class WikiController extends Controller
         $html = '';
         if($pages) {
             foreach ($pages as $key => $value) {
-                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('wikis.pages.show', [$organization->slug, $this->wiki->find($value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
+                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $this->wiki->find($value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
             }
         }
         return $html;
@@ -131,10 +131,10 @@ class WikiController extends Controller
         foreach ($wikiPages as $page => $value) {
             foreach($value->getSiblings() as $siblings) {
                 if($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$organization->slug, $siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
+                    $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="'.$value->id.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('wikis.pages.show', [$organization->slug, $value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
+            $html .= '<li id="'.$value->id.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
             if(!empty($value['children'])) {
                 $html .= '<ul>';
                 self::makePageTree($organization, $value['children'], $currentPageId, $html);

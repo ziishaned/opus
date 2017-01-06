@@ -122,7 +122,7 @@ class WikiPage extends Node
                                 'selected' => ($value->id == $openedNode) ? true : false,
                             ],
                             'a_attr' => [
-                                'href' => route('wikis.pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
                             ],
                         ];
                     }
@@ -149,7 +149,7 @@ class WikiPage extends Node
                                 'selected' => ($value->id == $openedNode) ? true : false,
                             ],
                             'a_attr' => [
-                                'href' => route('wikis.pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
                             ],
                         ];
                     }

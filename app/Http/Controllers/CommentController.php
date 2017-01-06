@@ -89,7 +89,7 @@ class CommentController extends Controller
         $page = $this->wikiPage->where('slug', '=', $pageSlug)->first();
         $this->activityLog->createActivity('page', 'commented', $page, $organization->id);
         
-        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
+        return redirect()->route('pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
             'alert'      => 'Comment successfully posted.',
             'alert_type' => 'success'
         ]);

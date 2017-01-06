@@ -84,7 +84,7 @@ class PageController extends Controller
         $page = $this->wikiPage->saveWikiPage($wiki->id, $this->request->all());
         $this->activityLog->createActivity('page', 'create', $page, $organization->id);
         
-        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $page->slug])->with([
+        return redirect()->route('pages.show', [$organizationSlug, $wikiSlug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success'
         ]);
@@ -116,7 +116,7 @@ class PageController extends Controller
     public function update($organizationSlug, $wikiSlug, $pageSlug)
     {
         $this->wikiPage->updatePage($pageSlug, $this->request->all());
-        return redirect()->route('wikis.pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
+        return redirect()->route('pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
             'alert'      => 'Page successfully updated.',
             'alert_type' => 'success'
         ]);
