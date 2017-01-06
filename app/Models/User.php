@@ -211,12 +211,9 @@ class User extends Authenticatable
     public function updateUser($slug, $data, $profile_image)
     {
         $this->where('slug', '=', $slug)->update([
-            'full_name'     =>  $data['full_name'],
+            'first_name'    =>  $data['first_name'],
+            'last_name'     =>  $data['last_name'],
             'profile_image' =>  !empty($profile_image) ? $profile_image : Auth::user()->profile_image,
-            'bio'           =>  $data['bio'],
-            'url'           =>  $data['url'],
-            'company'       =>  $data['company'],
-            'location'      =>  $data['location'],
             'email'         =>  $data['email'],
         ]);
 

@@ -85,7 +85,7 @@
 <script src="/plugins/highchart/drilldown.js"></script>
 <script src="/plugins/jquery-infinitescroll/jquery.infinitescroll.min.js"></script>
 
-<link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
+{{-- <link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
 <script src="/plugins/sh/scripts/shCore.js"></script>
 <script src="/plugins/sh/scripts/shLegacy.js"></script>
 <script src="/plugins/sh/scripts/shAutoloader.js"></script>
@@ -113,12 +113,12 @@
 <script src="/plugins/sh/scripts/shBrushScala.js"></script>
 <script src="/plugins/sh/scripts/shBrushSql.js"></script>
 <script src="/plugins/sh/scripts/shBrushVb.js"></script>
-<script src="/plugins/sh/scripts/shBrushXml.js"></script>
+<script src="/plugins/sh/scripts/shBrushXml.js"></script> --}}
 
 <script>
     new timeago().render(document.querySelectorAll('time.timeago'));
-    SyntaxHighlighter.defaults.toolbar = false;
-    SyntaxHighlighter.all();
+    // SyntaxHighlighter.defaults.toolbar = false;
+    // SyntaxHighlighter.all();
     
     // HighChart
     $(function() {

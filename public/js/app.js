@@ -47,42 +47,6 @@ var App = {
         $('#w').val(c.w);
         $('#h').val(c.h);
     },
-    removeUserFromOrganization: function (userId, organizationId) {
-        $.ajax({
-            url: '/organizations/invite',
-            type: 'DELETE',
-            dataType: 'json',
-            data: {
-                userId         : userId,
-                organizationId : organizationId
-            },
-            success: function(data) {
-                console.log(data);
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
-    getOrganizations: function() {
-        $.ajax({
-            url: '/users/organizations',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                var html = '';
-                $(data).each(function(index, el) {
-                    html += '<li><a href="'+el.url+'">'+el.name+'</a></li>'
-                });
-                $('.header-menu').find('#organizations-list .li-loader').replaceWith(html);
-            }, 
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
     getWikis: function(organizationId) {
         $.ajax({
             url: '/organizations/'+Cookies.get('organization_slug')+'/wikis',
@@ -251,14 +215,14 @@ var App = {
                 var editCommentForm = `
                                        <form action="/comments/`+commentId+`" method="POST" id="edit-comment-form" role="form" data-toggle="validator">
                                             <input type="hidden" name="_method" value="patch">
-                                            <div class="form-group" style="margin-bottom: 0;">
+                                            <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <textarea name="comment" id="edit-comment-input" class="form-control" rows="5" placeholder="Submit your comment..">` + comment + `</textarea>
+                                                        <textarea name="comment" id="edit-comment-input" class="form-control" rows="5">` + comment + `</textarea>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group" style="margin-top: 10px; height: 35px; margin-bottom: 10px;">
+                                            <div class="form-group" style="height: 35px; margin-bottom: 0px;">
                                                 <input type="submit" class="btn btn-default pull-left" id="close-edit-comment-form" value="Close">
                                                 <input type="submit" class="btn btn-success pull-right" id="submit-comment" value="Update Comment">
                                             </div>
@@ -278,7 +242,6 @@ var App = {
 
                     /* width and height of the editor */
                     width: "100%",
-                    height: 100,
 
                     /* display statusbar */
                     menubar: false,
@@ -289,10 +252,10 @@ var App = {
                     plugins: [
                         "advlist autolink link lists charmap hr anchor pagebreak mention",
                         "searchreplace wordcount visualblocks visualchars code nonbreaking",
-                        "save table contextmenu directionality emoticons template paste textcolor placeholder",
+                        "save table contextmenu directionality emoticons template paste textcolor",
                         "leaui_code_editor autoresize"
                     ],
-                    autoresize_min_height: 400,
+                    autoresize_min_height: 100,
                     mentions: {
                         source: function (query, process, delimiter) {
                             if (delimiter === '@') {
@@ -430,40 +393,6 @@ var App = {
             }
         });
     },
-    unFollowUser: function(followId, elm) {
-        $.ajax({
-            url: '/users/unfollow',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                followId: followId
-            },
-            success: function(data) {
-                document.location = '/users/' + followId;
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
-    followUser: function(followId, elm) {
-        $.ajax({
-            url: '/users/follow',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                followId: followId
-            },
-            success: function(data) {
-                document.location = '/users/' + followId;
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    }
 };
 
 $(document).ready(function() {
@@ -506,7 +435,7 @@ $(document).ready(function() {
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
-            "save table contextmenu directionality template paste textcolor placeholder",
+            "save table contextmenu directionality template paste textcolor",
             "leaui_code_editor codemirror mention autoresize"
         ],
         autoresize_min_height: 400,
@@ -583,55 +512,55 @@ $(document).ready(function() {
           },
     });
 
-    tinymce.init({
-        /* replace textarea having class .tinymce with tinymce editor */
-        selector: "#comment-input",
-        content_css : "/plugins/tinymce/tinymce.css",
-        statusbar: false,
+    $('#comment-input').on('focus', function() {
+        tinymce.init({
+            selector: "#comment-input",
+            content_css : "/plugins/tinymce/tinymce.css",
+            statusbar: false,
 
-        /* theme of the editor */
-        theme: "modern",
-        skin: "lightgray",
-        
-        /* width and height of the editor */
-        width: "100%",
-        height: 100,
-        
-        /* display statusbar */
-        menubar:false,
-        statubar: false,
-        paste_webkit_styles: "all",
-        paste_retain_style_properties: "all",
-        valid_elements: '*[*]',
-        auto_convert_smileys: true,
-        
-        /* plugin */
-        plugins: [
-            "advlist autolink link lists charmap hr anchor pagebreak mention",
-            "searchreplace wordcount visualblocks visualchars code nonbreaking",
-            "save table contextmenu directionality template paste textcolor placeholder",
-            "leaui_code_editor autoresize"
-        ],
-        autoresize_min_height: 400,
-        mentions: {
-            source: function (query, process, delimiter) {
-                if (delimiter === '@') {
-                    $.getJSON('/users/search/' + query, function (data) {
-                        process(data)
-                    });
+            /* theme of the editor */
+            theme: "modern",
+            skin: "lightgray",
+            
+            /* width and height of the editor */
+            width: "100%",
+
+            /* display statusbar */
+            menubar:false,
+            statubar: false,
+            paste_webkit_styles: "all",
+            paste_retain_style_properties: "all",
+            valid_elements: '*[*]',
+            auto_convert_smileys: true,
+            
+            /* plugin */
+            plugins: [
+                "advlist autolink link lists charmap hr anchor pagebreak mention",
+                "searchreplace wordcount visualblocks visualchars code nonbreaking",
+                "save table contextmenu directionality template paste textcolor",
+                "leaui_code_editor autoresize"
+            ],
+            autoresize_min_height: 100,
+            mentions: {
+                source: function (query, process, delimiter) {
+                    if (delimiter === '@') {
+                        $.getJSON('/users/search/' + query, function (data) {
+                            process(data)
+                        });
+                    }
+                },
+                insert: function(item) {
+                    return '<a href="/users/'+item.slug+'" style="font-weight: bold;">@' + item.name + '</a>';
                 }
             },
-            insert: function(item) {
-                return '<a href="/users/'+item.slug+'" style="font-weight: bold;">@' + item.name + '</a>';
-            }
-        },
 
-        browser_spellcheck: true,
-        nonbreaking_force_tab: true,
-        relative_urls: false,
+            browser_spellcheck: true,
+            nonbreaking_force_tab: true,
+            relative_urls: false,
 
-        /* toolbar */
-        toolbar: "bold italic underline | bullist numlist | link unlink | leaui_code_editor",
+            /* toolbar */
+            toolbar: "bold italic underline | bullist numlist | link unlink | leaui_code_editor",
+        });
     });
 });
 
@@ -644,6 +573,7 @@ $(function() {
 $(function() {
     if($('#wiki-page-tree').length > 0 ) {
         var wikiId = $('#wiki-page-tree').data('wiki-id');
+        var currentPage = $('#wiki-page-tree').data('current-page');
         var organizationId = $('#wiki-page-tree').data('organization-id');
         $('#wiki-page-tree').jstree({
             core: {
@@ -660,7 +590,7 @@ $(function() {
                     }, 
                     data: function() {
                         if($('#current-page-id').length > 0) {
-                            var openedNode = $('#current-page-id').val();
+                            var openedNode = $('#current-page-id').text();
                             $('#current-page-id').remove();
 
                             return {
@@ -681,7 +611,7 @@ $(function() {
                 var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="/organizations/`+$('body').data('organization')+`/wikis/`+$('body').data('wiki')+`/pages/create">create one here</a>.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
-            data.instance._open_to($('#current-node').val());
+            data.instance._open_to(currentPage);
         });
     } 
 });

@@ -95,22 +95,19 @@ class CommentController extends Controller
         ]);
     }
 
-    public function destroy($id) {
-        $page = $this->wikiPage->find($this->comment->find($id)->pluck('page_id')->first());
-        
-        $pageDeleted = $this->comment->deleteComment($id);
+    public function destroy($organizationSlug, $wikiSlug, $pageSlug, $id) 
+    {
+        $page = $this->wikiPage->getPage($pageSlug);
+        $organization = (new \App\Models\Organization)->getOrganization($organizationSlug);
 
-        $this->activityLog->createActivity('comment', 'delete', $page);
+        $this->comment->deleteComment($id);
 
-        if($pageDeleted) {
-            return redirect()->back()->with([
-                'alert' => 'Comment successfully deleted.',
-                'alert_type' => 'success'
-            ]);
-        }
-        return response()->json([
-            'message' => 'We are having some issues.'
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        $this->activityLog->createActivity('comment', 'delete', $page, $organization->id);
+
+        return redirect()->back()->with([
+            'alert' => 'Comment successfully deleted.',
+            'alert_type' => 'success'
+        ]);
     }
 
     public function update($id) {

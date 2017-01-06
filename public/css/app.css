@@ -6,7 +6,7 @@ html, body {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
-.wiki-head .wiki-name::first-letter{
+.wiki-head .wiki-name::first-letter, .page-name-head::first-letter {
     text-transform: uppercase;
 }
 
@@ -690,6 +690,10 @@ li.comment-item {
     border-radius: 0 0 4px 4px;
     border: 1px solid #ccc;
     border-top: 0px;
+}
+
+.comment-box .comment-content pre {
+    margin-bottom: 0;
 }
 
 .comment-box .comment-content p {

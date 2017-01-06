@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="form-group{{ $errors->has('page_name') ? ' has-error' : '' }}">
-                                <label for="page-name">Page Name</label>
+                                <label for="page-name" class="control-label">Page Name</label>
                                 <input type="text" id="page-name" class="form-control input" name="page_name" required="required">
                                 @if ($errors->has('page_name'))
                                     <span class="help-block">

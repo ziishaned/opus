@@ -133,10 +133,10 @@ class WikiController extends Controller
         $wikiPages = $this->wikiPage->getPages($wiki->id);
         return view('wiki.wiki', compact('wikiPages', 'wiki', 'organization'));
     }
-
-    // Todo: compare also organizationId
+    
     public function getWikiPages($organizationId, $id, $page_id = null)
     {
+        dd($id);
         $organization = \App\Models\Organization::find($organizationId)->first();
 
         $wiki = $this->wiki->find($id);
@@ -314,20 +314,14 @@ class WikiController extends Controller
     public function showPage($organizationSlug, $wikiSlug, $pageSlug)
     {
         $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
-        $wiki = $this->wiki->where('slug', '=', $wikiSlug)->first();
 
-        $page = $this->wikiPage->getPage($pageSlug);
+        $wiki = $this->wiki->where('slug', '=', $wikiSlug)->first();
         
+        $page = $this->wikiPage->getPage($pageSlug);
+
         $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf();
 
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
-
-        if($wikiPages) {
-            return view('wiki.page.page', compact('organization', 'wikiPages', 'page', 'wiki', 'pagePath'));
-        }
-        return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);
+        return view('wiki.page.page', compact('organization', 'page', 'wiki', 'pagePath'));
     }
 
     public function reverseArray($data)
@@ -380,23 +374,16 @@ class WikiController extends Controller
      * @param $pageId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroyPage($wikiSlug, $pageSlug)
+    public function destroyPage($organizationSlug, $wikiSlug, $pageSlug)
     {
-        $page = $this->wikiPage->getPage($pageSlug);
-
         $pageDeleted = $this->wikiPage->deletePage($pageSlug);
 
         $this->activityLog->createActivity('page', 'delete', $page);
 
-        if($pageDeleted) {
-            return redirect()->route('wikis.show', $wikiSlug)->with([
-                'alert' => 'Page successfully deleted.',
-                'alert_type' => 'success'
-            ]);
-        }
-        return response()->json([
-            'message' => 'We are having some issues.'
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);   
+        return redirect()->back()->with([
+            'alert' => 'Page successfully deleted.',
+            'alert_type' => 'success'
+        ]);
     }
 
     /**
@@ -429,37 +416,5 @@ class WikiController extends Controller
         return response()->json([
             'message' => 'Page parent has been changed.'
         ], Response::HTTP_OK);
-    }
-
-    public function watchWiki($id)
-    {
-        $wiki = $this->wiki->find($id);
-        $watch = $this->wiki->watch($id);
-        
-        if($watch) {
-            $this->activityLog->createActivity('wiki', 'watch', $wiki);
-            return response()->json([
-                'watch' => true
-            ], Response::HTTP_CREATED);
-        }
-        return response()->json([
-            'unwatch' => true
-        ], Response::HTTP_ACCEPTED);
-    }
-
-    public function watchPage($id)
-    {
-        $page = $this->wikiPage->find($id);
-        $watch = $this->wikiPage->watch($id);
-
-        if($watch) {
-            $this->activityLog->createActivity('page', 'watch', $page);
-            return response()->json([
-                'watch' => true
-            ], Response::HTTP_CREATED);
-        }
-        return response()->json([
-            'unwatch' => true
-        ], Response::HTTP_ACCEPTED);          
     }
 }

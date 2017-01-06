@@ -48,6 +48,7 @@ class WikiPage extends Node
      */
     protected $fillable = [
         'name',
+        'outline',
         'description',
         'parent_id',
         'user_id',
@@ -184,6 +185,7 @@ class WikiPage extends Node
     {
         $page = $this->create([
             'name'         =>  $data['page_name'],
+            'outline'      =>  !empty($data['outline']) ? $data['outline'] : null,
             'description'  =>  !empty($data['page_description']) ? $data['page_description'] : null,
             'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
             'user_id'      =>  Auth::user()->id,
