@@ -54,6 +54,7 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
         Route::get('{organization_slug}/wikis/{wiki_slug}', 'WikiController@show')->name('wikis.show');
         Route::get('{organization_slug}/wikis/{wiki_slug}/pages/reorder', 'PageController@pagesReorder')->name('pages.reorder');
+        Route::post('{organization_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
         Route::delete('{organization_slug}/wikis/{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
 
         Route::delete('{organization_slug}/wikis/{wiki_slug}/pages/{page_slug}', 'PageController@destroy')->name('pages.destroy');
@@ -76,6 +77,8 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::post('signin/{step}', 'OrganizationController@postSignin')->name('organizations.postsignin')->where(['step' => '[1-2]']);
         Route::get('create/{step}', 'OrganizationController@create')->name('organizations.create')->where(['step' => '[1-4]']);
         Route::post('create/{step}', 'OrganizationController@store')->name('organizations.store')->where(['step' => '[1-4]']);
+        Route::get('join/{step}', 'OrganizationController@join')->name('organizations.join')->where(['step' => '[1-4]']);
+        Route::post('join/{step}', 'OrganizationController@postJoin')->name('organizations.postjoin')->where(['step' => '[1-4]']);
     });
 
 });

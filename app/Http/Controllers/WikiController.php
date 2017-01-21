@@ -112,7 +112,7 @@ class WikiController extends Controller
         $html = '';
         if($pages) {
             foreach ($pages as $key => $value) {
-                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $this->wiki->find($value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
+                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $this->wiki->where('id', '=', $value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
             }
         }
         return $html;
@@ -155,7 +155,9 @@ class WikiController extends Controller
         $organization = $this->organization->getOrganization($organizationSlug);
         $wiki = $this->wiki->getWiki($nameSlug, $organization->id);
 
-        return view('wiki.edit', compact('wiki', 'organization'));
+        $categories = $this->category->getOrganizationCategories($organization->id);
+
+        return view('wiki.edit', compact('wiki', 'organization', 'categories'));
     }
 
     /**
@@ -164,12 +166,16 @@ class WikiController extends Controller
      * @param  string  $nameSlug
      * @return \Illuminate\Http\Response
      */
-    public function update($nameSlug)
+    public function update($organizationSlug, $nameSlug)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
+        
+        $organization = $this->organization->getOrganization($organizationSlug);
         $wiki = $this->wiki->updateWiki($nameSlug, $this->request->all());
-        $this->activityLog->createActivity('wiki', 'update', $wiki);
-        return redirect()->route('wikis.show', $nameSlug)->with([
+        
+        $this->activityLog->createActivity('wiki', 'update', $wiki, $organization->id);
+        
+        return redirect()->route('wikis.show', [$organization->slug, $nameSlug])->with([
             'alert' => 'Wiki successfully updated.',
             'alert_type' => 'success'
         ]);

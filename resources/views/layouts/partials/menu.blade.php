@@ -48,6 +48,11 @@
                     <li>
                         <a href="{{ route('organizations.reports.index', [$organization->slug, ]) }}" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
                     </li>
+                    @if(isset($wiki))
+                        <li>
+                            <a style="position: relative; top: 10px;" href="{{ route('pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default btn-sm">Create page</a>
+                        </li>
+                    @endif
                 </ul>
             @endif
             <ul class="nav navbar-nav navbar-right">

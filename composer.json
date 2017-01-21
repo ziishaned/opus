@@ -10,7 +10,8 @@
         "cviebrock/eloquent-sluggable": "^4.1",
         "baum/baum": "^1.1",
         "intervention/image": "^2.3",
-        "emojione/emojione": "^2.2"
+        "emojione/emojione": "^2.2",
+        "yohang88/letter-avatar": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

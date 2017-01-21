@@ -122,7 +122,7 @@ class WikiPage extends Node
                                 'selected' => ($value->id == $openedNode) ? true : false,
                             ],
                             'a_attr' => [
-                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::where('id', '=', $value->wiki_id)->pluck('slug')->first(), $value->slug]),
                             ],
                         ];
                     }
@@ -149,7 +149,7 @@ class WikiPage extends Node
                                 'selected' => ($value->id == $openedNode) ? true : false,
                             ],
                             'a_attr' => [
-                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::find($value->wiki_id)->pluck('slug')->first(), $value->slug]),
+                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::where('id', '=', $value->wiki_id)->pluck('slug')->first(), $value->slug]),
                             ],
                         ];
                     }
@@ -310,18 +310,16 @@ class WikiPage extends Node
      * @param  array $data
      * @return bool
      */
-    public function changeParent($data)
+    public function changePageParent($nodeId, $parentId)
     {
-        $page = $this->where('id', '=', $data['nodeId'])->first();
-        
-        if($page->parent_id == $data['parentId']) {
-            $page->parent_id = null;
-            $page->save();
-            return true;
+        $node   = $this->find($nodeId);
+        if ($parentId == '#') {
+            $parent = 'null';
+            $node->makeRoot();
+        } else {
+            $parent = $this->find($parentId);
+            $node->makeChildOf($parent);
         }
-
-        $page->parent_id = $data['parentId'];
-        $page->save();
-        return true;
+        return true;   
     }
 }
