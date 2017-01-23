@@ -9,32 +9,8 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())
                 <ul class="nav navbar-nav">
-                    <li class="hidden-xs">
-                        <a href="#" class="dropdown-toggle" data-organizationId="{{ $organization->id }}" data-appended="false" data-toggle="dropdown" id="get-wikis"><i class="fa fa-bars fa-lg"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-left" id="wikis-list" style="padding: 10px;">
-                            <li>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div style="width: 270px;">
-                                            <input class="form-control input-sm fuzzy-search" id="searchinput" type="search" placeholder="Find a wiki...">
-                                            <span class="fa fa-search" style="position: absolute; top: 7px; right: 23px; color: #e7e9ed;"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header" style="padding: 0px;"><i class="fa fa-clock-o fa-fw"></i> Recent Wikis</li>
-                            <li class="li-loader">
-                                <span class="loader"></span> Loading
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="{{ route('organizations.wikis.create', [$organization->slug]) }}" class="btn btn-default btn-block" style="padding-top: 5px; padding-bottom: 5px;">Create new wiki</a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="organization-name">
-                        <a href="{{ route('dashboard', [$organization->slug])  }}">{{ $organization->name }}</a>
+                        <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home"></i> {{ $organization->name }}</a>
                     </li>
                     <li>
                         <a href="{{ route('organizations.wikis', [$organization->slug, ]) }}">Wikis</a>
@@ -60,7 +36,7 @@
                             </div>
                         </form>
                     </li>
-                    <li class="dropdown hidden-xs" title="Notifications">
+                    <li class="dropdown hidden-xs">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox fa-fw"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
@@ -69,7 +45,7 @@
                             <li><a href="#">Separated link</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hidden-xs" title="Notifications">
+                    <li class="dropdown hidden-xs">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-plus fa-fw"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">Create wiki</a></li>
@@ -78,29 +54,13 @@
                             <li><a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown hidden-xs" title="{{ Auth::user()->full_name }}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            @if(empty(Auth::user()->profile_image))
-                                <img src="/images/default.png" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
-                            @else
-                                <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" alt="" class="profile-img"> <i class="fa fa-caret-down"></i>
-                            @endif
-                        </a>
+                    <li class="dropdown hidden-xs">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}">Profile</a></li>
                             <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}">Settings</a></li>
                             <li class="divider"></li>
-                            <li>
-                                <a href="{{ url('/logout') }}" id="logout" 
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-
-                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
+                            <li><a href="{{ url('/logout') }}"> Logout </a></li>
                         </ul>
                     </li>
                     <li class="hidden-lg hidden-md hidden-sm">

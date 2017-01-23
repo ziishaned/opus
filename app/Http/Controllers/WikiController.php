@@ -112,7 +112,7 @@ class WikiController extends Controller
         $html = '';
         if($pages) {
             foreach ($pages as $key => $value) {
-                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $this->wiki->find($value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
+                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $this->wiki->where('id', '=', $value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
             }
         }
         return $html;
