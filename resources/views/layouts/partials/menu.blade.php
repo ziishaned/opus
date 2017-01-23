@@ -24,6 +24,11 @@
                     <li>
                         <a href="{{ route('organizations.reports.index', [$organization->slug, ]) }}" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
                     </li>
+                    @if(isset($wiki)) 
+                        <li>
+                            <a href="#" class="btn btn-default" style="padding: 6px 10px; position: relative; top: 7px; left: 12px;">Create page</a>
+                        </li>
+                    @endif
                 </ul>
             @endif
             <ul class="nav navbar-nav navbar-right">
@@ -57,10 +62,10 @@
                     <li class="dropdown hidden-xs">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}">Profile</a></li>
-                            <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}">Settings</a></li>
+                            <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}"><i class="fa fa-user fa-fw"></i> Profile</a></li>
+                            <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
                             <li class="divider"></li>
-                            <li><a href="{{ url('/logout') }}"> Logout </a></li>
+                            <li><a href="{{ url('/logout') }}"><i class="fa fa-power-off fa-fw"></i> Logout </a></li>
                         </ul>
                     </li>
                     <li class="hidden-lg hidden-md hidden-sm">

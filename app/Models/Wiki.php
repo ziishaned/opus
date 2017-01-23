@@ -175,13 +175,10 @@ class Wiki extends Model
      */
     public function updateWiki($slug, $data)
     {
-        $wiki              =  $this->where('slug', '=', $slug)->first();
-        $wiki->name        =  $data['wiki_name'];
-        $wiki->outline     =  $data['outline'];
-        $wiki->description =  $data['wiki_description'];
-        $wiki->save();
-        
-        return $wiki;
+        $this->where('slug', '=', $slug)->update([
+            'description' =>  $data['wiki_description'],
+        ]);
+        return true;
     }
 
     /**

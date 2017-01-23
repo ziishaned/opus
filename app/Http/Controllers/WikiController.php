@@ -77,10 +77,10 @@ class WikiController extends Controller
         ]);
     }
 
-    public function show($organizationSlug, $nameSlug)
+    public function show($organizationSlug, $wikiSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
-        $wiki = $this->wiki->getWiki($nameSlug, $organization->id);
+        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
         if(!$wiki) {
             abort('404');
         }
@@ -147,29 +147,37 @@ class WikiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $nameSlug
+     * @param $wikiSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($organizationSlug, $nameSlug)
+    public function edit($organizationSlug, $wikiSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
-        $wiki = $this->wiki->getWiki($nameSlug, $organization->id);
+        
+        $categories = $this->category->getOrganizationCategories($organization->id);
 
-        return view('wiki.edit', compact('wiki', 'organization'));
+        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
+
+        return view('wiki.edit', compact('wiki', 'organization', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  string  $nameSlug
+     * @param  string  $wikiSlug
      * @return \Illuminate\Http\Response
      */
-    public function update($nameSlug)
+    public function update($organizationSlug, $wikiSlug)
     {
-        $this->validate($this->request, Wiki::WIKI_RULES);
-        $wiki = $this->wiki->updateWiki($nameSlug, $this->request->all());
-        $this->activityLog->createActivity('wiki', 'update', $wiki);
-        return redirect()->route('wikis.show', $nameSlug)->with([
+        $organization = $this->organization->getOrganization($organizationSlug);
+        
+        $wiki = $this->wiki->where('slug', '=', $wikiSlug)->first();
+        
+        $this->wiki->updateWiki($wikiSlug, $this->request->all());
+        
+        $this->activityLog->createActivity('wiki', 'update', $wiki, $organization->id);
+        
+        return redirect()->route('wikis.show', [$organization->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully updated.',
             'alert_type' => 'success'
         ]);
@@ -178,12 +186,12 @@ class WikiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $nameSlug
+     * @param  string  $wikiSlug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($nameSlug)
+    public function destroy($wikiSlug)
     {
-        $wiki = $this->wiki->deleteWiki($nameSlug);
+        $wiki = $this->wiki->deleteWiki($wikiSlug);
         $this->activityLog->createActivity('wiki', 'delete', $wiki);
         if($wiki) {
             return redirect()->route('dashboard')->with([
