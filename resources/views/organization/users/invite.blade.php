@@ -1,19 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div style="margin-bottom: 10px; margin-top: 10px; height: 50px;" class="hidden-xs">
-            <div class="site-breadcrumb">
-                <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
+    <div style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
+        <div class="container">
+            <div class="subnav">
+                <ul class="list-unstyled list-inline">
                     <li>
-                        <a href="#">Facebook</a>
+                        <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members list</a> 
                     </li>
                     <li class="active">
-                        <a href="#">Invite user</a>
+                        <a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a>
                     </li>
                 </ul>
+                <div class="clearfix"></div>
             </div>
         </div>
+    </div>
+    <div class="container" style="margin-top: 20px;">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div style="padding: 30px 0px; border-bottom: 1px solid #ccc;">

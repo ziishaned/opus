@@ -1,41 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="subnav" style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
+    <div style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
         <div class="container">
-            <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
-                <li>
-                    <a href="{{ route('organizations.wikis', [$organization->slug, ]) }}">All wikis</a>
-                </li>
-                <li class="active">
-                    <a href="{{ route('organizations.wikis.user-contributions', [$organization->slug, ]) }}">My contributions</a>
-                </li>
-                <li>
-                    <a href="#">Read list</a>
-                </li>
-                <li>
-                    <a href="#" title="Jis py zyada comment or viaitor hon">Trending</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="container">
-        <div style="margin-bottom: 10px; margin-top: 10px; height: 50px;">
-            <div class="site-breadcrumb pull-left">
-                <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
+            <div class="subnav">
+                <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                     <li>
-                        <a href="#">Facebook</a>
+                        <a href="{{ route('organizations.wikis', [$organization->slug, ]) }}">All wikis</a>
                     </li>
                     <li class="active">
-                        <a href="#">My contributions</a>
+                        <a href="{{ route('organizations.wikis.user-contributions', [$organization->slug, ]) }}">My contributions</a>
+                    </li>
+                    <li>
+                        <a href="#">Read list</a>
+                    </li>
+                    <li>
+                        <a href="#" title="Jis py zyada comment or viaitor hon">Trending</a>
                     </li>
                 </ul>
             </div>
-            <div class="add-btn pull-right" style="display: flex; height: 50px; align-items: center;">
-                <a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">+ Create Wiki</a>
-            </div>
         </div>
-        <div class="clearfix"></div>
+    </div>
+    <div class="container" style="margin-top: 30px;">
         <div class="row wikis-categories-con" id="ms-container">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ms-item">
                 <div class="panel panel-default">

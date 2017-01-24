@@ -15,19 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
-	    <div style="margin-bottom: 10px; margin-top: 10px; height: 50px;">
-            <div class="site-breadcrumb">
-                <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                    <li>
-                        <a href="#">Facebook</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">All activities</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="container" style="margin-top: 10px;">
 	    <div class="row">   
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 @include('layouts.partials.activity')

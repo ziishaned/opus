@@ -1,34 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="subnav" style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
+    <div style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
         <div class="container">
-            <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
-                <li class="active">
-                    <a href="{{ route('dashboard', [$organization->slug, ]) }}">Wikis</a>
-                </li>
-                <li>
-                    <a href="{{ route('dashboard.user.activity', [$organization->slug, ]) }}">Members</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="container">
-        <div style="margin-bottom: 10px; margin-top: 10px; height: 50px;" class="hidden-xs">
-            <div class="site-breadcrumb">
-                <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                    <li>
-                        <a href="#">Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#">Reports</a>
-                    </li>
+            <div class="subnav" >
+                <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                     <li class="active">
-                        <a href="#">Wikis</a>
+                        <a href="{{ route('dashboard', [$organization->slug, ]) }}">Wikis</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard.user.activity', [$organization->slug, ]) }}">Members</a>
                     </li>
                 </ul>
             </div>
         </div>
+    </div>
+    <div class="container" style="margin-top: 20px;">
         <div class="row" style="margin-bottom: 20px;">
             <div role="tabpanel">
                 <!-- Nav tabs -->

@@ -24,11 +24,11 @@
                     <li>
                         <a href="{{ route('organizations.reports.index', [$organization->slug, ]) }}" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
                     </li>
-                    @if(isset($wiki)) 
-                        <li>
-                            <a href="#" class="btn btn-default" style="padding: 6px 10px; position: relative; top: 7px; left: 12px;">Create page</a>
-                        </li>
-                    @endif
+                    {{-- @if(isset($wiki))  --}}
+                        {{-- <li> --}}
+                            {{-- <a href="#" class="btn btn-default" style="padding: 6px 10px; position: relative; top: 7px; left: 12px;">Create page</a> --}}
+                        {{-- </li> --}}
+                    {{-- @endif --}}
                 </ul>
             @endif
             <ul class="nav navbar-nav navbar-right">

@@ -15,7 +15,7 @@ html, body {
 }
 
 .subnav {
-    height: 35px;
+    height: 50px;
     display: flex;
     align-items: center;
 }    
