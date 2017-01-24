@@ -6,14 +6,6 @@ html, body {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
-.overview-info-list li {
-    margin-bottom: 10px;
-}
-
-.overview-label {
-    color: #7d7d7d;
-}
-
 .subnav {
     height: 50px;
     display: flex;
@@ -30,11 +22,15 @@ html, body {
 }
 
 .subnav>ul>li {
-    padding: 0;
+    margin: 0px 15px;
+    padding: 0px;
+}
+
+.subnav>ul>li:first-child {
+    margin-left: 0px; 
 }
 
 .subnav>ul>li>a {
-    padding: 5px 15px;
     color: #777;
 }
 
