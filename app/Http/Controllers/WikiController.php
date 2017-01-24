@@ -239,4 +239,13 @@ class WikiController extends Controller
             'message' => 'Page parent has been changed.'
         ], Response::HTTP_OK);
     }
+
+    public function overview($organizationSlug, $wikiSlug)
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);
+
+        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
+
+        return view('wiki.overview', compact('organization', 'wiki'));
+    }
 }

@@ -58,43 +58,84 @@
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 		    	<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="subnav pull-right" style="margin-top: 10px;">
+						<div class="subnav" style="margin-top: 10px;">
 							<ul class="list-unstyled list-inline">
-				    			<li><a href="{{ route('wikis.edit', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
-				    			<li><a href="#"><i class="fa fa-check-square-o fa-fw"></i> Add to read list</a></li>
-					            <li class="dropdown">
-					                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i> <i class="fa fa-caret-down"></i></a>
-					                <ul class="dropdown-menu dropdown-menu-right">	
-					                    <li><a href="#"><i class="fa fa-info fa-fw"></i> Overview</a></li>
-					                    <li><a href="#"><i class="fa fa-history fa-fw"></i> Page history</a></li>
-					                    <li><a href="#"><i class="fa fa-html5 fa-fw"></i> Page source</a></li>
-					                   	<li class="divider"></li>
-					                    <li><a href="#"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a></li>
-					                    <li><a href="#"><i class="fa fa-file-word-o fa-fw"></i> Export to Word Document</a></li>
-					                    <li class="divider"></li>
-					                    <li>
-					                    	<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-											<form id="delete-wiki" action="{{ route('wikis.destroy', [$organization->slug, $wiki->slug]) }}" method="POST" style="display: none;">
-				                                {!! method_field('delete') !!}
-				                                {!! csrf_field() !!}
-				                            </form>
-					                    </li>
-					                </ul>
-					            </li>
+				    			<li class="active"><a href="#"><i class="fa fa-info fa-fw"></i> Overview</a></li>
+				    			<li><a href="#"><i class="fa fa-lock"></i> Permissions</a></li>
+				    			<li><a href="#"><i class="fa fa-file-text-o"></i> Pages</a></li>
+				    			<li><a href="#"><i class="fa fa-inbox"></i> Notifications</a></li>
+				    			<li><a href="#"><i class="fa fa-slack"></i> Integrations</a></li>
 							</ul>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
-		    	<div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+		    	<div class="row" style="margin-top: 20px; margin-bottom: 10px;">
 		    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				    	<div class="page-description" style="min-height: 245px;">
-				    		@if(str_word_count($wiki->description) > 0)
-					    		{!! $wiki->description !!}
-				    		@else 
-								<p class="nothing-found" style="position: absolute; top: 50%; left: 50%; margin-left: -120px; margin-top: -20px;">This page does not contain any description yet...</p>	
-				    		@endif
-				    	</div>
+						<ul class="list-unstyled overview-info-list">
+							<li>
+								<div class="row">
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+										<div class="overview-label">Name</div>
+									</div>
+									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										{{ $wiki->name }}
+									</div>
+								</div>	
+							</li>
+							<li>
+								<div class="row">
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+										<div class="overview-label">Category</div>
+									</div>
+									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										<a href="#">{{ $wiki->category->name }}</a>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="row">
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+										<div class="overview-label"><i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="top" title="Homepage can only set by admins"></i> Homepage</div>
+									</div>
+									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										<a href="#">{{ $wiki->name }}</a>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="row">
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+										<div class="overview-label">{{ $wiki->user->first_name . ' ' . $wiki->user->last_name }}</div>
+									</div>
+									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										<a href="#">Zeeshan Ahmed</a>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="row">
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+										<div class="overview-label">Description</div>
+									</div>
+									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos deserunt ratione, molestias ipsa doloremque accusantium quae, dolores quo ipsam. In deserunt tenetur dignissimos fugit soluta, temporibus unde non ipsam a.
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="row">
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-right">
+										<div class="overview-label">Administrators</div>
+									</div>
+									<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+										<ol style="padding-left: 15px;">
+											<li>Zeeshan Ahmed</li>
+										</ol>
+									</div>
+								</div>
+							</li>
+						</ul>
 				    </div>
 				</div>
 			</div>

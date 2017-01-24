@@ -6,11 +6,24 @@ html, body {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
+.overview-info-list li {
+    margin-bottom: 10px;
+}
+
+.overview-label {
+    color: #7d7d7d;
+}
+
 .subnav {
     height: 35px;
     display: flex;
     align-items: center;
 }    
+
+.subnav ul li.active a {
+    font-weight: bold;
+    color: #424242;
+}
 
 .subnav ul {
     margin-bottom: 0;
