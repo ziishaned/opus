@@ -54,6 +54,7 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::get('{organization_slug}/wikis/create', 'WikiController@create')->name('organizations.wikis.create');
         Route::get('{organization_slug}/wikis/{wiki_slug}', 'WikiController@show')->name('wikis.show');
         Route::get('{organization_slug}/wikis/{wiki_slug}/overview', 'WikiController@overview')->name('wikis.overview');
+        Route::get('{organization_slug}/wikis/{wiki_slug}/permissions', 'WikiController@permissions')->name('wikis.permissions');
         Route::get('{organization_slug}/wikis/{wiki_slug}/pages/reorder', 'PageController@pagesReorder')->name('pages.reorder');
         Route::post('{organization_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
         Route::delete('{organization_slug}/wikis/{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');

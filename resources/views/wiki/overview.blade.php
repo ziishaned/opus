@@ -60,52 +60,57 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="subnav">
 							<ul class="list-unstyled list-inline">
-				    			<li class="active"><a href="#"><i class="fa fa-info fa-fw"></i> Overview</a></li>
-				    			<li><a href="#"><i class="fa fa-lock"></i> Permissions</a></li>
-				    			<li><a href="#"><i class="fa fa-file-text-o"></i> Pages</a></li>
-				    			<li><a href="#"><i class="fa fa-inbox"></i> Notifications</a></li>
-				    			<li><a href="#"><i class="fa fa-slack"></i> Integrations</a></li>
+				    			<li class="active"><a href="{{ route('wikis.overview', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a></li>
+				    			<li><a href="{{ route('wikis.permissions', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-lock fa-fw"></i> Permissions</a></li>
+				    			<li><a href="#"><i class="fa fa-file-text-o fa-fw"></i> Pages</a></li>
+				    			<li><a href="#"><i class="fa fa-inbox fa-fw"></i> Notifications</a></li>
+				    			<li><a href="#"><i class="fa fa-slack fa-fw"></i> Integrations</a></li>
 							</ul>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
-		    	<div class="row">
+		    	<div class="row" style="margin-top: 5px;">
 		    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<form action="" method="POST" role="form">
-							<div class="row">
-								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-									<div class="form-group">
-										<label for="">Name</label>
-										<input type="text" class="form-control" id="" value="{{ $wiki->name }}" placeholder="Input field">
+						<div class="panel panel-default">
+							<div class="panel-heading">Wiki overview</div>
+							<div class="panel-body">
+								<form action="" method="POST" role="form">
+									<div class="row">
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+											<div class="form-group">
+												<label for="">Name</label>
+												<input type="text" class="form-control" id="" value="{{ $wiki->name }}" placeholder="Input field">
+											</div>
+										</div>
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+											<div class="form-group">
+												<label for="">Created by</label>
+												<input type="text" name="" id="input" class="form-control" value="{{ $wiki->user->first_name . ' ' . $wiki->user->last_name }}" disabled="disabled">
+											</div>
+										</div>
 									</div>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<div class="form-group">
-										<label for="">Created by</label>
-										<input type="text" name="" id="input" class="form-control" value="{{ $wiki->user->first_name . ' ' . $wiki->user->last_name }}" disabled="disabled">
+										<label for="">Outline</label>
+										<input type="text" name="" id="input" class="form-control" value="{{ $wiki->outline }}">
 									</div>
-								</div>
+									<div class="form-group">
+										<label for="">Category</label>
+										<select name="" id="input" class="form-control" required="required">
+											<option value="">{{ $wiki->category->name }}</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="">Wiki homepage</label>
+										<select name="" id="input" class="form-control" required="required">
+											<option value="">Select wiki homepage</option>
+										</select>
+									</div>
+									<button type="submit" class="btn btn-success pull-right">Update</button>
+									<div class="clearfix"></div>
+								</form>
 							</div>
-							<div class="form-group">
-								<label for="">Outline</label>
-								<input type="text" name="" id="input" class="form-control" value="{{ $wiki->outline }}">
-							</div>
-							<div class="form-group">
-								<label for="">Category</label>
-								<select name="" id="input" class="form-control" required="required">
-									<option value="">{{ $wiki->category->name }}</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="">Wiki homepage</label>
-								<select name="" id="input" class="form-control" required="required">
-									<option value="">Select wiki homepage</option>
-								</select>
-							</div>
-							<button type="submit" class="btn btn-success pull-right">Update</button>
-							<div class="clearfix"></div>
-						</form>
+						</div>
 				    </div>
 				</div>
 			</div>
