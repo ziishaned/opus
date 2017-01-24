@@ -92,7 +92,7 @@
 				    		@if(str_word_count($wiki->description) > 0)
 					    		{!! $wiki->description !!}
 				    		@else 
-								<p class="nothing-found" style="position: absolute; top: 50%; left: 50%; margin-left: -120px; margin-top: -20px;">This page does not contain any description yet...</p>	
+								<p class="nothing-found" style="position: absolute; top: 50%; left: 50%; margin-left: -120px; margin-top: -20px;">This page does not contain any description yet...</p>
 				    		@endif
 				    	</div>
 				    </div>

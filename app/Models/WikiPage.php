@@ -310,18 +310,16 @@ class WikiPage extends Node
      * @param  array $data
      * @return bool
      */
-    public function changeParent($data)
+    public function changePageParent($nodeId, $parentId)
     {
-        $page = $this->where('id', '=', $data['nodeId'])->first();
-        
-        if($page->parent_id == $data['parentId']) {
-            $page->parent_id = null;
-            $page->save();
-            return true;
+        $node   = $this->find($nodeId);
+        if ($parentId == '#') {
+            $parent = 'null';
+            $node->makeRoot();
+        } else {
+            $parent = $this->find($parentId);
+            $node->makeChildOf($parent);
         }
-
-        $page->parent_id = $data['parentId'];
-        $page->save();
-        return true;
+        return true;   
     }
 }

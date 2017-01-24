@@ -79,6 +79,11 @@ class OrganizationController extends Controller
         return view('organization.create.'.$step, compact('step'));
     }
 
+    public function join($step)
+    {
+        return view('organization.join.'.$step, compact('step'));
+    }
+
     /**
      * Creates a new organization.
      *
@@ -276,6 +281,60 @@ class OrganizationController extends Controller
     public function signin($step) 
     {
         return view('organization.signin.'.$step, compact('step'));
+    }
+
+    public function postJoin($step)
+    {
+        $validationMessage = [];
+        switch ($step)
+        {
+            case 1:
+                $rules = [
+                    'organization_name' => 'required|exists:organization,name',
+                ];
+                $validationMessage = [
+                    'exists' => 'Specified organization does\'t exists.'
+                ];
+                break;
+            case 2:
+                $rules = [
+                    'email' => 'required|organization_has_email|email',
+                    'password' => 'required|confirmed',
+                ];
+                break;
+            default:
+                abort(404);
+        }
+
+        $this->validate($this->request, $rules, $validationMessage);
+
+        switch ($step)
+        {
+            case 1:
+                Session::put('organization_name', $this->request->get('organization_name'));
+                break;
+            case 2:
+                break;
+            default:
+                abort(404);
+        }
+
+        if ($step == 2) {
+            $userInfo = [
+                'email' => $this->request->get('email'),
+                'password' => $this->request->get('password'),
+                'organization' => Session::get('organization_name'),
+            ];
+            
+            dd('');
+
+            return redirect()->back()->with([
+                                        'alert'      => 'Email or password is not valid.',
+                                        'alert_type' => 'danger'
+                                    ]);
+        }
+
+        return redirect()->action('OrganizationController@join', ['step' => $step+1]);
     }
 
     /**

@@ -158,6 +158,8 @@ class WikiController extends Controller
 
         $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
 
+        $categories = $this->category->getOrganizationCategories($organization->id);
+
         return view('wiki.edit', compact('wiki', 'organization', 'categories'));
     }
 
@@ -178,6 +180,7 @@ class WikiController extends Controller
         $this->activityLog->createActivity('wiki', 'update', $wiki, $organization->id);
         
         return redirect()->route('wikis.show', [$organization->slug, $wiki->slug])->with([
+
             'alert' => 'Wiki successfully updated.',
             'alert_type' => 'success'
         ]);

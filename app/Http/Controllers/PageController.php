@@ -35,17 +35,21 @@ class PageController extends Controller
         $this->organization = $organization;
     }
 
-	public function pagesReorder($wiki_slug)
+	public function pagesReorder($organizationSlug, $wiki_slug)
     {
-        $wiki = $this->wiki->getWiki($wiki_slug);        
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
+        $organization = $this->organization->getOrganization($organizationSlug);
 
-        if($wikiPages) {
-            return view('wiki.page.reorder', compact('wikiPages', 'wiki'));
-        }
+        $wiki = $this->wiki->getWiki($wiki_slug, $organization->id);
+
+        return view('wiki.page.reorder', compact('wiki', 'organization'));        
+    }
+
+    public function reorder($organizationId, $wikiId)
+    {
+        $this->wikiPage->changePageParent($this->request->get('nodeId'), $this->request->get('parentId'));   
         return response()->json([
-            'message' => 'Resource not found.'
-        ], Response::HTTP_NOT_FOUND);        
+            'success' => true
+        ]);
     }
 
     public function destroy($organizationSlug, $wikiSlug, $pageSlug)

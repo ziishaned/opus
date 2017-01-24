@@ -296,6 +296,7 @@ input:focus, select:focus, .input:focus {
     box-shadow: none;
 }
 .btn-link, a.btn-link, .btn-link:hover, a.btn-link:hover, .btn-link:focus, a.btn-link:focus, .btn-link:active, a.btn-link:active {
+    text-decoration: none;
     border-color: transparent;
 }
 .btn-link, a.btn-link {
@@ -886,7 +887,7 @@ ul.comments-list {
 
 .jstree-selected>a {
     color: black !important;
-    font-weight: bold !important;
+    font-weight: 500 !important;
 }
 
 .jstree-default .jstree-anchor {
