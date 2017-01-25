@@ -58,7 +58,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 		    	<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="subnav pull-right" style="margin-top: 10px;">
+						<div class="subnav pull-right" style="position: relative; top: 10px; right: 6px;">
 							<ul class="list-unstyled list-inline">
 				    			<li><a href="{{ route('wikis.edit', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
 				    			<li><a href="#"><i class="fa fa-check-square-o fa-fw"></i> Add to read list</a></li>
@@ -86,7 +86,7 @@
 						<div class="clearfix"></div>
 					</div>
 				</div>
-		    	<div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+		    	<div class="row" style="margin-bottom: 10px;">
 		    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				    	<div class="page-description" style="min-height: 245px;">
 				    		@if(str_word_count($wiki->description) > 0)
