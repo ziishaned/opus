@@ -3,7 +3,7 @@
 @section('content')
     <div class="container" style="margin-top: 20px;">
         <div class="row">   
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <div class="dashboard-sidebar" data-spy="affix" data-offset-top="27">
                     <div class="panel panel-default">
                         <div class="panel-heading"><i class="fa fa-clock-o"></i> Recent wikis</div>
@@ -23,12 +23,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <h2 style="margin-bottom: 23px; position: relative; top: 5px;">All Updates</h2>
                 <hr>
                 @include('layouts.partials.activity')
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <div class="dashboard-aside dashboard-quick-links" data-spy="affix" data-offset-top="27">
                     <div class="section-head" style="margin-top: 10px; margin-bottom: 15px;">
                         Quick links

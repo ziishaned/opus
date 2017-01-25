@@ -63,6 +63,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}"><i class="fa fa-user fa-fw"></i> Profile</a></li>
+                            <li>
+                                <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> Read list</a>
+                            </li>
+                            <li>
+                                <a href="#" title="Jis py zyada comment or viaitor hon"><i class="fa fa-line-chart"></i> Trending</a>
+                            </li>
                             <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-power-off fa-fw"></i> Logout </a></li>

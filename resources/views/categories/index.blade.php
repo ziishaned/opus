@@ -1,23 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div style="background-color: #f8f8f8; border-bottom: 1px solid #E0E0E0;">
-        <div class="container">
-            <div class="subnav">
-                <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
-                    <li class="active">
-                        <a href="{{ route('organizations.categories.index', [$organization->slug, ]) }}">Categories</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('organizations.categories.create', [$organization->slug, ]) }}">Create category</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container" style="margin-top: 30px;">
+    <div class="container" style="margin-top: 20px;">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div style="margin-bottom: 20px;">
+                    <h2>Categories list</h2>
+                    <p>Categories are used to categorized wikis. You can also <a href="#">create one here</a>.</p>
+                </div>
                 <table class="table table-responsive table-condensed table-bordered table-hover categories">
                     <thead>
                         <tr>

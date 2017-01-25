@@ -174,8 +174,7 @@ a:focus {
 }
 
 .wikis-categories-con .category-name {
-    margin: 35px; 
-    margin-bottom: 35px;
+    margin: 25px 35px; 
 }
 
 .wikis-categories-con .list-group {
@@ -185,17 +184,18 @@ a:focus {
 .wikis-categories-con .list-group-item {
     border: 0px; 
     padding: 15px 40px; 
-    border-top: 1px solid #efefef; 
+    border-top: 1px solid #ddd; 
     border-radius: 0px !important;
+}
+
+.wikis-categories-con .list-group-item:last-child {
+    border-bottom: 1px solid #ddd; 
 }
 
 .wikis-categories-con .list-group-item-text {
     line-height: 25px; 
     color: #616161;
-}
-
-.wikis-categories-con .list-group-item:hover {
-    background-color: #ffffff;
+    font-size: 14px;
 }
 
 .wikis-categories-con .panel-body {
@@ -314,7 +314,7 @@ button {
     outline: none !important;
 }
 
-a, p, input, select, div, h1, h2, h3, h4, h5, h6 {
+p, input, select, div, h1, h2, h3, h4, h5, h6 {
     font-family: 'segoe ui', 'Open Sans', 'source sans pro';
     color: #424242;
 }
@@ -350,7 +350,7 @@ p {
 
 a, a:link, a:visited, a:active, a:focus, a:hover {
     text-decoration: none;
-    color: #3572b0;
+    cursor: pointer;
 }
 
 
