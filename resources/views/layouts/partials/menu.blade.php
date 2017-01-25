@@ -8,7 +8,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="position: relative; left: -15px;">
                     <li class="organization-name">
                         <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home"></i> {{ $organization->name }}</a>
                     </li>

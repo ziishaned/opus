@@ -729,16 +729,18 @@ $(function() {
         });      
     }
 
-    var sideNav = $('#side-nav-con').offset();
+    if($('#side-nav-con').length > 0) {
+        var sideNav = $('#side-nav-con').offset();
 
-    $(window).scroll(function(){
-        if($(window).scrollTop() > sideNav.top){
-            $('#side-nav-con').css('position','fixed').css({
-                'top': '70px',
-                'width': '360px'
-            });
-        } else {
-            $('#side-nav-con').removeAttr('style');
-        }
-    });
+        $(window).scroll(function(){
+            if($(window).scrollTop() > sideNav.top){
+                $('#side-nav-con').css('position','fixed').css({
+                    'top': '70px',
+                    'width': '360px'
+                });
+            } else {
+                $('#side-nav-con').removeAttr('style');
+            }
+        });
+    }
 });

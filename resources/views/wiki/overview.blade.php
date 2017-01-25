@@ -80,7 +80,7 @@
 										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 											<div class="form-group">
 												<label for="">Name</label>
-												<input type="text" class="form-control" id="" value="{{ $wiki->name }}" placeholder="Input field">
+												<input type="text" class="form-control focus" id="" value="{{ $wiki->name }}" placeholder="Input field">
 											</div>
 										</div>
 										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

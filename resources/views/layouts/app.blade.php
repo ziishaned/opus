@@ -73,7 +73,6 @@
 <script src="/js/moment.min.js"></script>
 <script src="/js/masonry.min.js"></script>
 <script src="/js/js.cookie.js"></script>
-<script src="/js/timeago.js"></script>
 <script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
 <script src="/js/app.js"></script>
 <script src="/plugins/jcrop/Jcrop.min.js"></script>
@@ -116,7 +115,6 @@
 <script src="/plugins/sh/scripts/shBrushXml.js"></script> --}}
 
 <script>
-    new timeago().render(document.querySelectorAll('time.timeago'));
     // SyntaxHighlighter.defaults.toolbar = false;
     // SyntaxHighlighter.all();
     

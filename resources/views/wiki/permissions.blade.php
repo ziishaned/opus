@@ -74,19 +74,7 @@
 		    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<div class="pull-left" style="position: relative; top: 9px;">
-									Users with access to <b>{{ $wiki->name }}</b> wiki <span class="label label-default" style="-webkit-text-stroke: 0px;">5</span>
-								</div>
-								<div class="pull-right" style="position: relative; top: 5px;">
-									<div class="form-group period-dropdown">
-	                                    <div class="btn-group btn-group-sm">
-	                                        <button type="button" class="btn btn-default active">All</button>
-	                                        <button type="button" class="btn btn-default">Admins</button>
-	                                        <button type="button" class="btn btn-default">Normal users</button>
-	                                    </div>
-	                                </div>
-								</div>
-								<div class="clearfix"></div>
+								Users with access to {{ $wiki->name }} wiki <span class="label label-default" style="-webkit-text-stroke: 0px;">5</span>
 							</div>
 							<div class="panel-body">
 								<div class="row">
@@ -139,7 +127,7 @@
 				                        </div>
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-										<div class="member-con" style="margin-bottom: 18px; border: 1px solid #E0E0E0; padding: 18px 29px; border-radius: 4px; box-shadow: 0px 0px 3px rgba(204, 204, 204, 0.35)">
+										<div class="member-con" style="border: 1px solid #E0E0E0; padding: 18px 29px; border-radius: 4px; box-shadow: 0px 0px 3px rgba(204, 204, 204, 0.35)">
 				                            <div class="member-image pull-left">
                                                 <img src="/images/profile-pics/img_2017-01-21-05-14.jpg" width="54" height="54" alt="Image" style="border-radius: 50%; border: 1px solid #fafafa;">
                                             </div>
