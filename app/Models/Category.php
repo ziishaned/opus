@@ -88,4 +88,12 @@ class Category extends Model
     {
         return $this->where('organization_id', '=', $id)->get();
     }
+
+    public function getCategory($categorySlug, $organizationId)
+    {
+        return $this->where('slug', '=', $categorySlug)
+                    ->where('organization_id', '=', $organizationId)
+                    ->with(['wikis'])
+                    ->first();   
+    }
 }

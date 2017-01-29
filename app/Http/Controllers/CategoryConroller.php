@@ -20,16 +20,6 @@ class CategoryConroller extends Controller
         $this->request      = $request;
         $this->organization = $organization;
     }
-
-    public function index($organizationSlug)
-    {
-        $organization = $this->organization->getOrganization($organizationSlug);
-        
-        $categories = $this->category->getCategories($organization->id);
-        
-        return view('categories.index', compact('organization', 'categories'));
-    }
-
     public function store($organizationSlug)
     {
         $this->validate($this->request, Category::CATEGORY_RULES);
@@ -68,5 +58,14 @@ class CategoryConroller extends Controller
             'alert' => 'Category successfully updated.',
             'alert_type' => 'success'
         ]);
+    }
+
+    public function getCategoryWikis($organizationSlug, $categorySlug)
+    {
+        $organization = $this->organization->getOrganization($organizationSlug);
+
+        $category = $this->category->getCategory($categorySlug, $organization->id);
+
+        return view('organization.categories.wikis', compact('organization', 'category'));
     }
 }

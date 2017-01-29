@@ -20,7 +20,7 @@ var App = {
     },
     initMasonry: function() {
         var that = this;  
-        if($('#ms-container').length > 0) {
+        if($('#ms-container').length > 0 && $('#ms-container').find('.ms-item').length > 0) {
             new Masonry(document.querySelector('#ms-container'), {
                 itemSelector: '.ms-item',
                 columnWidth: '.ms-item',                

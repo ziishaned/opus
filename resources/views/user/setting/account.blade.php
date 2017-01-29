@@ -4,7 +4,7 @@
     <section>
         <div class="container">
             <div role="tabpanel">
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs nav-tabs-center" role="tablist">
                     <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/settings/profile') class="active" @endif role="presentation">
                         <a href="{{ route('settings.profile', [$organization->slug, ]) }}">Profile</a>            
                     </li>

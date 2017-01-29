@@ -55,23 +55,23 @@ a:focus {
     text-decoration: none;
 }
 
-.nav-tabs>li>a {
+.nav-tabs-center>li>a {
     color: #777;
 }
 
-.nav-tabs>li>a:hover {
+.nav-tabs-center>li>a:hover {
     color: #333;
 }
 
-.nav-tabs > li, .nav-pills > li {
-    float:none;
-    display:inline-block;
-    *display:inline; /* ie7 fix */
-    zoom:1; /* hasLayout ie7 trigger */
+.nav-tabs-center > li {
+    float: none;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
 }
 
-.nav-tabs, .nav-pills {
-    text-align:center;
+.nav-tabs-center {
+    text-align: center;
 }
 
 .tab-content {

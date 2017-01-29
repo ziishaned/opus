@@ -66,7 +66,7 @@
                 <h4 class="modal-title">Create category</h4>
             </div>
             <div class="modal-body" style="padding-left: 0px; padding-right: 0px;">
-                <form action="{{ route('organizations.categories.store', [$organization->slug]) }}" method="POST" role="form" id="update-category-form">
+                <form action="{{ isset($organization) ? route('organizations.categories.store', [$organization->slug]) : '' }}" method="POST" role="form" id="update-category-form">
                     <div class="plr15">
                         <div class="form-group">
                             <label for="name">Name</label>
