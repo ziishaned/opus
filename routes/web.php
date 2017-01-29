@@ -24,7 +24,6 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::group(['prefix' => '{organization_slug}/settings'], function () {
             Route::get('profile', 'UserController@profileSettings')->name('settings.profile');
             Route::get('account', 'UserController@accountSettings')->name('settings.account');
-            Route::get('notifications', 'UserController@notificationsSettings')->name('settings.notifications');
         });
 
         Route::group(['prefix' => '{organization_slug}/categories'], function () {

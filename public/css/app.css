@@ -11,12 +11,48 @@ a:focus {
     text-decoration: none;
 }
 
+.nav-tabs>li>a {
+    color: #777;
+}
+
+.nav-tabs>li>a:hover {
+    color: #333;
+}
+
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+    zoom:1; /* hasLayout ie7 trigger */
+}
+
+.nav-tabs, .nav-pills {
+    text-align:center;
+}
+
+.tab-content {
+    padding: 20px 15px;
+}
+
+.tab-bordered {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.nav-tabs {
+    border-bottom: 0px;
+}
+
 #category-outline {
     font-size: 13px;
 }
 
 .cur-default {
     cursor: default;
+}
+
+.mb20 {
+    margin-bottom: 20px;
 }
 
 .mt0 {
@@ -40,6 +76,7 @@ html, body {
     margin: 0px;
     height: 100%;
     font-family: 'Roboto', 'segoe ui';
+    /*background-color: #f1f6f8;*/
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -286,10 +323,6 @@ code {
     font-family: monaco !important;
 }
 
-hr {
-    margin: 12px 0px 12px 0px;
-}
-
 button {
     outline: none !important;
 }
@@ -317,6 +350,11 @@ h4 {
 
 h5 {
     font-size: 14px;
+}
+
+h6 {
+    font-size: 13px;
+    font-weight: 400;
 }
 
 .nothing-found {
@@ -440,7 +478,11 @@ h5 {
     cursor: pointer !important;
 }
 
-.mce-floatpanel .mce-text, .mce-tooltip, .rte-autocomplete .active a, .btn {
+.upload-btn {
+    margin-bottom: 8px;
+}
+
+.mce-floatpanel .mce-text, .mce-tooltip, .rte-autocomplete .active a, .btn, .no-stroke {
     -webkit-text-stroke: 0px !important;
 }
 

@@ -174,12 +174,6 @@ class UserController extends Controller
         return view('user.setting.account', compact('organization'));
     }
 
-    public function notificationsSettings($organizationSlug)
-    {
-        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
-        return view('user.setting.notifications', compact('organization'));
-    }
-
     public function update($slug)
     {
         $this->validate($this->request, [
