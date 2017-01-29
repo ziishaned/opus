@@ -27,6 +27,7 @@ class RouteServiceProvider extends ServiceProvider
             'page_slug'         =>  '(\w+-*\d*)+',
             'id'                =>  '[0-9]+',
             'wiki_slug'         =>  '(\w+-*\d*)+',
+            'category_slug'     =>  '(\w+-*\d*)+',
             'text'              =>  '[a-zA-Z0-9]+',
             'organization_slug' =>  '(\w+-*\d*)+',
             'organization_id'   =>  '[0-9]+',

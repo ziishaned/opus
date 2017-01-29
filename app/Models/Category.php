@@ -5,9 +5,21 @@ namespace App\Models;
 use Auth;
 use Emojione;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Category extends Model
 {
+    use Sluggable;
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
     const CATEGORY_RULES = [
         'category_name' => 'required',
     ];
@@ -16,6 +28,7 @@ class Category extends Model
 
     protected $fillable = [
         'name',
+        'slug',
     	'outline',
     	'user_id',
     	'organization_id',
@@ -42,6 +55,7 @@ class Category extends Model
     {
     	$this->create([
     		'name' 			  => $data['category_name'],
+            'outline'         => $data['description'],
 	    	'user_id' 		  => Auth::user()->id,
 	    	'organization_id' => $organizationId,
     	]);
@@ -61,7 +75,6 @@ class Category extends Model
 
     public function updateCategory($data, $categoryId, $organizationId)
     {
-        // Emojione::$imagePathPNG = '/images/png/';
         $this->where('id', '=', $categoryId)
              ->where('organization_id', '=', $organizationId)
              ->update([

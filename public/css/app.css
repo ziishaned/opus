@@ -7,6 +7,50 @@
   }
 }
 
+form legend {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.activity-head {
+    background-color: #ffffff;
+    z-index: 10;
+}
+
+.collg5 {
+    width: 457px;
+}
+
+.col4 {
+    width: 360px;
+}
+
+.col3 {
+    width: 262px;
+}
+
+.media-icon {
+    color: #9E9E9E;
+    margin-right: 6px;
+}
+
+/*ul.list-bordered li:first-child {
+    padding-top: 0px;
+}*/
+
+ul.list-bordered li:last-child {
+    border-bottom: 0px;
+}
+
+ul.list-bordered li {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0px;
+}
+
+.activity-time, .activity-content {
+    font-size: 13px;
+}
+
 a:focus {
     text-decoration: none;
 }
@@ -45,6 +89,7 @@ a:focus {
 
 #category-outline {
     font-size: 13px;
+    line-height: 1.7em;
 }
 
 .cur-default {
@@ -55,16 +100,36 @@ a:focus {
     margin-bottom: 20px;
 }
 
+.mb5 {
+    margin-bottom: 5px;
+}
+
 .mt0 {
     margin-top: 0;
 }
 
-.m10 {
+.plr15 {
+    padding: 0px 15px;
+}
+
+.m10, .mb10 {
     margin-bottom: 10px;
 }
 
-.m20 {
+.mb20 {
     margin-bottom: 20px;
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+
+.p0 {
+    padding: 0;
+}
+
+.m0 {
+    margin-bottom: 0;
 }
 
 .text-lead {
@@ -84,6 +149,18 @@ html, body {
     color: #333;
     background-color: #e6e6e6;
     border-color: #adadad;
+}
+
+.category-foot .category-foot-inner {
+    height: 30px;
+}
+
+.category-actions {
+    display: none;
+}
+
+.category-item-inner:hover .category-actions {
+    display: block;
 }
 
 .category-foot .category-actions li button:hover {
@@ -204,14 +281,9 @@ a:hover {
     margin-top: -10px;
 }
 
-.header-menu ul>li.active {
-    /*border-bottom: 3px solid #00d1b2;*/
-}
-
 .header-menu ul>li.active>a {
     background-color: #ffffff !important;
-    -webkit-text-stroke: 0px;
-    color: #00d1b2 !important;
+    font-weight: 500;
 }
 
 .header-menu .nav-btn {
@@ -277,6 +349,9 @@ a:hover {
 
 input, select, .input {
     border-radius: 2px !important;
+}
+
+.btn, input, select, .input, .category-item-inner {
     transition: all 0.12s linear 0s !important;
 }
 
@@ -374,6 +449,10 @@ h6 {
 .emojionearea h1{
     font-family: "Roboto", "segoe ui" !important;
     -webkit-text-stroke: 0px;
+}
+
+.dropdown-menu.textcomplete-dropdown[data-strategy=emojionearea] {
+    z-index: 10000 !important;
 }
 
 .syntaxhighlighter { 

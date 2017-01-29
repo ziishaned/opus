@@ -19,36 +19,7 @@
     </script>
 </head>
 <body @if(isset($organization)) data-organization="{{ $organization->slug }}" @endif @if(isset($wiki)) data-wiki="{{ $wiki->slug }}" @endif>
-    <div class="modal fade" id="profile-pic-cropper" data-backdrop="static">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Crop your profile picture</h4>
-                </div>
-                <div class="modal-body" style="padding-left: 0px; padding-right: 0px;">
-                    <form action="#" method="POST" role="form" id="crop-image-form">
-                        <div class="center-block">
-                            <div class="row">
-                                <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-3">
-                                    <img src="" id="cropimage">
-                                    <input type="text" name="profile_image" id="profile-image-name" value="" class="hide">
-                                    <input type="text" name="x" id="x" class="hide">
-                                    <input type="text" name="y" id="y" class="hide">
-                                    <input type="text" name="w" id="w" class="hide">
-                                    <input type="text" name="h" id="h" class="hide">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer" style="padding-bottom: 0px; margin-top: 15px;">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="update-image-size">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('layouts.partials.modals')
     <div style="min-height: 55px;">
         @include('layouts.partials.menu')
     </div>

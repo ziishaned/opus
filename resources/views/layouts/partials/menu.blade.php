@@ -46,7 +46,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-plus fa-fw"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">Create wiki</a></li>
-                            <li><a href="{{ route('organizations.categories.create', [$organization->slug]) }}">Create category</a></li>
+                            <li><a href="#create-category-modal" data-toggle="modal">Create category</a></li>
                             <li class="nav-divider"></li>
                             <li><a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a></li>
                         </ul>
@@ -57,9 +57,6 @@
                             <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}"><i class="fa fa-user fa-fw"></i> Profile</a></li>
                             <li>
                                 <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> Read list</a>
-                            </li>
-                            <li>
-                                <a href="#" title="Jis py zyada comment or viaitor hon"><i class="fa fa-line-chart"></i> Trending</a>
                             </li>
                             <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
                             <li class="divider"></li>

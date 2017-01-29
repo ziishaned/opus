@@ -1,9 +1,9 @@
 var App = {
     init: function(params = null) {
+        this.params = params;
         this.bindUI();
         this.initJcrop();
         this.initTooltip();
-        this.params = params;
         // this.loadOrganizationActivites();
         this.loadCategories();
         this.initMasonry();
@@ -15,7 +15,7 @@ var App = {
             tones: false,
             autoHideFilters: true,
             useSprite: false,
-            saveEmojisAs: 'shortname'
+            saveEmojisAs: 'shortname',
         });
     },
     initMasonry: function() {
@@ -87,49 +87,27 @@ var App = {
     },
     bindUI: function () {
         var that = this;
-        $(document).on('click', '#edit-category, #cancel-category-edit', function(event) {
+        $('#update-category-modal').on('hidden.bs.modal', function (e) {
+            $('#update-category-form').find('.emojionearea').remove();
+            $('#update-category-form').find('#name').val('');
+            $('#update-category-form').find('#update-outline').val('');
+            $('#update-category-form').find('#update-outline').replaceWith('<textarea name="description" id="update-outline" class="form-control" rows="3" required="required"></textarea>');    
+        });
+        $(document).on('click', '#edit-category', function(event) {
             event.preventDefault();
-            var curEle = $(this).closest('.category-item');
-            
-            var categoryId       =  $(curEle).data('category-id'),
-                organizationSlug =  $(curEle).data('organization-slug'),
-                name             =  $(curEle).find('#category-name').text(),
-                outline          =  $(curEle).find('#category-outline').text(),
-                eleBackup        =  $(curEle).find('.panel').clone(),
-                template         =  `<div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <form action="/organizations/`+organizationSlug+`/categories/`+categoryId+`" method="POST" role="form">
-                                                <input type="hidden" name="_method" value="patch">
-                                                <div class="form-group">
-                                                    <label for="name">Name</label>
-                                                    <input type="text" name="category_name" class="form-control" value="`+name+`" id="name">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="outline">Outline</label>
-                                                    <textarea name="description" id="outline" class="form-control" rows="3" required="required">`+outline+`</textarea>
-                                                </div>
-                                                <button type="submit" class="btn btn-success pull-left" id="update-edit-category">Update</button>
-                                                <button class="btn btn-default pull-right" id="update-close-category">Close</button>
-                                                <div class="clearfix"></div>
-                                            </form>
-                                        </div>
-                                     </div>`;
-
-            $(curEle).addClass('cur-default');
-            $(curEle).empty().append(template);
-            that.initMasonry();
-            that.initEmojione();
-
-            $(document).on('click', '#update-close-category', function(event) {
-                event.preventDefault();
-                $(curEle).empty().append(eleBackup);
-                $(curEle).removeClass('cur-default');
-                that.initMasonry();
-            });
-
-            $(document).on('click', '#update-edit-category', function(event) {
-                event.stopPropagation();
-                $(this).closest('form').submit();
+            var curEle   =  $(this).closest('.category-item');
+            var categoryId =  $(curEle).data('category-id');
+            var name     =  $(curEle).find('#category-name').text();
+            var outline  =  $(curEle).find('#category-outline').length ? $(curEle).find('#category-outline').data('emoji-content') : '';
+            $('#update-category-form').find('#name').val(name);         
+            $('#update-category-form').find('#update-outline').val(outline);
+            $('#update-category-form').attr('action', '/organizations/'+that.params.organizationSlug+'/categories/'+categoryId);
+            $("#update-outline").emojioneArea({
+                pickerPosition: "bottom",
+                tones: false,
+                autoHideFilters: true,
+                useSprite: false,
+                saveEmojisAs: 'shortname',
             });
         });
         $(document).on('click', '#add-invitation-input', function(event) {
@@ -459,6 +437,7 @@ $(document).ready(function() {
         selectPageParent     : $('#page-parent'),
         inviteUserInput      : $('#invite-people-input'),
         inviteToOrganization : $('#invite-to-organization-id'),
+        organizationSlug     : $('body').data('organization'),
     });
 
     if($('#timezone').length > 0) {

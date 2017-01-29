@@ -30,12 +30,6 @@ class CategoryConroller extends Controller
         return view('categories.index', compact('organization', 'categories'));
     }
 
-    public function create($organizationSlug) 
-    {
-    	$organization = $this->organization->getOrganization($organizationSlug);
-    	return view('categories.create', compact('organization'));
-    }
-
     public function store($organizationSlug)
     {
         $this->validate($this->request, Category::CATEGORY_RULES);
