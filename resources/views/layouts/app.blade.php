@@ -54,7 +54,7 @@
     </div>
 
     @if(Session::get('alert'))
-        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 0px; margin-top: -4px; font-size: 13px;">
+        <div class="alert alert-{{Session::get('alert_type')}}" style="border-radius: 0; margin-bottom: 0px; margin-top: -2px; font-size: 13px;">
             <div class="container">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 {{ Session::get('alert') }}

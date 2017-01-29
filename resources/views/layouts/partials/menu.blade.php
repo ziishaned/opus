@@ -7,16 +7,13 @@
             <a class="navbar-brand hidden-lg hidden-md hidden-sm" href="#">Wiki Stack</a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-            @if(Auth::user())
-                <ul class="nav navbar-nav" style="position: relative; left: -15px;">
+            <ul class="nav navbar-nav">
+                @if(Auth::user())
                     <li class="organization-name">
                         <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home"></i> {{ $organization->name }}</a>
                     </li>
-                    <li>
-                        <a href="{{ route('organizations.wikis', [$organization->slug, ]) }}">Wikis</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('organizations.categories.index', [$organization->slug, ]) }}">Categories</a>
+                    <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/categories') class="active" @endif>
+                        <a href="{{ route('organizations.categories', [$organization->slug, ]) }}">Categories</a>
                     </li>
                     <li>
                         <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members</a> 
@@ -29,26 +26,21 @@
                             {{-- <a href="#" class="btn btn-default" style="padding: 6px 10px; position: relative; top: 7px; left: 12px;">Create page</a> --}}
                         {{-- </li> --}}
                     {{-- @endif --}}
-                </ul>
-            @endif
+                @else 
+                    <li>
+                        <a href="{{ url('/') }}" class="navbar-brand">Opus</a>
+                    </li>
+                @endif
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::user())    
                     <li class="hidden-xs hidden-sm">
                         <form class="navbar-form" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control input" placeholder="Search" style="width: 265px; padding-right: 30px;">
+                                <input type="text" class="form-control input" placeholder="Search" style="width: 255px; padding-right: 30px;">
                                 <span class="fa fa-search fa-fw" style="position: absolute; top: 17px; right: 23px; color: #adadad;"></span>
                             </div>
                         </form>
-                    </li>
-                    <li class="dropdown hidden-xs">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-inbox fa-fw"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
                     </li>
                     <li class="dropdown hidden-xs">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 10px; padding-right: 10px;"><i class="fa fa-plus fa-fw"></i></a>
@@ -98,6 +90,15 @@
                 @else
                     <li>
                         <a href="#">Pricing</a>
+                    </li>
+                    <li>
+                        <a href="#">Documentation</a>
+                    </li>
+                    <li>
+                        <a href="#">Blog</a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn btn-default nav-btn"><i class="fa fa-twitter fa-lg fa-fw"></i> Tweet</a>
                     </li>
                 @endif
             </ul>

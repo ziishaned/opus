@@ -287,7 +287,7 @@ class User extends Authenticatable
                     ->where('organization.name', '=', $data['organization'])
                     ->where('users.email', '=', $data['email'])
                     // ->where('users.password', '=', \Hash::make($this->request->get('password')))
-                    ->select('users.*')
+                    ->select('users.*', 'organization.slug')
                     ->first();
                     
         if($user && \Hash::check($data['password'], $user->password)) {

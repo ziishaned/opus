@@ -98,12 +98,7 @@ class OrganizationController extends Controller
                 break;
             case 2:
                 $rules = [
-                    'input_1' => 'required',
-                    'input_2' => 'required',
-                    'input_3' => 'required',
-                    'input_4' => 'required',
-                    'input_5' => 'required',
-                    'input_6' => 'required',
+                    'validation_key' => 'required',
                 ];
                 break;
             case 3:
@@ -142,17 +137,11 @@ class OrganizationController extends Controller
                 // });
                 break;
             case 2:
-                $validationKey = '';
-                foreach ($this->request->all() as $value) {
-                    $validationKey .= $value;
-                }
-
-                if($validationKey == Session::get('validation_key')) {
+                if($this->request->get('validation_key') == Session::get('validation_key')) {
                     break;
                 }
-                return redirect()->back()->with([
-                    'alert' => 'Validation key mismatch.',
-                    'alert_type' => 'danger'
+                return redirect()->back()->withErrors([
+                    'validation_key' => 'Validation key mismatch.'
                 ]);
                 break;
             case 3:
@@ -169,12 +158,49 @@ class OrganizationController extends Controller
                 ];
                 $user = (new \App\Models\User)->createUser($userInfo);
                 
-                $organization = [
+                $organizationData = [
                     'organization_name' => $this->request->get('organization_name'),
                     'description' => $this->request->get('description'),
                     'user_id' => $user->id,
                 ];
-                (new \App\Models\Organization)->postOrganization($organization);
+                $organization = $this->organization->postOrganization($organizationData);
+
+                $categories = [
+                    [
+                        'name' => 'Engineering',
+                        'user_id' => $user->id,
+                        'organization_id' => $organization->id,
+                    ],
+                    [
+                        'name' => 'New Employee Onboarding',
+                        'user_id' => $user->id,
+                        'organization_id' => $organization->id,
+                    ],
+                    [
+                        'name' => 'Marketing',
+                        'user_id' => $user->id,
+                        'organization_id' => $organization->id,
+                    ],
+                    [
+                        'name' => 'Product',
+                        'user_id' => $user->id,
+                        'organization_id' => $organization->id,
+                    ],
+                    [
+                        'name' => 'Human Resuorces',
+                        'user_id' => $user->id,
+                        'organization_id' => $organization->id,
+                    ],
+                    [
+                        'name' => 'Sales',
+                        'user_id' => $user->id,
+                        'organization_id' => $organization->id,
+                    ],
+                ]; 
+                foreach ($categories as $category) {
+                    $this->category->create($category);
+                }
+
                 break;
             default:
                 abort(404);
@@ -195,7 +221,7 @@ class OrganizationController extends Controller
         return $this->request->header('content-type') == 'application/json'; 
     }
 
-    public function getWikis($organizationSlug) 
+    public function getCategories($organizationSlug) 
     {
         $organization = $this->organization->getOrganization($organizationSlug);
         
@@ -219,7 +245,7 @@ class OrganizationController extends Controller
 
         $categories = $this->category->where('organization_id', '=', $organization->id)->with(['wikis'])->get();
 
-        return view('organization.wikis', compact('organization', 'categories'));
+        return view('organization.category', compact('organization', 'categories'));
     }
 
     public function getUserContributedWikis($organizationSlug) 
@@ -391,9 +417,9 @@ class OrganizationController extends Controller
                 Auth::login($user, $this->request->get('remember'));
 
                 // Set the cookie having organization slug
-                setcookie('organization_slug', Session::get('organization_name'), time() + (86400 * 30), "/");
+                setcookie('organization_slug', $user->organization->slug, time() + (86400 * 30), "/");
 
-                return redirect()->route('dashboard', [Session::get('organization_name'), ]);
+                return redirect()->route('dashboard', [$user->organization->slug, ]);
             }
 
 

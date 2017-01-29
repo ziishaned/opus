@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Auth;
+use Emojione;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -60,10 +61,12 @@ class Category extends Model
 
     public function updateCategory($data, $categoryId, $organizationId)
     {
+        // Emojione::$imagePathPNG = '/images/png/';
         $this->where('id', '=', $categoryId)
              ->where('organization_id', '=', $organizationId)
              ->update([
                     'name' => $data['category_name'],
+                    'outline' => $data['description'],
              ]);
         return true;
     }

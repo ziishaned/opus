@@ -3,10 +3,29 @@ var App = {
         this.bindUI();
         this.initJcrop();
         this.initTooltip();
-        this.params         = params;
-        this.categoryBackup = '';
+        this.params = params;
         // this.loadOrganizationActivites();
         this.loadCategories();
+        this.initMasonry();
+        this.initEmojione();
+    },
+    initEmojione: function() {
+        $("#outline, #organization-description").emojioneArea({
+            pickerPosition: "bottom",
+            tones: false,
+            autoHideFilters: true,
+            useSprite: false,
+            saveEmojisAs: 'shortname'
+        });
+    },
+    initMasonry: function() {
+        var that = this;  
+        if($('#ms-container').length > 0) {
+            new Masonry(document.querySelector('#ms-container'), {
+                itemSelector: '.ms-item',
+                columnWidth: '.ms-item',                
+            });      
+        }
     },
     initTooltip: function() {
         $('[data-toggle="tooltip"]').tooltip();
@@ -70,34 +89,48 @@ var App = {
         var that = this;
         $(document).on('click', '#edit-category, #cancel-category-edit', function(event) {
             event.preventDefault();
+            var curEle = $(this).closest('.category-item');
+            
+            var categoryId       =  $(curEle).data('category-id'),
+                organizationSlug =  $(curEle).data('organization-slug'),
+                name             =  $(curEle).find('#category-name').text(),
+                outline          =  $(curEle).find('#category-outline').text(),
+                eleBackup        =  $(curEle).find('.panel').clone(),
+                template         =  `<div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <form action="/organizations/`+organizationSlug+`/categories/`+categoryId+`" method="POST" role="form">
+                                                <input type="hidden" name="_method" value="patch">
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" name="category_name" class="form-control" value="`+name+`" id="name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="outline">Outline</label>
+                                                    <textarea name="description" id="outline" class="form-control" rows="3" required="required">`+outline+`</textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-success pull-left" id="update-edit-category">Update</button>
+                                                <button class="btn btn-default pull-right" id="update-close-category">Close</button>
+                                                <div class="clearfix"></div>
+                                            </form>
+                                        </div>
+                                     </div>`;
 
-            if($('.categories-con').find('.edit-active').length > 0) {
-                $('.categories-con').find('.edit-active').replaceWith(that.categoryBackup);
-            }
+            $(curEle).addClass('cur-default');
+            $(curEle).empty().append(template);
+            that.initMasonry();
+            that.initEmojione();
 
-            that.categoryBackup = $(this).closest('tr').clone();
-            var tableRow = $(this).closest('tr');
+            $(document).on('click', '#update-close-category', function(event) {
+                event.preventDefault();
+                $(curEle).empty().append(eleBackup);
+                $(curEle).removeClass('cur-default');
+                that.initMasonry();
+            });
 
-            $(tableRow).addClass('edit-active');
-            var categoryName = $(tableRow).find('#category_name').text();
-            var categoryId = $(tableRow).find('#category_name').data('category-id');
-            var organizationSlug = $(tableRow).find('#category_name').data('organization');
-
-            var html = `<td>
-                            <form action="/organizations/`+organizationSlug+`/categories/`+categoryId+`" method="POST" role="form" id="category-edit-form">
-                                <input type="hidden" name="_method" value="PATCH">
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <input type="text" name="category_name" class="form-control input-sm" style="width: 98.5% !important; border-radius: 0px !important; border-color: #66afe9; outline: 0; width: 100%; box-sizing: border-box; -webkit-box-sizing:border-box; -moz-box-sizing: border-box;" placeholder="Enter category name" value="`+categoryName+`">
-                                </div>
-                            </form>
-                        </td>
-                        <td>
-                            <ul class="list-unstyled list-inline categories-actions" style="margin-bottom: 0; position: relative; top: 3px;">
-                                <li><button type="button" class="btn btn-success btn-xs" onclick="event.preventDefault(); document.getElementById('category-edit-form').submit();" style="margin-right: 8px;">Save</button></li>
-                                <li><button type="button" class="btn btn-default btn-xs" id="cancel-category-edit">Cancel</button></li>
-                            </ul>
-                        </td>`;
-            $(tableRow).empty().append(html);
+            $(document).on('click', '#update-edit-category', function(event) {
+                event.stopPropagation();
+                $(this).closest('form').submit();
+            });
         });
         $(document).on('click', '#add-invitation-input', function(event) {
             event.preventDefault();
@@ -711,36 +744,4 @@ $(function() {
             });
         });
     } 
-});
-
-$(function() {    
-    $("#outline, #organization-description").emojioneArea({
-        pickerPosition: "bottom",
-        tones: false,
-        autoHideFilters: true,
-        useSprite: false,
-    });
-
-    if($('#ms-container').length > 0) {
-        var container = document.querySelector('#ms-container');
-        var msnry = new Masonry( container, {
-            itemSelector: '.ms-item',
-            columnWidth: '.ms-item',                
-        });      
-    }
-
-    if($('#side-nav-con').length > 0) {
-        var sideNav = $('#side-nav-con').offset();
-
-        $(window).scroll(function(){
-            if($(window).scrollTop() > sideNav.top){
-                $('#side-nav-con').css('position','fixed').css({
-                    'top': '70px',
-                    'width': '360px'
-                });
-            } else {
-                $('#side-nav-con').removeAttr('style');
-            }
-        });
-    }
 });

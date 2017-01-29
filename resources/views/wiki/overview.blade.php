@@ -58,7 +58,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 		    	<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<div class="subnav">
+						<div class="wiki-subnav">
 							<ul class="list-unstyled list-inline">
 				    			<li class="active"><a href="{{ route('wikis.overview', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a></li>
 				    			<li><a href="{{ route('wikis.permissions', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-lock fa-fw"></i> Permissions</a></li>
