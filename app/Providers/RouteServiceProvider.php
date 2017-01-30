@@ -23,6 +23,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        parent::boot();
+
         Route::patterns([
             'page_slug'         =>  '(\w+-*\d*)+',
             'id'                =>  '[0-9]+',
@@ -35,7 +37,36 @@ class RouteServiceProvider extends ServiceProvider
             'wiki_id'           =>  '[0-9]+',
         ]);
 
-        parent::boot();
+        Route::bind('page_slug', function($slug) {
+            return \App\Models\WikiPage::where('slug', '=', $slug)->first();
+        });
+
+        Route::bind('page_id', function($id) {
+            return \App\Models\WikiPage::where('id', '=', $id)->first();
+        });
+
+        Route::bind('wiki_id', function($id) {
+            return \App\Models\Wiki::where('id', '=', $id)->first();
+        });
+
+        Route::bind('organization_id', function($id) {
+            return \App\Models\Organization::where('id', '=', $id)->first();
+        });
+
+        Route::bind('organization_slug', function($slug) {
+            return \App\Models\Organization::where('slug', '=', $slug)->first();
+        });
+
+        Route::bind('wiki_slug', function($slug) {
+            $organizationId = \Auth::user()->organization->id;
+            return \App\Models\Wiki::where('slug', '=', $slug)
+                                    ->where('organization_id', '=', $organizationId)
+                                    ->first();
+        });
+
+        Route::bind('category_slug', function($slug) {
+            return \App\Models\Category::where('slug', '=', $slug)->first();
+        });
     }
 
     /**

@@ -173,9 +173,9 @@ class Wiki extends Model
      * @param  array  $data
      * @return bool
      */
-    public function updateWiki($slug, $data)
+    public function updateWiki($id, $data)
     {
-        $this->where('slug', '=', $slug)->update([
+        $this->where('id', '=', $id)->update([
             'description' =>  $data['wiki_description'],
         ]);
         return true;

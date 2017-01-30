@@ -48,7 +48,7 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::get('search/{text}', 'OrganizationController@filterOrganizations');
 
         Route::post('{organization_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
-        Route::get('{organization_id}/wikis/{wiki_id}/pages/{pageId?}', 'WikiController@getWikiPages');
+        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_id?}', 'WikiController@getWikiPages')->name('wikis.pages');
         Route::patch('{organization_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.delete');
 
         Route::group(['prefix' => '{organization_slug}/wikis'], function () {

@@ -183,6 +183,7 @@ return [
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Lord\Laroute\LarouteServiceProvider::class,
     ],
 
     /*

@@ -7,7 +7,6 @@ use Auth;
 use App\Models\Wiki;
 use App\Models\WikiPage;
 use App\Models\Category;
-use App\Models\ActivityLog;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,16 +27,17 @@ class WikiController extends Controller
 
     protected $request;
 
-    protected $activityLog;
-
     protected $category;
 
-    public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage, ActivityLog $activityLog, Category $category) {
+    public function __construct(Request $request, 
+                                Wiki $wiki, 
+                                Organization $organization, 
+                                WikiPage $wikiPage, 
+                                Category $category) {
         $this->wiki         = $wiki;
         $this->request      = $request;
         $this->wikiPage     = $wikiPage;
         $this->category     = $category;
-        $this->activityLog  = $activityLog;
         $this->organization = $organization;
     }
 
@@ -69,7 +69,6 @@ class WikiController extends Controller
         $organization = $this->organization->getOrganization($organizationSlug);
 
         $wiki = $this->wiki->saveWiki($this->request->all(), $organization->id);
-        $this->activityLog->createActivity('wiki', 'create', $wiki, $organization->id);
 
         return redirect()->route('wikis.show', [$organization->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully created.',
@@ -77,27 +76,21 @@ class WikiController extends Controller
         ]);
     }
 
-    public function show($organizationSlug, $categorySlug, $wikiSlug)
+    public function show(Organization $organization, Category $category, Wiki $wiki)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
         return view('wiki.wiki', compact('wikiPages', 'wiki', 'organization'));
     }
     
-    public function getWikiPages($organizationId, $id, $page_id = null)
+    public function getWikiPages(Organization $organization, Wiki $wiki, WikiPage $page = null)
     {
-        $organization = \App\Models\Organization::find($organizationId)->first();
-
-        $wiki = $this->wiki->find($id);
-
         if(!$this->request->get('opened_node')) {
-            $wikiPages = $this->wikiPage->getWikiPages($organization, $id, $page_id);
+            $wikiPages = $this->wikiPage->getWikiPages($organization, $wiki->id, $page->id);
             return $this->makePageHtml($wikiPages, $organization);
         } 
 
-        $wikiPages = $this->wikiPage->getWikiPages($organization, $id, $page_id, $this->request->get('opened_node'));
+        $wikiPages = $this->wikiPage->getWikiPages($organization, $wiki->id, $page->id, $this->request->get('opened_node'));
 
         $html = '';
         $this->makePageTree($organization, $wikiPages, $this->request->get('opened_node'), $html);
@@ -147,14 +140,8 @@ class WikiController extends Controller
      * @param $wikiSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($organizationSlug, $wikiSlug)
+    public function edit(Organization $organization, Category $category, Wiki $wiki)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-        
-        $categories = $this->category->getOrganizationCategories($organization->id);
-
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
-
         $categories = $this->category->getOrganizationCategories($organization->id);
 
         return view('wiki.edit', compact('wiki', 'organization', 'categories'));
@@ -166,18 +153,11 @@ class WikiController extends Controller
      * @param  string  $wikiSlug
      * @return \Illuminate\Http\Response
      */
-    public function update($organizationSlug, $wikiSlug)
-    {
-        $organization = $this->organization->getOrganization($organizationSlug);
+    public function update(Organization $organization, Category $category, Wiki $wiki)
+    {        
+        $this->wiki->updateWiki($wiki->id, $this->request->all());
         
-        $wiki = $this->wiki->where('slug', '=', $wikiSlug)->first();
-        
-        $this->wiki->updateWiki($wikiSlug, $this->request->all());
-        
-        $this->activityLog->createActivity('wiki', 'update', $wiki, $organization->id);
-        
-        return redirect()->route('wikis.show', [$organization->slug, $wiki->slug])->with([
-
+        return redirect()->route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully updated.',
             'alert_type' => 'success'
         ]);
@@ -192,7 +172,7 @@ class WikiController extends Controller
     public function destroy($wikiSlug)
     {
         $wiki = $this->wiki->deleteWiki($wikiSlug);
-        $this->activityLog->createActivity('wiki', 'delete', $wiki);
+
         if($wiki) {
             return redirect()->route('dashboard')->with([
                 'alert' => 'Wiki successfully deleted.',
@@ -240,21 +220,13 @@ class WikiController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function overview($organizationSlug, $categorySlug, $wikiSlug)
+    public function overview(Organization $organization, Category $category, Wiki $wiki)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
-
         return view('wiki.overview', compact('organization', 'wiki'));
     }
 
-    public function permissions($organizationSlug, $wikiSlug)
+    public function permissions(Organization $organization, Category $category, Wiki $wiki)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
-
-        return view('wiki.permissions', compact('organization', 'wiki'));
+        return view('wiki.permissions', compact('organization', 'wiki', 'category'));
     }
 }

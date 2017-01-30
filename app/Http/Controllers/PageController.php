@@ -35,13 +35,9 @@ class PageController extends Controller
         $this->organization = $organization;
     }
 
-	public function pagesReorder($organizationSlug, $wiki_slug)
+	public function pagesReorder(Organization $organization, Category $category, Wiki $wiki)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
-        $wiki = $this->wiki->getWiki($wiki_slug, $organization->id);
-
-        return view('wiki.page.reorder', compact('wiki', 'organization'));        
+        return view('wiki.page.reorder', compact('wiki', 'organization', 'category'));        
     }
 
     public function reorder($organizationId, $wikiId)

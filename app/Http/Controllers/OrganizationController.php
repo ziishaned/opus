@@ -221,10 +221,8 @@ class OrganizationController extends Controller
         return $this->request->header('content-type') == 'application/json'; 
     }
 
-    public function getCategories($organizationSlug) 
-    {
-        $organization = $this->organization->getOrganization($organizationSlug);
-        
+    public function getCategories(Organization $organization) 
+    {        
         if($this->isContentTypeJson()) {
             $wikis = [];
 
@@ -416,7 +414,6 @@ class OrganizationController extends Controller
             if($user) {
                 Auth::login($user, $this->request->get('remember'));
 
-                // Set the cookie having organization slug
                 setcookie('organization_slug', $user->organization->slug, time() + (86400 * 30), "/");
 
                 return redirect()->route('dashboard', [$user->organization->slug, ]);

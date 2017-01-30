@@ -6,7 +6,7 @@
     	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     	    	<h3>Edit page</h3>
                 <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
-                <form action="{{ route('pages.update', [$organization->slug, $wiki->slug, $page->slug]) }}" method="POST" role="form" style="margin-bottom: 10px;">
+                <form action="{{ route('pages.update', [$organization->slug, $wiki->category->slug, $wiki->slug, $page->slug]) }}" method="POST" role="form" style="margin-bottom: 10px;">
                  	{!! method_field('patch') !!}
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

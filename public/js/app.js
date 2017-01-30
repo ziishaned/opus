@@ -637,8 +637,9 @@ $(function() {
                 },
                 'data' : {
                     url: function (node) {    
-                        return node.id === '#' ?    
-                        '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages' : '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages/'+node.id;
+                        return (node.id === '#')    
+                                ? laroute.action('wikis.pages', { organization_id: organizationId, wiki_id: wikiId })
+                                : laroute.action('wikis.pages', { organization_id: organizationId, wiki_id: wikiId, page_id: node.id });
                     }, 
                     data: function() {
                         if($('#current-page-id').length > 0) {
@@ -668,9 +669,8 @@ $(function() {
     }
 
     if($('#reorder-page-tree').length > 0 ) {
-        var wikiId = $('#reorder-page-tree').data('wiki-id');
-        var currentPage = $('#reorder-page-tree').data('current-page');
-        var organizationId = $('#reorder-page-tree').data('organization-id');
+        var wikiSlug         = $('#reorder-page-tree').data('wiki-slug');
+        var organizationSlug = $('#reorder-page-tree').data('organization-id');
         $('#reorder-page-tree').jstree({
             core: {
                 "check_callback" : true,
@@ -679,9 +679,10 @@ $(function() {
                     'dots' : false,
                 },
                 'data' : {
-                    url: function (node) {    
-                        return node.id === '#' ?    
-                        '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages' : '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages/'+node.id;
+                    url: function (node) {
+                        return (node.id === '#')    
+                                ? laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug })
+                                : laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug, page_id: node.id });
                     }, 
                     data: function() {
                         if($('#current-page-id').length > 0) {
@@ -706,7 +707,6 @@ $(function() {
                 var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="/organizations/`+$('body').data('organization')+`/wikis/`+$('body').data('wiki')+`/pages/create">create one here</a>.</p>`;
                 $('#reorder-page-tree').replaceWith(html);
             };
-            data.instance._open_to(currentPage);
         }).on('move_node.jstree', function(e, data) {
             $.ajax({
                 url: '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages/reorder',

@@ -60,12 +60,8 @@ class CategoryConroller extends Controller
         ]);
     }
 
-    public function getCategoryWikis($organizationSlug, $categorySlug)
+    public function getCategoryWikis(Organization $organization, Category $category)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
-        $category = $this->category->getCategory($categorySlug, $organization->id);
-
         return view('organization.categories.wikis', compact('organization', 'category'));
     }
 }
