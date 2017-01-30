@@ -120,7 +120,7 @@ class Wiki extends Model
      */
     public function getWiki($wikiSlug, $organizationId)
     {
-        $wiki = $this->where('slug', '=', $wikiSlug)->where('organization_id', '=', $organizationId)->with('user')->first();
+        $wiki = $this->where('slug', '=', $wikiSlug)->where('organization_id', '=', $organizationId)->with(['user', 'category'])->first();
         if(is_null($wiki)) {
             return false;
         }

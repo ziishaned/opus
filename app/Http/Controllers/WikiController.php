@@ -77,15 +77,12 @@ class WikiController extends Controller
         ]);
     }
 
-    public function show($organizationSlug, $wikiSlug)
+    public function show($organizationSlug, $categorySlug, $wikiSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
         $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
-        if(!$wiki) {
-            abort('404');
-        }
-
         $wikiPages = $this->wikiPage->getPages($wiki->id);
+
         return view('wiki.wiki', compact('wikiPages', 'wiki', 'organization'));
     }
     
@@ -243,7 +240,7 @@ class WikiController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function overview($organizationSlug, $wikiSlug)
+    public function overview($organizationSlug, $categorySlug, $wikiSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
 

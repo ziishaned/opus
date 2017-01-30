@@ -10,14 +10,14 @@
 	        				<img src="{!! new LetterAvatar($wiki->name, 'circle', 44) !!}" alt="">
 	    				</div>
 	    				<div class="pull-left" style="margin-left: 10px;">
-		        			<h3 style="margin-bottom: 0; margin-top: 14px;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
+		        			<h3 style="margin-bottom: 0; margin-top: 14px;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
 	    				</div>
 	    				<div class="pull-right">
 	    					<div class="dropdown" style="margin-top: 14px;">
 		    					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #424242;"><i class="fa fa-ellipsis-v fa-lg fa-fw" style="margin-bottom: 5px;"></i></a>
 		                        <ul class="dropdown-menu dropdown-menu-right">
 		                            <li>
-				        				<a href="{{ route('wikis.overview', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a>
+				        				<a href="{{ route('wikis.overview', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a>
 				        			</li>
 				        			<li>
 				        				<a href="#"><i class="fa fa-calendar-o fa-fw"></i> Activity</a>
@@ -26,7 +26,7 @@
 				        				<a href="#"><i class="fa fa-key fa-fw"></i> Permissions</a>
 				        			</li>
 				        			<li>
-					                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
+					                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
 					                </li>
 					                <li class="divider"></li>
 									<li>
@@ -60,8 +60,8 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="wiki-subnav">
 							<ul class="list-unstyled list-inline">
-				    			<li class="active"><a href="{{ route('wikis.overview', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a></li>
-				    			<li><a href="{{ route('wikis.permissions', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-lock fa-fw"></i> Permissions</a></li>
+				    			<li class="active"><a href="{{ route('wikis.overview', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a></li>
+				    			<li><a href="{{ route('wikis.permissions', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-lock fa-fw"></i> Permissions</a></li>
 				    			<li><a href="#"><i class="fa fa-file-text-o fa-fw"></i> Pages</a></li>
 				    			<li><a href="#"><i class="fa fa-inbox fa-fw"></i> Notifications</a></li>
 				    			<li><a href="#"><i class="fa fa-slack fa-fw"></i> Integrations</a></li>
@@ -106,7 +106,7 @@
 											<option value="">Select wiki homepage</option>
 										</select>
 									</div>
-									<button type="submit" class="btn btn-success pull-right">Update</button>
+									<input type="submit" class="btn btn-success" value="Update">
 									<div class="clearfix"></div>
 								</form>
 							</div>

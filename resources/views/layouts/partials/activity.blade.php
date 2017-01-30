@@ -24,10 +24,10 @@
                         <div class="pull-left">              
                            <p class="mb5 activity-content">
                                 @if($activity->log_params['subject_type'] == 'wiki')
-                                    <a href="@if($activity->log_params['subject_type'] == 'wiki') {{ route('wikis.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['id']), ]) }} @else {{ route('pages.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ViewHelper::getPageSlug($activity->log_params['id'])]) }} @endif" title="{{ $activity->log_params['name'] }}">{{ $activity->log_params['name'] }}</a>
+                                    {{-- <a href="@if($activity->log_params['subject_type'] == 'wiki') {{ route('wikis.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['id']), ]) }} @else {{ route('pages.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ViewHelper::getPageSlug($activity->log_params['id'])]) }} @endif" title="{{ $activity->log_params['name'] }}">{{ $activity->log_params['name'] }}</a> --}}
                                 @endif
                                 @if($activity->log_params['subject_type'] == 'page') 
-                                    <a href="{{ route('wikis.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ]) }}" title="{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}">{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}</a>
+                                    {{-- <a href="{{ route('wikis.show', [$organization->slug, ViewHelper::getWikiSlug($activity->log_params['wiki_id']), ]) }}" title="{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}">{{ ViewHelper::getWikiName($activity->log_params['wiki_id']) }}</a> --}}
                                 @endif
                             </p>
                             <p class="text-muted activity-time mb0">

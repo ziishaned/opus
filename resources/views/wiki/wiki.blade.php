@@ -10,14 +10,14 @@
 	        				<img src="{!! new LetterAvatar($wiki->name, 'circle', 44) !!}" alt="">
 	    				</div>
 	    				<div class="pull-left" style="margin-left: 10px;">
-		        			<h3 style="margin-bottom: 0; margin-top: 14px;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
+		        			<h3 style="margin-bottom: 0; margin-top: 14px;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
 	    				</div>
 	    				<div class="pull-right">
 	    					<div class="dropdown" style="margin-top: 14px;">
 		    					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #424242;"><i class="fa fa-ellipsis-v fa-lg fa-fw" style="margin-bottom: 5px;"></i></a>
 		                        <ul class="dropdown-menu dropdown-menu-right">
 		                            <li>
-				        				<a href="{{ route('wikis.overview', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a>
+				        				<a href="{{ route('wikis.overview', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-info fa-fw"></i> Overview</a>
 				        			</li>
 				        			<li>
 				        				<a href="#"><i class="fa fa-calendar-o fa-fw"></i> Activity</a>
@@ -26,7 +26,7 @@
 				        				<a href="#"><i class="fa fa-key fa-fw"></i> Permissions</a>
 				        			</li>
 				        			<li>
-					                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
+					                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
 					                </li>
 					                <li class="divider"></li>
 									<li>
@@ -60,7 +60,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="subnav pull-right" style="position: relative; top: 10px; right: 6px;">
 							<ul class="list-unstyled list-inline">
-				    			<li><a href="{{ route('wikis.edit', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
+				    			<li><a href="{{ route('wikis.edit', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
 				    			<li><a href="#"><i class="fa fa-check-square-o fa-fw"></i> Add to read list</a></li>
 					            <li class="dropdown">
 					                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i> <i class="fa fa-caret-down"></i></a>
@@ -74,7 +74,7 @@
 					                    <li class="divider"></li>
 					                    <li>
 					                    	<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-											<form id="delete-wiki" action="{{ route('wikis.destroy', [$organization->slug, $wiki->slug]) }}" method="POST" style="display: none;">
+											<form id="delete-wiki" action="{{ route('wikis.destroy', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}" method="POST" style="display: none;">
 				                                {!! method_field('delete') !!}
 				                                {!! csrf_field() !!}
 				                            </form>

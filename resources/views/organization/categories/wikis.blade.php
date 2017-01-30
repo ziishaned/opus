@@ -20,7 +20,7 @@
                     <?php Emojione\Emojione::$imagePathPNG = '/images/png/'; ?>
                     @foreach($category->wikis as $wiki)
                         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ms-item">
-                            <a href="{{ route('categories.wikis', [$organization->slug, $wiki->slug]) }}" class="category-item" data-category-id="{{ $wiki->id }}">
+                            <a href="{{ route('wikis.show', [$organization->slug, $category->slug, $wiki->slug]) }}" class="category-item" data-category-id="{{ $wiki->id }}">
                                 <div class="panel panel-default category-item-inner" style="margin-bottom: 32px;">
                                     <div class="panel-body">
                                         <div class="category-body m10">
