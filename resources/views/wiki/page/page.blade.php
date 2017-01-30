@@ -10,7 +10,7 @@
 	        				<img src="{!! new LetterAvatar($wiki->name, 'circle', 44) !!}" alt="">
 	    				</div>
 	    				<div class="pull-left" style="margin-left: 10px;">
-		        			<h3 style="margin-bottom: 0; margin-top: 14px;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
+		        			<h3 style="margin-bottom: 0; margin-top: 14px;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug, ]) }}">{{ $wiki->name }}</a></h3>
 	    				</div>
 	    				<div class="pull-right">
 	    					<div class="dropdown" style="margin-top: 14px;">
@@ -26,7 +26,7 @@
 				        				<a href="#"><i class="fa fa-key fa-fw"></i> Permissions</a>
 				        			</li>
 				        			<li>
-					                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
+					                    <a href="{{ route('pages.reorder', [$organization->slug, $category->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
 					                </li>
 					                <li class="divider"></li>
 									<li>
@@ -49,8 +49,8 @@
 						<div class="panel panel-default" id="wiki-list-con">
 				            <div class="panel-heading">Page tree</div>
 				        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px; padding-right: 0px; min-height: 320px; overflow-y: auto;">
-								<div id="current-page-id" class="hide">{{ $page->id }}</div>
-								<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}" data-organization-id="{{ $organization->id }}" data-current-page="{{ $page->id }}"></div>
+								<div id="current-page-slug" class="hide">{{ $page->slug }}</div>
+								<div id="wiki-page-tree" style="margin-top: -7px;" data-category-slug="{{ $category->slug }}" data-wiki-slug="{{ $wiki->slug }}" data-organization-slug="{{ $organization->slug }}" data-current-page="{{ $page->id }}"></div>
 				        	</div>
 				        </div>
 					</div>
@@ -68,13 +68,13 @@
 		        </div>
 		    	<div class="row">
 			        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	                    <h4 class="page-name-head"><a href="{{ route('pages.show', [$organization->slug, $wiki->slug, $page->slug]) }}">{{ $page->name }}</a></h4>
+	                    <h4 class="page-name-head"><a href="{{ route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug]) }}">{{ $page->name }}</a></h4>
 	                    <p class="text-muted">Created by {{ $page->user->first_name }} {{ $page->user->last_name }} on {{ $page->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $page->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }} </p>
 	                </div>
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<div class="subnav pull-right" style="margin-top: 10px;">
 							<ul class="list-unstyled list-inline">
-				    			<li><a href="{{ route('pages.edit', [$organization->slug, $wiki->slug, $page->slug]) }}"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
+				    			<li><a href="{{ route('pages.edit', [$organization->slug, $category->slug, $wiki->slug, $page->slug]) }}"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
 				    			<li><a href="#"><i class="fa fa-check-square-o fa-fw"></i> Add to read list</a></li>
 					            <li class="dropdown">
 					                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i> <i class="fa fa-caret-down"></i></a>
@@ -88,7 +88,7 @@
 					                    <li class="divider"></li>
 					                    <li>
 					                    	<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-page').submit();}"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-											<form id="delete-page" action="{{ route('pages.destroy', [$organization->slug, $wiki->slug, $page->slug]) }}" method="POST" style="display: none;">
+											<form id="delete-page" action="{{ route('pages.destroy', [$organization->slug, $category->slug, $wiki->slug, $page->slug]) }}" method="POST" style="display: none;">
 				                                <input type="hidden" name="_method" value="delete">
 				                            </form>
 					                    </li>
@@ -138,7 +138,7 @@
                                                                     <li><a href="#" id="edit-comment" data-comment-id="{{ $comment->id  }}" data-organization-id="{{ $organization->id  }}" data-wiki-id="{{ $wiki->id  }}" data-page-id="{{ $page->id  }}"><i class="fa fa-pencil"></i></a></li>
                                                                     <li>
                                                                         <a href="#" onclick="if(confirm('Are you sure you want to delete comment?')) {event.preventDefault(); document.getElementById('delete-comment').submit();}"><i class="fa fa-trash-o"></i></a>
-                                                                        <form id="delete-comment" action="{{ route('comments.delete', [$organization->slug, $wiki->slug, $page->slug, $comment->id]) }}" method="POST" style="display: none;">
+                                                                        <form id="delete-comment" action="{{ route('comments.delete', [$organization->slug, $category->slug, $wiki->slug, $page->slug, $comment->id]) }}" method="POST" style="display: none;">
                                                                             {!! method_field('delete') !!}
                                                                             {!! csrf_field() !!}
                                                                         </form>
@@ -163,7 +163,7 @@
 				<hr>
 				<div class="row" style="margin-bottom: 15px;">
 		    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		    			<form action="{{ route('comments.store', [$organization->slug, $page->wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
+		    			<form action="{{ route('comments.store', [$organization->slug, $category->slug, $wiki->slug, $page->slug]) }}" method="POST" id="comment-form" role="form" data-toggle="validator"> 
 		    				<div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
 		    					<div class="row">
 		    						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-input-con">

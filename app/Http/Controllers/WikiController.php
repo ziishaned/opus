@@ -46,10 +46,8 @@ class WikiController extends Controller
         return $this->wiki->getWikis();
     }
 
-    public function create($organizationSlug)
+    public function create(Organization $organization)
     {  
-        $organization = $this->organization->getOrganization($organizationSlug);    
-
         $categories = $this->category->getOrganizationCategories($organization->id);
 
         if($categories->count() == 0) {
@@ -62,15 +60,13 @@ class WikiController extends Controller
         return view('wiki.create', compact('organization', 'categories'));
     }
 
-    public function store($organizationSlug)
+    public function store(Organization $organization)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
-     
-        $organization = $this->organization->getOrganization($organizationSlug);
 
         $wiki = $this->wiki->saveWiki($this->request->all(), $organization->id);
 
-        return redirect()->route('wikis.show', [$organization->slug, $wiki->slug])->with([
+        return redirect()->route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully created.',
             'alert_type' => 'success'
         ]);
@@ -80,54 +76,44 @@ class WikiController extends Controller
     {
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
-        return view('wiki.wiki', compact('wikiPages', 'wiki', 'organization'));
+        return view('wiki.wiki', compact('wikiPages', 'wiki', 'organization', 'category'));
     }
     
-    public function getWikiPages(Organization $organization, Wiki $wiki, WikiPage $page = null)
+    public function getWikiPages()
     {
-        if(!$this->request->get('opened_node')) {
-            $wikiPages = $this->wikiPage->getWikiPages($organization, $wiki->id, $page->id);
-            return $this->makePageHtml($wikiPages, $organization);
-        } 
-
-        $wikiPages = $this->wikiPage->getWikiPages($organization, $wiki->id, $page->id, $this->request->get('opened_node'));
-
-        $html = '';
-        $this->makePageTree($organization, $wikiPages, $this->request->get('opened_node'), $html);
-    
-        return $html;
-    }
-
-    public function makePageHtml($pages, $organization) {
-        $html = '';
-        if($pages) {
-            foreach ($pages as $key => $value) {
-                $html .= '<li id="'.$value['id'].'" data-created_at="'. $value['data']['created_at'] .'" class="' . ($value['children'] == true ? 'jstree-closed' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $this->wiki->where('id', '=', $value['wiki_id'])->pluck('slug')->first(), $value['slug']]).'">' . $value['text'] . '</a>';
-            }
+        $organization =  $this->organization->where('slug', '=', $this->request->get('organization_slug'))->first();
+        $category     =  $this->category->where('slug', '=', $this->request->get('category_slug'))->first();
+        $wiki         =  $this->wiki->where('slug', '=', $this->request->get('wiki_slug'))->first();
+        if($this->request->get('page_slug')) {
+            $page     =  $this->wikiPage->where('slug', '=', $this->request->get('page_slug'))->first();
         }
-        return $html;
+
+        if($this->request->get('fetch') == 'roots') {
+            return $this->wikiPage->getRootPages($organization, $category, $wiki);
+        } elseif ($this->request->get('fetch') == 'children') {
+            return $this->wikiPage->getChildrenPages($organization, $category, $wiki, $page);
+        } else {
+            $wikiPages =  $this->wikiPage->getTreeTo($organization, $category, $wiki, $page);
+         
+            $html = '';
+            $this->makePageTree($organization, $wiki, $category, $wikiPages, $page->id, $html);
+        
+            return $html;
+        }
     }
 
-    /**
-     * Todo: send this in array form instead of html
-     * 
-     * @param  [type] $wikiPages     [description]
-     * @param  [type] $currentPageId [description]
-     * @param  [type] &$html         [description]
-     * @return [type]                [description]
-     */
-    public static function makePageTree($organization, $wikiPages, $currentPageId, &$html)
+    public static function makePageTree($organization, $wiki, $category, $wikiPages, $currentPageId, &$html)
     {
         foreach ($wikiPages as $page => $value) {
             foreach($value->getSiblings() as $siblings) {
                 if($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="'.$siblings->id.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $siblings->wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
+                    $html .= '<li id="'.$siblings->id.'" data-slug="'.$siblings->slug.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="'.$value->id.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $value->wiki->slug, $value->slug]).'">' . $value->name . '</a>';
+            $html .= '<li id="'.$value->id.'" data-slug="'.$value->slug.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $value->slug]).'">' . $value->name . '</a>';
             if(!empty($value['children'])) {
                 $html .= '<ul>';
-                self::makePageTree($organization, $value['children'], $currentPageId, $html);
+                self::makePageTree($organization, $wiki, $category, $value['children'], $currentPageId, $html);
                 $html .= '</ul></li>';
             }
         }

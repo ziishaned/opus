@@ -6,6 +6,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/', 'HomeController@home')->name('home');
 });
 
+Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');
+
 Route::group(['prefix' => 'organizations'], function () {
     Route::group(['middleware' => 'auth'], function() {
         Route::group(['prefix' => '{organization_slug}/users'], function () {
@@ -28,8 +30,8 @@ Route::group(['prefix' => 'organizations'], function () {
 
         Route::group(['prefix' => '{organization_slug}/categories'], function () {
             Route::post('', 'CategoryConroller@store')->name('organizations.categories.store');
-            Route::delete('{categoryId}', 'CategoryConroller@destroy')->name('organizations.categories.destroy');
-            Route::patch('{categoryId}', 'CategoryConroller@update')->name('organizations.categories.update');
+            Route::delete('{category_slug}', 'CategoryConroller@destroy')->name('organizations.categories.destroy');
+            Route::patch('{category_slug}', 'CategoryConroller@update')->name('organizations.categories.update');
             Route::get('{category_slug}/wikis', 'CategoryConroller@getCategoryWikis')->name('categories.wikis');
         });
 
@@ -48,8 +50,7 @@ Route::group(['prefix' => 'organizations'], function () {
         Route::get('search/{text}', 'OrganizationController@filterOrganizations');
 
         Route::post('{organization_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
-        Route::get('{organization_slug}/wikis/{wiki_slug}/pages/{page_id?}', 'WikiController@getWikiPages')->name('wikis.pages');
-        Route::patch('{organization_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.delete');
+        Route::patch('{organization_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.update');
 
         Route::group(['prefix' => '{organization_slug}/wikis'], function () {
             Route::post('', 'WikiController@store')->name('wikis.store');
@@ -61,15 +62,15 @@ Route::group(['prefix' => 'organizations'], function () {
             Route::get('{wiki_slug}', 'WikiController@show')->name('wikis.show');
             Route::get('{wiki_slug}/overview', 'WikiController@overview')->name('wikis.overview');
             Route::get('{wiki_slug}/permissions', 'WikiController@permissions')->name('wikis.permissions');
-            Route::get('{wiki_slug}/pages/reorder', 'PageController@pagesReorder')->name('pages.reorder');
             Route::delete('{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
+            Route::get('{wiki_slug}/pages/reorder', 'PageController@pagesReorder')->name('pages.reorder');
 
+            Route::get('{wiki_slug}/pages/create', 'PageController@create')->name('pages.create');
+            Route::get('{wiki_slug}/pages/{page_slug}', 'PageController@show')->name('pages.show');
             Route::delete('{wiki_slug}/pages/{page_slug}', 'PageController@destroy')->name('pages.destroy');
             Route::get('{wiki_slug}/pages/{page_slug}/edit', 'PageController@edit')->name('pages.edit');
             Route::post('{wiki_slug}/pages', 'PageController@store')->name('pages.store');
-            Route::get('{wiki_slug}/pages/create', 'PageController@create')->name('pages.create');
             Route::get('{wiki_slug}/edit', 'WikiController@edit')->name('wikis.edit');
-            Route::get('{wiki_slug}/pages/{page_slug}', 'PageController@show')->name('pages.show');
             Route::patch('{wiki_slug}/pages/{page_slug}', 'PageController@update')->name('pages.update');
 
             Route::post('{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('comments.store');

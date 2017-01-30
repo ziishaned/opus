@@ -4,7 +4,6 @@ var App = {
         this.bindUI();
         this.initJcrop();
         this.initTooltip();
-        // this.loadOrganizationActivites();
         this.loadCategories();
         this.initMasonry();
         this.initEmojione();
@@ -95,13 +94,13 @@ var App = {
         });
         $(document).on('click', '#edit-category', function(event) {
             event.preventDefault();
-            var curEle   =  $(this).closest('.category-item');
-            var categoryId =  $(curEle).data('category-id');
-            var name     =  $(curEle).find('#category-name').text();
-            var outline  =  $(curEle).find('#category-outline').length ? $(curEle).find('#category-outline').data('emoji-content') : '';
+            var curEle       =  $(this).closest('.category-item'),
+                categoryslug =  $(curEle).data('category-slug'),
+                name         =  $(curEle).find('#category-name').text(),
+                outline      =  $(curEle).find('#category-outline').length ? $(curEle).find('#category-outline').data('emoji-content') : '';
             $('#update-category-form').find('#name').val(name);         
             $('#update-category-form').find('#update-outline').val(outline);
-            $('#update-category-form').attr('action', '/organizations/'+that.params.organizationSlug+'/categories/'+categoryId);
+            $('#update-category-form').attr('action', laroute.action('organizations.categories.update', { organization_slug: that.params.organizationSlug, category_slug: categoryslug}));
             $("#update-outline").emojioneArea({
                 pickerPosition: "bottom",
                 tones: false,
@@ -155,21 +154,6 @@ var App = {
             }
             $('.total-invitations').text($('.invitations-input-con li').length);
         });
-        $(document).on('click', '#get-organizations', function(event) {
-            event.preventDefault();            
-            if($('#get-organizations').attr('data-appended') == 'false') {
-                $(this).attr('data-appended', true);
-                that.getOrganizations();
-            }
-        });
-        $(document).on('click', '#get-wikis', function(event) {
-            event.preventDefault();            
-            if($('#get-wikis').attr('data-appended') == 'false') {
-                $(this).attr('data-appended', true);
-                var organizationId = $(this).attr('data-organizationId');
-                that.getWikis(organizationId);
-            }
-        });
         $('#update-image-size').on('click', function(event) {
             event.preventDefault();
             $.ajax({
@@ -213,219 +197,6 @@ var App = {
                 }
             });
         });
-        $(document).on('click', 'button', function() {
-            $(this).find('.loader').show();
-        });
-        $(document).on('click', '#edit-comment', function (e) {
-            e.preventDefault();
-            var curComment = this;
-            var comment = $(this).closest('.comment-box').find('#comment-fedit').text();
-            var commentContent = $(this).closest('.comment-box').find('.comment-content').html();
-            if($('#edit-comment-form').length == 0) {
-                var commentId = $(this).attr('data-comment-id');
-                var organizationId = $(this).attr('data-organization-id');
-                var wikiId = $(this).attr('data-wiki-id');
-                var pageId = $(this).attr('data-page-id');
-                var editCommentForm = `
-                                       <form action="/organizations/`+organizationId+`/wikis/`+wikiId+`/pages/`+pageId+`/comments/`+commentId+`" method="POST" id="edit-comment-form" role="form">
-                                            <input type="hidden" name="_method" value="patch">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <textarea name="comment" id="edit-comment-input" class="form-control" rows="5">` + comment + `</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" style="height: 35px; margin-bottom: 0px;">
-                                                <input type="submit" class="btn btn-default pull-left" id="close-edit-comment-form" value="Close">
-                                                <input type="submit" class="btn btn-success pull-right" id="submit-comment" value="Update Comment">
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </form>
-                                    `;
-                $(this).closest('.comment-box').find('.comment-content').empty();
-                $(this).closest('.comment-box').find('.comment-content').append(editCommentForm);
-                tinymce.remove("#edit-comment-input");
-                tinymce.init({
-                    selector: "#edit-comment-input",
-                    content_css: "/plugins/tinymce/tinymce.css",
-
-                    /* theme of the editor */
-                    theme: "modern",
-                    skin: "lightgray",
-
-                    /* width and height of the editor */
-                    width: "100%",
-
-                    /* display statusbar */
-                    menubar: false,
-                    statusbar: false,
-                    valid_elements: '*[*]',
-                    /* plugin */
-                    plugins: [
-                        "advlist autolink link lists charmap hr anchor pagebreak mention",
-                        "searchreplace wordcount visualblocks visualchars code nonbreaking",
-                        "save table contextmenu directionality emoticons template paste textcolor",
-                        "leaui_code_editor autoresize"
-                    ],
-                    autoresize_min_height: 100,
-                    mentions: {
-                        delimiter: ':',
-                        queryBy: 'name',
-                        source: function (query, process, delimiter) {
-                            if (delimiter === ':') {
-                                $.ajax({
-                                    url: '/js/emoji.json',
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    success: function(data) {
-                                        var ok = [];
-                                        $(data).each(function(index, el) {
-                                            if(el.name.indexOf( query ) > -1) {
-                                                ok.push(el);
-                                            }
-                                        });   
-                                        process(ok);
-                                    }, 
-                                    error: function(error) {
-                                        console.log(error);
-                                    }
-                                });
-                            }
-                        },
-                        insert: function(item) {
-                            return '<img style="max-width: 23px; max-height: 22px; min-width: 23px; min-height: 22px; position: relative; top: 5px;" class="emojioneemoji" src="/images/png/'+item.unicode+'.png">';
-                        },
-                        render: function(item) {
-                            return '<li>'+
-                                        '<a><img alt="👍" class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
-                                    '</li>';
-                        }
-                    },
-                    paste_webkit_styles: "all",
-                    paste_retain_style_properties: "all",
-
-                    browser_spellcheck: true,
-                    nonbreaking_force_tab: true,
-                    relative_urls: false,
-                
-                    /* toolbar */
-                    toolbar: "bold italic underline | bullist numlist | emoticons link unlink | leaui_code_editor",
-                });
-            }
-            $('#close-edit-comment-form').on('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $('#edit-comment-form').remove();
-                $(curComment).closest('.comment-box').find('.comment-content').html(commentContent);
-            });
-        });
-
-        $(document).on('click', '#rm-user-from-invite-list', function() {
-            var userId = $(this).closest('li').attr('data-userid');
-            that.removeUserFromOrganization(userId, that.params.inviteToOrganization.val());
-            $(this).closest('li').remove();
-        });
-
-        $(document).on('click', '#follow-button', function() {
-            var followId = $(this).attr('data-follow-id');
-            that.followUser(followId);
-        });
-
-        $(document).on('click', '#unfollow-button', function() {
-            var followId = $(this).attr('data-follow-id');
-            that.unFollowUser(followId);
-        });
-
-        $(document).on('click', '#watch-wiki-btn', function(event) {
-            event.preventDefault();
-            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
-            var wikiId = $(this).attr('data-wiki-id');
-            that.watchWiki(wikiId);
-        });
-
-        $(document).on('click', '#watch-page-btn', function(event) {
-            event.preventDefault();
-            $(this).html('<img src="/images/btn-loader.gif" class="img-responsive loader" alt="Image">');
-            var pageId = $(this).attr('data-page-id');
-            that.watchPage(pageId);
-        });
-
-        $(document).on('click', '#like-comment', function(event) {
-            event.preventDefault();
-            var commentId = $(this).attr('data-commentid');
-            that.starComment(commentId);
-        });
-    },
-    starComment: function(id) {
-        $.ajax({
-            url: '/comments/'+id+'/star',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                commentId: id
-            },
-            success: function(data) {
-                if(data.star) {
-                    var totalStars = parseInt($(document).find('#comment-total-star[data-commentid="'+id+'"]').text());
-                    $(document).find('#comment-total-star[data-commentid="'+id+'"]').text(totalStars+1);
-                }
-                if(data.unstar) {
-                    var totalStars = parseInt($(document).find('#comment-total-star[data-commentid="'+id+'"]').text());
-                    $(document).find('#comment-total-star[data-commentid="'+id+'"]').text(totalStars-1);
-                }
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
-    watchPage: function(id) {
-        $.ajax({
-            url: '/pages/'+id+'/watch',
-            type: 'POST',
-            dataType: 'json',
-            success: function(data) {
-                if(data.watch) {
-                    var totalWatch = parseInt($(document).find('.page-watch-count').text());
-                    $(document).find('.page-watch-count').text(totalWatch+1);
-                    $(document).find('#watch-page-btn').html('Unwatch');
-                }
-                if(data.unwatch) {
-                    var totalWatch = parseInt($(document).find('.page-watch-count').text());
-                    $(document).find('.page-watch-count').text(totalWatch-1);
-                    $(document).find('#watch-page-btn').html('Watch');
-                }
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
-    watchWiki: function(id) {
-        $.ajax({
-            url: '/wikis/'+id+'/watch',
-            type: 'POST',
-            dataType: 'json',
-            success: function(data) {
-                if(data.watch) {
-                    var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
-                    $(document).find('.wiki-watch-count').text(totalWatch+1);
-                    $(document).find('#watch-wiki-btn').html('Unwatch');
-                }
-                if(data.unwatch) {
-                    var totalWatch = parseInt($(document).find('.wiki-watch-count').text());
-                    $(document).find('.wiki-watch-count').text(totalWatch-1);
-                    $(document).find('#watch-wiki-btn').html('Watch');
-                }
-            },
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
     },
 };
 
@@ -444,29 +215,20 @@ $(document).ready(function() {
         $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
     }
 
-    $('.page-tree-con').on('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    });
-
     tinymce.init({
-        /* replace textarea having class .tinymce with tinymce editor */
         selector: "#page-description, #wiki-description",
         content_css : "/plugins/tinymce/tinymce.css,/plugins/tinymce/plugins/leaui_code_editor/css/pre.css", 
 
-        /* theme of the editor */
         theme: "modern",
         skin: "lightgray",
         
-        /* width and height of the editor */
         width: "100%",
         height: 400,
         
-        /* display statusbar */
         menubar: false,
         statusbar: false,
         valid_elements: '*[*]',
-        /* plugin */
+        
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
@@ -514,7 +276,6 @@ $(document).ready(function() {
 		nonbreaking_force_tab: true,
         relative_urls: false,
         
-        /* toolbar */
         toolbar: [
         	"styleselect | bold italic underline forecolor backcolor | leaui_code_editor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | link unlink table | preview code | undo redo | localautosave",
         ],
@@ -523,7 +284,6 @@ $(document).ready(function() {
             fullscreen: false,
             path: 'CodeMirror',
             config: {
-                // theme: 'monokai',
                 tabSize: 4, 
                 mode: 'htmlmixed',
                 extraKeys: {"Ctrl-Space": "autocomplete"},
@@ -534,7 +294,6 @@ $(document).ready(function() {
             height: 500,        
             cssFiles: [
                 'addon/hint/show-hint.css',
-                // 'theme/monokai.css',
             ],
             jsFiles: [          
                'mode/htmlmixed/htmlmixed.js',
@@ -545,90 +304,15 @@ $(document).ready(function() {
             ]
         },
     });
-
-    $('#comment-input').on('focus', function() {
-        tinymce.init({
-            selector: "#comment-input",
-            content_css : "/plugins/tinymce/tinymce.css",
-            statusbar: false,
-
-            /* theme of the editor */
-            theme: "modern",
-            skin: "lightgray",
-            
-            /* width and height of the editor */
-            width: "100%",
-
-            /* display statusbar */
-            menubar:false,
-            statubar: false,
-            paste_webkit_styles: "all",
-            paste_retain_style_properties: "all",
-            valid_elements: '*[*]',
-            
-            /* plugin */
-            plugins: [
-                "advlist autolink link lists charmap hr anchor pagebreak mention",
-                "searchreplace wordcount visualblocks visualchars code nonbreaking",
-                "save table contextmenu directionality template paste textcolor",
-                "leaui_code_editor autoresize"
-            ],
-            mentions: {
-                delimiter: ':',
-                queryBy: 'name',
-                source: function (query, process, delimiter) {
-                    if (delimiter === ':') {
-                        $.ajax({
-                            url: '/js/emoji.json',
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function(data) {
-                                var ok = [];
-                                $(data).each(function(index, el) {
-                                    if(el.name.indexOf( query ) > -1) {
-                                        ok.push(el);
-                                    }
-                                });   
-                                process(ok);
-                            }, 
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                    }
-                },
-                insert: function(item) {
-                    return '<img style="max-width: 23px; max-height: 22px; min-width: 23px; min-height: 22px; position: relative; top: 5px;" class="emojioneemoji" src="/images/png/'+item.unicode+'.png">';
-                },
-                render: function(item) {
-                    return '<li>'+
-                                '<a><img class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
-                            '</li>';
-                }
-            },
-            autoresize_min_height: 100,
-
-            browser_spellcheck: true,
-            nonbreaking_force_tab: true,
-            relative_urls: false,
-
-            /* toolbar */
-            toolbar: "bold italic underline | bullist numlist | link unlink | leaui_code_editor",
-        });
-    });
 });
 
-// Semantic UI
-$(function() {
-    $('.ui.dropdown').dropdown();
-});
-
-// jsTree
 $(function() {
     if($('#wiki-page-tree').length > 0 ) {
-        var wikiId = $('#wiki-page-tree').data('wiki-id');
+        var wikiSlug = $('#wiki-page-tree').data('wiki-slug');
         var currentPage = $('#wiki-page-tree').data('current-page');
-        var organizationId = $('#wiki-page-tree').data('organization-id');
+        var organizationSlug = $('#wiki-page-tree').data('organization-slug');
+        var categorySlug = $('#wiki-page-tree').data('category-slug');
+        
         $('#wiki-page-tree').jstree({
             core: {
                 "themes" : {
@@ -636,21 +320,18 @@ $(function() {
                     'dots' : false,
                 },
                 'data' : {
-                    url: function (node) {    
-                        return (node.id === '#')    
-                                ? laroute.action('wikis.pages', { organization_id: organizationId, wiki_id: wikiId })
-                                : laroute.action('wikis.pages', { organization_id: organizationId, wiki_id: wikiId, page_id: node.id });
-                    }, 
-                    data: function() {
-                        if($('#current-page-id').length > 0) {
-                            var openedNode = $('#current-page-id').text();
-                            $('#current-page-id').remove();
+                    url: function (node) {
+                        if($('#current-page-slug').length > 0) {
+                            var opened_node = $('#current-page-slug').text();
+                            $('#current-page-slug').remove();
 
-                            return {
-                                'opened_node': openedNode 
-                            };
-                        }
-                    }
+                            return laroute.action('wikis.pages', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: opened_node, fetch_tree: true});
+                        }  
+
+                        return (node.id === '#')    
+                                ? laroute.action('wikis.pages', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, fetch: 'roots' })
+                                : laroute.action('wikis.pages', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: node.data.slug, fetch: 'children' });
+                    },
                 }
             },
             sort: function (a, b) {
@@ -661,7 +342,7 @@ $(function() {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
             if(data.instance._cnt == 0) {
-                var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="/organizations/`+$('body').data('organization')+`/wikis/`+$('body').data('wiki')+`/pages/create">create one here</a>.</p>`;
+                var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="`+laroute.action('pages.create', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug })+`">create one here</a>.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
             data.instance._open_to(currentPage);
@@ -670,7 +351,7 @@ $(function() {
 
     if($('#reorder-page-tree').length > 0 ) {
         var wikiSlug         = $('#reorder-page-tree').data('wiki-slug');
-        var organizationSlug = $('#reorder-page-tree').data('organization-id');
+        var organizationSlug = $('#reorder-page-tree').data('organization-slug');
         $('#reorder-page-tree').jstree({
             core: {
                 "check_callback" : true,

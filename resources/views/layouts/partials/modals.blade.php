@@ -33,7 +33,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Edit category</h4>
+                <h4 class="modal-title">Update category</h4>
             </div>
             <div class="modal-body" style="padding-left: 0px; padding-right: 0px;">
                 <form action="#" method="POST" role="form" id="update-category-form">
@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="outline">Outline</label>
-                            <textarea name="description" id="update-outline" class="form-control" rows="3" required="required"></textarea>
+                            <textarea name="description" id="update-outline" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer" style="padding-bottom: 0px; margin-top: 25px;">

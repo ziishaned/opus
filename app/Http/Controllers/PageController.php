@@ -7,7 +7,6 @@ use Auth;
 use App\Models\Wiki;
 use App\Models\WikiPage;
 use App\Models\Category;
-use App\Models\ActivityLog;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,16 +21,17 @@ class PageController extends Controller
 
     protected $request;
 
-    protected $activityLog;
-
     protected $category;
 
-    public function __construct(Request $request, Wiki $wiki, Organization $organization, WikiPage $wikiPage, ActivityLog $activityLog, Category $category) {
+    public function __construct(Request $request, 
+                                Wiki $wiki, 
+                                Organization $organization, 
+                                WikiPage $wikiPage,  
+                                Category $category) {
         $this->wiki         = $wiki;
         $this->request      = $request;
         $this->wikiPage     = $wikiPage;
         $this->category     = $category;
-        $this->activityLog  = $activityLog;
         $this->organization = $organization;
     }
 
@@ -52,71 +52,49 @@ class PageController extends Controller
     {
         $pageDeleted = $this->wikiPage->deletePage($pageSlug);
 
-        $this->activityLog->createActivity('page', 'delete', $page);
-
         return redirect()->back()->with([
             'alert' => 'Page successfully deleted.',
             'alert_type' => 'success'
         ]);
     }   
 
-    public function edit($organizationSlug, $wikiSlug, $pageSlug)
-    {
-        $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
-
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
-        
-        $page = $this->wikiPage->getPage($pageSlug);
-        
+    public function edit(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
+    {   
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
-        return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages', 'organization'));
+        return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages', 'organization', 'category'));
     }
 
-    public function store($organizationSlug, $wikiSlug)
+    public function store(Organization $organization, Category $category, Wiki $wiki)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
         $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
-        
-        $wiki = \App\Models\Wiki::where('slug', '=', $wikiSlug)->first();
 
         $page = $this->wikiPage->saveWikiPage($wiki->id, $this->request->all());
-        $this->activityLog->createActivity('page', 'create', $page, $organization->id);
         
-        return redirect()->route('pages.show', [$organizationSlug, $wikiSlug, $page->slug])->with([
+        return redirect()->route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success'
         ]);
     }
 
-    public function create($organizationSlug, $wikiSlug)
+    public function create(Organization $organization, Category $category, Wiki $wiki)
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-
-        $wiki = $this->wiki->getWiki($wikiSlug, $organization->id);
         $wikiPages = $this->wikiPage->getPages($wiki->id);
         
-        return view('wiki.page.create', compact('wiki', 'wikiPages', 'organization'));
+        return view('wiki.page.create', compact('wiki', 'wikiPages', 'organization', 'category'));
     }
 
-    public function show($organizationSlug, $wikiSlug, $pageSlug)
+    public function show(Organization $organization , Category $category, Wiki $wiki, WikiPage $page)
     {
-        $organization = $this->organization->where('slug', '=', $organizationSlug)->first();
-
-        $wiki = $this->wiki->where('slug', '=', $wikiSlug)->first();
-        
-        $page = $this->wikiPage->getPage($pageSlug);
-
         $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf();
 
-        return view('wiki.page.page', compact('organization', 'page', 'wiki', 'pagePath'));
+        return view('wiki.page.page', compact('organization', 'page', 'wiki', 'pagePath', 'category'));
     }
 
-    public function update($organizationSlug, $wikiSlug, $pageSlug)
+    public function update(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
     {
-        $this->wikiPage->updatePage($pageSlug, $this->request->all());
-        return redirect()->route('pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
+        $this->wikiPage->updatePage($page->id, $this->request->all());
+        return redirect()->route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully updated.',
             'alert_type' => 'success'
         ]);

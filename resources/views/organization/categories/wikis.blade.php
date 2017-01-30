@@ -35,7 +35,7 @@
                         </div>
                     @endforeach
                 @else
-                    <p class="text-center" style="position: absolute; top: 50%; left: 50%; margin-left: -120px; margin-top: 50px;">No wikis yet. You can <a href="#">create one here</a>.</p>
+                    <p class="text-center" style="position: absolute; top: 50%; left: 50%; margin-left: -120px; margin-top: 50px;">No wikis yet. You can <a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">create one here</a>.</p>
                 @endif
             </div>
         </div>

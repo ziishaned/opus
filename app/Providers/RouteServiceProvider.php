@@ -35,7 +35,12 @@ class RouteServiceProvider extends ServiceProvider
             'organization_id'   =>  '[0-9]+',
             'page_id'           =>  '[0-9]+',
             'wiki_id'           =>  '[0-9]+',
+            'user_slug'         =>  '(\w+-*\d*)+',
         ]);
+
+        Route::bind('user_slug', function($slug) {
+            return \App\Models\User::where('slug', '=', $slug)->first();
+        });
 
         Route::bind('page_slug', function($slug) {
             return \App\Models\WikiPage::where('slug', '=', $slug)->first();

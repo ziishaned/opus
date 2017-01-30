@@ -62,9 +62,8 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getMembers($organizationSlug)
+    public function getMembers(Organization $organization)
     {
-        $organization        = $this->organization->getOrganization($organizationSlug);
         $organizationMembers = $this->organization->getMembers($organization);
         return view('organization.members', compact('organization', 'organizationMembers'));
     }
@@ -429,10 +428,10 @@ class OrganizationController extends Controller
         return redirect()->action('OrganizationController@signin', ['step' => $step+1]);
     }
 
-    public function getActivity($organizationSlug) 
+    public function getActivity(Organization $organization) 
     {
-        $organization = $this->organization->getOrganization($organizationSlug);   
         $activities   = $this->activity->getOrganizationActivity($organization->id);
+     
         return view('organization.activity', compact('activities', 'organization'));        
     }
 
@@ -443,9 +442,8 @@ class OrganizationController extends Controller
         return view('organization.user-activity', compact('activities', 'organization'));   
     }
 
-    public function inviteUsers($organizationSlug) 
+    public function inviteUsers(Organization $organization) 
     {
-        $organization = $this->organization->getOrganization($organizationSlug);   
         return view('organization.users.invite', compact('organization'));
     }
 }

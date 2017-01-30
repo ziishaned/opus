@@ -7,7 +7,6 @@ use Hash;
 use Image;
 use Session;
 use App\Models\User;
-use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +29,6 @@ class UserController extends Controller
      * @var \Illuminate\Http\Request
      */
     protected $request;
-    
-    protected $activityLog;
 
     protected $profileImagePath = 'images/profile-pics';
 
@@ -41,11 +38,10 @@ class UserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User         $user
      */
-    public function __construct(Request $request, User $user, ActivityLog $activityLog)
+    public function __construct(Request $request, User $user)
     {
         $this->user    = $user;
         $this->request = $request;
-        $this->activityLog = $activityLog;
     }
 
     /**
@@ -67,17 +63,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($organizationSlug, $userSlug)
-    {
-        $organization = (new Organization)->getOrganization($organizationSlug);
-        $user = $this->user->getUser($userSlug);
-
-        if(!$user) {
-            return abort(404);
-        }
-        
-        $activities = $this->activityLog->getUserActivity($user->id, $organization->id);
-        return view('user.user', compact('user', 'activities', 'organization'));
+    public function show(Organization $organization, User $user)
+    {   
+        return view('user.user', compact('user', 'organization'));
     }
 
     /**
@@ -162,15 +150,13 @@ class UserController extends Controller
         return view('user.wikis', compact('user', 'userWikis'));
     }
 
-    public function profileSettings($organizationSlug)
+    public function profileSettings(Organization $organization)
     {
-        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
         return view('user.setting.profile', compact('organization'));
     }
 
-    public function accountSettings($organizationSlug)
+    public function accountSettings(Organization $organization)
     {
-        $organization = \App\Models\Organization::where('slug', '=', $organizationSlug)->first();
         return view('user.setting.account', compact('organization'));
     }
 
@@ -222,10 +208,5 @@ class UserController extends Controller
         Session::flush();
 
         return redirect('/');
-    }
-
-    public function activity()
-    {
-        return $this->user->getActivity($this->request->get('user_id'));
     }
 }

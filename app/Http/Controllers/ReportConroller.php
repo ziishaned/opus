@@ -17,9 +17,8 @@ class ReportConroller extends Controller
 		$this->organization = $organization;
 	}
 
-    public function index($organizationSlug)
+    public function index(Organization $organization)
     {
-    	$organization = $this->organization->getOrganization($organizationSlug);
     	return view('organization.report', compact('organization'));
     }
 }

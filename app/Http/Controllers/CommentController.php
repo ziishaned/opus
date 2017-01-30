@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
+use App\Models\Category;
+use App\Models\Wiki;
 use App\Models\Comment;
 use App\Models\WikiPage;
-use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,44 +34,15 @@ class CommentController extends Controller
     protected $wikiPage;
 
     /**
-     * @var \App\Models\ActivityLog
-     */
-    protected $activityLog;
-
-    /**
      * CommentController constructor.
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Comment      $comment
      */
-    public function __construct(Request $request, WikiPage $wikiPage, Comment $comment, ActivityLog $activityLog) {
+    public function __construct(Request $request, WikiPage $wikiPage, Comment $comment) {
     	$this->request      =  $request;
         $this->comment      =  $comment;
         $this->wikiPage     =  $wikiPage;
-        $this->activityLog  =  $activityLog;
-    }
-
-    /**
-     * Like Comment.
-     *
-     * @param  integer $id
-     * @return mixed
-     */
-    public function starComment($id)
-    {
-        $page = $this->wikiPage->find($this->comment->find($id)->pluck('page_id')->first());
-
-        $star = $this->comment->starComment($id);
-        
-        if($star) {
-            $this->activityLog->createActivity('comment', 'star', $page);
-            return response()->json([
-                'star' => true
-            ], Response::HTTP_CREATED);          
-        }
-        return response()->json([
-            'unstar' => true
-        ], Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -79,17 +52,13 @@ class CommentController extends Controller
      * @param string $pageSlug
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($organizationSlug, $wikiSlug, $pageSlug)
+    public function store(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
     {
-        $organization = (new \App\Models\Organization)->getOrganization($organizationSlug);
-
         $this->validate($this->request, Comment::COMMENT_RULES);
-        $this->comment->storeComment($pageSlug, $this->request->all());
-
-        $page = $this->wikiPage->where('slug', '=', $pageSlug)->first();
-        $this->activityLog->createActivity('page', 'commented', $page, $organization->id);
         
-        return redirect()->route('pages.show', [$organizationSlug, $wikiSlug, $pageSlug])->with([
+        $this->comment->storeComment($page->id, $this->request->all());
+
+        return redirect()->route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Comment successfully posted.',
             'alert_type' => 'success'
         ]);
@@ -102,8 +71,6 @@ class CommentController extends Controller
 
         $this->comment->deleteComment($id);
 
-        $this->activityLog->createActivity('comment', 'delete', $page, $organization->id);
-
         return redirect()->back()->with([
             'alert' => 'Comment successfully deleted.',
             'alert_type' => 'success'
@@ -113,12 +80,9 @@ class CommentController extends Controller
     public function update($organizationId, $wikiId, $pageId, $commentId) {
         $page = $this->wikiPage->find($pageId);
 
-
         $this->validate($this->request, Comment::COMMENT_RULES);
         
         $this->comment->updateComment($commentId, $this->request->all());
-
-        $this->activityLog->createActivity('comment', 'update', $page, $organizationId);
 
         return redirect()->back()->with([
             'alert'       => 'Comment successfully updated.',

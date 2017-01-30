@@ -19,7 +19,7 @@
                 <?php Emojione\Emojione::$imagePathPNG = '/images/png/'; ?>
                 @foreach($categories as $category)
                     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ms-item">
-                        <a href="{{ route('categories.wikis', [$organization->slug, $category->slug]) }}" class="category-item" data-category-id="{{ $category->id }}">
+                        <a href="{{ route('categories.wikis', [$organization->slug, $category->slug]) }}" class="category-item" data-category-slug="{{ $category->slug }}">
                             <div class="panel panel-default category-item-inner" style="margin-bottom: 32px;">
                                 <div class="panel-body">
                                     <div class="category-body m10">
@@ -40,7 +40,7 @@
                                                     </li>
                                                     <li>
                                                         <button class="btn btn-link delete-btn" onclick="if(confirm('Are you sure you want to delete this category?')) {event.preventDefault(); document.getElementById('delete-category').submit();}"><i class="fa fa-trash-o fa-fw"></i></button>
-                                                        <form id="delete-category" action="{{ route('organizations.categories.destroy', [$organization->slug, $category->id]) }}" method="POST" style="display: none;">
+                                                        <form id="delete-category" action="{{ route('organizations.categories.destroy', [$organization->slug, $category->slug]) }}" method="POST" style="display: none;">
                                                             {!! method_field('delete') !!}
                                                             {!! csrf_field() !!}
                                                         </form>

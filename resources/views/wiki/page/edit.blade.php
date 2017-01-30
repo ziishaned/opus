@@ -6,7 +6,7 @@
     	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     	    	<h3>Edit page</h3>
                 <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
-                <form action="{{ route('pages.update', [$organization->slug, $wiki->category->slug, $wiki->slug, $page->slug]) }}" method="POST" role="form" style="margin-bottom: 10px;">
+                <form action="{{ route('pages.update', [$organization->slug, $category->slug, $wiki->slug, $page->slug]) }}" method="POST" role="form" style="margin-bottom: 10px;">
                  	{!! method_field('patch') !!}
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -45,7 +45,7 @@
                         <textarea id="page-description" name="page_description">{{ $page->description }}</textarea>
                     </div>
                     <div class="pull-left">
-		                <a href="{{ route('pages.show', [$organization->slug, $wiki->slug, $page->slug, ]) }}" onclick="if(confirm('All changes will be discarded?')) {event.preventDefault(); document.location = $(this).attr('href'); }" class="btn btn-default">Close</a>
+		                <a href="{{ route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug, ]) }}" onclick="if(confirm('All changes will be discarded?')) {event.preventDefault(); document.location = $(this).attr('href'); }" class="btn btn-default">Close</a>
                     </div>
                     <div class="pull-right">
                         <input type="submit" class="btn btn-success" value="Save">

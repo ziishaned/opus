@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="wiki-head">
-                        <h3 style="margin-bottom: 0;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
+                        <h3 style="margin-bottom: 0;" class="wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
                         <p style="margin-bottom: 0px;" class="text-muted">Created by {{ $wiki->user->first_name . ' ' . $wiki->user->last_name }} on {{ $wiki->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() }} at {{ $wiki->created_at->timezone(Session::get('user_timezone'))->format('h:i A') }}</p>
                     </div>
                 </div>
@@ -20,10 +20,10 @@
                                 <a href="#">Permissions</a>
                             </li>
                             <li>
-                                <a href="{{ route('pages.reorder', [$organization->slug, $wiki->slug]) }}">Reorder pages</a>
+                                <a href="{{ route('pages.reorder', [$organization->slug, $category->slug, $wiki->slug]) }}">Reorder pages</a>
                             </li>
                             <li style="position: relative; top: 10px;">
-                                <a href="{{ route('pages.create', [$organization->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
+                                <a href="{{ route('pages.create', [$organization->slug, $category->slug, $wiki->slug]) }}" class="btn btn-default" style="padding-top: 5px; padding-bottom: 5px;">Create page</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -62,7 +62,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h3>New page</h3>
                 <p style="margin-bottom: 10px;">A wiki contains all the pages with informative text for your project.</p>
-                <form action="{{ route('pages.store', [$organization->slug, $wiki->slug]) }}" method="POST" role="form" style="margin-bottom: 15px;">
+                <form action="{{ route('pages.store', [$organization->slug, $category->slug, $wiki->slug]) }}" method="POST" role="form" style="margin-bottom: 15px;">
                     <input type="text" class="hide" name="wiki_id" value="{{ $wiki->id }}">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

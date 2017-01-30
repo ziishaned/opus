@@ -20,11 +20,9 @@ class CategoryConroller extends Controller
         $this->request      = $request;
         $this->organization = $organization;
     }
-    public function store($organizationSlug)
+    public function store(Organization $organization)
     {
         $this->validate($this->request, Category::CATEGORY_RULES);
-
-        $organization = $this->organization->getOrganization($organizationSlug);
         
         $this->category->createCategory($this->request->all(), $organization->id);
 
@@ -34,11 +32,9 @@ class CategoryConroller extends Controller
         ]);
     }
 
-    public function destroy($organizationSlug, $categoryId) 
+    public function destroy(Organization $organization, Category $category) 
     {
-        $organization = $this->organization->getOrganization($organizationSlug);
-        
-        $this->category->deleteCategory($categoryId, $organization->id);
+        $this->category->deleteCategory($category->id, $organization->id);
 
         return redirect()->back()->with([
             'alert' => 'Category successfully deleted.',
@@ -46,13 +42,11 @@ class CategoryConroller extends Controller
         ]);
     }
 
-    public function update($organizationSlug, $categoryId)
+    public function update(Organization $organization, Category $category)
     {
         $this->validate($this->request, Category::CATEGORY_RULES);
         
-        $organization = $this->organization->getOrganization($organizationSlug);
-        
-        $this->category->updateCategory($this->request->all(), $categoryId, $organization->id);
+        $this->category->updateCategory($this->request->all(), $category->id, $organization->id);
 
         return redirect()->back()->with([
             'alert' => 'Category successfully updated.',

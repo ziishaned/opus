@@ -100,13 +100,12 @@ class Comment extends Model
      * @param array  $data
      * @return bool
      */
-    public function storeComment($pageSlug, $data)
+    public function storeComment($pageId, $data)
     {
         Emojione::$imagePathPNG = '/images/png/';
 
-        $page = (new wikiPage)->getPage($pageSlug);
         $this->create([
-            'page_id'    => $page->id,
+            'page_id'    => $pageId,
             'content'    => Emojione::toImage($data['comment']),
             'user_id'    => Auth::user()->id,
             'updated_at' => Carbon::now(),

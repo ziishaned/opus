@@ -49,7 +49,7 @@
 						<div class="panel panel-default" id="wiki-list-con">
 				            <div class="panel-heading">Page tree</div>
 				        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px; padding-right: 0px; min-height: 320px; overflow-y: auto;">
-								<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}" data-organization-id="{{ $organization->id }}"></div>
+								<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-slug="{{ $wiki->slug }}" data-organization-slug="{{ $organization->slug }}" data-category-slug="{{ $category->slug }}"></div>
 				        	</div>
 				        </div>
 					</div>

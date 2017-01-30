@@ -99,65 +99,61 @@ class WikiPage extends Node
         return $query;
     }
 
-
-    public function getWikiPages($organization, $wikiId, $page_id, $openedNode = null)
+    public function getRootPages($organization, $category, $wiki)
     {
         $nodes = [];
 
-        if(is_null($openedNode)) {
-            if(!is_null($page_id)) {
-                $childs = $this->find($page_id)->children()->get();
-                foreach ($childs as $key => $value) {
-                    if($wikiId == $value->wiki_id) {
-                        $nodes[] = [
-                            'id'   => $value->id,
-                            'wiki_id' => $value->wiki_id,
-                            'text' => $value->name,
-                            'slug' => $value->slug,
-                            'children' => ($value->isLeaf() == false) ? true : false,
-                            'data' => [
-                                'created_at' => $value->created_at,
-                            ],
-                            'state' => [
-                                'selected' => ($value->id == $openedNode) ? true : false,
-                            ],
-                            'a_attr' => [
-                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::where('id', '=', $value->wiki_id)->pluck('slug')->first(), $value->slug]),
-                            ],
-                        ];
-                    }
-                }                
-            } else {
-                $page = $this->where('wiki_id', '=', $wikiId)->first();
-                if(empty($page)) {
-                    return false;
-                }
-
-                $roots = $this->find($page->id)->roots()->get();
-                foreach ($roots as $key => $value) {
-                    if($wikiId == $value->wiki_id) {
-                        $nodes[] = [
-                            'id'   => $value->id,
-                            'wiki_id' => $value->wiki_id,
-                            'text' => $value->name,
-                            'slug' => $value->slug,
-                            'children' => ($value->isLeaf() == false) ? true : false,
-                            'data' => [
-                                'created_at' => $value->created_at,
-                            ],
-                            'state' => [
-                                'selected' => ($value->id == $openedNode) ? true : false,
-                            ],
-                            'a_attr' => [
-                                'href' => route('pages.show', [$organization->slug, \App\Models\Wiki::where('id', '=', $value->wiki_id)->pluck('slug')->first(), $value->slug]),
-                            ],
-                        ];
-                    }
-                }
+        $roots = $this->roots()->where('wiki_id', '=', $wiki->id)->get();
+        foreach ($roots as $key => $value) {
+            if($wiki->id == $value->wiki_id) {
+                $nodes[] = [
+                    'id'   => $value->id,
+                    'wiki_id' => $value->wiki_id,
+                    'text' => $value->name,
+                    'slug' => $value->slug,
+                    'children' => ($value->isLeaf() == false) ? true : false,
+                    'data' => [
+                        'created_at' => $value->created_at,
+                        'slug' => $value->slug,
+                    ],
+                    'a_attr' => [
+                        'href' => route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $value->slug]),
+                    ],
+                ];
             }
-        } else {
-            $nodes = $this->find($openedNode)->getAncestorsAndSelf()->toHierarchy();
         }
+
+        return $nodes;
+    }
+
+    public function getChildrenPages($organization, $category, $wiki, $page)
+    {
+        $nodes = [];
+
+        $childrens = $this->find($page->id)->children()->get();
+        foreach ($childrens as $key => $value) {
+            $nodes[] = [
+                'id'   => $value->id,
+                'wiki_id' => $value->wiki_id,
+                'text' => $value->name,
+                'slug' => $value->slug,
+                'children' => ($value->isLeaf() == false) ? true : false,
+                'data' => [
+                    'created_at' => $value->created_at,
+                    'slug' => $value->slug,
+                ],
+                'a_attr' => [
+                    'href' => route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $value->slug]),
+                ],
+            ];
+        }
+
+        return $nodes;   
+    }
+
+    public function getTreeTo($organization, $category, $wiki, $page)
+    {
+        $nodes = $this->find($page->id)->getAncestorsAndSelf()->toHierarchy();   
         return $nodes;
     }
 
@@ -217,14 +213,13 @@ class WikiPage extends Node
      * @param  array $data
      * @return bool
      */
-    public function updatePage($slug, $data)
+    public function updatePage($id, $data)
     {
-        $this->where('slug', '=', $slug)->update([
+        $this->find($id)->update([
             'name' => $data['page_name'],
             'description' => $data['page_description'],
             'outline' => $data['outline'],
             'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
-            
         ]);
     
         return true;
