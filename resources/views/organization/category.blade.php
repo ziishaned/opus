@@ -34,7 +34,7 @@
                                                 <p class="marginless"><span class="glyphicon glyphicon-book"></span> <span>{{ $category->wikis->count() }}</span> Wikis</p>
                                             </div>
                                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                                                <ul class="marginless list-unstyled list-inline category-actions">
+                                                <ul class="marginless list-unstyled list-inline category-actions animated fadeInDown">
                                                     <li>
                                                         <button class="btn btn-link" id="edit-category" data-toggle="modal" href="#update-category-modal"><i class="fa fa-pencil fa-fw"></i></button>
                                                     </li>

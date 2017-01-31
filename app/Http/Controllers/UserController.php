@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organization;
 use Hash;
 use Image;
 use Session;
 use App\Models\User;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;

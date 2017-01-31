@@ -65,7 +65,7 @@ class WikiPage extends Node
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'page_id', 'id')->with('user');
+        return $this->hasMany(Comment::class, 'page_id', 'id')->latest()->with('user');
     }    
 
     /**

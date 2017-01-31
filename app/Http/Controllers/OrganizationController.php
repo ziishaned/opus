@@ -7,7 +7,6 @@ use Mail;
 use Redirect;
 use App\Models\User;
 use App\Models\Category;
-use App\Models\ActivityLog;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,20 +27,17 @@ class OrganizationController extends Controller
 
     private $user;
 
-    private $activity;
 
     private $category;
 
     public function __construct(Request $request, 
                                 Organization $organization, 
                                 User $user, 
-                                ActivityLog $activity,
                                 Category $category)
     {
         $this->user         = $user;
         $this->request      = $request;
         $this->category     = $category;
-        $this->activity     = $activity;
         $this->organization = $organization;
     }
 
@@ -429,17 +425,13 @@ class OrganizationController extends Controller
     }
 
     public function getActivity(Organization $organization) 
-    {
-        $activities   = $this->activity->getOrganizationActivity($organization->id);
-     
-        return view('organization.activity', compact('activities', 'organization'));        
+    {     
+        return view('organization.activity', compact('organization'));        
     }
 
-    public function getUserActivity($organizationSlug) 
+    public function getUserActivity(Organization $organization) 
     {
-        $organization = $this->organization->getOrganization($organizationSlug);   
-        $activities   = $this->activity->getUserActivity(Auth::user()->id, $organization->id);
-        return view('organization.user-activity', compact('activities', 'organization'));   
+        return view('organization.user-activity', compact('organization'));   
     }
 
     public function inviteUsers(Organization $organization) 

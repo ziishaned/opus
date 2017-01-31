@@ -6,16 +6,6 @@ var App = {
         this.initTooltip();
         this.loadCategories();
         this.initMasonry();
-        this.initEmojione();
-    },
-    initEmojione: function() {
-        $("#outline, #organization-description").emojioneArea({
-            pickerPosition: "bottom",
-            tones: false,
-            autoHideFilters: true,
-            useSprite: false,
-            saveEmojisAs: 'shortname',
-        });
     },
     initMasonry: function() {
         var that = this;  
@@ -87,27 +77,18 @@ var App = {
     bindUI: function () {
         var that = this;
         $('#update-category-modal').on('hidden.bs.modal', function (e) {
-            $('#update-category-form').find('.emojionearea').remove();
             $('#update-category-form').find('#name').val('');
             $('#update-category-form').find('#update-outline').val('');
-            $('#update-category-form').find('#update-outline').replaceWith('<textarea name="description" id="update-outline" class="form-control" rows="3" required="required"></textarea>');    
         });
         $(document).on('click', '#edit-category', function(event) {
             event.preventDefault();
             var curEle       =  $(this).closest('.category-item'),
                 categoryslug =  $(curEle).data('category-slug'),
                 name         =  $(curEle).find('#category-name').text(),
-                outline      =  $(curEle).find('#category-outline').length ? $(curEle).find('#category-outline').data('emoji-content') : '';
+                outline      =  $(curEle).find('#category-outline').text();
             $('#update-category-form').find('#name').val(name);         
             $('#update-category-form').find('#update-outline').val(outline);
             $('#update-category-form').attr('action', laroute.action('organizations.categories.update', { organization_slug: that.params.organizationSlug, category_slug: categoryslug}));
-            $("#update-outline").emojioneArea({
-                pickerPosition: "bottom",
-                tones: false,
-                autoHideFilters: true,
-                useSprite: false,
-                saveEmojisAs: 'shortname',
-            });
         });
         $(document).on('click', '#add-invitation-input', function(event) {
             event.preventDefault();
@@ -233,42 +214,9 @@ $(document).ready(function() {
             "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
             "save table contextmenu directionality template paste textcolor",
-            "leaui_code_editor codemirror mention autoresize"
+            "leaui_code_editor codemirror autoresize"
         ],
         autoresize_min_height: 400,
-        mentions: {
-            delimiter: ':',
-            queryBy: 'name',
-            source: function (query, process, delimiter) {
-                if (delimiter === ':') {
-                    $.ajax({
-                        url: '/js/emoji.json',
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            var ok = [];
-                            $(data).each(function(index, el) {
-                                if(el.name.indexOf( query ) > -1) {
-                                    ok.push(el);
-                                }
-                            });   
-                            process(ok);
-                        }, 
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });
-                }
-            },
-            insert: function(item) {
-                return '<img style="max-width: 23px; max-height: 22px; min-width: 23px; min-height: 22px; position: relative; top: 5px;" class="emojioneemoji" src="/images/png/'+item.unicode+'.png">';
-            },
-            render: function(item) {
-                return '<li>'+
-                            '<a><img class="emojioneemoji" src="/images/png/'+item.unicode+'.png" style="font-size: inherit; height: 2ex; width: 2.1ex; min-height: 20px; min-width: 20px; display: inline-block; margin: 0 5px .2ex 0; line-height: normal; vertical-align: middle; max-width: 100%; top: 0;">'+item.name+'</a>'+
-                        '</li>';
-            }
-        },
 		paste_webkit_styles: "all",
 		paste_retain_style_properties: "all",
 
@@ -345,7 +293,7 @@ $(function() {
                 var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="`+laroute.action('pages.create', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug })+`">create one here</a>.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
-            data.instance._open_to(currentPage);
+            data.instance._open_to($('#current-page-id').text());
         });
     }
 

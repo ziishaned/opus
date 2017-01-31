@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/animate.css">
     <link rel="stylesheet" href="/plugins/tinymce/tinymce-lightgray.css">
     <link rel="stylesheet" href="/plugins/tinymce/editor.css">
     <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
-    <link rel="stylesheet" href="/plugins/emojionearea/emojione.min.css">
-    <link rel="stylesheet" href="/plugins/emojionearea/emojionearea.min.css">
     <script>
         var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
     </script>
@@ -47,9 +46,6 @@
 <script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
 <script src="/js/app.js"></script>
 <script src="/plugins/jcrop/Jcrop.min.js"></script>
-<script src="/plugins/emojionearea/emojione.min.js"></script>
-<script src="/plugins/emojionearea/emojionearea.min.js"></script>
-<script src="/plugins/emojionearea/jquery.textcomplete.js"></script>
 <script src="/plugins/highchart/highcharts.js"></script>
 <script src="/plugins/highchart/data.js"></script>
 <script src="/plugins/highchart/drilldown.js"></script>

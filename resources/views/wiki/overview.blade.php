@@ -45,14 +45,7 @@
 		    				</ul>
 	    				</div>
 	    			</div>
-					<div style="margin-top: 12px;">
-						<div class="panel panel-default" id="wiki-list-con">
-				            <div class="panel-heading">Page tree</div>
-				        	<div class="panel-body" style="padding-left: 0px !important; padding-bottom: 10px; padding-right: 0px; min-height: 320px; overflow-y: auto;">
-								<div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-id="{{ $wiki->id }}" data-organization-id="{{ $organization->id }}"></div>
-				        	</div>
-				        </div>
-					</div>
+					@include('layouts.partials.page-tree')
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">

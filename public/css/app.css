@@ -7,6 +7,47 @@
   }
 }
 
+.comment-list .comment-item {
+    padding: 15px 0px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-list .comment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0px;
+}
+
+.comment-list .comment-item:first-child {
+    padding-top: 0;
+}
+
+.media-foot ul.actions li {
+    padding: 0 10px; 
+}
+
+ul.dot-divider li::after {
+    content: "\00B7";
+    font-weight: bold;
+    left: 10px;
+    position: relative;
+}
+
+ul.dot-divider li:last-child::after {
+    content: '';
+}
+
+.cus-nav>li>a {
+    position: relative;
+    display: block;
+    padding: 6px 8px;
+    border-radius: 4px;
+    color: #777;
+}
+
+.cus-nav-right {
+    text-align: right;
+}
+
 form legend {
     font-size: 18px;
     margin-bottom: 12px;
@@ -15,6 +56,41 @@ form legend {
 .activity-head {
     background-color: #ffffff;
     z-index: 10;
+}
+
+.dropdown.open .wiki-setting-btn, .cus-nav>li.dropdown.open>a {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    border: 1px solid #adadad;
+    background-color: #e6e6e6;
+    margin: -1px;
+    border-bottom: 0px;
+    border-radius: 4px 4px 0px 0px; 
+}
+
+.wiki-setting-btn {
+    border-radius: 4px;
+    padding: 5px;
+    position: relative;
+    right: 2px;
+    color: #777;
+}
+
+.wiki-setting-btn:active, 
+.wiki-setting-btn:hover, 
+.wiki-setting-btn:focus, 
+.cus-nav>li>a:active, 
+.cus-nav>li>a:hover,
+.cus-nav>li>a:focus {
+    color: #333;
+}
+
+.wiki-setting-btn:hover, .cus-nav>li>a:hover {
+    margin: -1px;
+    border: 1px solid #adadad;
+    background-color: #e6e6e6;
 }
 
 .collg5 {
@@ -96,12 +172,41 @@ a:focus {
     cursor: default;
 }
 
+.headin-no-margin {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.ml15 {
+    margin-left: 15px;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+ 
+.mb15 {
+    margin-bottom: 15px;
+}
+
 .mb20 {
     margin-bottom: 20px;
 }
 
+.mb25 {
+    margin-bottom: 25px;
+}
+
 .mb5 {
-    margin-bottom: 5px;
+    margin-bottom: 5px !important;
 }
 
 .mt0 {
@@ -113,11 +218,7 @@ a:focus {
 }
 
 .m10, .mb10 {
-    margin-bottom: 10px;
-}
-
-.mb20 {
-    margin-bottom: 20px;
+    margin-bottom: 10px !important;
 }
 
 .mb0 {
@@ -310,7 +411,7 @@ a:hover {
     padding-top: 70px;
 }
 
-.wiki-head .wiki-name::first-letter, .page-name-head::first-letter {
+.wiki-name::first-letter, .page-name::first-letter {
     text-transform: uppercase;
 }
 
@@ -402,7 +503,7 @@ button {
     outline: none !important;
 }
 
-p, input, select, div, h1, h2, h3, h4, h5, h6 {
+p, input, select, div, h1, h2, h3, h4, h5, h6, .media-foot a {
     font-family: 'Roboto', 'segoe ui', 'Open Sans', 'source sans pro';
     color: #424242;
 }
@@ -430,15 +531,6 @@ h5 {
 h6 {
     font-size: 13px;
     font-weight: 400;
-}
-
-.nothing-found {
-    text-align: center;
-    padding: 5px;
-    margin: 0;
-    font-size: 14px;
-    color: #7d7d7d;
-    font-weight: normal;
 }
 
 .emojionearea-editor {
@@ -477,12 +569,6 @@ h6 {
 .syntaxhighlighter::-webkit-scrollbar-thumb:active {
     background: rgba(0,0,0,0.61); / Some darker color when you click it */
     -webkit-border-radius: 100px;
-}
-
-.dot-divider::after {
-    content: "\00B7";
-    padding: 0 6px;
-    font-weight: bold;
 }
 
 .pagination {
@@ -561,7 +647,7 @@ h6 {
     margin-bottom: 8px;
 }
 
-.mce-floatpanel .mce-text, .mce-tooltip, .rte-autocomplete .active a, .btn, .no-stroke {
+.mce-floatpanel .mce-text, .mce-tooltip, .rte-autocomplete .active a, .btn, .no-stroke, .text-muted, button .mce-txt {
     -webkit-text-stroke: 0px !important;
 }
 

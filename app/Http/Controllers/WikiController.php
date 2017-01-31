@@ -208,7 +208,7 @@ class WikiController extends Controller
 
     public function overview(Organization $organization, Category $category, Wiki $wiki)
     {
-        return view('wiki.overview', compact('organization', 'wiki'));
+        return view('wiki.overview', compact('organization', 'wiki', 'category'));
     }
 
     public function permissions(Organization $organization, Category $category, Wiki $wiki)

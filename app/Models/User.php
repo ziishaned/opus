@@ -5,7 +5,6 @@ namespace App\Models;
 use Auth;
 use Hash;
 use Carbon\Carbon;
-use App\Models\ActivityLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -157,11 +156,6 @@ class User extends Authenticatable
         return $this->hasMany(WikiPage::class, 'user_id', 'id');
     }
 
-    public function activities()
-    {
-        return $this->hasMany(ActivityLog::class, 'user_id', 'id');
-    }
-
     /**
      * DESC
      *
@@ -262,21 +256,6 @@ class User extends Authenticatable
             'email' => $data['email'],
         ]);
         return $user;
-    }
-
-    public function getActivity($userId)
-    {
-        $to       =  Carbon::today()->format('Y-m-d');
-        $from     =  Carbon::today()->subYears(1)->format('Y-m-d');
-
-        $activities  = DB::table('activity_log')
-                           ->where('user_id', '=', $userId)
-                           ->whereBetween('created_at', [$from . '00:00:00', $to . ' 23:59:59'])
-                           ->groupby('date')
-                           ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
-                           ->get();
-
-        return $activities; 
     }
 
     public function validate($data) 
