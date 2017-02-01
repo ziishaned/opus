@@ -56,7 +56,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}"><i class="fa fa-user fa-fw"></i> Profile</a></li>
                             <li>
-                                <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> Read list</a>
+                                <a href="{{ route('users.readlist', [$organization->slug, Auth::user()->slug]) }}"><i class="fa fa-newspaper-o fa-fw"></i> Read list</a>
                             </li>
                             <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
                             <li class="divider"></li>

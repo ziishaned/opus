@@ -209,4 +209,9 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function getReadList(Organization $organization, User $user)
+    {
+        return view('user.readlist', compact('organization'));
+    }
 }

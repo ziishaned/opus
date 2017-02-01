@@ -15,6 +15,7 @@ Route::group(['prefix' => 'organizations'], function () {
             Route::delete('{user_slug}', 'UserController@deleteAccount')->name('users.destroy');
             Route::get('search/{text}', 'UserController@filterUser');
             Route::patch('{user_slug}/password', 'UserController@updatePassword')->name('users.password.update');
+            Route::get('{user_slug}/readlist', 'UserController@getReadList')->name('users.readlist');
             Route::get('{user_slug}', 'UserController@show')->name('users.show');
             Route::patch('{user_slug}', 'UserController@update')->name('users.update');
             Route::get('{user_slug}/organizations', 'UserController@getOrganizationsView')->name('users.organizations');
