@@ -130,7 +130,7 @@ class WikiController extends Controller
     {
         $categories = $this->category->getOrganizationCategories($organization->id);
 
-        return view('wiki.edit', compact('wiki', 'organization', 'categories'));
+        return view('wiki.edit', compact('wiki', 'organization', 'categories', 'category'));
     }
 
     /**

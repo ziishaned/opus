@@ -96,7 +96,7 @@ var App = {
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 hidden-md hidden-lg">
                                                 <div class="remove-invitation-input-con">
-                                                    <button type="button" class="btn-link" id="remove-invitation-input" style="font-size: 17px; font-size: 17px; width: 100%;"><i class="fa fa-close"></i></button>
+                                                    <button type="button" class="btn-link" id="remove-invitation-input"><i class="fa fa-close"></i></button>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -118,8 +118,8 @@ var App = {
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 hidden-sm hidden-xs">
-                                                <div class="remove-invitation-input-con" style="text-align: center; position: relative; top: 18px;">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Remove invitation" class="btn-link" id="remove-invitation-input" style="font-size: 17px;"><i class="fa fa-close"></i></a>
+                                                <div class="remove-invitation-input-con" style="text-align: center; position: relative; top: 27px;">
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Remove invitation" class="btn-link" id="remove-invitation-input"><i class="fa fa-close"></i></a>
                                                 </div>
                                             </div>
                                         </div>
