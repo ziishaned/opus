@@ -5,7 +5,7 @@
 		<div class="container">
 			<div class="row v-center mb10">
 				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-					<h2 class="marginless mb5">Wishlist</h2>
+					<h2 class="marginless mb5">Read List</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore ab minima repellat eligendi ut adipisci!</p>		
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
