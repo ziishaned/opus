@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Organization
  *
- * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
  * @package App\Models
  */
 class Organization extends Model
@@ -28,8 +28,8 @@ class Organization extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
@@ -62,6 +62,18 @@ class Organization extends Model
         $this->hasMany(Category::class, 'organization_id', 'id');
     }
 
+    public function activity()
+    {
+        return $this->hasMany(Activity::class, 'organization_id', 'id')->with(['user', 'subject' => function($query) {
+            $query->withTrashed();
+        }])->latest();
+    }
+
+    public function subject()
+    {
+        return $this->morphTo();
+    }
+
     /**
      * User can join organization.
      *
@@ -84,7 +96,7 @@ class Organization extends Model
 
     /**
      * An organization can have many wikis.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function wikis()
@@ -99,14 +111,14 @@ class Organization extends Model
      */
     public function getOrganizations()
     {
-        return $this->with(['user', 'wikis'])
-                    ->paginate(10);
+        return $this->with(['user', 'wikis'])->paginate(10);
     }
 
     /**
      * Find a specific array in organization table.
      *
      * @param  string $organizationSlug
+     *
      * @return mixed
      */
     public function getOrganization($organizationSlug)
@@ -114,15 +126,17 @@ class Organization extends Model
         $organization = $this->where('slug', '=', $organizationSlug)
                              ->with(['user', 'wikis', 'members'])
                              ->first();
-        if($organization) {
+        if ($organization) {
             return $organization;
         }
+
         return false;
     }
 
     public function getWikis($organization)
     {
         $organizationWikis = $this->find($organization->id)->wikis()->paginate(10);
+
         return $organizationWikis;
     }
 
@@ -134,17 +148,18 @@ class Organization extends Model
     public function postOrganization($data)
     {
         $organization = $this->create([
-            'name'          =>  $data['organization_name'],
-            'user_id'       =>  $data['user_id'],
-            'description'   =>  $data['description'],
+            'name'        => $data['organization_name'],
+            'user_id'     => $data['user_id'],
+            'description' => $data['description'],
         ]);
         DB::table('user_organization')->insert([
-            'user_type'        => 'admin',
-            'user_id'          => $data['user_id'],
-            'organization_id'  => $organization->id,
-            'created_at'       => Carbon::now(),
-            'updated_at'       => Carbon::now(),
+            'user_type'       => 'admin',
+            'user_id'         => $data['user_id'],
+            'organization_id' => $organization->id,
+            'created_at'      => Carbon::now(),
+            'updated_at'      => Carbon::now(),
         ]);
+
         return $organization;
     }
 
@@ -153,6 +168,7 @@ class Organization extends Model
      *
      * @param  integer $id
      * @param  string  $organizationName
+     *
      * @return mixed
      */
     public function updateOrganization($id, $organizationName)
@@ -160,9 +176,10 @@ class Organization extends Model
         $organization = $this->find($id)->update([
             'name' => $organizationName,
         ]);
-        if($organization) {
+        if ($organization) {
             return true;
         }
+
         return false;
     }
 
@@ -170,13 +187,15 @@ class Organization extends Model
      * Delete organization from database.
      *
      * @param  integer $id
+     *
      * @return mixed
      */
     public function deleteOrganization($id)
     {
-        if($this->find($id)->delete()) {
+        if ($this->find($id)->delete()) {
             return true;
         };
+
         return false;
     }
 
@@ -184,14 +203,16 @@ class Organization extends Model
      * Invite a user to organization.
      *
      * @param array $data
+     *
      * @return bool
      */
-    public function inviteUser($data) {
-        $userHaveOrganization =  DB::table('user_organization')
-                                     ->whereIn('user_id', [$data['userId']])
-                                     ->whereIn('organization_id', [$data['organizationId']])
-                                     ->first();
-        if(!$userHaveOrganization) {
+    public function inviteUser($data)
+    {
+        $userHaveOrganization = DB::table('user_organization')
+                                  ->whereIn('user_id', [$data['userId']])
+                                  ->whereIn('organization_id', [$data['organizationId']])
+                                  ->first();
+        if (!$userHaveOrganization) {
             DB::table('user_organization')->insert([
                 'user_type'       => 'normal',
                 'user_id'         => $data['userId'],
@@ -199,8 +220,10 @@ class Organization extends Model
                 'created_at'      => Carbon::now(),
                 'updated_at'      => Carbon::now(),
             ]);
+
             return true;
         }
+
         return true;
     }
 
@@ -208,14 +231,16 @@ class Organization extends Model
      * Remove a user from organization.
      *
      * @param array $data
+     *
      * @return bool
      */
     public function removeInvite($data)
     {
         DB::table('user_organization')
-            ->where('user_id', '=', $data['userId'])
-            ->where('organization_id', '=', $data['organizationId'])
-            ->delete();
+          ->where('user_id', '=', $data['userId'])
+          ->where('organization_id', '=', $data['organizationId'])
+          ->delete();
+
         return true;
     }
 
@@ -223,11 +248,13 @@ class Organization extends Model
      * Get all the members of an organization
      *
      * @param $organization
+     *
      * @return \App\Models\Organization
      */
     public function getMembers($organization)
     {
         $members = $this->find($organization->id)->members()->paginate(10);
+
         return $members;
     }
 
@@ -236,6 +263,7 @@ class Organization extends Model
      *
      * @param $userId
      * @param $organizationId
+     *
      * @return bool
      */
     public function isMember($userId, $organizationId)
@@ -245,9 +273,10 @@ class Organization extends Model
             'organization_id' => $organizationId,
         ])->first();
 
-        if($member) {
+        if ($member) {
             return true;
         }
+
         return false;
     }
 
@@ -255,6 +284,7 @@ class Organization extends Model
      * Filter the organizations.
      *
      * @param string $text
+     *
      * @return \App\Models\Organization
      */
     public function filterOrganizations($text)
@@ -263,18 +293,24 @@ class Organization extends Model
         $query = $query->where('user_organization.user_id', '=', Auth::user()->id);
         $query = $query->where('organization.name', 'like', '%' . $text . '%');
         $query = $query->join('user_organization', 'organization.id', '=', 'user_organization.organization_id')
-                       ->select('organization.*')->get();   
+                       ->select('organization.*')->get();
+
         return $query;
     }
 
     public function getUserOrganizations($userId)
     {
         return $this
-                  ->join('user_organization', 'organization.id', '=', 'user_organization.organization_id')
-                  ->where('user_organization.user_id', '=', $userId)
-                  ->where('user_organization.user_type', '=', 'admin')
-                  ->groupBy('organization.user_id')
-                  ->select('organization.*', 'user_organization.user_type')
-                  ->get();
+            ->join('user_organization', 'organization.id', '=', 'user_organization.organization_id')
+            ->where('user_organization.user_id', '=', $userId)
+            ->where('user_organization.user_type', '=', 'admin')
+            ->groupBy('organization.user_id')
+            ->select('organization.*', 'user_organization.user_type')
+            ->get();
+    }
+
+    public function getActivty($id)
+    {
+        return $this->find($id)->with('activity')->first();
     }
 }

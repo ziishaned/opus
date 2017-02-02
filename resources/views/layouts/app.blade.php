@@ -85,7 +85,7 @@
 <script>
     // SyntaxHighlighter.defaults.toolbar = false;
     // SyntaxHighlighter.all();
-    
+
     // HighChart
     $(function() {
         if($('#highchart-wikis').length > 0) {
@@ -335,8 +335,8 @@
                         ]
                     }]
                 }
-            }); 
-        }  
+            });
+        }
     });
 </script>
 </body>

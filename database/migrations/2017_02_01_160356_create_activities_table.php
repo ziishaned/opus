@@ -19,6 +19,7 @@ class CreateActivitiesTable extends Migration
             $table->string('subject_type');
             $table->string('name');
             $table->integer('user_id')->unsigned();
+            $table->integer('organization_id')->unsigned();
             $table->timestamps();
         });
     }

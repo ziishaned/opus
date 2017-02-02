@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Auth;
-use Hash;
-use App\Models\Timezone;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * Class User
  *
- * @author Zeshan Ahmed <ziishaned@gmail.com>
+ * @author  Zeshan Ahmed <ziishaned@gmail.com>
  * @package App\Models
  */
 class User extends Authenticatable
@@ -29,9 +28,9 @@ class User extends Authenticatable
     {
         return [
             'slug' => [
-                'source' => ['first_name', 'last_name'],
-                'separator' => '_'
-            ]
+                'source'    => ['first_name', 'last_name'],
+                'separator' => '_',
+            ],
         ];
     }
 
@@ -42,8 +41,8 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'profile_image',
-        'email', 
-        'password'
+        'email',
+        'password',
     ];
 
     protected $dates = ['deleted_at'];
@@ -60,6 +59,16 @@ class User extends Authenticatable
     public function category()
     {
         return $this->hasMany(Category::class, 'user_id', 'id');
+    }
+
+    /**
+     * DESC
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activity()
+    {
+        return $this->hasMany(Activity::class, 'user_id', 'id');
     }
 
     /**
@@ -89,7 +98,7 @@ class User extends Authenticatable
 
     /**
      * An organization can have multiple employee.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
     public function organizations()
@@ -137,10 +146,11 @@ class User extends Authenticatable
     public function getUser($userSlug)
     {
         $user = $this->where('slug', '=', $userSlug)->with(['timezone', 'organization', 'organizations', 'wikis'])->first();
-        
-        if($user) {
+
+        if ($user) {
             return $user;
         }
+
         return false;
     }
 
@@ -154,6 +164,7 @@ class User extends Authenticatable
     public function getOrganizations($user)
     {
         $userOrganizations = $this->find($user->id)->organizations()->paginate(10);
+
         return $userOrganizations;
     }
 
@@ -165,25 +176,26 @@ class User extends Authenticatable
      * @return \App\Models\User
      */
     public function getWikis($user)
-    {        
+    {
         $userWikis = $this->find($user->id)->wikis()->paginate(10);
+
         return $userWikis;
     }
 
     public function updateUser($slug, $data, $profile_image)
     {
         $this->where('slug', '=', $slug)->update([
-            'first_name'    =>  $data['first_name'],
-            'last_name'     =>  $data['last_name'],
-            'profile_image' =>  !empty($profile_image) ? $profile_image : Auth::user()->profile_image,
-            'email'         =>  $data['email'],
+            'first_name'    => $data['first_name'],
+            'last_name'     => $data['last_name'],
+            'profile_image' => !empty($profile_image) ? $profile_image : Auth::user()->profile_image,
+            'email'         => $data['email'],
         ]);
 
         Timezone::updateOrCreate(['user_id' => Auth::user()->id], [
-            'user_id' => Auth::user()->id,
+            'user_id'  => Auth::user()->id,
             'timezone' => $data['timezone'],
         ]);
-        
+
         return true;
     }
 
@@ -191,6 +203,7 @@ class User extends Authenticatable
      * Filter the users.
      *
      * @param  string $text
+     *
      * @return mixed
      */
     public function filter($text)
@@ -210,31 +223,33 @@ class User extends Authenticatable
         return true;
     }
 
-    public function createUser($data) 
+    public function createUser($data)
     {
         $user = $this->create([
             'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'password' => Hash::make($data['password']),
-            'email' => $data['email'],
+            'last_name'  => $data['last_name'],
+            'password'   => Hash::make($data['password']),
+            'email'      => $data['email'],
         ]);
+
         return $user;
     }
 
-    public function validate($data) 
+    public function validate($data)
     {
         $user = $this
-                    ->join('organization', 'organization.user_id', '=', 'users.id')
-                    ->join('user_organization', 'user_organization.user_id', '=', 'users.id')
-                    ->where('organization.name', '=', $data['organization'])
-                    ->where('users.email', '=', $data['email'])
-                    // ->where('users.password', '=', \Hash::make($this->request->get('password')))
-                    ->select('users.*', 'organization.slug')
-                    ->first();
-                    
-        if($user && \Hash::check($data['password'], $user->password)) {
+            ->join('organization', 'organization.user_id', '=', 'users.id')
+            ->join('user_organization', 'user_organization.user_id', '=', 'users.id')
+            ->where('organization.name', '=', $data['organization'])
+            ->where('users.email', '=', $data['email'])
+            // ->where('users.password', '=', \Hash::make($this->request->get('password')))
+            ->select('users.*', 'organization.slug')
+            ->first();
+
+        if ($user && Hash::check($data['password'], $user->password)) {
             return $user;
         }
+
         return false;
     }
 }

@@ -92,18 +92,6 @@ form legend {
     background-color: #e6e6e6;
 }
 
-.collg5 {
-    width: 457px;
-}
-
-.col4 {
-    width: 360px;
-}
-
-.col3 {
-    width: 262px;
-}
-
 .media-icon {
     color: #9E9E9E;
     margin-right: 6px;
@@ -393,23 +381,18 @@ a:hover {
     margin: 10px 0;
 }
 
-@media(max-width: 1200px){
+@media (max-width: 767px) {
     .affix {
-        position: relative !important;    
+        position: static !important;
+        /*width: auto !important;*/
+        top: 0 !important;
     }
-}
-
-.dashboard-sidebar.affix, .dashboard-quick-links {
-    width: 360px;
 }
 
 .affix {
     top: 50px;
     padding-top: 15px;
-}
-
-.affix + .container-fluid {
-    padding-top: 70px;
+    /*width: 100%;*/
 }
 
 .wiki-name::first-letter, .page-name::first-letter {

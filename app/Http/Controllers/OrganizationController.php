@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class OrganizationController
  *
- * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
  * @package App\Http\Controllers
  */
 class OrganizationController extends Controller
@@ -62,6 +62,7 @@ class OrganizationController extends Controller
     public function getMembers(Organization $organization)
     {
         $organizationMembers = $this->organization->getMembers($organization);
+
         return view('organization.members', compact('organization', 'organizationMembers'));
     }
 
@@ -72,12 +73,12 @@ class OrganizationController extends Controller
      */
     public function create($step)
     {
-        return view('organization.create.'.$step, compact('step'));
+        return view('organization.create.' . $step, compact('step'));
     }
 
     public function join($step)
     {
-        return view('organization.join.'.$step, compact('step'));
+        return view('organization.join.' . $step, compact('step'));
     }
 
     /**
@@ -87,8 +88,7 @@ class OrganizationController extends Controller
      */
     public function store($step)
     {
-        switch ($step)
-        {
+        switch ($step) {
             case 1:
                 $rules = ['email' => 'required|email'];
                 break;
@@ -100,8 +100,8 @@ class OrganizationController extends Controller
             case 3:
                 $rules = [
                     'first_name' => 'required|max:15',
-                    'last_name' => 'required|max:15',
-                    'password' => 'required|min:6|confirmed',
+                    'last_name'  => 'required|max:15',
+                    'password'   => 'required|min:6|confirmed',
                 ];
                 break;
             case 4:
@@ -115,8 +115,7 @@ class OrganizationController extends Controller
 
         $this->validate($this->request, $rules);
 
-        switch ($step)
-        {
+        switch ($step) {
             case 1:
                 $validation_key = mt_rand(100000, 999999);
                 Session::put('email', $this->request->get('email'));
@@ -133,11 +132,12 @@ class OrganizationController extends Controller
                 // });
                 break;
             case 2:
-                if($this->request->get('validation_key') == Session::get('validation_key')) {
+                if ($this->request->get('validation_key') == Session::get('validation_key')) {
                     break;
                 }
+
                 return redirect()->back()->withErrors([
-                    'validation_key' => 'Validation key mismatch.'
+                    'validation_key' => 'Validation key mismatch.',
                 ]);
                 break;
             case 3:
@@ -148,51 +148,51 @@ class OrganizationController extends Controller
             case 4:
                 $userInfo = [
                     'first_name' => Session::get('first_name'),
-                    'last_name' => Session::get('last_name'),
-                    'password' => Session::get('password'),
-                    'email' => Session::get('email'),
+                    'last_name'  => Session::get('last_name'),
+                    'password'   => Session::get('password'),
+                    'email'      => Session::get('email'),
                 ];
-                $user = (new \App\Models\User)->createUser($userInfo);
-                
+                $user     = $this->user->createUser($userInfo);
+
                 $organizationData = [
                     'organization_name' => $this->request->get('organization_name'),
-                    'description' => $this->request->get('description'),
-                    'user_id' => $user->id,
+                    'description'       => $this->request->get('description'),
+                    'user_id'           => $user->id,
                 ];
-                $organization = $this->organization->postOrganization($organizationData);
+                $organization     = $this->organization->postOrganization($organizationData);
 
                 $categories = [
                     [
-                        'name' => 'Engineering',
-                        'user_id' => $user->id,
+                        'name'            => 'Engineering',
+                        'user_id'         => $user->id,
                         'organization_id' => $organization->id,
                     ],
                     [
-                        'name' => 'New Employee Onboarding',
-                        'user_id' => $user->id,
+                        'name'            => 'New Employee Onboarding',
+                        'user_id'         => $user->id,
                         'organization_id' => $organization->id,
                     ],
                     [
-                        'name' => 'Marketing',
-                        'user_id' => $user->id,
+                        'name'            => 'Marketing',
+                        'user_id'         => $user->id,
                         'organization_id' => $organization->id,
                     ],
                     [
-                        'name' => 'Product',
-                        'user_id' => $user->id,
+                        'name'            => 'Product',
+                        'user_id'         => $user->id,
                         'organization_id' => $organization->id,
                     ],
                     [
-                        'name' => 'Human Resuorces',
-                        'user_id' => $user->id,
+                        'name'            => 'Human Resuorces',
+                        'user_id'         => $user->id,
                         'organization_id' => $organization->id,
                     ],
                     [
-                        'name' => 'Sales',
-                        'user_id' => $user->id,
+                        'name'            => 'Sales',
+                        'user_id'         => $user->id,
                         'organization_id' => $organization->id,
                     ],
-                ]; 
+                ];
                 foreach ($categories as $category) {
                     $this->category->create($category);
                 }
@@ -204,33 +204,33 @@ class OrganizationController extends Controller
 
         if ($step == 4) {
             return redirect()->route('home')->with([
-                                            'alert'      => 'Organization created successfully. Now sign in to your organization!',
-                                            'alert_type' => 'success'
-                                        ]);
+                'alert'      => 'Organization created successfully. Now sign in to your organization!',
+                'alert_type' => 'success',
+            ]);
         }
 
-        return redirect()->action('OrganizationController@create', ['step' => $step+1]);
+        return redirect()->action('OrganizationController@create', ['step' => $step + 1]);
     }
 
     public function isContentTypeJson()
     {
-        return $this->request->header('content-type') == 'application/json'; 
+        return $this->request->header('content-type') == 'application/json';
     }
 
     public function getCategories(Organization $organization)
-    {        
-        if($this->isContentTypeJson()) {
+    {
+        if ($this->isContentTypeJson()) {
             $wikis = [];
 
-            foreach($organization->wikis as $key => $wiki) {
-                
-                if(count($wikis) >= 5) {
+            foreach ($organization->wikis as $key => $wiki) {
+
+                if (count($wikis) >= 5) {
                     break;
                 }
 
                 $wikis[] = [
                     'url'  => route('wikis.show', [$organization->slug, $wiki->slug]),
-                    'name' => $wiki->name
+                    'name' => $wiki->name,
                 ];
             }
 
@@ -245,6 +245,7 @@ class OrganizationController extends Controller
     public function getUserContributedWikis($organizationSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
+
         return view('organization.wikis.user-contributions', compact('organization'));
     }
 
@@ -262,19 +263,21 @@ class OrganizationController extends Controller
      * This function updates organization data.
      *
      * @param  integer $id
+     *
      * @return mixed
      */
     public function update($id)
     {
         $this->validate($this->request, Organization::ORGANIZATION_RULES);
         $updated = $this->organization->updateOrganization($id, $this->request->get('organization_name'));
-        if($updated) {
+        if ($updated) {
             return response()->json([
-                'message' => 'Organization successfully updated.'
+                'message' => 'Organization successfully updated.',
             ], Response::HTTP_OK);
         }
+
         return response()->json([
-            'message' => 'Resource not found.'
+            'message' => 'Resource not found.',
         ], Response::HTTP_NOT_FOUND);
     }
 
@@ -282,43 +285,44 @@ class OrganizationController extends Controller
      * Deletes an organization.
      *
      * @param  integer $id
+     *
      * @return mixed
      */
     public function destroy($id)
     {
         $organizationDeleted = $this->organization->deleteOrganization($id);
-        if($organizationDeleted) {
+        if ($organizationDeleted) {
             return redirect()->route('dashboard')->with([
-                'alert' => 'Organization successfully deleted.',
-                'alert_type' => 'success'
+                'alert'      => 'Organization successfully deleted.',
+                'alert_type' => 'success',
             ]);
         }
+
         return response()->json([
-            'message' => 'We are having some issues.'
+            'message' => 'We are having some issues.',
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     public function signin($step)
     {
-        return view('organization.signin.'.$step, compact('step'));
+        return view('organization.signin.' . $step, compact('step'));
     }
 
     public function postJoin($step)
     {
         $validationMessage = [];
-        switch ($step)
-        {
+        switch ($step) {
             case 1:
-                $rules = [
+                $rules             = [
                     'organization_name' => 'required|exists:organization,name',
                 ];
                 $validationMessage = [
-                    'exists' => 'Specified organization does\'t exists.'
+                    'exists' => 'Specified organization does\'t exists.',
                 ];
                 break;
             case 2:
                 $rules = [
-                    'email' => 'required|organization_has_email|email',
+                    'email'    => 'required|organization_has_email|email',
                     'password' => 'required|confirmed',
                 ];
                 break;
@@ -328,8 +332,7 @@ class OrganizationController extends Controller
 
         $this->validate($this->request, $rules, $validationMessage);
 
-        switch ($step)
-        {
+        switch ($step) {
             case 1:
                 Session::put('organization_name', $this->request->get('organization_name'));
                 break;
@@ -341,20 +344,20 @@ class OrganizationController extends Controller
 
         if ($step == 2) {
             $userInfo = [
-                'email' => $this->request->get('email'),
-                'password' => $this->request->get('password'),
+                'email'        => $this->request->get('email'),
+                'password'     => $this->request->get('password'),
                 'organization' => Session::get('organization_name'),
             ];
-            
+
             dd('');
 
             return redirect()->back()->with([
-                                        'alert'      => 'Email or password is not valid.',
-                                        'alert_type' => 'danger'
-                                    ]);
+                'alert'      => 'Email or password is not valid.',
+                'alert_type' => 'danger',
+            ]);
         }
 
-        return redirect()->action('OrganizationController@join', ['step' => $step+1]);
+        return redirect()->action('OrganizationController@join', ['step' => $step + 1]);
     }
 
     /**
@@ -365,19 +368,18 @@ class OrganizationController extends Controller
     public function postSignin($step)
     {
         $validationMessage = [];
-        switch ($step)
-        {
+        switch ($step) {
             case 1:
-                $rules = [
+                $rules             = [
                     'organization_name' => 'required|exists:organization,name',
                 ];
                 $validationMessage = [
-                    'exists' => 'Specified organization does\'t exists.'
+                    'exists' => 'Specified organization does\'t exists.',
                 ];
                 break;
             case 2:
                 $rules = [
-                    'email' => 'required|email',
+                    'email'    => 'required|email',
                     'password' => 'required',
                 ];
                 break;
@@ -387,8 +389,7 @@ class OrganizationController extends Controller
 
         $this->validate($this->request, $rules, $validationMessage);
 
-        switch ($step)
-        {
+        switch ($step) {
             case 1:
                 Session::put('organization_name', $this->request->get('organization_name'));
                 break;
@@ -400,39 +401,36 @@ class OrganizationController extends Controller
 
         if ($step == 2) {
             $userInfo = [
-                'email' => $this->request->get('email'),
-                'password' => $this->request->get('password'),
+                'email'        => $this->request->get('email'),
+                'password'     => $this->request->get('password'),
                 'organization' => Session::get('organization_name'),
             ];
-            
+
             $user = $this->user->validate($userInfo);
 
-            if($user) {
+            if ($user) {
                 Auth::login($user, $this->request->get('remember'));
 
                 setcookie('organization_slug', $user->organization->slug, time() + (86400 * 30), "/");
 
-                return redirect()->route('dashboard', [$user->organization->slug, ]);
+                return redirect()->route('dashboard', [$user->organization->slug,]);
             }
 
 
             return redirect()->back()->with([
-                                        'alert'      => 'Email or password is not valid.',
-                                        'alert_type' => 'danger'
-                                    ]);
+                'alert'      => 'Email or password is not valid.',
+                'alert_type' => 'danger',
+            ]);
         }
 
-        return redirect()->action('OrganizationController@signin', ['step' => $step+1]);
+        return redirect()->action('OrganizationController@signin', ['step' => $step + 1]);
     }
 
     public function getActivity(Organization $organization)
-    {     
-        return view('organization.activity', compact('organization'));        
-    }
-
-    public function getUserActivity(Organization $organization)
     {
-        return view('organization.user-activity', compact('organization'));   
+        $activities = $this->organization->getActivty($organization->id)->activity;
+
+        return view('organization.activity', compact('organization', 'activities'));
     }
 
     public function inviteUsers(Organization $organization)

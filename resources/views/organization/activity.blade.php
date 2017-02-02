@@ -3,7 +3,7 @@
 @section('content')
     <section>
         <div class="container">
-            <div class="row">   
+            <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="dashboard-sidebar" data-spy="affix" data-offset-top="10">
                         <div class="panel panel-default">
@@ -25,20 +25,22 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div data-spy="affix" data-offset-top="10" style="background-color: #ffffff; z-index: 10; width: 360px;">
-                        <h2 style="margin-bottom: 23px; margin-top: 0; position: relative; top: 5px;">All Updates</h2>
-                        <hr style="margin: 0;">
+                    <div style="min-height: 47px;">
+                        <div data-spy="affix" data-offset-top="10" style="background-color: #ffffff; z-index: 10; width: 360px;">
+                            <h2 style="margin-bottom: 23px; margin-top: 0; position: relative; top: 5px;">All Updates</h2>
+                            <hr style="margin: 0;">
+                        </div>
                     </div>
                     @include('layouts.partials.activity')
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="dashboard-aside dashboard-quick-links" data-spy="affix" data-offset-top="10">
+                    <div class="dashboard-aside" data-spy="affix" data-offset-top="10">
                         <div class="section-head">
                             <h2 style="margin-top: 6px; margin-bottom: 17px;">Quick links</h2>
                         </div>
                         <hr>
                         <div class="section-body text-center">
-                            <ul class="list-inline list-unstyled"> 
+                            <ul class="list-inline list-unstyled">
                                 <li>
                                     <button type="button" class="btn btn-default">Create wiki</button>
                                 </li>
