@@ -34,7 +34,7 @@ class CategoryConroller extends Controller
 
     public function destroy(Organization $organization, Category $category) 
     {
-        $this->category->deleteCategory($category->id, $organization->id);
+        $this->category->deleteCategory($category->id);
 
         return redirect()->back()->with([
             'alert' => 'Category successfully deleted.',

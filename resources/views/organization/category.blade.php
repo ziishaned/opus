@@ -39,11 +39,9 @@
                                                         <button class="btn btn-link" id="edit-category" data-toggle="modal" href="#update-category-modal"><i class="fa fa-pencil fa-fw"></i></button>
                                                     </li>
                                                     <li>
-                                                        <button class="btn btn-link delete-btn" onclick="if(confirm('Are you sure you want to delete this category?')) {event.preventDefault(); document.getElementById('delete-category').submit();}"><i class="fa fa-trash-o fa-fw"></i></button>
-                                                        <form id="delete-category" action="{{ route('organizations.categories.destroy', [$organization->slug, $category->slug]) }}" method="POST" style="display: none;">
-                                                            {!! method_field('delete') !!}
-                                                            {!! csrf_field() !!}
-                                                        </form>
+                                                        <object>
+                                                            <a href="{{ route('organizations.categories.destroy', [$organization->slug, $category->slug]) }}" class="btn btn-link delete-btn" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i></a>
+                                                        </object>
                                                     </li>
                                                 </ul>
                                             </div>

@@ -14,10 +14,7 @@
                     <li><a href="#"><i class="fa fa-file-word-o fa-fw"></i> Export to Word Document</a></li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-page').submit();}"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-                        <form id="delete-page" action="{{ route('pages.destroy', [$organization->slug, $category->slug, $wiki->slug, $page->slug]) }}" method="POST" style="display: none;">
-                            <input type="hidden" name="_method" value="delete">
-                        </form>
+                        <a href="{{ route('pages.destroy', [$organization->slug, $category->slug, $wiki->slug, $page->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
                     </li>
                 </ul>
             </li>

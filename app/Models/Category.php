@@ -9,7 +9,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class Category extends Model
 {
-    use Sluggable;
+    use Sluggable, RecordsActivity;
 
     public function sluggable()
     {
@@ -19,6 +19,8 @@ class Category extends Model
             ]
         ];
     }
+
+    protected static $recordEvents = ['created', 'updated', 'deleted'];
 
     const CATEGORY_RULES = [
         'category_name' => 'required',
@@ -67,20 +69,18 @@ class Category extends Model
         return $this->where('organization_id', '=', $organizationId)->paginate(15);
     }
 
-    public function deleteCategory($categoryId, $organizationId)
+    public function deleteCategory($categoryId)
     {
-        $this->where('id', '=', $categoryId)->where('organization_id', '=', $organizationId)->delete();
+        $this->find($categoryId)->delete();
         return true;
     }
 
     public function updateCategory($data, $categoryId, $organizationId)
     {
-        $this->where('id', '=', $categoryId)
-             ->where('organization_id', '=', $organizationId)
-             ->update([
-                    'name' => $data['category_name'],
-                    'outline' => $data['description'],
-             ]);
+        $this->find($categoryId)->update([
+                                    'name' => $data['category_name'],
+                                    'outline' => $data['description'],
+                                ]);
         return true;
     }
 

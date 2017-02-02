@@ -18,8 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
-    use Sluggable;
+    use Notifiable, Sluggable;
 
     /**
      * Return the sluggable configuration array for this model.

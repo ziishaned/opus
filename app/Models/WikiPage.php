@@ -17,7 +17,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
  */
 class WikiPage extends Node
 {
-    use Sluggable;
+    use Sluggable, RecordsActivity;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -231,72 +231,11 @@ class WikiPage extends Node
      * @param  int $id
      * @return bool
      */
-    public function deletePage($slug)
+    public function deletePage($id)
     {
-        $query = $this->where('slug', '=', $slug)->delete();
+        $this->find($id)->delete();
 
-        if(!$query) {
-            return false;
-        }
         return true;
-    }
-
-    /**
-     * Star a specific resource.
-     *
-     * @param  int $id
-     * @return bool
-     */
-    public function star($id)
-    {
-        $star = DB::table('user_star')
-                    ->where('entity_id', '=', $id)
-                    ->where('user_id', '=', Auth::user()->id)
-                    ->where('entity_type', '=', 'page')
-                    ->first();
-
-        if(is_null($star)) {
-            DB::table('user_star')->insert([
-                'entity_id'     => $id,
-                'entity_type'   => 'page',
-                'user_id'       => Auth::user()->id,
-                'created_at'    => Carbon::now(),
-                'updated_at'    => Carbon::now(),
-            ]);
-            return true;
-        }
-        DB::table('user_star')
-            ->where('entity_id', '=', $id)
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'page')
-            ->delete();
-        return false;
-    }
-
-    public function watch($id)
-    {
-        $watch = DB::table('user_watch')
-                           ->where('entity_id', '=', $id)
-                           ->where('user_id', '=', Auth::user()->id)
-                           ->where('entity_type', '=', 'page')
-                           ->first();
-
-        if(is_null($watch)) {
-            DB::table('user_watch')->insert([
-                'entity_id'     => $id,
-                'entity_type'   => 'page',
-                'user_id'       => Auth::user()->id,
-                'created_at'    => Carbon::now(),
-                'updated_at'    => Carbon::now(),
-            ]);
-            return true;
-        }
-        DB::table('user_watch')
-            ->where('entity_id', '=', $id)
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'page')
-            ->delete();
-        return false;
     }
 
     /**

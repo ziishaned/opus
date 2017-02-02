@@ -21,11 +21,11 @@
 	        				<a href="#"><i class="fa fa-key fa-fw"></i> Permissions</a>
 	        			</li>
 	        			<li>
-		                    <a href="{{ route('pages.reorder', [$organization->slug, $wiki->category->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
+		                    <a href="{{ route('pages.reorder', [$organization->slug, $category->slug, $wiki->slug]) }}"><i class="fa fa-reorder fa-fw"></i> Reorder pages</a>
 		                </li>
 		                <li class="divider"></li>
 						<li>
-							<a href="#"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+							<a href="{{ route('wikis.destroy', [$organization->slug, $category->slug, $wiki->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
 						</li>
 	                </ul>
 				</div>	

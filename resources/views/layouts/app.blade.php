@@ -51,6 +51,7 @@
 <script src="/plugins/highchart/drilldown.js"></script>
 <script src="/plugins/jquery-infinitescroll/jquery.infinitescroll.min.js"></script>
 <script src="/js/laroute.js"></script>
+<script src="/js/laravel-delete-req.js"></script>
 
 {{-- <link rel="stylesheet" href="/plugins/sh/styles/shCoreDefault.css">
 <script src="/plugins/sh/scripts/shCore.js"></script>

@@ -48,11 +48,11 @@ class PageController extends Controller
         ]);
     }
 
-    public function destroy($organizationSlug, $wikiSlug, $pageSlug)
+    public function destroy(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
     {
-        $pageDeleted = $this->wikiPage->deletePage($pageSlug);
+        $pageDeleted = $this->wikiPage->deletePage($page->id);
 
-        return redirect()->back()->with([
+        return redirect()->route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug])->with([
             'alert' => 'Page successfully deleted.',
             'alert_type' => 'success'
         ]);
@@ -86,14 +86,14 @@ class PageController extends Controller
 
     public function show(Organization $organization , Category $category, Wiki $wiki, WikiPage $page)
     {
-        $pagePath = $this->wikiPage->find($page->id)->getAncestorsAndSelf();
-
         return view('wiki.page.page', compact('organization', 'page', 'wiki', 'pagePath', 'category'));
     }
 
     public function update(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
     {
         $this->wikiPage->updatePage($page->id, $this->request->all());
+        $page = $this->wikiPage->find($page->id);
+
         return redirect()->route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully updated.',
             'alert_type' => 'success'

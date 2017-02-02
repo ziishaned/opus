@@ -155,42 +155,14 @@ class WikiController extends Controller
      * @param  string  $wikiSlug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($wikiSlug)
+    public function destroy(Organization $organization, Category $category, Wiki $wiki)
     {
-        $wiki = $this->wiki->deleteWiki($wikiSlug);
+        $wiki = $this->wiki->deleteWiki($wiki->id);
 
-        if($wiki) {
-            return redirect()->route('dashboard')->with([
-                'alert' => 'Wiki successfully deleted.',
-                'alert_type' => 'success'
-            ]);
-        }
-        return response()->json([
-            'message' => 'We are having some issues.'
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-    /**
-     * Filter wikis.
-     *
-     * @param string $text
-     * @return \App\Models\Wiki
-     */
-    public function filterWikis($text)
-    {
-        return $this->wiki->filterWikis($text);
-    }
-
-    /**
-     * Filter a specific wiki pages.
-     *
-     * @param integer $wikiId
-     * @param string  $text
-     * @return mixed
-     */
-    public function filterWikiPages($wikiId, $text)
-    {
-        return $this->wikiPage->filterWikiPages($wikiId, $text);
+        return redirect()->route('dashboard', [$organization->slug])->with([
+            'alert' => 'Wiki successfully deleted.',
+            'alert_type' => 'success'
+        ]);
     }
 
     public function reverseArray($data)

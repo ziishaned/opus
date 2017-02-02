@@ -9,13 +9,6 @@
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 			    	<div class="row affix-top" data-spy="affix" data-offset-top="10" style="width: 780px; background-color: #ffffff; z-index: 100;">
-				        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-		                    <ol class="breadcrumb page-path no-stroke">
-	                            @foreach($pagePath as $path)
-	                                <li><a href="{{ route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $path->slug]) }}">{{ $path->name }}</a></li>
-	                            @endforeach
-	                        </ol>
-		                </div>
 		                @include('layouts.partials.page-nav')
 					</div>
 					<div class="row">

@@ -16,7 +16,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
  */
 class Wiki extends Model
 {
-    use Sluggable;
+    use Sluggable, RecordsActivity;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -153,15 +153,10 @@ class Wiki extends Model
      * @param  string $slug
      * @return bool
      */
-    public function deleteWiki($slug)
+    public function deleteWiki($id)
     {
-        $wiki = $this->where('slug', '=', $slug)->first();
-        $query = $this->where('slug', '=', $slug)->delete();
-
-        if(!$query) {
-            return false;
-        }
-        return $wiki;
+        $this->find($id)->delete();
+        return true;
     }
 
     /**
@@ -173,77 +168,9 @@ class Wiki extends Model
      */
     public function updateWiki($id, $data)
     {
-        $this->where('id', '=', $id)->update([
+        $this->find($id)->update([
             'description' =>  $data['wiki_description'],
         ]);
         return true;
-    }
-
-    /**
-     * Filter wikis.
-     *
-     * @param string $text
-     * @return \App\Models\Wiki
-     */
-    public function filterWikis($text)
-    {
-        $query = $this;
-        $query = $query->where('user_id', '=', Auth::user()->id);
-        $query = $query->where('name', 'like', '%' . $text . '%')->get();   
-
-        return $query;
-    }
-
-    public function star($id)
-    {
-        $wikiStarred = DB::table('user_star')
-                           ->where('entity_id', '=', $id)
-                           ->where('user_id', '=', Auth::user()->id)
-                           ->where('entity_type', '=', 'wiki')
-                           ->first();
-
-        if(is_null($wikiStarred)) {
-            DB::table('user_star')->insert([
-                'entity_id'     => $id,
-                'entity_type'   => 'wiki',
-                'user_id'       => Auth::user()->id,
-                'created_at'    => Carbon::now(),
-                'updated_at'    => Carbon::now(),
-            ]);
-            return true;
-        }
-
-        DB::table('user_star')
-            ->where('entity_id', '=', $id)
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'wiki')
-            ->delete();
-        return false;
-    }
-
-    public function watch($id)
-    {
-        $wikiWacthed = DB::table('user_watch')
-                           ->where('entity_id', '=', $id)
-                           ->where('user_id', '=', Auth::user()->id)
-                           ->where('entity_type', '=', 'wiki')
-                           ->first();
-
-        if(is_null($wikiWacthed)) {
-            DB::table('user_watch')->insert([
-                'entity_id'     => $id,
-                'entity_type'   => 'wiki',
-                'user_id'       => Auth::user()->id,
-                'created_at'    => Carbon::now(),
-                'updated_at'    => Carbon::now(),
-            ]);
-            return true;
-        }
-        DB::table('user_watch')
-            ->where('entity_id', '=', $id)
-            ->where('user_id', '=', Auth::user()->id)
-            ->where('entity_type', '=', 'wiki')
-            ->delete();
-        return false;
     }
 }
