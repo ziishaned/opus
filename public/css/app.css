@@ -8,13 +8,13 @@
 }
 
 .comment-list .comment-item {
-    padding: 15px 0px;
+    padding: 15px 0;
     border-bottom: 1px solid #eee;
 }
 
 .comment-list .comment-item:last-child {
     border-bottom: none;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .comment-list .comment-item:first-child {
@@ -59,15 +59,14 @@ form legend {
 }
 
 .dropdown.open .wiki-setting-btn, .cus-nav>li.dropdown.open>a {
-    background-image: none;
     outline: 0;
     -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
     box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
     border: 1px solid #adadad;
-    background-color: #e6e6e6;
+    background: #e6e6e6 none;
     margin: -1px;
-    border-bottom: 0px;
-    border-radius: 4px 4px 0px 0px; 
+    border-bottom-width: 0;
+    border-radius: 4px 4px 0 0;
 }
 
 .wiki-setting-btn {
@@ -115,12 +114,12 @@ form legend {
 }*/
 
 ul.list-bordered li:last-child {
-    border-bottom: 0px;
+    border-bottom: 0;
 }
 
 ul.list-bordered li {
     border-bottom: 1px solid #ddd;
-    padding: 12px 0px;
+    padding: 12px 0;
 }
 
 .activity-time, .activity-content {
@@ -160,7 +159,7 @@ a:focus {
 }
 
 .nav-tabs {
-    border-bottom: 0px;
+    border-bottom: 0;
 }
 
 #category-outline {
@@ -173,8 +172,8 @@ a:focus {
 }
 
 .headin-no-margin {
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .ml5 {
@@ -214,7 +213,7 @@ a:focus {
 }
 
 .plr15 {
-    padding: 0px 15px;
+    padding: 0 15px;
 }
 
 .m10, .mb10 {
@@ -239,9 +238,9 @@ a:focus {
 }
 
 html, body {
-    margin: 0px;
+    margin: 0;
     height: 100%;
-    font-family: 'Roboto', 'segoe ui';
+    font-family: 'Roboto', 'segoe ui', sans-serif;
     /*background-color: #f1f6f8;*/
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
 }
@@ -306,7 +305,7 @@ html, body {
 }
 
 .header-menu .navbar-right {
-    margin-right: 0px !important;
+    margin-right: 0 !important;
 }
 
 .header-menu {
@@ -320,8 +319,7 @@ html, body {
 }
 
 .create-organization .create-organization-head {
-    margin: 0px;
-    margin-bottom: 20px;
+    margin: 0 0 20px;
 }
 
 .create-organization .create-organization-body ul>li>a.step-completed h4, .create-organization .create-organization-body ul>li>a.step-completed p {
@@ -392,7 +390,7 @@ a:hover {
 
 .header-menu .nav-btn {
     padding: 5px 12px;
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 
 @media(max-width: 1200px){
@@ -425,13 +423,13 @@ a:hover {
     }
 
     .invitations-input-con li {
-        padding: 10px 0px; 
+        padding: 10px 0;
         border-top: 1px solid #ccc;
     }
 
     .invitations-input-con li:first-child {
-        padding-top: 0px;
-        border-top: 0px;
+        padding-top: 0;
+        border-top: 0;
     }
 
     .invitations-input-con li:last-child {
@@ -507,7 +505,7 @@ button {
 }
 
 p, input, select, div, h1, h2, h3, h4, h5, h6, .media-foot a {
-    font-family: 'Roboto', 'segoe ui', 'Open Sans', 'source sans pro';
+    font-family: 'Roboto', 'segoe ui', 'Open Sans', 'source sans pro', sans-serif;
     color: #424242;
 }
 
@@ -553,7 +551,7 @@ h6 {
 .syntaxhighlighter { 
     overflow-y: hidden !important; 
     overflow-x: auto !important; 
-    margin: 0px 5px !important;
+    margin: 0 5px !important;
 }
 
 .syntaxhighlighter::-webkit-scrollbar {
@@ -659,7 +657,7 @@ h6 {
 }
 
 .mce-tooltip {
-    font-family: 'segoe ui' !important;
+    font-family: 'segoe ui', sans-serif !important;
 }
 
 .mce-menu-item-normal.mce-active {
@@ -667,6 +665,6 @@ h6 {
 }
 
 text tspan {
-    font-family: "segoe ui" !important;
+    font-family: "segoe ui", sans-serif !important;
     font-size: 14px !important;
 }
