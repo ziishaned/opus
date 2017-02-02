@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\WikiPage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Comment
@@ -16,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+
+    use RecordsActivity, SoftDeletes;
+
     /**
      * @var string
      */
@@ -31,6 +35,8 @@ class Comment extends Model
         'updated_at',
         'created_at',
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * @const array COMMENT_RULES
@@ -70,29 +76,6 @@ class Comment extends Model
     }
 
     /**
-     * Like a comment.
-     *
-     * @param integer  $id
-     * @return bool
-     */
-    public function starComment($id)
-    {
-        $commentStarred = DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->first();
-        if(is_null($commentStarred)) {
-            DB::table('user_star')->insert([
-                'entity_id'     => $id,
-                'entity_type'   => 'comment',
-                'user_id'       => Auth::user()->id,
-                'created_at'    => Carbon::now(),
-                'updated_at'    => Carbon::now(),
-            ]);
-            return true;
-        }
-        DB::table('user_star')->where('entity_id', '=', $id)->where('user_id', '=', Auth::user()->id)->delete();
-        return false;
-    }
-
-    /**
      * Create a new comment.
      *
      * @param string  $pageSlug
@@ -112,11 +95,8 @@ class Comment extends Model
     }
 
     public function deleteComment($id) {
-        $query = $this->where('id', '=', $id)->delete();
-
-        if(!$query) {
-            return false;
-        }
+        $this->find($id)->delete();
+        
         return true;
     }
 

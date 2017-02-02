@@ -6,10 +6,11 @@ use Auth;
 use Emojione;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use Sluggable, RecordsActivity;
+    use Sluggable, RecordsActivity, SoftDeletes;
 
     public function sluggable()
     {
@@ -37,6 +38,8 @@ class Category extends Model
     	'created_at',
     	'updated_at',
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function user()
     {

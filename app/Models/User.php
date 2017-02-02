@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Auth;
 use Hash;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Models\Timezone;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
@@ -18,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable, Sluggable;
+    use Notifiable, Sluggable, SoftDeletes;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -45,6 +45,8 @@ class User extends Authenticatable
         'email', 
         'password'
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * @var array
@@ -96,46 +98,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all the wikis that are starred by a user.
-     *
-     * @return mixed
-     */
-    public function starWikis()
-    {
-        return $this->belongsToMany(Wiki::class, 'user_star', 'user_id', 'entity_id')->where('entity_type', '=', 'wiki');
-    }
-
-    /**
-     * Get all the pages that are starred by a user.
-     *
-     * @return mixed
-     */
-    public function starPages()
-    {
-        return $this->belongsToMany(Wiki::class, 'user_star', 'user_id', 'entity_id')->where('entity_type', '=', 'page');
-    }
-
-    /**
-     * Get all the wikis that are watched by a user.
-     *
-     * @return mixed
-     */
-    public function watchWikis()
-    {
-        return $this->belongsToMany(Wiki::class, 'user_watch', 'user_id', 'entity_id')->where('entity_type', '=', 'wiki');
-    }
-
-    /**
-     * Get all the pages that are watched by a user.
-     *
-     * @return mixed
-     */
-    public function watchPages()
-    {
-        return $this->belongsToMany(Wiki::class, 'user_watch', 'user_id', 'entity_id')->where('entity_type', '=', 'page');
-    }
-
-    /**
      * A user can has many wikis.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -174,7 +136,7 @@ class User extends Authenticatable
      */
     public function getUser($userSlug)
     {
-        $user = $this->where('slug', '=', $userSlug)->with(['timezone', 'organization', 'organizations', 'starWikis', 'watchWikis', 'wikis'])->first();
+        $user = $this->where('slug', '=', $userSlug)->with(['timezone', 'organization', 'organizations', 'wikis'])->first();
         
         if($user) {
             return $user;
@@ -185,7 +147,8 @@ class User extends Authenticatable
     /**
      * Get a specific resource.
      *
-     * @param  string $userSlug
+     * @param $user
+     *
      * @return mixed
      */
     public function getOrganizations($user)
@@ -197,7 +160,8 @@ class User extends Authenticatable
     /**
      * Get all the wikis of a user.
      *
-     * @param  string $userSlug
+     * @param $user
+     *
      * @return \App\Models\User
      */
     public function getWikis($user)
@@ -215,7 +179,7 @@ class User extends Authenticatable
             'email'         =>  $data['email'],
         ]);
 
-        \App\Models\Timezone::updateOrCreate(['user_id' => Auth::user()->id], [
+        Timezone::updateOrCreate(['user_id' => Auth::user()->id], [
             'user_id' => Auth::user()->id,
             'timezone' => $data['timezone'],
         ]);

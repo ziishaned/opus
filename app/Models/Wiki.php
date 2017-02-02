@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Wiki
@@ -16,7 +17,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
  */
 class Wiki extends Model
 {
-    use Sluggable, RecordsActivity;
+    use Sluggable, RecordsActivity, SoftDeletes;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -52,6 +53,8 @@ class Wiki extends Model
         'updated_at',
         'created_at',
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * @const array

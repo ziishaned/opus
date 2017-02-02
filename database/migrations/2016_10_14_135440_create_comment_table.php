@@ -18,8 +18,7 @@ class CreateCommentTable extends Migration
             $table->integer('page_id')->unsigned();
             $table->longText('content');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

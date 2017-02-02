@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Wiki;
 use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class WikiPage
@@ -17,7 +18,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
  */
 class WikiPage extends Node
 {
-    use Sluggable, RecordsActivity;
+    use Sluggable, RecordsActivity, SoftDeletes;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -59,6 +60,8 @@ class WikiPage extends Node
         'rgt',
         'depth',
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * @return mixed

@@ -20,6 +20,7 @@ class CreateCategoryTable extends Migration
             $table->mediumText('outline');
             $table->integer('user_id')->unsigned();
             $table->integer('organization_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -30,9 +30,9 @@ class OrganizationController extends Controller
 
     private $category;
 
-    public function __construct(Request $request, 
-                                Organization $organization, 
-                                User $user, 
+    public function __construct(Request $request,
+                                Organization $organization,
+                                User $user,
                                 Category $category)
     {
         $this->user         = $user;
@@ -54,7 +54,8 @@ class OrganizationController extends Controller
     /**
      * Get mem
      *
-     * @param $organizationSlug
+     *
+     * @param \App\Models\Organization $organization
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -216,7 +217,7 @@ class OrganizationController extends Controller
         return $this->request->header('content-type') == 'application/json'; 
     }
 
-    public function getCategories(Organization $organization) 
+    public function getCategories(Organization $organization)
     {        
         if($this->isContentTypeJson()) {
             $wikis = [];
@@ -241,7 +242,7 @@ class OrganizationController extends Controller
         return view('organization.category', compact('organization', 'categories'));
     }
 
-    public function getUserContributedWikis($organizationSlug) 
+    public function getUserContributedWikis($organizationSlug)
     {
         $organization = $this->organization->getOrganization($organizationSlug);
         return view('organization.wikis.user-contributions', compact('organization'));
@@ -297,7 +298,7 @@ class OrganizationController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function signin($step) 
+    public function signin($step)
     {
         return view('organization.signin.'.$step, compact('step'));
     }
@@ -424,17 +425,17 @@ class OrganizationController extends Controller
         return redirect()->action('OrganizationController@signin', ['step' => $step+1]);
     }
 
-    public function getActivity(Organization $organization) 
+    public function getActivity(Organization $organization)
     {     
         return view('organization.activity', compact('organization'));        
     }
 
-    public function getUserActivity(Organization $organization) 
+    public function getUserActivity(Organization $organization)
     {
         return view('organization.user-activity', compact('organization'));   
     }
 
-    public function inviteUsers(Organization $organization) 
+    public function inviteUsers(Organization $organization)
     {
         return view('organization.users.invite', compact('organization'));
     }

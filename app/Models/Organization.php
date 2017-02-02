@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Organization
@@ -16,7 +17,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
  */
 class Organization extends Model
 {
-    use Sluggable;
+    use Sluggable, SoftDeletes;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -53,6 +54,8 @@ class Organization extends Model
         'updated_at',
         'created_at',
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function categories()
     {
@@ -126,7 +129,6 @@ class Organization extends Model
     /**
      * Create an organization.
      *
-     * @param  string $organizationName
      * @return mixed
      */
     public function postOrganization($data)
