@@ -321,8 +321,9 @@ class OrganizationController extends Controller
                 ];
                 break;
             case 2:
+                dd($organization = $this->organization->where('name', 'like', '%'.Session::get('organization_name').'%')->first()->toArray());
                 $rules = [
-                    'email'    => 'required|organization_has_email|email',
+                    'email'    => 'required|organization_has_email:'.$organization->id.'|email',
                     'password' => 'required|confirmed',
                 ];
                 break;
