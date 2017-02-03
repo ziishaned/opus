@@ -5,11 +5,11 @@
 		<div class="container">
 			<div class="row">
 			    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-					<div class="col3 affix-top" data-spy="affix" data-offset-top="10">
+					<div data-spy="affix" data-offset-top="10">
 						@if(empty($user->profile_image))
-						    <img src="/images/default.png" class="img-rounded" width="195" height="195" alt="Image">
+						    <img src="/images/default.png" class="img-rounded" width="194" height="194" alt="Image">
 						@else
-						    <img src="/images/profile-pics/{{ $user->profile_image }}" class="img-rounded" width="195" height="195" alt="Image">
+						    <img src="/images/profile-pics/{{ $user->profile_image }}" class="img-rounded" width="194" height="194" alt="Image">
 						@endif
 						@if($user->first_name || $user->last_name)
 						    <h3 title="{{ $user->first_name . ' ' . $user->last_name  }}">{{ $user->first_name . ' ' . $user->last_name  }}</h3>
@@ -20,14 +20,16 @@
 					</div>
 				</div>
 			    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-					<div class="activity-head affix-top collg5" data-spy="affix" data-offset-top="10">
-                        <h2 class="mt0">All Updates</h2>
-                        <hr class="m0">
+					<div style="min-height: 47px;">
+						<div class="activity-head" data-spy="affix" data-offset-top="10" style="background-color: #ffffff; z-index: 10; width: 457.5px;">
+	                        <h2 class="mt0">All Updates</h2>
+	                        <hr class="m0">
+	                    </div>
                     </div>
 					@include('layouts.partials.activity')
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">	
-					<div class="col4 affix-top" data-spy="affix" data-offset-top="10">
+					<div data-spy="affix" data-offset-top="10" style="width: 360px;">
 						<div class="panel panel-default">
 	                        <div class="panel-heading"><i class="fa fa-star-o"></i> Favourite wikis</div>
 	                        <div class="panel-body">

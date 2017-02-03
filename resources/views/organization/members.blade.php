@@ -28,47 +28,38 @@
                             </form>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            @if($organizationMembers->count() > 0)
-                                <ul class="list-unstyled list-inline mb0">
-                                    @foreach($organizationMembers as $member)
-                                        <li>
-                                            <div class="media">
-                                                <a class="pull-left" href="#">
-                                                    @if(empty($member->profile_image))
-                                                        <img src="/images/default.png" width="64" height="64" alt="Image" class="media-object img-rounded">
-                                                    @else
-                                                        <img src="/images/profile-pics/{{ $member->profile_image }}" width="64" height="64" alt="Image" class="media-object img-rounded">
-                                                    @endif
-                                                </a>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading mb10">
-                                                        {{ $member->first_name .' '. $member->last_name }} 
-                                                        @if($member->user_role == 'admin')
-                                                            <span class="label label-primary" style="padding: 2px 8px; -webkit-text-stroke: 0px; position: relative; top: -2px; left: 8px;">Owner</span>
-                                                        @else
-                                                            <span class="label label-primary" style="padding: 2px 8px; -webkit-text-stroke: 0px; position: relative; top: -2px; left: 8px;">Member</span>
-                                                        @endif
-                                                    </h4>
-                                                    <p class="marginless">
-                                                        <a href="mailto:{{ $member->email  }}"><i class="fa fa-envelope-o fa-fw"></i> {{ $member->email  }}</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                                        {{ $organizationMembers->links() }}
+                    @if($organizationMembers->count() > 0)
+                        <div class="row">
+                            @foreach($organizationMembers as $member)
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="media">
+                                        <a class="pull-left" href="#">
+                                            @if(empty($member->profile_image))
+                                                <img src="/images/default.png" width="64" height="64" alt="Image" class="media-object img-rounded">
+                                            @else
+                                                <img src="/images/profile-pics/{{ $member->profile_image }}" width="64" height="64" alt="Image" class="media-object img-rounded">
+                                            @endif
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading mb10">
+                                                {{ $member->first_name .' '. $member->last_name }}
+                                                @if($member->user_role == 'admin')
+                                                    <span class="label label-primary no-stroke ml10">Admin</span>
+                                                @else
+                                                    <span class="label label-primary" style="position: relative; top: -2px; left: 8px;">Member</span>
+                                                @endif
+                                            </h4>
+                                            <p class="marginless">
+                                                <a href="mailto:{{ $member->email  }}"><i class="fa fa-envelope-o fa-fw"></i> {{ $member->email  }}</a>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            @else
-                                <p class="text-center" style="position: absolute; top: 50%; left: 50%; margin-left: -120px; margin-top: 50px;">No members yet. You can <a href="{{ route('invite.users', [$organization->slug, ]) }}">invite one here</a>.</p>
-                            @endif
+                            @endforeach
                         </div>
-                    </div>
+                    @else
+                        <p class="text-center" style="position: absolute; top: 50%; left: 50%; margin-left: -120px; margin-top: 50px;">No members yet. You can <a href="{{ route('invite.users', [$organization->slug, ]) }}">invite one here</a>.</p>
+                    @endif
                 </div>
             </div>
         </div>

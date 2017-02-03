@@ -68,7 +68,14 @@ class User extends Authenticatable
      */
     public function activity()
     {
-        return $this->hasMany(Activity::class, 'user_id', 'id');
+        return $this->hasMany(Activity::class, 'user_id', 'id')->with(['subject' => function($query) {
+            $query->withTrashed();
+        }])->latest();
+    }
+
+    public function subject()
+    {
+        return $this->morphTo();
     }
 
     /**
@@ -251,5 +258,10 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function getActivty($id)
+    {
+        return $this->find($id)->with('activity')->first();
     }
 }

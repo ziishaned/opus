@@ -65,7 +65,9 @@ class UserController extends Controller
      */
     public function show(Organization $organization, User $user)
     {   
-        return view('user.user', compact('user', 'organization'));
+        $activities = $this->user->getActivty($user->id)->activity;
+
+        return view('user.user', compact('user', 'organization', 'activities'));
     }
 
     /**

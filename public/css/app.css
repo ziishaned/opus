@@ -7,6 +7,34 @@
   }
 }
 
+.readlist-item-unread {
+    font-weight: 600;
+    -webkit-text-stroke: 0px !important;
+}
+
+.readlist-item-time {
+    font-size: 13px;
+}
+
+.tabs-vertical ul li a {
+    padding: 0 15px;
+    display: block;
+    padding: 6px 8px;
+    color: #777;
+}
+
+.tabs-vertical ul li a:hover {
+    margin: -1px;
+    border: 1px solid #adadad;
+    background-color: #e6e6e6;
+    color: #333;
+    border-radius: 3px;
+}
+
+.tabs-vertical ul li {
+    margin-bottom: 5px;
+}
+
 .comment-list .comment-item {
     padding: 15px 0;
     border-bottom: 1px solid #eee;
