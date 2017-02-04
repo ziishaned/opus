@@ -12,14 +12,14 @@
 								<p>A centralized place for your company to document who you are, what you do, and how to achieve results.</p>
 								<ul class="list-unstyled list-inline">
 									<li>
-										<a href="{{ route('organizations.join', [1]) }}" class="btn btn-primary">Join an existing organization</a>
+										<a href="{{ route('organizations.join') }}" class="btn btn-primary">Join an existing organization</a>
 									</li>
 									<li>
-										<a href="{{ route('organizations.create', [1]) }}" class="btn btn-default">Create a organization</a>
+										<a href="{{ route('organizations.create') }}" class="btn btn-default">Create a organization</a>
 									</li>
 								</ul>
 							</div>
-							<p>Already joined a organization? <a href="{{ route('organizations.signin', [1]) }}">sign in</a></p>
+							<p>Already joined a organization? <a href="{{ route('organizations.login') }}">Login</a></p>
 						</section>		
 					</div>
 				</div>

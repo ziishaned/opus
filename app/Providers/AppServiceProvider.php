@@ -17,21 +17,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::resolver(function($translator, $data, $rules, $messages) {
-          return new HashValidator($translator, $data, $rules, $messages);
+        Validator::resolver(function ($translator, $data, $rules, $messages) {
+            return new HashValidator($translator, $data, $rules, $messages);
         });
-        Validator::extend('organization_has_email', function($attribute, $value, $parameters, $validator) {
-            dd($parameters);
-            $users = Organization::where('name', '=', Session::get('organization_name'))->with(['members'
-            ])->get()->pluck('user');
+        Validator::extend('organization_has_email', function ($attribute, $email, $id, $validator) {
+            $users = Organization::where('id', $id)
+                                 ->with([
+                                     'members' => function ($query) use ($email) {
+                                         $query->where('email', $email);
+                                     },
+                                 ])->first();
 
-            foreach ($users as $user) {
-                if($user->email == $value) {
-                    return false;
-                }
+            if ($users->members->count() > 0) {
+                return false;
             }
-            
-            return false;
+
+            return true;
         });
     }
 

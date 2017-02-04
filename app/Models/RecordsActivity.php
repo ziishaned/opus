@@ -23,7 +23,7 @@ trait RecordsActivity
             'subject_type'    => get_class($this),
             'name'            => $this->getActivityName($this, $event),
             'user_id'         => isset(Auth::user()->id) ? Auth::user()->id : $this->user_id,
-            'organization_id' => Auth::user()->organization->id,
+            'organization_id' => $this->organization_id
         ]);
     }
 

@@ -151,6 +151,7 @@ class OrganizationController extends Controller
                     'last_name'  => Session::get('last_name'),
                     'password'   => Session::get('password'),
                     'email'      => Session::get('email'),
+                    'active'     => '1',
                 ];
                 $user     = $this->user->createUser($userInfo);
 
@@ -303,13 +304,9 @@ class OrganizationController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function signin($step)
-    {
-        return view('organization.signin.' . $step, compact('step'));
-    }
-
     public function postJoin($step)
     {
+        $rules             = [];
         $validationMessage = [];
         switch ($step) {
             case 1:
@@ -321,9 +318,10 @@ class OrganizationController extends Controller
                 ];
                 break;
             case 2:
-                dd($organization = $this->organization->where('name', 'like', '%'.Session::get('organization_name').'%')->first()->toArray());
+                $organization = $this->organization->where('name', 'like', '%' . Session::get('organization_name') . '%')->first();
+
                 $rules = [
-                    'email'    => 'required|organization_has_email:'.$organization->id.'|email',
+                    'email'    => 'required|organization_has_email:' . $organization->id . '|email',
                     'password' => 'required|confirmed',
                 ];
                 break;
@@ -345,86 +343,21 @@ class OrganizationController extends Controller
 
         if ($step == 2) {
             $userInfo = [
-                'email'        => $this->request->get('email'),
-                'password'     => $this->request->get('password'),
-                'organization' => Session::get('organization_name'),
+                'first_name' => $this->request->get('first_name'),
+                'last_name'  => $this->request->get('last_name'),
+                'password'   => $this->request->get('password'),
+                'email'      => $this->request->get('email'),
+                'active'     => '0',
             ];
+            $this->user->createUser($userInfo);
 
-            dd('');
-
-            return redirect()->back()->with([
-                'alert'      => 'Email or password is not valid.',
-                'alert_type' => 'danger',
+            return redirect()->route('home')->with([
+                'alert'      => 'A request is sent to admins for joining this '. Session::get('organization_name')  . ' organization. You will be notified on your email.',
+                'alert_type' => 'success',
             ]);
         }
 
         return redirect()->action('OrganizationController@join', ['step' => $step + 1]);
-    }
-
-    /**
-     * Creates a new organization.
-     *
-     * @return mixed
-     */
-    public function postSignin($step)
-    {
-        $validationMessage = [];
-        switch ($step) {
-            case 1:
-                $rules             = [
-                    'organization_name' => 'required|exists:organization,name',
-                ];
-                $validationMessage = [
-                    'exists' => 'Specified organization does\'t exists.',
-                ];
-                break;
-            case 2:
-                $rules = [
-                    'email'    => 'required|email',
-                    'password' => 'required',
-                ];
-                break;
-            default:
-                abort(404);
-        }
-
-        $this->validate($this->request, $rules, $validationMessage);
-
-        switch ($step) {
-            case 1:
-                Session::put('organization_name', $this->request->get('organization_name'));
-                break;
-            case 2:
-                break;
-            default:
-                abort(404);
-        }
-
-        if ($step == 2) {
-            $userInfo = [
-                'email'        => $this->request->get('email'),
-                'password'     => $this->request->get('password'),
-                'organization' => Session::get('organization_name'),
-            ];
-
-            $user = $this->user->validate($userInfo);
-
-            if ($user) {
-                Auth::login($user, $this->request->get('remember'));
-
-                setcookie('organization_slug', $user->organization->slug, time() + (86400 * 30), "/");
-
-                return redirect()->route('dashboard', [$user->organization->slug,]);
-            }
-
-
-            return redirect()->back()->with([
-                'alert'      => 'Email or password is not valid.',
-                'alert_type' => 'danger',
-            ]);
-        }
-
-        return redirect()->action('OrganizationController@signin', ['step' => $step + 1]);
     }
 
     public function getActivity(Organization $organization)

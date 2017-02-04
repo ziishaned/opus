@@ -43,6 +43,7 @@ class User extends Authenticatable
         'profile_image',
         'email',
         'password',
+        'active',
     ];
 
     protected $dates = ['deleted_at'];
@@ -134,16 +135,6 @@ class User extends Authenticatable
     }
 
     /**
-     * DESC
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getUsers()
-    {
-        return $this->paginate(10);
-    }
-
-    /**
      * Get all resources.
      *
      * @param $userSlug
@@ -206,21 +197,6 @@ class User extends Authenticatable
         return true;
     }
 
-    /**
-     * Filter the users.
-     *
-     * @param  string $text
-     *
-     * @return mixed
-     */
-    public function filter($text)
-    {
-        return User::where(function ($query) use ($text) {
-            $query->where('name', 'like', '%' . $text . '%')
-                  ->orWhere('email', 'like', '%' . $text . '%');
-        })->where('id', '!=', Auth::user()->id)->get();
-    }
-
     public function updatePassword($slug, $data)
     {
         $this->where('slug', '=', $slug)->update([
@@ -237,6 +213,7 @@ class User extends Authenticatable
             'last_name'  => $data['last_name'],
             'password'   => Hash::make($data['password']),
             'email'      => $data['email'],
+            'active'     => $data['active'],
         ]);
 
         return $user;

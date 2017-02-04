@@ -59,7 +59,7 @@ class Organization extends Model
 
     public function categories()
     {
-        $this->hasMany(Category::class, 'organization_id', 'id');
+        return $this->hasMany(Category::class, 'organization_id', 'id');
     }
 
     public function activity()
@@ -311,6 +311,6 @@ class Organization extends Model
 
     public function getActivty($id)
     {
-        return $this->find($id)->with('activity')->first();
+        return $this->where('id', $id)->with('activity')->first();
     }
 }

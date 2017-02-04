@@ -45,17 +45,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return $this->user->getUsers();
-    }
-
-
-    /**
      * Display the specified resource.
      *
      * @param         $organizationSlug
@@ -68,17 +57,6 @@ class UserController extends Controller
         $activities = $this->user->getActivty($user->id)->activity;
 
         return view('user.user', compact('user', 'organization', 'activities'));
-    }
-
-    /**
-     * Filter Users.
-     *
-     * @param $text
-     * @return mixed
-     */
-    public function filterUser($text)
-    {
-        return $this->user->filter($text);
     }
 
     public function storeAvatar() {
@@ -100,7 +78,8 @@ class UserController extends Controller
         ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
     }
 
-    public function cropAvatar() {
+    public function cropAvatar() 
+    {
         $img = Image::make(public_path('/images/profile-pics/' . $this->request->get('image')));
         $img->crop((int) $this->request->get('w'), (int) $this->request->get('h'), (int) $this->request->get('x'), (int) $this->request->get('y'));
         $img->save();
@@ -108,48 +87,6 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Profile picture successfully cropped.'
         ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
-    } 
-
-    /**
-     * Return organizations view with user organizations.
-     *
-     * @param $userSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getOrganizationsView($userSlug)
-    {
-        $user               = $this->user->getUser($userSlug);
-        $userOrganizations  = $this->user->getOrganizations($user);
-        return view('user.organizations', compact('user', 'userOrganizations'));
-    }
-
-    public function getOrganizations() 
-    {
-        $userId        =  Auth::user()->id;
-        $user          =  $this->user->find($userId)->with(['organizations'])->first();
-        $organizations =  [];
-
-        foreach ($user->organizations as $key => $organization) {
-            $organizations[] = [
-                'url'  => route('organizations.show', [$organization->slug]),
-                'name' => $organization->name
-            ];
-        }
-
-        return $organizations;
-    }
-
-    /**
-     * Get all the wikis of a specific user and return them on user wikis view.
-     *
-     * @param $userSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function wikis($userSlug)
-    {
-        $user       = $this->user->getUser($userSlug);
-        $userWikis  = $this->user->getWikis($user);
-        return view('user.wikis', compact('user', 'userWikis'));
     }
 
     public function profileSettings(Organization $organization)
@@ -216,4 +153,118 @@ class UserController extends Controller
     {
         return view('user.readlist', compact('organization'));
     }
+
+    public function login()
+    {
+        return view('auth.login');
+    }
+
+    public function setOrganization()
+    {
+        $organizations = Auth::user()->organizations;
+
+        return view('organization.select', compact('organizations'));
+    }
+
+    public function postSetOrganization()
+    {
+        return redirect()->route('dashboard', [
+            $this->request->get('organization'),
+        ]);
+    }
+
+    /**
+     * Creates a new organization.
+     *
+     * @return mixed
+     */
+    public function postLogin()
+    {
+        $this->validate($this->request, [
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $data = [
+            'email' => $this->request->get('email'), 
+            'password'=> $this->request->get('password')
+        ];
+
+        if(Auth::validate($data)) {
+            Auth::attempt($data, $this->request->get('remember'));
+
+            return redirect()->route('organizations.set');
+        } 
+
+        return redirect()->back()->with([
+            'alert'      => 'Email or password is not valid.',
+            'alert_type' => 'danger',
+        ]);
+
+//         if ($user) {
+//             Auth::login($user, $this->request->get('remember'));
+
+//         }
+//         $validationMessage = [];
+//         switch ($step) {
+//             case 1:
+//                 $rules             = [
+//                     'organization_name' => 'required|exists:organization,name',
+//                 ];
+//                 $validationMessage = [
+//                     'exists' => 'Specified organization does\'t exists.',
+//                 ];
+//                 break;
+//             case 2:
+//                 $rules = [
+//                     'email'    => 'required|email',
+//                     'password' => 'required',
+//                 ];
+//                 break;
+//             default:
+//                 abort(404);
+//         }
+
+//         $this->validate($this->request, $rules, $validationMessage);
+
+//         switch ($step) {
+//             case 1:
+//                 Session::put('organization_name', $this->request->get('organization_name'));
+//                 break;
+//             case 2:
+//                 break;
+//             default:
+//                 abort(404);
+//         }
+
+//         if ($step == 2) {
+//             dd('Wait');
+//             $email    = $this->request->get('email');
+//             $password  = $this->request->get('password');
+// //            $this->organization->
+
+//             $user = $this->user->validate($userInfo);
+//             dd($user->toArray());
+//             if ($user) {
+//                 Auth::login($user, $this->request->get('remember'));
+
+//                 return redirect()->route('dashboard', [$user->organization->slug,]);
+//             }
+
+
+//             return redirect()->back()->with([
+//                 'alert'      => 'Email or password is not valid.',
+//                 'alert_type' => 'danger',
+//             ]);
+//         }
+
+//         return redirect()->action('OrganizationController@login', ['step' => $step + 1]);
+    }
+
+    public function getOrganizations()
+    {
+        return response()->json([
+            'organizations' => $this->user->where('email', $this->request->get('email'))->with('organizations')->first()->organizations,
+        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+    }    
 }

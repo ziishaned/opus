@@ -21,6 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('profile_image');
             $table->string('email');
             $table->string('password');
+            $table->enum('active', [
+                0,
+                1
+            ])->default(0);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
