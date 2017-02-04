@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row" style="margin-top: 80px;">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-lg-offset-4">
-                    <h1 class="text-center mb15">Select a organization</h1>
+                    <h1 class="text-center" style="margin-bottom: 20px;">Select a organization</h1>
                     <form action="{{ route('organizations.set.post') }}" method="POST" role="form">
                         <div class="form-group">
                             <select name="organization" class="form-control" required="required">
@@ -14,7 +14,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary pull-right">Select</button>
+                        <button type="submit" class="btn btn-primary">Select</button>
                     </form>
                 </div>
             </div>

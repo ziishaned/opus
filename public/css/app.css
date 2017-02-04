@@ -258,7 +258,7 @@ html, body {
     height: 100%;
     font-family: 'Roboto', 'segoe ui', sans-serif;
     /*background-color: #f1f6f8;*/
-    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+    /*-webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);*/
 }
 
 .category-item:hover .category-item-inner {
@@ -363,10 +363,6 @@ a:hover {
     margin: 0;
 }
 
-.fullheight {
-    min-height: 74vh;
-}
-
 .vertical-center {
     display: flex;
     align-items: center;
@@ -454,12 +450,6 @@ a:hover {
     }
 }
 
-.emojionearea.focused {
-    border-color: #66afe9 !important;
-    outline: 0 !important;
-    box-shadow: none !important;
-}
-
 input, select, .input {
     border-radius: 2px !important;
 }
@@ -516,7 +506,7 @@ button {
 }
 
 p, input, select, div, h1, h2, h3, h4, h5, h6, .media-foot a {
-    font-family: 'Roboto', 'segoe ui', 'Open Sans', 'source sans pro', sans-serif;
+    font-family: 'Roboto', 'Segoe UI', 'Open Sans', 'source sans pro', sans-serif;
     color: #424242;
 }
 
@@ -545,20 +535,6 @@ h6 {
     font-weight: 400;
 }
 
-.emojionearea-editor {
-    border-radius: 3px !important;
-    min-height: 78px !important;
-}
-
-.emojionearea h1{
-    font-family: "Roboto", "segoe ui" !important;
-    -webkit-text-stroke: 0px;
-}
-
-.dropdown-menu.textcomplete-dropdown[data-strategy=emojionearea] {
-    z-index: 10000 !important;
-}
-
 .syntaxhighlighter { 
     overflow-y: hidden !important; 
     overflow-x: auto !important; 
@@ -581,10 +557,6 @@ h6 {
 .syntaxhighlighter::-webkit-scrollbar-thumb:active {
     background: rgba(0,0,0,0.61); / Some darker color when you click it */
     -webkit-border-radius: 100px;
-}
-
-.pagination {
-    margin: 0 !important;
 }
 
 .page-description pre, .page-description code {

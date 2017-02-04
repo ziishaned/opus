@@ -162,12 +162,15 @@ class UserController extends Controller
     public function setOrganization()
     {
         $organizations = Auth::user()->organizations;
+        Session::set('organization_set', false);
 
         return view('organization.select', compact('organizations'));
     }
 
     public function postSetOrganization()
     {
+        Session::set('organization_set', true);
+
         return redirect()->route('dashboard', [
             $this->request->get('organization'),
         ]);

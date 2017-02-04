@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "56100498e3a358f6b0c495cb8a0bebb0",
+    "content-hash": "64903c8c90144ad79f3660ecdb70b051",
     "packages": [
         {
             "name": "baum/baum",
@@ -329,50 +329,6 @@
                 "string"
             ],
             "time": "2015-11-06T14:35:42+00:00"
-        },
-        {
-            "name": "emojione/emojione",
-            "version": "v2.2.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Ranks/emojione.git",
-                "reference": "0aad7f9f7969f0187e4f50d12fdc113541a34ac3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Ranks/emojione/zipball/0aad7f9f7969f0187e4f50d12fdc113541a34ac3",
-                "reference": "0aad7f9f7969f0187e4f50d12fdc113541a34ac3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.6 || ~5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Emojione\\": "lib/php/src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "(CC-BY-4.0 and MIT)"
-            ],
-            "description": "Emoji One is a complete set of emojis designed for the web. It includes libraries to easily convert unicode characters to shortnames (:smile:) and shortnames to our custom emoji images. PNG and SVG formats provided for the emoji images.",
-            "homepage": "http://www.emojione.com",
-            "keywords": [
-                "Emoji One",
-                "emoji",
-                "emojione",
-                "emojis",
-                "emoticons",
-                "smileys",
-                "smilies",
-                "unicode"
-            ],
-            "time": "2016-12-03T01:19:25+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2407,6 +2363,50 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
+        },
+        {
+            "name": "emojione/emojione",
+            "version": "v2.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ranks/emojione.git",
+                "reference": "0aad7f9f7969f0187e4f50d12fdc113541a34ac3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ranks/emojione/zipball/0aad7f9f7969f0187e4f50d12fdc113541a34ac3",
+                "reference": "0aad7f9f7969f0187e4f50d12fdc113541a34ac3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.6 || ~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Emojione\\": "lib/php/src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(CC-BY-4.0 and MIT)"
+            ],
+            "description": "Emoji One is a complete set of emojis designed for the web. It includes libraries to easily convert unicode characters to shortnames (:smile:) and shortnames to our custom emoji images. PNG and SVG formats provided for the emoji images.",
+            "homepage": "http://www.emojione.com",
+            "keywords": [
+                "Emoji One",
+                "emoji",
+                "emojione",
+                "emojis",
+                "emoticons",
+                "smileys",
+                "smilies",
+                "unicode"
+            ],
+            "time": "2016-12-03T01:19:25+00:00"
         },
         {
             "name": "fzaninotto/faker",

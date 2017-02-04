@@ -5,11 +5,11 @@
         <div class="container">
             <div role="tabpanel">
                 <ul class="nav nav-tabs nav-tabs-center" role="tablist">
-                    <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/settings/profile') class="active" @endif role="presentation">
-                        <a href="{{ route('settings.profile', [$organization->slug, ]) }}">Profile</a>            
+                    <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'settings/profile') class="active" @endif role="presentation">
+                        <a href="{{ route('settings.profile') }}">Profile</a>
                     </li>
-                    <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/settings/account') class="active" @endif role="presentation">
-                        <a href="{{ route('settings.account', [$organization->slug, ]) }}">Account</a>
+                    <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'settings/account') class="active" @endif role="presentation">
+                        <a href="{{ route('settings.account') }}">Account</a>
                     </li>
                 </ul>
                 <div class="tab-content tab-bordered">

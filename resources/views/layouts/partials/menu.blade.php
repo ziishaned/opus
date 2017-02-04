@@ -8,7 +8,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                @if(Auth::user())
+                @if(Auth::user() && Session::get('organization_set') == true)
                     <li class="organization-name">
                         <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home"></i> {{ $organization->name }}</a>
                     </li>
@@ -33,7 +33,7 @@
                 @endif
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                @if(Auth::user())    
+                @if(Auth::user() && Session::get('organization_set') == true)
                     <li class="hidden-xs hidden-sm">
                         <form class="navbar-form" role="search">
                             <div class="form-group">
@@ -89,14 +89,21 @@
                         <a href="#">Pricing</a>
                     </li>
                     <li>
-                        <a href="#">Documentation</a>
+                        <a href="#">About</a>
                     </li>
-                    <li>
-                        <a href="#">Blog</a>
-                    </li>
-                    <li>
-                        <a href="#" class="btn btn-default nav-btn"><i class="fa fa-twitter fa-lg fa-fw"></i> Tweet</a>
-                    </li>
+                    @if(!Auth::user())
+                        <li>
+                            <a href="{{ route('organizations.login') }}" class="btn btn-default nav-btn">Login</a>
+                        </li>
+                    @else
+                        <li class="dropdown hidden-xs">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ route('settings.profile') }}"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-power-off fa-fw"></i> Logout </a></li>
+                            </ul>
+                        </li>
+                    @endif
                 @endif
             </ul>
         </div>
