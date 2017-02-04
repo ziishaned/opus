@@ -34,6 +34,12 @@ class User extends Authenticatable
         ];
     }
 
+    const LOGIN_RULES = [
+        'email'    => 'required|email',
+        'password' => 'required',
+        'organization' => 'required|exists:organization,name',
+    ];
+
     /**
      * @var array
      */
@@ -219,15 +225,19 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function validate($data)
+    public function getActivty($id)
+    {
+        return $this->find($id)->with('activity')->first();
+    }
+
+    public function validate($data) 
     {
         $user = $this
             ->join('organization', 'organization.user_id', '=', 'users.id')
             ->join('user_organization', 'user_organization.user_id', '=', 'users.id')
             ->where('organization.name', '=', $data['organization'])
             ->where('users.email', '=', $data['email'])
-            // ->where('users.password', '=', \Hash::make($this->request->get('password')))
-            ->select('users.*', 'organization.slug')
+            ->select('users.*', 'organization.slug as organization_slug')
             ->first();
 
         if ($user && Hash::check($data['password'], $user->password)) {
@@ -235,10 +245,5 @@ class User extends Authenticatable
         }
 
         return false;
-    }
-
-    public function getActivty($id)
-    {
-        return $this->find($id)->with('activity')->first();
     }
 }

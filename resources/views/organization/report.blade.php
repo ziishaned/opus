@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- <section>
-        <div>
+    <section>
+        {{-- <div>
             <div class="container">
                 <div class="subnav" >
                     <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
@@ -15,7 +15,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="container" style="margin-top: 20px;">
             <div class="row" style="margin-bottom: 20px;">
                 <div role="tabpanel">
@@ -59,5 +59,5 @@
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>
 @endsection

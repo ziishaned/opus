@@ -24,7 +24,7 @@
                             @endif
 
                             @if($activity->name == 'created_wiki')
-                                <span class="glyphicon glyphicon-book media-icon no-stroke"></span> <a href="#">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created a wiki <a href="">{{ $activity->subject['name'] }}</a>.
+                                <span class="glyphicon glyphicon-book media-icon"></span> <a href="#">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created a wiki <a href="">{{ $activity->subject['name'] }}</a>.
                             @endif
                             @if($activity->name == 'deleted_wiki')
                                 <i class="fa fa-trash-o fa-fw media-icon"></i> <a href="#">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted a wiki <a href="">{{ $activity->subject['name'] }}</a>.

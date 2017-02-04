@@ -13,11 +13,8 @@
     <link rel="stylesheet" href="/plugins/tinymce/editor.css">
     <link rel="stylesheet" href="/plugins/vakata-jstree/dist/themes/default/style.css" />
     <link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
-    <script>
-        var userSlug = "<?php if(Auth::user()) { echo Auth::user()->slug; } ?>";
-    </script>
 </head>
-<body @if(isset($organization)) data-organization="{{ $organization->slug }}" @endif @if(isset($wiki)) data-wiki="{{ $wiki->slug }}" @endif>
+<body>
     @include('layouts.partials.modals')
     <div style="min-height: 55px;">
         @include('layouts.partials.menu')

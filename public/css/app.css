@@ -7,6 +7,11 @@
   }
 }
 
+a {
+    color: #4078c0;
+    text-decoration: none;
+}
+
 .readlist-item-unread {
     font-weight: 600;
     -webkit-text-stroke: 0px !important;
@@ -631,8 +636,8 @@ h6 {
     margin-bottom: 8px;
 }
 
-.mce-floatpanel .mce-text, .mce-tooltip, .rte-autocomplete .active a, .btn, .no-stroke, .text-muted, button .mce-txt {
-    -webkit-text-stroke: 0px !important;
+.text-muted {
+    color: #767676 !important;
 }
 
 .rte-autocomplete::before, .rte-autocomplete::after {

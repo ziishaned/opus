@@ -189,7 +189,6 @@ $(document).ready(function() {
         selectPageParent     : $('#page-parent'),
         inviteUserInput      : $('#invite-people-input'),
         inviteToOrganization : $('#invite-to-organization-id'),
-        organizationSlug     : $('body').data('organization'),
     });
 
     if($('#timezone').length > 0) {
@@ -333,7 +332,7 @@ $(function() {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
             if(data.instance._cnt == 0) {
-                var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="/organizations/`+$('body').data('organization')+`/wikis/`+$('body').data('wiki')+`/pages/create">create one here</a>.</p>`;
+                var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="`+laroute.action('pages.create', { organization_slug: organizationSlug, wiki_slug: wikiSlug, page_id: node.id })+`">create one here</a>.</p>`;
                 $('#reorder-page-tree').replaceWith(html);
             };
         }).on('move_node.jstree', function(e, data) {
