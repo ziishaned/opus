@@ -1,16 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation" style="margin-bottom: 0;">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" style="border: none; background-color: #f8f8f8; cursor: pointer;">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" style="border: none; cursor: pointer; float: left; margin-left: 8px;">
                 <i class="fa fa-bars fa-lg"></i>
             </button>
-            @if(!Auth::user())
-                <a href="{{ route('dashboard', [$organization->slug])  }}" class="navbar-brand">Opus</a>
-            @endif
+            <a href="{{ url('/') }}" class="navbar-brand pull-right" style="margin-right: 8px;">Opus</a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav header-controls">
-                @if(Auth::user())
+            @if(Auth::user())
+                <ul class="nav navbar-nav header-controls">
                     <li>
                         <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home fa-fw"></i> {{ $organization->name }}</a>
                     </li>
@@ -20,20 +18,8 @@
                     <li>
                         <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members</a> 
                     </li>
-                    <li>
-                        <a href="{{ route('organizations.reports.index', [$organization->slug, ]) }}" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
-                    </li>
-                    {{-- @if(isset($wiki) && isset($category)) 
-                        <li>
-                            <a href="{{ route('pages.create', [$organization->slug, $category->slug, $wiki->slug]) }}" class="btn btn-default" style="padding: 6px 10px; position: relative; top: 7px; left: 12px;">Create page</a>
-                        </li>
-                    @endif --}}
-                @else 
-                    <li>
-                        <a href="{{ url('/') }}" class="navbar-brand">Opus</a>
-                    </li>
-                @endif
-            </ul>
+                </ul>
+            @endif
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::user())
                     <li>
