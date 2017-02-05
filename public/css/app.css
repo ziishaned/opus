@@ -18,7 +18,10 @@ a {
 
 .index-head {
     border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
+}
+
+.index-head h4 {
+    padding-bottom: 10px;
 }
 
 .index-body {

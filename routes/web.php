@@ -60,6 +60,7 @@ Route::group(['prefix' => 'organizations', 'middleware' => 'auth'], function () 
     Route::group(['prefix' => '{organization_slug}/wikis'], function () {
         Route::post('', 'WikiController@store')->name('wikis.store');
         Route::get('create', 'WikiController@create')->name('organizations.wikis.create');
+        Route::get('', 'WikiController@getWikis')->name('organizations.wikis');
     });
 
     Route::group(['prefix' => '{organization_slug}/categories/{category_slug}/wikis'], function () {

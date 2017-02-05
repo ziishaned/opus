@@ -14,8 +14,8 @@
                     <li>
                         <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home fa-fw"></i> {{ $organization->name }}</a>
                     </li>
-                    <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/categories') class="active" @endif>
-                        <a href="{{ route('organizations.categories', [$organization->slug, ]) }}">Categories</a>
+                    <li>
+                        <a href="{{ route('organizations.wikis', [$organization->slug, ]) }}">Wikis</a>
                     </li>
                     <li>
                         <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members</a> 

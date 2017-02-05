@@ -8,7 +8,7 @@
                     <div data-spy="affix" data-offset-top="10">
                         <div class="tabs-vertical" style="margin-bottom: 30px;">
                             <div class="index-head">
-                                <h4 class="marginless"><i class="fa fa-link fa-fw"></i> Quick links</h4>
+                                <h4 class=""><i class="fa fa-link fa-fw"></i> Quick links</h4>
                             </div>
                             <div class="index-body">
                                 <ul class="list-unstyled">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="tabs-vertical">
                             <div class="index-head">
-                                <h4 class="marginless"><i class="fa fa-star-o fa-fw"></i> Favourite wikis</h4>
+                                <h4 class=""><i class="fa fa-star-o fa-fw"></i> Favourite wikis</h4>
                             </div>
                             <div class="index-body">
                                 <p class="text-muted text-center">Fovourite list is empty...</p>
@@ -48,7 +48,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div style="min-height: 38px;">
                         <div class="index-head" data-spy="affix" data-offset-top="10" style="background-color: #ffffff; z-index: 10; width: 457.5px;">
-                            <h4 class="marginless"><i class="fa fa-feed fa-fw"></i> All updates</h4>
+                            <h4 class=""><i class="fa fa-feed fa-fw"></i> All updates</h4>
                         </div>
                     </div>
                     <div class="index-body">
@@ -59,7 +59,7 @@
                     <div data-spy="affix" data-offset-top="10">
                         <div class="tabs-vertical" style="margin-bottom: 30px;">
                             <div class="index-head">
-                                <h4 class="marginless"><i class="fa fa-clock-o fa-fw"></i> Recent wikis</h4>
+                                <h4 class=""><i class="fa fa-clock-o fa-fw"></i> Recent wikis</h4>
                             </div>
                             <div class="index-body">
                                 @if($wikis->count() > 0) 
@@ -86,7 +86,7 @@
                         </div>
                         {{-- <div class="tabs-vertical">
                             <div class="index-head">
-                                <h4 class="marginless"><i class="fa fa-eye fa-fw"></i> Read list</h4>
+                                <h4 class=""><i class="fa fa-eye fa-fw"></i> Read list</h4>
                             </div>
                             <div class="index-body">
                                 <p class="text-muted text-center">Your read list is epmty...</p>
