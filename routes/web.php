@@ -42,7 +42,6 @@ Route::group(['prefix' => 'organizations', 'middleware' => 'auth'], function () 
         Route::get('{category_slug}/wikis', 'CategoryConroller@getCategoryWikis')->name('categories.wikis');
     });
 
-    Route::get('{organization_slug}/reports', 'ReportConroller@index')->name('organizations.reports.index');
     Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
 
     Route::get('{organization_slug}/invite', 'OrganizationController@inviteUsers')->name('invite.users');

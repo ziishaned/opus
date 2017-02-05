@@ -78,25 +78,6 @@ var App = {
         $('#w').val(c.w);
         $('#h').val(c.h);
     },
-    getWikis: function(organizationId) {
-        $.ajax({
-            url: '/organizations/'+Cookies.get('organization_slug')+'/wikis',
-            type: 'GET',
-            dataType: 'json',
-            contentType: 'application/json',
-            success: function(data) {
-                var html = '';
-                $(data).each(function(index, el) {
-                    html += '<li><a href="'+el.url+'">'+el.name+'</a></li>'
-                });
-                $('.header-menu').find('#wikis-list .li-loader').replaceWith(html);
-            }, 
-            error: function(error) {
-                var response = JSON.parse(error.responseText);
-                console.log(response);
-            }
-        });
-    },
     bindUI: function () {
         var that = this;
         $('#update-category-modal').on('hidden.bs.modal', function (e) {
