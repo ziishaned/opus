@@ -12,8 +12,33 @@ a {
     text-decoration: none;
 }
 
-.activity-text a:hover, .organization-member-item .member-info a:hover {
+.wikis-table>tbody>tr>td {
+        padding: 10px 0px;
+}
+
+.wikis-table>tbody>tr:last-child {
+    border-bottom: 1px solid #ddd; 
+}
+
+.wikis-table>thead>tr>th {
+    font-weight: 400;
+    border-bottom-width: 1px;
+}
+
+.activity-text a:hover, .organization-member-item .member-info a:hover, .wikis-table a:hover {
     text-decoration: underline;
+}
+
+.wikis-table .wiki-category-list li {
+    margin-bottom: 5px;
+}
+
+.wikis-table .wiki-category-list li:last-child {
+    margin-bottom: 0;
+}
+
+.no-hoverable:hover {
+    text-decoration: none !important;
 }
 
 .index-head {
@@ -167,7 +192,7 @@ ul.list-bordered li:last-child {
     border-bottom: 0;
 }
 
-ul.list-bordered li {
+ul.list-bordered>li {
     border-bottom: 1px solid #ddd;
     padding: 12px 0;
 }
@@ -684,4 +709,14 @@ h6 {
 text tspan {
     font-family: "segoe ui", sans-serif !important;
     font-size: 14px !important;
+}
+
+.category-icon {
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background: #e7edf3;
+    position: relative;
+    top: 3px;
 }

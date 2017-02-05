@@ -187,4 +187,13 @@ class WikiController extends Controller
     {
         return view('wiki.permissions', compact('organization', 'wiki', 'category'));
     }
+
+    public function getWikis(Organization $organization)
+    {
+        $wikis = $this->wiki->getWikis($organization->id);
+
+        $categories = $this->category->getCategories($organization->id);
+
+        return view('wiki.list', compact('organization', 'wikis', 'categories'));
+    }
 }

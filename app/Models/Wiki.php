@@ -96,17 +96,9 @@ class Wiki extends Model
         return $this->belongsTo(Organization::class, 'organization_id', 'id');
     }
 
-    /**
-     * Retrieve all wikis from database.
-     *
-     * @param null $limit
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getOrganizationWikis($id)
+    public function getWikis($organizationId)
     {
-        return $this
-                    ->where('user_id', '=', Auth::user()->id)
-                    ->where('organization_id', '=', $id)
+        return $this->where('organization_id', '=', $organizationId)
                     ->latest()
                     ->get();
     }

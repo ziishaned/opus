@@ -69,7 +69,7 @@ class Category extends Model
 
     public function getCategories($organizationId)
     {
-        return $this->where('organization_id', '=', $organizationId)->paginate(15);
+        return $this->where('organization_id', '=', $organizationId)->get();
     }
 
     public function deleteCategory($categoryId)

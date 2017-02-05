@@ -17,100 +17,20 @@ class ViewHelper
 		return Route::getCurrentRoute()->getPath();
 	}
 
-    public static function userHasOrganization($organizationSlug)
+    public static function getBackgroundColor($name)
     {
-        $organization = (new Organization)->getOrganization($organizationSlug);
-        $userHasOrganization =  DB::table('user_organization')->where([
-            'user_id' => Auth::user()->id,
-            'organization_id' => $organization->id,
-        ])->first();
-
-        if($userHasOrganization) {
-            return true;
-        }
-        return false;
-    }
-
-    // public static function getUsername($id)
-    // {
-    //     return User::where('id', '=', $id)->pluck('name')->first();
-    // }
-
-    public static function getUsername($id)
-    {
-        $fullName = User::where('id', '=', $id)->pluck('full_name')->first();
-
-        if(empty($fullName)) {
-            return '@' . User::where('id', '=', $id)->pluck('name')->first();
-        } else {
-            return $fullName;
-        }
-    }
-
-    public static function getUserSlug($id)
-    {
-        return User::where('id', '=', $id)->pluck('slug')->first();
-    }
-
-    public static function getProfilePic($id)
-    {
-        return User::where('id', '=', $id)->pluck('profile_image')->first();
-    }
-
-    public static function getWikiSlug($id)
-    {
-        return Wiki::where('id', '=', $id)->pluck('slug')->first();
-    }
-
-    public static function getPageSlug($id)
-    {
-        return WikiPage::where('id', '=', $id)->pluck('slug')->first();
-    }
-
-    public static function getOrganizationName($id)
-    {
-        return Organization::where('id', '=', $id)->pluck('name')->first();
-    }
-
-    public static function getWikiName($id)
-    {
-        return Wiki::where('id', '=', $id)->pluck('name')->first();
-    }
-
-    public static function makeWikiPageTree($wikiPages, $currentPageId)
-    {
-        foreach ($wikiPages as $page => $value) {
-            $class = '';
-            if($value->id == $currentPageId) {
-                $class='active';
-            }
-
-            echo  '<li class="'.$class.'" id="'.$value->id.'"><a href="/wikis/'. $value->wiki->slug .'/pages/'. $value->slug . '">' . $value->name . '</a>';
-            if(!empty($value['pages'])) {
-                echo '<ul>';
-                self::makeWikiPageTree($value['pages'], $currentPageId);
-                echo '</ul></li>';
-            }
-        }
-    }
-
-    public static function getWiki($slug)
-    {
-        return Wiki::where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->first();
-    }
-
-    public static function getCommentStar($id)
-    {
-        return DB::table('user_star')->where('entity_type', '=', 'comment')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
-    }
-
-    public static function getWikiWatch($id)
-    {
-        return DB::table('user_watch')->where('entity_type', '=', 'wiki')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
-    }
-
-    public static function getPageWatch($id)
-    {
-        return DB::table('user_watch')->where('entity_type', '=', 'page')->where('entity_id', '=', $id)->groupBy('entity_id')->count();
+        $colors = [
+            'rgb(181, 158, 140)',
+            'rgb(75, 147, 209)',
+            'rgb(147, 84, 202)',
+            'rgb(72, 191, 131)',
+            'rgb(65, 65, 65)',
+            'rgb(239, 86, 79)',
+            'rgb(98, 108, 120)',
+            'rgb(214, 139, 79)',
+            'rgb(109, 187, 62)',
+        ];
+        
+        return $colors[array_rand($colors)];
     }
 }
