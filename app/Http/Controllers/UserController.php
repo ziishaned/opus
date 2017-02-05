@@ -25,6 +25,8 @@ class UserController extends Controller
      */
     protected $user;
 
+    protected $organization;
+
     /**
      * @var \Illuminate\Http\Request
      */
@@ -38,10 +40,11 @@ class UserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User         $user
      */
-    public function __construct(Request $request, User $user)
+    public function __construct(Request $request, User $user, Organization $organization)
     {
         $this->user    = $user;
         $this->request = $request;
+        $this->organization = $organization;
     }
 
     /**
@@ -324,4 +327,13 @@ class UserController extends Controller
             'organizations' => $this->user->where('email', $this->request->get('email'))->with('organizations')->first()->organizations,
         ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
     }    
+
+    public function dashboard(Organization $organization)
+    {
+        $activities = $this->organization->getActivty($organization->id)->activity;
+
+        $wikis      = $this->organization->getWikis($organization->id, 5);
+        
+        return view('organization.home', compact('organization', 'activities', 'wikis'));
+    }
 }

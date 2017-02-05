@@ -12,6 +12,15 @@ a {
     text-decoration: none;
 }
 
+.index-head {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.index-body {
+    margin-top: 15px;
+}
+
 .readlist-item-unread {
     font-weight: 600;
     -webkit-text-stroke: 0px !important;
@@ -21,19 +30,32 @@ a {
     font-size: 13px;
 }
 
+.tabs-vertical li.divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
 .tabs-vertical ul li a {
-    padding: 0 15px;
     display: block;
-    padding: 6px 8px;
+    padding: 4px 5px;
+}
+
+.index-wikis-item, .tabs-vertical ul li a {
     color: #777;
 }
 
-.tabs-vertical ul li a:hover {
-    margin: -1px;
-    border: 1px solid #adadad;
-    background-color: #e6e6e6;
+.tabs-vertical ul li a:hover, .index-wikis-item:hover {
     color: #333;
-    border-radius: 3px;
+}
+
+.tabs-vertical ul li a:hover {
+    /*margin: -1px;*/
+    /*border: 1px solid #adadad;*/
+    /*background-color: #e6e6e6;*/
+    /*color: #333;*/
+    /*border-radius: 3px;*/
 }
 
 .tabs-vertical ul li {
@@ -421,7 +443,6 @@ a:hover {
 .affix {
     top: 50px;
     padding-top: 15px;
-    /*width: 100%;*/
 }
 
 .wiki-name::first-letter, .page-name::first-letter {

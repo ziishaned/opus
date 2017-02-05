@@ -133,9 +133,16 @@ class Organization extends Model
         return false;
     }
 
-    public function getWikis($organization)
+    public function getWikis($organizationId, $total = null)
     {
-        $organizationWikis = $this->find($organization->id)->wikis()->paginate(10);
+        if(!is_null($total)) {
+            $organization = $this->where('id', $organizationId)->with(['wikis' => function($query) {
+                return $query->take(5);
+            }])->first();
+            
+            return $organization->wikis;
+        }
+        $organizationWikis = $this->find($organizationId)->wikis()->paginate(10);
 
         return $organizationWikis;
     }

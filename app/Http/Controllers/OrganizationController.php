@@ -211,13 +211,6 @@ class OrganizationController extends Controller
         return redirect()->action('OrganizationController@join', ['step' => $step + 1]);
     }
 
-    public function getActivity(Organization $organization)
-    {
-        $activities = $this->organization->getActivty($organization->id)->activity;
-
-        return view('organization.activity', compact('organization', 'activities'));
-    }
-
     public function inviteUsers(Organization $organization)
     {
         return view('organization.users.invite', compact('organization'));

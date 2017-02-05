@@ -6,6 +6,23 @@ var App = {
         this.initTooltip();
         this.loadCategories();
         this.initMasonry();
+
+        var fixAffixWidth = function() {
+            $('[data-spy="affix"]').each(function() {
+                $(this).width( $(this).parent().width() );
+            });
+        }
+        fixAffixWidth();
+        $(window).resize(fixAffixWidth);
+
+        var navbar = $('.navbar');
+        $(window).scroll(function(){
+            if($(window).scrollTop() <= 40){
+                navbar.css('border-bottom', 'none');
+            } else {
+              navbar.css('border-bottom', '1px solid #e7e7e7'); 
+            }
+        }); 
     },
     initMasonry: function() {
         var that = this;  

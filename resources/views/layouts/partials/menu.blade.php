@@ -12,7 +12,7 @@
             <ul class="nav navbar-nav header-controls">
                 @if(Auth::user())
                     <li>
-                        <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home"></i> {{ $organization->name }}</a>
+                        <a href="{{ route('dashboard', [$organization->slug])  }}"><i class="fa fa-home fa-fw"></i> {{ $organization->name }}</a>
                     </li>
                     <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/categories') class="active" @endif>
                         <a href="{{ route('organizations.categories', [$organization->slug, ]) }}">Categories</a>
@@ -23,11 +23,11 @@
                     <li>
                         <a href="{{ route('organizations.reports.index', [$organization->slug, ]) }}" title="user and wikis - jis nay zayada kam kiya hai">Reports</a> 
                     </li>
-                    @if(isset($wiki)) 
+                    {{-- @if(isset($wiki) && isset($category)) 
                         <li>
                             <a href="{{ route('pages.create', [$organization->slug, $category->slug, $wiki->slug]) }}" class="btn btn-default" style="padding: 6px 10px; position: relative; top: 7px; left: 12px;">Create page</a>
                         </li>
-                    @endif
+                    @endif --}}
                 @else 
                     <li>
                         <a href="{{ url('/') }}" class="navbar-brand">Opus</a>
@@ -39,8 +39,7 @@
                     <li>
                         <form class="navbar-form" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control input" placeholder="Search" style="width: 255px; padding-right: 30px;">
-                                <span class="fa fa-search fa-fw" style="position: absolute; top: 17px; right: 23px; color: #adadad;"></span>
+                                <input type="text" class="form-control input" placeholder="Search" style="width: 255px;">
                             </div>
                         </form>
                     </li>
@@ -54,9 +53,9 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down fa-fw"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}"><i class="fa fa-user fa-fw"></i> Profile</a></li>
+                            <li><a href="{{ route('users.show', [$organization->slug, $loggedInUser->slug]) }}"><span class="glyphicon glyphicon-user" style="width: 1.28571429em;"></span> Profile</a></li>
                             <li>
                                 <a href="{{ route('users.readlist', [$organization->slug, Auth::user()->slug]) }}"><i class="fa fa-newspaper-o fa-fw"></i> Read list</a>
                             </li>
