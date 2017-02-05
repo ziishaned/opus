@@ -5,14 +5,13 @@
                 <div class="media">
                     <a class="pull-left" href="#">
                         @if(empty($activity->user->profile_image))
-                            <img src="/images/default.png" class="media-object img-rounded" width="64" height="64">
+                            <img src="{!! new Avatar($activity->user->first_name .' '. $activity->user->last_name, 'square', 54) !!}" class="media-object img-rounded" alt="">
                         @else
-                            <img src="/images/profile-pics/{{ $activity->user->profile_image }}"
-                                 class="media-object img-rounded" width="64" height="64">
+                            <img src="/images/profile-pics/{{ $activity->user->profile_image }}" class="media-object img-rounded" width="54" height="64">
                         @endif
                     </a>
                     <div class="media-body">
-                        <p class="mb5">
+                        <p class="mb5 activity-text">
                             @if($activity->name == 'created_category')
                                 <i class="fa fa-bookmark-o fa-fw media-icon"></i> <a href="#">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created a category <a href="">{{ $activity->subject['name'] }}</a>.
                             @endif

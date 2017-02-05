@@ -18,9 +18,15 @@ var App = {
         var navbar = $('.navbar');
         $(window).scroll(function(){
             if($(window).scrollTop() <= 40){
-                navbar.css('border-bottom', 'none');
+                navbar.css({
+                    'box-shadow': 'none',
+                    'border-bottom': '1px solid #e7edf3',
+                });
             } else {
-              navbar.css('border-bottom', '1px solid #e7e7e7'); 
+                navbar.css({
+                    'box-shadow': '0 2px 6px rgba(0,0,0,0.35)',
+                    'border-bottom': 'none',
+                }); 
             }
         }); 
     },

@@ -69,10 +69,10 @@
                                                 <a href="#">
                                                     <div class="media" style="display: flex; align-items: center;">
                                                         <div class="pull-left">
-                                                            <img src="{!! new LetterAvatar($wiki->name, 'circle', 34) !!}" style="border-radius: 50%; border: 1px solid rgba(0,0,0,0.1)" class="media-object" alt="">
+                                                            <img src="{!! new Avatar($wiki->name, 'square', 38) !!}" class="media-object img-rounded" alt="">
                                                         </div>
                                                         <div class="media-body">
-                                                            <p class="marginless index-wikis-item">{{ $wiki->name }}</p>
+                                                            <p class="index-wikis-item ml10 mb0">{{ $wiki->name }}</p>
                                                         </div>
                                                     </div>
                                                 </a>

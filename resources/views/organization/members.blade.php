@@ -6,7 +6,7 @@
             <div role="tabpanel">
                 <ul class="nav nav-tabs nav-tabs-center" role="tablist">
                     <li class="active">
-                        <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members list</a> 
+                        <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members <span class="label label-default">{{ $organization->members->count()  }}</span></a> 
                     </li>
                     <li>
                         <a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a>
@@ -14,43 +14,37 @@
                 </ul>
                 <div class="tab-content tab-bordered">
                     <div class="row mb20">
-                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
-                            <p>
-                                Users with access to <strong>{{ $organization->name  }}</strong> <span class="label label-default">{{ $organization->members->count()  }}</span>
-                            </p>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <h4>Members List</h4>
                         </div>
-                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 text-right">
-                            <form class="members-filter-form" method="get">
-                                <div class="form-group mb0">
-                                    <input type="text" class="form-control input input-sm" placeholder="Filter by name">
-                                    <span class="fa fa-search fa-fw text-muted" style="position: absolute; top: 8px; right: 23px;"></span>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
+                            <form class="form-inline" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Filter by name..." style="width: 258px;">
                                 </div>
+                                <button type="submit" class="btn btn-default">Search</button>
+                                <a href="#" class="btn btn-link">Clear</a>
                             </form>
                         </div>
                     </div>
                     @if($organizationMembers->count() > 0)
                         <div class="row">
                             @foreach($organizationMembers as $member)
-                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 organization-member-item">
                                     <div class="media">
                                         <a class="pull-left" href="#">
                                             @if(empty($member->profile_image))
-                                                <img src="/images/default.png" width="64" height="64" alt="Image" class="media-object img-rounded">
+                                                <img src="{!! new Avatar($member->first_name .' '. $member->last_name, 'square', 54) !!}" class="media-object img-rounded" alt="">
                                             @else
                                                 <img src="/images/profile-pics/{{ $member->profile_image }}" width="64" height="64" alt="Image" class="media-object img-rounded">
                                             @endif
                                         </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading mb10">
+                                        <div class="media-body member-info">
+                                            <a href="#" class="media-heading" style="font-size: 18px; font-weight: 500;">
                                                 {{ $member->first_name .' '. $member->last_name }}
-                                                @if($member->user_role == 'admin')
-                                                    <span class="label label-primary no-stroke ml10">Admin</span>
-                                                @else
-                                                    <span class="label label-primary" style="position: relative; top: -2px; left: 8px;">Member</span>
-                                                @endif
-                                            </h4>
+                                            </a>
                                             <p class="marginless">
-                                                <a href="mailto:{{ $member->email  }}"><i class="fa fa-envelope-o fa-fw"></i> {{ $member->email  }}</a>
+                                                <a href="mailto:{{ $member->email  }}">{{ $member->email  }}</a>
                                             </p>
                                         </div>
                                     </div>

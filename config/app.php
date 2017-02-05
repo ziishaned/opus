@@ -233,8 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'ViewHelper' => App\Helpers\ViewHelper::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Emojione' => Emojione\Emojione::class,
-        'LetterAvatar' => YoHang88\LetterAvatar\LetterAvatar::class,
+        'Avatar' => YoHang88\LetterAvatar\LetterAvatar::class,
     ],
 
 ];

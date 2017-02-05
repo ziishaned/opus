@@ -12,6 +12,10 @@ a {
     text-decoration: none;
 }
 
+.activity-text a:hover, .organization-member-item .member-info a:hover {
+    text-decoration: underline;
+}
+
 .index-head {
     border-bottom: 1px solid #eee;
     padding-bottom: 20px;
@@ -353,7 +357,8 @@ html, body {
 
 .header-menu {
     background-color: #ffffff;
-    border: none;
+    border-bottom: 1px solid #e7edf3;
+    transition: box-shadow 0.2s, -webkit-transform 0.2s;
 }
 
 .create-organization {
