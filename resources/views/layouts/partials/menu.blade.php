@@ -1,10 +1,12 @@
 <nav class="navbar navbar-default navbar-fixed-top header-menu" role="navigation" style="margin-bottom: 0;">
-    <div class="container">
+    {{-- <div class="container"> --}}
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" style="border: none; cursor: pointer; float: left; margin-left: 8px;">
                 <i class="fa fa-bars fa-lg"></i>
             </button>
-            <a href="{{ url('/') }}" class="navbar-brand pull-right" style="margin-right: 8px;">Opus</a>
+            @if(!Auth::user())
+                <a href="{{ url('/') }}" class="navbar-brand pull-right" style="margin-right: 8px;">Opus</a>
+            @endif
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             @if(Auth::user())
@@ -24,8 +26,9 @@
                 @if(Auth::user())
                     <li>
                         <form class="navbar-form" role="search">
-                            <div class="form-group">
+                            <div class="form-group with-icon">
                                 <input type="text" class="form-control input" placeholder="Search" style="width: 255px;">
+                                <i class="fa fa-search icon"></i>
                             </div>
                         </form>
                     </li>
@@ -63,5 +66,5 @@
                 @endif
             </ul>
         </div>
-    </div>
+    {{-- </div> --}}
 </nav>

@@ -236,7 +236,7 @@ class OrganizationController extends Controller
         $this->organization->postOrganization($organization);
 
         return redirect()->route('home')->with([
-            'alert'      => 'Team successfully created. Now sign in to your team!',
+            'alert'      => 'Team successfully created. Now login to your team!',
             'alert_type' => 'success',
         ]);
     }

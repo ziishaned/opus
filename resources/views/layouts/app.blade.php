@@ -16,7 +16,7 @@
 </head>
 <body>
     @include('layouts.partials.modals')
-    <div style="min-height: 53px;">
+    <div style="{{ Auth::user() ? 'min-height: 50px' : 'min-height: 53px;' }}">
         @include('layouts.partials.menu')
     </div>
 

@@ -1,11 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                    <div data-spy="affix" data-offset-top="10">
+    <div style="width: 285px; padding-left: 15px; padding-right: 15px;" class="hidden-sm hidden-xs">
+        <nav class="navbar navbar-default page-side-navbar navbar-fixed-side">
+            <div class="container">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="menu-header">
+                            <i class="fa fa-link fa-fw"></i> Quick links
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-feed fa-fw"></i> <span class="ml15">All updates</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-user"></span> <span style="margin-left: 16px;">My activity</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-eye fa-fw"></i> <span class="ml10">Read list</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-book"></span> <span class="ml15">Create wiki</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-tag fa-fw"></i> <span class="ml10">Create category</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><i class="fa fa-handshake-o fa-fw"></i> <span class="ml10">Invite users</span></a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="menu-header">
+                            <i class="fa fa-star-o fa-fw"></i> Favourite wikis
+                        </li>
+                        <li class="empty-list-text">
+                            <p class="text-muted text-center">Fovourite list is empty...</p>
+                        </li>
+                </div>
+            </div>
+        </nav>
+    </div>
+                    {{-- <div data-spy="affix" data-offset-top="10">
                         <div class="tabs-vertical" style="margin-bottom: 30px;">
                             <div class="index-head">
                                 <h4 class=""><i class="fa fa-link fa-fw"></i> Quick links</h4>
@@ -43,13 +79,12 @@
                                 <p class="text-muted text-center">Fovourite list is empty...</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                    <div style="min-height: 38px;">
-                        <div class="index-head" data-spy="affix" data-offset-top="10" style="background-color: #ffffff; z-index: 10; width: 457.5px;">
-                            <h4 class=""><i class="fa fa-feed fa-fw"></i> All updates</h4>
-                        </div>
+                    </div> --}}
+                <div class="row" style="margin-left: 285px;">
+                    
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="index-head">
+                        <h4 class=""><i class="fa fa-feed fa-fw"></i> All updates</h4>
                     </div>
                     <div class="index-body">
                         @include('layouts.partials.activity')
@@ -94,7 +129,7 @@
                         </div> --}}
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+                </div>
+            {{-- </div> --}}
+        {{-- </div> --}}
 @endsection
