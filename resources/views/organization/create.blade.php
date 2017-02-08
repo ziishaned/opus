@@ -8,7 +8,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email" class="control-label">Email</label>
-                        <input id="email" type="email" class="form-control input" name="email" placeholder="john@example.com" required>
+                        <input id="email" type="email" class="form-control input" value="{{ old('email') }}" name="email" placeholder="john@example.com" required>
                         @if ($errors->has('email'))
                             <div class="help-block with-errors">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -69,7 +69,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group{{ $errors->has('organization_name') ? ' has-error' : '' }}">
                         <label for="organization_name">Team Name</label>
-                        <input type="text" class="form-control input" name="organization_name" id="organization_name" required="required" autocomplete="off">
+                        <input type="text" class="form-control input" {{ old('organization_name') }} name="organization_name" id="organization_name" required="required" autocomplete="off">
                         @if ($errors->has('organization_name'))
                             <div class="help-block with-errors">
                                 <strong>{{ $errors->first('organization_name') }}</strong>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="organization-description">Description</label>
-                        <textarea name="description" id="organization-description" class="form-control input" rows="3"></textarea>
+                        <textarea name="description" id="organization-description" {{ old('description') }} class="form-control input" rows="3"></textarea>
                         <p class="help-block">Describe a little about your team.</p>
                     </div>
                 </div>

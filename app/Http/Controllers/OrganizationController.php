@@ -254,26 +254,15 @@ class OrganizationController extends Controller
 
     public function store()
     {
-        dd($this->request->all());
-        $this->validate($this->request, [
-            'email' => 'required|email',
-            'first_name' => 'required|max:15',
-            'last_name'  => 'required|max:15',
-            'password'   => 'required|min:6|confirmed',
-            'organization_name' => 'required|unique:organization,name',
-        ]);
+        $this->validate($this->request, Organization::CREATE_ORGANIZATION_RULES);
 
         $user = $this->user->createUser($this->request->all());
 
-        $organizationData = [
-            'organization_name' => $this->request->get('organization_name'),
-            'description'       => $this->request->get('description'),
-            'user_id'           => $user->id,
-        ];
-        $organization     = $this->organization->postOrganization($organizationData);
+        $organization = collect($this->request->all())->put('user_id', $user->id);
+        $this->organization->postOrganization($organization);
 
         return redirect()->route('home')->with([
-            'alert'      => 'Organization created successfully. Now sign in to your organization!',
+            'alert'      => 'Team successfully created. Now sign in to your team!',
             'alert_type' => 'success',
         ]);
     }

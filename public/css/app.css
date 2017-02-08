@@ -661,3 +661,12 @@ text tspan {
 }
 
 /****************************** End Join Team **********************************************/
+
+/****************************** Login Team **********************************************/
+@media (max-width: 370px) {
+    .team-login .create-button, .team-join .create-button, .team-create .create-button {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+/****************************** End Login Team **********************************************/

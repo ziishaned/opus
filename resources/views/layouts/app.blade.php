@@ -16,7 +16,7 @@
 </head>
 <body>
     @include('layouts.partials.modals')
-    <div style="min-height: 55px;">
+    <div style="min-height: 53px;">
         @include('layouts.partials.menu')
     </div>
 

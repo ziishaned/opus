@@ -41,6 +41,17 @@ class Organization extends Model
     ];
 
     /**
+     * @const array
+     */
+    const CREATE_ORGANIZATION_RULES = [
+        'email'             => 'required|email',
+        'first_name'        => 'required|max:15',
+        'last_name'         => 'required|max:15',
+        'password'          => 'required|min:6|confirmed',
+        'organization_name' => 'required|unique:organization,name',
+    ];
+
+    /**
      * @var string
      */
     protected $table = 'organization';
@@ -56,6 +67,21 @@ class Organization extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public static function boot()
+    {
+        parent::boot();
+        
+        Organization::created(function($organization) {
+            DB::table('user_organization')->insert([
+                'user_type'       => 'admin',
+                'user_id'         => $organization->user_id,
+                'organization_id' => $organization->id,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now(),
+            ]);
+        });
+    }
 
     public function categories()
     {
@@ -152,22 +178,15 @@ class Organization extends Model
      *
      * @return mixed
      */
-    public function postOrganization($data)
+    public function postOrganization($organization)
     {
-        $organization = $this->create([
-            'name'        => $data['organization_name'],
-            'user_id'     => $data['user_id'],
-            'description' => $data['description'],
-        ]);
-        DB::table('user_organization')->insert([
-            'user_type'       => 'admin',
-            'user_id'         => $data['user_id'],
-            'organization_id' => $organization->id,
-            'created_at'      => Carbon::now(),
-            'updated_at'      => Carbon::now(),
+        $this->create([
+            'name'        => $organization['organization_name'],
+            'user_id'     => $organization['user_id'],
+            'description' => $organization['description'],
         ]);
 
-        return $organization;
+        return true;
     }
 
     /**
