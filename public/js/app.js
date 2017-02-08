@@ -6,6 +6,7 @@ var App = {
         this.initTooltip();
         this.loadCategories();
         this.initMasonry();
+        this.initCarousel();
 
         var fixAffixWidth = function() {
             $('[data-spy="affix"]').each(function() {
@@ -29,6 +30,22 @@ var App = {
                 }); 
             }
         }); 
+    },
+    initCarousel: function() {
+        if ($('.Carousel').length > 0) {
+            var $carousel = $('.Carousel');
+            $carousel.wrapInner($('<div class="CarouselGroup"/>'));
+            var $group = $('.CarouselGroup');
+            var $group2 = $group.clone().appendTo($carousel);
+
+            var animate = function() {
+              $group.css({marginLeft: 0}).animate({marginLeft: -$group.width()}, 70000, 'linear').promise().done(function() {
+                animate();
+              });
+            };
+
+            animate();
+        }
     },
     initMasonry: function() {
         var that = this;  

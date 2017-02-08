@@ -49,7 +49,6 @@ class User extends Authenticatable
         'profile_image',
         'email',
         'password',
-        'active',
     ];
 
     protected $dates = ['deleted_at'];
@@ -219,7 +218,6 @@ class User extends Authenticatable
             'last_name'  => $data['last_name'],
             'password'   => Hash::make($data['password']),
             'email'      => $data['email'],
-            'active'     => $data['active'],
         ]);
 
         return $user;

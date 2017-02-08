@@ -4,12 +4,8 @@
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h1 class="text-center marginless" style="margin-top: 50px; margin-bottom: 20px;">Login</h1>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-lg-offset-4">
+                    <h1 class="text-center" style="margin-bottom: 20px;">Login to Opus</h1>
                     <form action="{{ route('organizations.postlogin') }}" method="POST" role="form">
                         <div class="form-group{{ $errors->has('organization') ? ' has-error' : '' }}">
                             <label for="organization" class="control-label">Organization</label>
@@ -44,8 +40,7 @@
                                 Remember me
                             </label>
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <div class="clearfix"></div>
+                        <input type="submit" class="btn btn-primary" value="Submit"> <span class="text-muted">Forgot your password?</span><a href="#"> Reset it.</a>
                     </form>
                 </div>
             </div>

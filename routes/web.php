@@ -4,10 +4,10 @@ Route::get('logout', 'UserController@logout')->name('logout');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', 'HomeController@home')->name('home');
-    Route::get('login', 'UserController@login')->name('organizations.login');
-    Route::post('login', 'UserController@postLogin')->name('organizations.postlogin');
-    Route::get('create', 'UserController@createOrganization')->name('organizations.create');
-    Route::post('create', 'UserController@postCreateOrganization')->name('organizations.store');
+    Route::get('login', 'OrganizationController@login')->name('organizations.login');
+    Route::post('login', 'OrganizationController@postLogin')->name('organizations.postlogin');
+    Route::get('create', 'OrganizationController@create')->name('organizations.create');
+    Route::post('create', 'OrganizationController@store')->name('organizations.store');
     Route::get('join', 'OrganizationController@join')->name('organizations.join');
     Route::post('join', 'OrganizationController@postJoin')->name('organizations.postjoin');
     Route::get('user/organizations', 'UserController@getOrganizations')->name('user.organizations');

@@ -215,4 +215,66 @@ class OrganizationController extends Controller
     {
         return view('organization.users.invite', compact('organization'));
     }
+
+    public function login()
+    {
+        return view('organization.login');
+    }
+
+    public function postLogin()
+    {
+        $this->validate($this->request, User::LOGIN_RULES, [
+            'exists' => 'Organization does not exists.' 
+        ]);
+
+        $data = [
+            'email' => $this->request->get('email'), 
+            'password' => $this->request->get('password'),
+            'organization' => $this->request->get('organization'),
+        ];
+
+        if($data = $this->user->validate($data)) {
+            Auth::login($data, $this->request->get('remember'));
+
+            return redirect()->route('dashboard', [
+                $data->organization_slug, 
+            ]);
+        } 
+
+        return redirect()->back()->with([
+            'alert'      => 'Email or password is not valid.',
+            'alert_type' => 'danger',
+        ]);
+    }
+
+    public function create()
+    {
+        return view('organization.create');
+    }
+
+    public function store()
+    {
+        dd($this->request->all());
+        $this->validate($this->request, [
+            'email' => 'required|email',
+            'first_name' => 'required|max:15',
+            'last_name'  => 'required|max:15',
+            'password'   => 'required|min:6|confirmed',
+            'organization_name' => 'required|unique:organization,name',
+        ]);
+
+        $user = $this->user->createUser($this->request->all());
+
+        $organizationData = [
+            'organization_name' => $this->request->get('organization_name'),
+            'description'       => $this->request->get('description'),
+            'user_id'           => $user->id,
+        ];
+        $organization     = $this->organization->postOrganization($organizationData);
+
+        return redirect()->route('home')->with([
+            'alert'      => 'Organization created successfully. Now sign in to your organization!',
+            'alert_type' => 'success',
+        ]);
+    }
 }

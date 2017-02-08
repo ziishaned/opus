@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Opus Wiki</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/animate.css">
     <link rel="stylesheet" href="/plugins/tinymce/tinymce-lightgray.css">
     <link rel="stylesheet" href="/plugins/tinymce/editor.css">
@@ -29,9 +29,8 @@
         </div>
     @endif
 
-    <div class="main-body" id="page-content-wrapper">
-        @yield('content')
-    </div>
+    @yield('content')
+    
 <script src="/js/jquery.js"></script>
 {{-- <script src="/js/jquery-ui.min.js"></script> --}}
 <script src="/js/bootstrap.min.js"></script>
