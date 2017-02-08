@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="team-create">
-        <h1 class="text-center marginless heading">Create Team</h1>
-        <form action="{{ route('organizations.store') }}" method="POST" role="form">
+    <div class="team-join">
+        <h1 class="text-center marginless heading">Join a Team</h1>
+        <form action="{{ route('organizations.postjoin') }}" method="POST" role="form">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -74,16 +74,13 @@
                             <div class="help-block with-errors">
                                 <strong>{{ $errors->first('organization_name') }}</strong>
                             </div>
+                        @else 
+                            <p class="help-block">Type the team name you want to join.</p>
                         @endif
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="organization-description">Description</label>
-                        <textarea name="description" id="organization-description" class="form-control input" rows="3"></textarea>
-                        <p class="help-block">Describe a little about your team.</p>
                     </div>
                 </div>
             </div>
-            <input type="submit" class="create-button" value="Submit"> <span class="text-muted">Already have a team?</span><a href="{{ route('organizations.login') }}"> Login now</a>.
+            <input type="submit" class="create-button" value="Submit"> <span class="text-muted"> Already joined a team?</span><a href="{{ route('organizations.login') }}"> Login now</a>.
         </form>
     </div>
 @endsection

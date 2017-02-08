@@ -66,9 +66,9 @@ class OrganizationController extends Controller
         return view('organization.members', compact('organization', 'organizationMembers'));
     }
 
-    public function join($step)
+    public function join()
     {
-        return view('organization.join.' . $step, compact('step'));
+        return view('organization.join');
     }
 
     public function isContentTypeJson()

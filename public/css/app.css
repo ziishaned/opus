@@ -632,14 +632,32 @@ text tspan {
 
 /******************************* Team create ************************************************/
 
-.organization-create { max-width: 600px; margin: auto; margin-top: 20px; margin-bottom: 13px; }
-.organization-create .heading { font-size: 45px; font-weight: 600; margin-bottom: 30px; margin-top: 0px;  }
+.team-create, .team-join, .team-login { max-width: 600px; margin: auto; margin-top: 20px; margin-bottom: 13px; }
+.team-create .heading { font-size: 45px; font-weight: 600; margin-bottom: 30px; margin-top: 0px;  }
 
 @media (max-width: 630px) {
-    .organization-create {
+    .team-create, .team-join, .team-login {
         margin-left: 14px;
         margin-right: 14px;
     }
 }
 
 /***************************** End Team create *********************************************/
+
+/****************************** Join Team **************************************************/
+
+.team-join .create-button, .team-create .create-button, .team-login .create-button {
+    border: 2px solid #CCD6E4;
+    padding: 7px 25px;
+    color: #7E96B3;
+    display: inline-flex;
+    margin-right: 15px;
+    background-color: #fff;
+}
+
+.team-join .create-button:hover, .team-create .create-button:hover, .team-login .create-button:hover {
+    border-color: #6844a7;
+    color: #6844a7;
+}
+
+/****************************** End Join Team **********************************************/
