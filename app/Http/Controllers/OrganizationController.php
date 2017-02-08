@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Mail;
 use Redirect;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Organization;
@@ -155,60 +156,33 @@ class OrganizationController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public function postJoin($step)
+    public function postJoin()
     {
-        $rules             = [];
-        $validationMessage = [];
-        switch ($step) {
-            case 1:
-                $rules             = [
-                    'organization_name' => 'required|exists:organization,name',
-                ];
-                $validationMessage = [
-                    'exists' => 'Specified organization does\'t exists.',
-                ];
-                break;
-            case 2:
-                $organization = $this->organization->where('name', 'like', '%' . Session::get('organization_name') . '%')->first();
+        $this->validate($this->request, Organization::JOIN_ORGANIZATION_RULES, [
+            'exists' => 'Specified organization does\'t exists.',
+        ]);
 
-                $rules = [
-                    'email'    => 'required|organization_has_email:' . $organization->id . '|email',
-                    'password' => 'required|confirmed',
-                ];
-                break;
-            default:
-                abort(404);
-        }
+        $organization = $this->organization->where('name', $this->request->get('organization_name'))->first();
+        $this->validate($this->request, [
+            'email' => 'required|organization_has_email:' . $organization->id . '|email',
+        ]);
+    
+        // Create the user        
+        $user  = $this->user->createUser($this->request->all());
 
-        $this->validate($this->request, $rules, $validationMessage);
+        // Join the organization
+        DB::table('user_organization')->insert([
+            'user_type'       => 'normal',
+            'user_id'         => $user->id,
+            'organization_id' => $organization->id,
+            'created_at'      => Carbon::now(),
+            'updated_at'      => Carbon::now(),
+        ]);
 
-        switch ($step) {
-            case 1:
-                Session::put('organization_name', $this->request->get('organization_name'));
-                break;
-            case 2:
-                break;
-            default:
-                abort(404);
-        }
-
-        if ($step == 2) {
-            $userInfo = [
-                'first_name' => $this->request->get('first_name'),
-                'last_name'  => $this->request->get('last_name'),
-                'password'   => $this->request->get('password'),
-                'email'      => $this->request->get('email'),
-                'active'     => '0',
-            ];
-            $this->user->createUser($userInfo);
-
-            return redirect()->route('home')->with([
-                'alert'      => 'A request is sent to admins for joining this '. Session::get('organization_name')  . ' organization. You will be notified on your email.',
-                'alert_type' => 'success',
-            ]);
-        }
-
-        return redirect()->action('OrganizationController@join', ['step' => $step + 1]);
+        return redirect()->route('home')->with([
+            'alert'      => 'Team successfully joined. You can login to joined team now.',
+            'alert_type' => 'success',
+        ]);
     }
 
     public function inviteUsers(Organization $organization)

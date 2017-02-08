@@ -28,6 +28,10 @@ label {
     margin-bottom: 5px;
 }
 
+.form-group.has-error label {
+    color: #a94442;
+}
+
 .wikis-table>tbody>tr>td {
         padding: 10px 0px;
 }

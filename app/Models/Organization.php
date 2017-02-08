@@ -51,6 +51,14 @@ class Organization extends Model
         'organization_name' => 'required|unique:organization,name',
     ];
 
+    const JOIN_ORGANIZATION_RULES = [
+        'email'             => 'required|email',
+        'first_name'        => 'required|max:15',
+        'last_name'         => 'required|max:15',
+        'password'          => 'required|min:6|confirmed',
+        'organization_name' => 'required|exists:organization,name',
+    ];
+
     /**
      * @var string
      */
