@@ -1,4 +1,4 @@
-.row {
+.no-container {
     margin-left: 0;
     margin-right: 0;
 }
@@ -100,18 +100,6 @@ label {
     text-decoration: none !important;
 }
 
-.index-head {
-    border-bottom: 1px solid #eee;
-}
-
-.index-head h4 {
-    padding-bottom: 10px;
-}
-
-.index-body {
-    margin-top: 15px;
-}
-
 .readlist-item-unread {
     font-weight: 600;
     -webkit-text-stroke: 0px !important;
@@ -119,38 +107,6 @@ label {
 
 .readlist-item-time {
     font-size: 13px;
-}
-
-.tabs-vertical li.divider {
-    height: 1px;
-    margin: 9px 0;
-    overflow: hidden;
-    background-color: #e5e5e5;
-}
-
-.tabs-vertical ul li a {
-    display: block;
-    padding: 4px 5px;
-}
-
-.index-wikis-item, .tabs-vertical ul li a {
-    color: #777;
-}
-
-.tabs-vertical ul li a:hover, .index-wikis-item:hover {
-    color: #333;
-}
-
-.tabs-vertical ul li a:hover {
-    /*margin: -1px;*/
-    /*border: 1px solid #adadad;*/
-    /*background-color: #e6e6e6;*/
-    /*color: #333;*/
-    /*border-radius: 3px;*/
-}
-
-.tabs-vertical ul li {
-    margin-bottom: 5px;
 }
 
 .comment-list .comment-item {
@@ -434,10 +390,6 @@ ul.list-bordered>li {
     color: #ffffff;
 }
 
-section {
-    margin-top: 20px;
-}
-
 .vertical-center {
     display: flex;
     align-items: center;
@@ -716,6 +668,16 @@ text tspan {
 
 /****************************** Page Side Nav **********************************************/
 
+.aside-content {
+    margin-left: 285px;
+}
+
+.page-side-navbar-con {
+    width: 285px; 
+    padding-left: 15px; 
+    padding-right: 15px;
+}
+
 .page-side-navbar.navbar-fixed-side {
     position: fixed;
     margin: 0 -15px;
@@ -798,4 +760,33 @@ text tspan {
     text-transform: uppercase;
 }
 /****************************** End Page Side Nav **********************************************/
+
+/****************************** Team Feed Page **********************************************/
+
+.aside-content {
+    padding: 22px 0px 0px 15px;
+}
+
+.news-feed .heading, .recent-wikis .heading, .readlist .heading {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 16px;
+}
+
+.news-feed .heading h3, .recent-wikis .heading h3, .readlist .heading h3 {
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Lato";
+}
+
+.recent-wikis .heading, .readlist .heading {
+    margin-bottom: 10px;
+}
+
+.news-feed .heading .icon, .recent-wikis .heading .icon, .readlist .heading .icon {
+    margin-right: 7px;
+}
+
+/****************************** End Team Feed Page **********************************************/
+
 
