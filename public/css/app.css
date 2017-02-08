@@ -625,6 +625,8 @@ text tspan {
 .feature-button { border-color: #6844a7 !important; color: #6844a7 !important;  }
 .feature-button:hover { border-color: #5d00ff !important; color: #5d00ff !important;  }
 
+.index-wikis-item:first-letter { text-transform: uppercase; }
+
 /******************************* Team create ************************************************/
 
 .team-create, .team-join, .team-login { max-width: 600px; margin: auto; margin-top: 20px; margin-bottom: 13px; }
@@ -751,8 +753,12 @@ text tspan {
     background: #e6e6e6;
 }
 
+.navbar-fixed-side .navbar-nav>li>a.active { 
+    background: #e6e6e6;
+}
+
 .page-side-navbar.navbar-fixed-side .menu-header {
-    margin: 0 0 3px;
+    margin: 0 0 12px;
     font-size: 13px;
     font-weight: 600;
     margin-left: 15px;
@@ -776,7 +782,10 @@ text tspan {
     margin: 0px;
     font-size: 16px;
     font-weight: 600;
-    font-family: "Lato";
+}
+
+.recent-wikis {
+    margin-bottom: 25px;
 }
 
 .recent-wikis .heading, .readlist .heading {
@@ -789,4 +798,55 @@ text tspan {
 
 /****************************** End Team Feed Page **********************************************/
 
+/****************************** Wikis list Page **********************************************/
+
+.wiki-side-nav {
+    margin-top: 20px;
+}
+
+.wiki-side-nav .major-link {
+    margin-bottom: 15px;
+}
+
+.minor-links .nav-stacked li a, .wiki-side-nav .major-link .nav-stacked a {
+    padding: 7px 10px;
+    border-radius: 0px;
+    color: inherit;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.minor-links .nav-stacked li a:hover, .wiki-side-nav .major-link .nav-stacked a:hover {
+    color: inherit;
+}
+
+.minor-links .nav-stacked li a .category-icon {
+    margin-right: 12px;
+}
+
+.wiki-side-nav .minor-links .heading {
+    margin: 0 0 9px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-left: 3px;
+    color: #8e8e8e;
+    text-transform: uppercase;
+}
+
+.wiki-side-nav .major-link .nav-stacked .icon {
+    margin-right: 16px;
+}
+
+.wiki-list-head .heading {
+    margin: 0px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.wiki-list-head {
+    margin: 20px 0px;
+}
+
+/****************************** End Wikis list Page **********************************************/
 

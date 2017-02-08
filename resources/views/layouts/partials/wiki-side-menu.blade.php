@@ -2,7 +2,7 @@
 	<div class="row v-center mb25">
 		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 			<div class="pull-left v-center">
-				<img src="{!! new LetterAvatar($wiki->name, 'circle', 44) !!}" alt="">
+				<img src="{!! new Avatar($wiki->name, 'circle', 44) !!}" alt="">
 				<h3 class="headin-no-margin ml10 wiki-name"><a href="{{ route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h3>
 			</div>
 		</div>

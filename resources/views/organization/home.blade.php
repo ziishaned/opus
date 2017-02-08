@@ -10,7 +10,7 @@
                             <i class="fa fa-link fa-fw"></i> Quick links
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-feed fa-fw"></i> <span class="ml15">All updates</span></a>
+                            <a href="#" class="active"><i class="fa fa-feed fa-fw"></i> <span class="ml15">All updates</span></a>
                         </li>
                         <li>
                             <a href="#"><span class="glyphicon glyphicon-user"></span> <span style="margin-left: 16px;">My activity</span></a>
@@ -68,7 +68,7 @@
                                                 <img src="{!! new Avatar($wiki->name, 'square', 38) !!}" class="media-object img-rounded" alt="">
                                             </div>
                                             <div class="media-body">
-                                                <p class="index-wikis-item ml10 mb0">{{ $wiki->name }}</p>
+                                                <p class="index-wikis-item mb0">{{ $wiki->name }}</p>
                                             </div>
                                         </div>
                                     </a>
@@ -76,7 +76,7 @@
                             </ul>
                         @endforeach
                     @else
-                        <p class="text-muted text-center">No recent wikis...</p>
+                        <p class="text-muted text-left">No recent wikis...</p>
                     @endif
                 </div>
             </div>
@@ -85,84 +85,9 @@
                     <h3><i class="fa fa-eye fa-fw icon"></i> Read list</h3>
                 </div>
                 <div class="read-list">
-                    <p class="text-muted text-center">Your read list is epmty...</p>
+                    <p class="text-muted text-left">Your read list is epmty...</p>
                 </div>
             </div>
         </div>
     </div>
-                {{-- <div class="tabs-vertical" style="margin-bottom: 30px;">
-                    <div class="index-head">
-                        <h3 class=""><i class="fa fa-clock-o fa-fw"></i> Recent wikis</h3>
-                    </div>
-                    <div class="index-body">
-                        @if($wikis->count() > 0) 
-                            @foreach($wikis as $wiki)
-                                <ul class="list-unstyled marginless">
-                                    <li>
-                                        <a href="#">
-                                            <div class="media" style="display: flex; align-items: center;">
-                                                <div class="pull-left">
-                                                    <img src="{!! new Avatar($wiki->name, 'square', 38) !!}" class="media-object img-rounded" alt="">
-                                                </div>
-                                                <div class="media-body">
-                                                    <p class="index-wikis-item ml10 mb0">{{ $wiki->name }}</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            @endforeach
-                        @else
-                            <p class="text-muted text-center">This organization does not have any recent wikis...</p>
-                        @endif
-                    </div>
-                </div>
-            <div class="tabs-vertical">
-                <div class="index-head">
-                    <h4 class=""><i class="fa fa-eye fa-fw"></i> Read list</h4>
-                </div>
-                <div class="index-body">
-                    <p class="text-muted text-center">Your read list is epmty...</p>
-                </div>
-            </div> --}}
-        {{-- </div>
-    </div> --}}
-            {{-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <div data-spy="affix" data-offset-top="10">
-                    <div class="tabs-vertical" style="margin-bottom: 30px;">
-                        <div class="index-head">
-                            <h4 class=""><i class="fa fa-clock-o fa-fw"></i> Recent wikis</h4>
-                        </div>
-                        <div class="index-body">
-                            @if($wikis->count() > 0) 
-                                @foreach($wikis as $wiki)
-                                    <ul class="list-unstyled marginless">
-                                        <li>
-                                            <a href="#">
-                                                <div class="media" style="display: flex; align-items: center;">
-                                                    <div class="pull-left">
-                                                        <img src="{!! new Avatar($wiki->name, 'square', 38) !!}" class="media-object img-rounded" alt="">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <p class="index-wikis-item ml10 mb0">{{ $wiki->name }}</p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                @endforeach
-                            @else
-                                <p class="text-muted text-center">This organization does not have any recent wikis...</p>
-                            @endif
-                        </div>
-                    </div>
-                <div class="tabs-vertical">
-                    <div class="index-head">
-                        <h4 class=""><i class="fa fa-eye fa-fw"></i> Read list</h4>
-                    </div>
-                    <div class="index-body">
-                        <p class="text-muted text-center">Your read list is epmty...</p>
-                    </div>
-                </div>
-            </div> --}}
 @endsection
