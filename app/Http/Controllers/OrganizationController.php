@@ -240,4 +240,14 @@ class OrganizationController extends Controller
             'alert_type' => 'success',
         ]);
     }
+
+    public function generalSettings(Organization $organization)
+    {
+        return view('organization.setting.general', compact('organization'));
+    }
+
+    public function membersSettings(Organization $organization)
+    {
+        return view('organization.setting.members', compact('organization'));
+    }
 }

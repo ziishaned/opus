@@ -23,7 +23,7 @@
                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                                     <div>
                                         @if(empty(Auth::user()->profile_image))
-                                            <img src="{!! new Avatar($activity->user->first_name .' '. $activity->user->last_name, 'square', 194) !!}" class="media-object img-rounded" alt="">
+                                            <img src="{!! new Avatar(Auth::user()->first_name .' '. Auth::user()->last_name, 'square', 194) !!}" class="media-object img-rounded" alt="">
                                         @else 
                                             <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" class="img-rounded img-responsive" width="194" height="194">
                                         @endif

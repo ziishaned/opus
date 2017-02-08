@@ -1,3 +1,7 @@
+* {
+    -webkit-font-smoothing: antialiased;
+}
+
 .no-container {
     margin-left: 0;
     margin-right: 0;
@@ -69,7 +73,6 @@ label {
     width: 100%;
     margin-top: -.5em;
 }
-
 
 .wikis-table>tbody>tr>td {
         padding: 10px 0px;
@@ -194,38 +197,6 @@ ul.list-bordered>li {
 
 .activity-time, .activity-content {
     font-size: 13px;
-}
-
-.nav-tabs-center>li>a {
-    color: #777;
-}
-
-.nav-tabs-center>li>a:hover {
-    color: #333;
-}
-
-.nav-tabs-center > li {
-    float: none;
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-}
-
-.nav-tabs-center {
-    text-align: center;
-}
-
-.tab-content {
-    padding: 20px 15px;
-}
-
-.tab-bordered {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.nav-tabs {
-    border-bottom: 0;
 }
 
 #category-outline {
@@ -850,3 +821,69 @@ text tspan {
 
 /****************************** End Wikis list Page **********************************************/
 
+/****************************** Team Settings Page **********************************************/
+
+.team-general-setting {
+    max-width: 800px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.team-general-setting .heading h1 {
+    margin: 0;
+    margin-bottom: 40px;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.team-info h2, .team-logo h2, .delete-team h2, .team-members h2 {
+    margin: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.team-info, .team-logo, .delete-team, .team-members {
+    margin-top: 40px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 40px;
+    min-height: 110px;
+}
+
+.team-info .action-info, .upload-team-logo,.delete-team {
+    max-width: 400px;
+}
+
+.team-info form .save-team-info, .upload-team-logo {
+    border-radius: 3px;
+    border: 2px solid #CCD6E4;
+    padding: 5px 20px;
+    color: #7E96B3;
+    display: inline-flex;
+    margin-right: 15px;
+    background-color: #fff;
+}
+
+.team-info form .save-team-info:hover, .upload-team-logo:hover {   
+    border-color: #6844a7;
+    color: #6844a7;
+}
+
+.delete-team input[type=submit] {
+    padding: 0;
+}
+
+.team-members {
+    border-bottom: 0; 
+}
+
+.member-list .member-name {
+    font-size: 16px;
+}
+
+.member-list  .member-role {
+    font-size: 12px;
+}
+
+
+/****************************** End Team Settings Page **********************************************/
