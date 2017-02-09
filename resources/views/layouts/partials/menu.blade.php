@@ -36,8 +36,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('organizations.wikis.create', [$organization->slug]) }}">Create wiki</a></li>
                         <li><a href="#create-category-modal" data-toggle="modal">Create category</a></li>
-                        <li class="nav-divider"></li>
-                        <li><a href="{{ route('invite.users', [$organization->slug, ]) }}">Invite user</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -50,6 +48,7 @@
                         <li><a href="{{ route('settings.profile', [$organization->slug, ]) }}"><i class="fa fa-gear fa-fw"></i> User Settings</a></li>
                         <li class="divider"></li>
                         <li><a href="{{ route('organizations.settings.general', [$organization->slug, ]) }}"><i class="fa fa-users fa-fw"></i> Team Settings</a></li>
+                        <li><a href="#"><i class="fa fa-send-o fa-fw"></i> Invite user</a></li>
                         <li class="divider"></li>
                         <li><a href="{{ url('/logout') }}"><i class="fa fa-power-off fa-fw"></i> Logout </a></li>
                     </ul>

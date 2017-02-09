@@ -25,7 +25,6 @@ Route::group(['prefix' => 'organizations', 'middleware' => 'auth'], function () 
     Route::group([ 'prefix' => '{organization_slug}/settings'], function() {
         Route::get('general', 'OrganizationController@generalSettings')->name('organizations.settings.general');
         Route::get('members', 'OrganizationController@membersSettings')->name('organizations.settings.members');
-        Route::get('subscriptions', 'OrganizationController@subscriptionsSettings')->name('organizations.settings.subscriptions');
     });
 
     Route::group(['prefix' => '{organization_slug}/users'], function () {

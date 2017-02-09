@@ -70,7 +70,7 @@
                                 <td>
                                     <ul class="list-unstyled mb0 wiki-category-list">
                                         <li>
-                                            <a href="#" class="no-hoverable"><span class="label label-default" style="background-color: {{ ViewHelper::getBackgroundColor($wiki->category->name) }}">{{ $wiki->category->name }}</span></a>
+                                            <span class="label label-default" style="background-color: {{ ViewHelper::getBackgroundColor($wiki->category->name) }}">{{ $wiki->category->name }}</span>
                                         </li>
                                     </ul>
                                 </td>

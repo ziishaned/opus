@@ -387,12 +387,12 @@ ul.list-bordered>li {
     text-transform: uppercase;
 }
 
-input, select, .btn {
+input, select, .btn, textarea {
     border-radius: 3px !important;
     transition: all 0.12s linear 0s !important;
 }
 
-input , input:focus, select:focus, .input:focus {
+input , input:focus, select:focus, .input:focus, textarea, textarea:focus {
     box-shadow: none !important;
 }
 
