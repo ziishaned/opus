@@ -42,7 +42,7 @@
         </nav>
     </div>
     <div class="row no-container aside-content">
-        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="news-feed">
                 <div class="heading">
                     <h3><i class="fa fa-feed fa-fw icon"></i> All updates</h3>
@@ -53,40 +53,42 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-            <div class="recent-wikis">
-                <div class="heading">
-                    <h3><i class="fa fa-clock-o fa-fw icon"></i> Recent wikis</h3>
-                </div>
-                <div class="recent-wikis-list">
-                    @if($wikis->count() > 0) 
-                        @foreach($wikis as $wiki)
-                            <ul class="list-unstyled marginless">
-                                <li>
-                                    <a href="#">
-                                        <div class="media" style="display: flex; align-items: center;">
-                                            <div class="pull-left">
-                                                <img src="{!! new Avatar($wiki->name, 'square', 38) !!}" class="media-object img-rounded" alt="">
+            <div data-spy="affix" data-offset-top="10">
+                {{-- <div class="recent-wikis">
+                    <div class="heading">
+                        <h3><i class="fa fa-clock-o fa-fw icon"></i> Recent wikis</h3>
+                    </div>
+                    <div class="recent-wikis-list">
+                        @if($wikis->count() > 0) 
+                            @foreach($wikis as $wiki)
+                                <ul class="list-unstyled marginless">
+                                    <li>
+                                        <a href="#">
+                                            <div class="media" style="display: flex; align-items: center;">
+                                                <div class="pull-left">
+                                                    <img src="{!! new Avatar($wiki->name, 'circle', 33) !!}" class="media-object img-rounded" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <p class="index-wikis-item mb0">{{ $wiki->name }}</p>
+                                                </div>
                                             </div>
-                                            <div class="media-body">
-                                                <p class="index-wikis-item mb0">{{ $wiki->name }}</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        @endforeach
-                    @else
-                        <p class="text-muted text-left">No recent wikis...</p>
-                    @endif
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endforeach
+                        @else
+                            <p class="text-muted text-left">No recent wikis...</p>
+                        @endif
+                    </div>
                 </div>
-            </div>
-            <div class="readlist">
-                <div class="heading">
-                    <h3><i class="fa fa-eye fa-fw icon"></i> Read list</h3>
-                </div>
-                <div class="read-list">
-                    <p class="text-muted text-left">Your read list is epmty...</p>
-                </div>
+                <div class="readlist">
+                    <div class="heading">
+                        <h3><i class="fa fa-eye fa-fw icon"></i> Read list</h3>
+                    </div>
+                    <div class="read-list">
+                        <p class="text-muted text-left">Your read list is epmty...</p>
+                    </div>
+                </div> --}}
             </div>
         </div>
     </div>

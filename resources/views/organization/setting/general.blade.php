@@ -13,9 +13,6 @@
                 <li role="presentation">
                     <a href="{{ route('organizations.settings.members', [$organization->slug]) }}"">Members</a>
                 </li>
-                <li role="presentation">
-                    <a href="">Subscription</a>
-                </li>
             </ul>
             <div class="tab-content">
                 <div class="team-info">
@@ -49,7 +46,7 @@
                         Deleting this team will permanently delete all wikis and users in this account.
                     </p>
                     <form action="" method="POST" role="form">
-                        <input type="submit" class="btn btn-link" value="Yes I understand, delete my account">
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Yes I understand, delete my account</button>
                     </form>
                 </div>
             </div>

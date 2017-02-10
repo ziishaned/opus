@@ -13,9 +13,6 @@
                 <li role="presentation" class="active">
                     <a href="{{ route('organizations.settings.members', [$organization->slug]) }}"">Members</a>
                 </li>
-                <li role="presentation">
-                    <a href="">Subscription</a>
-                </li>
             </ul>
             <div class="tab-content">
                 <div class="team-info">

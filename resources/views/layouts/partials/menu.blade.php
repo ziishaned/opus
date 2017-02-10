@@ -16,9 +16,6 @@
                 <li>
                     <a href="{{ route('organizations.wikis', [$organization->slug, ]) }}">Wikis</a>
                 </li>
-                <li>
-                    <a href="{{ route('organizations.members', [$organization->slug, ]) }}">Members</a> 
-                </li>
             </ul>
         @endif
         <ul class="nav navbar-nav navbar-right">

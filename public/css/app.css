@@ -28,6 +28,10 @@ a {
     text-decoration: none;
 }
 
+/*.heading {
+    font-family: "Lato";
+}*/
+
 a:hover, a:focus {
     text-decoration: none;
 }
@@ -343,6 +347,12 @@ ul.list-bordered>li {
     transition: box-shadow 0.2s, -webkit-transform 0.2s;
 }
 
+.header-menu li a {
+    /*font-family: "Lato";*/
+    font-size: 13px;
+    font-weight: 400;
+}
+
 .create-organization {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -546,6 +556,17 @@ text tspan {
 
 /********************************** Index Page *************************************/
 
+@media (max-width: 770px) {
+    .page-side-navbar-con {
+        display: none;
+    }
+
+    .aside-content {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+}
+
 .intro { padding: 50px 0px; margin-bottom: 60px; }
 
 .index-intro { margin-bottom: 45px; }
@@ -717,7 +738,9 @@ text tspan {
 .navbar-fixed-side .navbar-nav>li>a {
     padding-top: 10px;
     padding-bottom: 10px;
-    color: #333;
+    /*font-family: "Lato";*/
+    font-size: 13px;
+    font-weight: 400;
 }
 
 .navbar-fixed-side .navbar-nav>li>a:hover {
@@ -726,15 +749,24 @@ text tspan {
 
 .navbar-fixed-side .navbar-nav>li>a.active { 
     background: #e6e6e6;
+    color: #333;
 }
 
 .page-side-navbar.navbar-fixed-side .menu-header {
-    margin: 0 0 12px;
+/*    margin: 0 0 12px;
     font-size: 13px;
     font-weight: 600;
     margin-left: 15px;
     color: #8e8e8e;
+    text-transform: uppercase;*/
+
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 15px;
+    color: #8e8e8e;
     text-transform: uppercase;
+    font-family: "roboto";
 }
 /****************************** End Page Side Nav **********************************************/
 
@@ -823,27 +855,32 @@ text tspan {
 
 /****************************** Team Settings Page **********************************************/
 
-.team-general-setting {
+.team-general-setting, .user-general-setting {
     max-width: 800px;
     margin: auto;
     margin-top: 30px;
 }
 
-.team-general-setting .heading h1 {
+.team-general-setting .heading h1, .user-general-setting .heading h1 {
     margin: 0;
     margin-bottom: 40px;
     font-size: 45px;
     font-weight: bold;
 }
 
-.team-info h2, .team-logo h2, .delete-team h2, .team-members h2 {
+.team-info h2, 
+.team-logo h2, 
+.delete-team h2, 
+.team-members h2, 
+.profile-pic-setting h2,
+.user-info h2 {
     margin: 0;
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: bold;
 }
 
-.team-info, .team-logo, .delete-team, .team-members {
+.team-info, .team-logo, .delete-team, .team-members, .profile-pic-setting, .user-info {
     margin-top: 40px;
     border-bottom: 1px solid #eee;
     padding-bottom: 40px;
@@ -854,7 +891,7 @@ text tspan {
     max-width: 400px;
 }
 
-.team-info form .save-team-info, .upload-team-logo {
+.team-info form .save-team-info, .upload-team-logo, .profile-pic-setting .upload-btn, .user-info .update-btn {
     border-radius: 3px;
     border: 2px solid #CCD6E4;
     padding: 5px 20px;
@@ -864,13 +901,10 @@ text tspan {
     background-color: #fff;
 }
 
-.team-info form .save-team-info:hover, .upload-team-logo:hover {   
+.team-info form .save-team-info:hover, .upload-team-logo:hover, .profile-pic-setting .upload-btn:hover, .user-info .update-btn:hover {   
     border-color: #6844a7;
     color: #6844a7;
-}
-
-.delete-team input[type=submit] {
-    padding: 0;
+    background-color: #fff;
 }
 
 .team-members {
@@ -885,5 +919,34 @@ text tspan {
     font-size: 12px;
 }
 
-
 /****************************** End Team Settings Page **********************************************/
+
+/****************************** User Settings Page **********************************************/
+
+#avatar-upload-form .heading {
+    margin-top: 0;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.avatar-upload-form-con {
+    padding-left: 20px;
+}
+
+@media (max-width: 830px) {
+    .user-general-setting {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
+.user-info .heading {
+    margin-bottom: 5px;   
+}
+
+.user-info .text-muted {
+    margin-bottom: 10px;
+}
+
+/****************************** End User Settings Page **********************************************/
