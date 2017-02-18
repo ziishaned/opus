@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="page-side-navbar-con" class="hidden-sm hidden-xs">
+    {{-- <div class="page-side-navbar-con" class="hidden-sm hidden-xs">
         <nav class="navbar navbar-default page-side-navbar navbar-fixed-side">
             <div class="container">
                 <div class="collapse navbar-collapse">
@@ -40,9 +40,35 @@
                 </div>
             </div>
         </nav>
-    </div>
+    </div> --}}
     <div class="row no-container aside-content">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="side-nav">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#" class="active"><i class="fa fa-feed fa-fw"></i> <span class="ml15">All updates</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><span class="glyphicon glyphicon-user"></span> <span style="margin-left: 16px;">My activity</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-eye fa-fw"></i> <span class="ml10">Read list</span></a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#"><span class="glyphicon glyphicon-book"></span> <span class="ml15">Create wiki</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-tag fa-fw"></i> <span class="ml10">Create category</span></a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#"><i class="fa fa-handshake-o fa-fw"></i> <span class="ml10">Invite users</span></a>
+                    </li>
+                </ul>
+            </div>   
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
             <div class="news-feed">
                 <div class="heading">
                     <h3><i class="fa fa-feed fa-fw icon"></i> All updates</h3>
