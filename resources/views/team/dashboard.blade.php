@@ -6,29 +6,7 @@
 		<div class="row no-container">
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 				<div class="page-header">All activities</div>
-				@if($activities->count() > 0)
-					<div class="events-list">
-						<div class="media event">
-							<a class="pull-left event-user-image" href="#">
-								<img class="media-object img-circle" src="/img/elliot.jpg" alt="Image">
-							</a>
-							<div class="media-body">
-								<div class="event-top">
-									<div class="pull-left event-icon">
-										<img src="/img/icons/basic_message.svg" width="22" height="22" alt="Image">
-									</div>
-									<div class="pull-left">
-										<a href="#">Elliot</a> commented on a page <a href="#">How to install</a>.
-									</div>
-									<div class="clearfix"></div>
-								</div>
-								<p class="text-muted">2 days ago</p>
-							</div>
-						</div>
-					</div>
-				@else 
-					<h1 class="nothing-found"><img src="/img/icons/basic_info.svg" width="44"> No activity found</h1>
-				@endif
+				@include('team.partials.activity')
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				<div class="panel panel-default">

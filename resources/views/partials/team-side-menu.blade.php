@@ -27,7 +27,7 @@
 				</a>
 			</li>
 			<li class="item">
-				<a href="members.html">
+				<a href="{{ route('teams.settings.members', [$team->slug,]) }}">
 					<img src="/img/icons/basic_mail.svg" width="24" height="24" class="icon">
 					<span class="item-name">Invite User</span>
 				</a>

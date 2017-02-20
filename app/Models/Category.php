@@ -23,7 +23,7 @@ class Category extends Model
     protected static $recordEvents = ['created', 'updated', 'deleted'];
 
     const CATEGORY_RULES = [
-        'name' => 'required|max:15',
+        'name' => 'required|unique:category,name|max:25',
     ];
 
     protected $table = 'category';

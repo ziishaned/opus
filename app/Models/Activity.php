@@ -13,7 +13,7 @@ class Activity extends Model
         'subject_type',
         'name',
         'user_id',
-        'organization_id',
+        'team_id',
         'created_at',
         'updated_at',
     ];
@@ -28,8 +28,8 @@ class Activity extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function organization()
+    public function team()
     {
-        $this->belongsTo(Organization::class, 'organization_id', 'id');
+        $this->belongsTo(Team::class, 'team_id', 'id');
     }
 }

@@ -81,7 +81,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class, 'user_id', 'id')->with(['subject' => function($query) {
             $query->withTrashed();
-        }])->latest();
+        }, 'user'])->latest();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
     public function subject()
@@ -187,7 +192,9 @@ class User extends Authenticatable
 
     public function getActivty($id)
     {
-        return $this->find($id)->with('activity')->first();
+        $activity = $this->where('id', $id)->with('activity')->first();
+
+        return $activity;
     }
 
     public function validate($data) 

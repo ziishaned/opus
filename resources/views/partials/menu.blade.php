@@ -20,8 +20,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus fa-fw"></i></a>
 					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 6px;">
-                        <li><a href="#">Create Wiki</a></li>
-                        <li><a href="#">Create Category</a></li>
+                        <li><a href="{{ route('wikis.create', [ $team->slug ]) }}">Create Wiki</a></li>
+                        <li><a href="{{ route('categories.create', [ $team->slug ]) }}">Create Category</a></li>
                     </ul>
               	</li>
 				<li class="dropdown">
