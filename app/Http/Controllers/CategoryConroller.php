@@ -4,27 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\Organization;
+use App\Models\Team;
 
 class CategoryConroller extends Controller
 {
 	private $request;
 
-    private $organization;
+    private $team;
 
     private $category;
 
-    public function __construct(Request $request, Organization $organization, Category $category)
+    public function __construct(Request $request, Team $team, Category $category)
     {
-    	$this->category = $category;
+    	$this->category     = $category;
         $this->request      = $request;
-        $this->organization = $organization;
+        $this->team         = $team;
     }
-    public function store(Organization $organization)
+
+    public function create(Team $team)
+    {
+        return view('category.create', compact('team'));
+    }
+
+    public function store(Team $team)
     {
         $this->validate($this->request, Category::CATEGORY_RULES);
         
-        $this->category->createCategory($this->request->all(), $organization->id);
+        $this->category->createCategory($this->request->all(), $team->id);
 
         return redirect()->back()->with([
             'alert' => 'Category successfully created.',
@@ -32,7 +38,7 @@ class CategoryConroller extends Controller
         ]);
     }
 
-    public function destroy(Organization $organization, Category $category) 
+    public function destroy(Team $team, Category $category) 
     {
         $this->category->deleteCategory($category->id);
 
@@ -42,11 +48,11 @@ class CategoryConroller extends Controller
         ]);
     }
 
-    public function update(Organization $organization, Category $category)
+    public function update(Team $team, Category $category)
     {
         $this->validate($this->request, Category::CATEGORY_RULES);
         
-        $this->category->updateCategory($this->request->all(), $category->id, $organization->id);
+        $this->category->updateCategory($this->request->all(), $category->id, $team->id);
 
         return redirect()->back()->with([
             'alert' => 'Category successfully updated.',
@@ -54,8 +60,8 @@ class CategoryConroller extends Controller
         ]);
     }
 
-    public function getCategoryWikis(Organization $organization, Category $category)
+    public function getCategoryWikis(Team $team, Category $category)
     {
-        return view('organization.categories.wikis', compact('organization', 'category'));
+        return view('team.categories.wikis', compact('team', 'category'));
     }
 }

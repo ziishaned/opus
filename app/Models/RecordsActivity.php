@@ -19,11 +19,11 @@ trait RecordsActivity
     public function recordActivity($event)
     {
         Activity::create([
-            'subject_id'      => $this->id,
-            'subject_type'    => get_class($this),
-            'name'            => $this->getActivityName($this, $event),
-            'user_id'         => isset(Auth::user()->id) ? Auth::user()->id : $this->user_id,
-            'organization_id' => $this->organization_id
+            'subject_id'    => $this->id,
+            'subject_type'  => get_class($this),
+            'name'          => $this->getActivityName($this, $event),
+            'user_id'       => isset(Auth::user()->id) ? Auth::user()->id : $this->user_id,
+            'team_id'       => $this->team_id
         ]);
     }
 

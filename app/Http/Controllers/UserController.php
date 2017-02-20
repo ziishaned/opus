@@ -6,7 +6,8 @@ use Hash;
 use Image;
 use Session;
 use App\Models\User;
-use App\Models\Organization;
+use App\Models\Wiki;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -20,46 +21,29 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UserController extends Controller
 {
-    /**
-     * @var \App\Models\User
-     */
     protected $user;
 
-    protected $organization;
+    protected $team;
 
-    /**
-     * @var \Illuminate\Http\Request
-     */
+    protected $wiki;
+
     protected $request;
 
     protected $profileImagePath = 'images/profile-pics';
 
-    /**
-     * UserController constructor.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\User         $user
-     */
-    public function __construct(Request $request, User $user, Organization $organization)
+    public function __construct(Request $request, User $user, Team $team, Wiki $wiki)
     {
         $this->user    = $user;
+        $this->team    = $team;
         $this->request = $request;
-        $this->organization = $organization;
+        $this->wiki    = $wiki;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param         $organizationSlug
-     * @param  string $userSlug
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Organization $organization, User $user)
+    public function show(Team $team, User $user)
     {   
         $activities = $this->user->getActivty($user->id)->activity;
 
-        return view('user.user', compact('user', 'organization', 'activities'));
+        return view('user.profile', compact('user', 'team', 'activities'));
     }
 
     public function storeAvatar() {
@@ -92,14 +76,14 @@ class UserController extends Controller
         ], \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
     }
 
-    public function profileSettings(Organization $organization)
+    public function profileSettings(Team $team)
     {
-        return view('user.setting.profile', compact('organization'));
+        return view('user.setting.profile', compact('team'));
     }
 
-    public function accountSettings(Organization $organization)
+    public function accountSettings(Team $team)
     {
-        return view('user.setting.account', compact('organization'));
+        return view('user.setting.account', compact('team'));
     }
 
     public function update($slug)
@@ -152,24 +136,17 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function getReadList(Organization $organization, User $user)
+    public function getReadList(Team $team, User $user)
     {
-        return view('user.readlist', compact('organization'));
+        return view('user.read-list', compact('team'));
     }
-    
-    public function getOrganizations()
-    {
-        return response()->json([
-            'organizations' => $this->user->where('email', $this->request->get('email'))->with('organizations')->first()->organizations,
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
-    }    
 
-    public function dashboard(Organization $organization)
+    public function dashboard(Team $team)
     {
-        $activities = $this->organization->getActivty($organization->id)->activity;
-
-        $wikis      = $this->organization->getWikis($organization->id, 5);
+        $activities = $this->team->getActivty($team->id)->activity;
+     
+        $wikis      = $this->wiki->getTeamWikis($team->id, 5);
         
-        return view('organization.home', compact('organization', 'activities', 'wikis'));
+        return view('team.dashboard', compact('team', 'activities', 'wikis'));
     }
 }

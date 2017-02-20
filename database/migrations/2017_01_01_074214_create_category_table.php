@@ -19,7 +19,7 @@ class CreateCategoryTable extends Migration
             $table->string('slug', 65535);
             $table->mediumText('outline');
             $table->integer('user_id')->unsigned();
-            $table->integer('organization_id')->unsigned();
+            $table->integer('team_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

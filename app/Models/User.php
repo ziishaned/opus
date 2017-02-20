@@ -37,7 +37,7 @@ class User extends Authenticatable
     const LOGIN_RULES = [
         'email'    => 'required|email',
         'password' => 'required',
-        'organization' => 'required|exists:organization,name',
+        'team_name' => 'required|exists:teams,name',
     ];
 
     /**
@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasMany(Category::class, 'user_id', 'id');
     }
 
+    public function team()
+    {
+        return $this->hasOne(Team::class, 'user_id', 'id');
+    }
+
     /**
      * DESC
      *
@@ -92,31 +97,6 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class, 'user_id', 'id');
-    }
-
-    /**
-     * An organization has only one owner.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function organization()
-    {
-        return $this->hasOne(Organization::class, 'user_id', 'id');
-    }
-
-    public function timezone()
-    {
-        return $this->hasOne(Timezone::class, 'user_id', 'id');
-    }
-
-    /**
-     * An organization can have multiple employee.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
-     */
-    public function organizations()
-    {
-        return $this->belongsToMany(Organization::class, 'user_organization', 'user_id', 'organization_id');
     }
 
     /**
@@ -148,27 +128,13 @@ class User extends Authenticatable
      */
     public function getUser($userSlug)
     {
-        $user = $this->where('slug', '=', $userSlug)->with(['timezone', 'organization', 'organizations', 'wikis'])->first();
+        $user = $this->where('slug', '=', $userSlug)->first();
 
         if ($user) {
             return $user;
         }
 
         return false;
-    }
-
-    /**
-     * Get a specific resource.
-     *
-     * @param $user
-     *
-     * @return mixed
-     */
-    public function getOrganizations($user)
-    {
-        $userOrganizations = $this->find($user->id)->organizations()->paginate(10);
-
-        return $userOrganizations;
     }
 
     /**
@@ -192,11 +158,7 @@ class User extends Authenticatable
             'last_name'     => $data['last_name'],
             'profile_image' => !empty($profile_image) ? $profile_image : Auth::user()->profile_image,
             'email'         => $data['email'],
-        ]);
-
-        Timezone::updateOrCreate(['user_id' => Auth::user()->id], [
-            'user_id'  => Auth::user()->id,
-            'timezone' => $data['timezone'],
+            'timezone'      => $data['timezone'],
         ]);
 
         return true;
@@ -231,11 +193,11 @@ class User extends Authenticatable
     public function validate($data) 
     {
         $user = $this
-            ->join('organization', 'organization.user_id', '=', 'users.id')
-            ->join('user_organization', 'user_organization.user_id', '=', 'users.id')
-            ->where('organization.name', '=', $data['organization'])
+            ->join('teams', 'teams.user_id', '=', 'users.id')
+            ->join('user_teams', 'user_teams.user_id', '=', 'users.id')
+            ->where('teams.name', '=', $data['team_name'])
             ->where('users.email', '=', $data['email'])
-            ->select('users.*', 'organization.slug as organization_slug')
+            ->select('users.*', 'teams.slug as team_slug')
             ->first();
 
         if ($user && Hash::check($data['password'], $user->password)) {

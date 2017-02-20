@@ -7,7 +7,7 @@ use Auth;
 use App\Models\Wiki;
 use App\Models\WikiPage;
 use App\Models\Category;
-use App\Models\Organization;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,22 +23,18 @@ class WikiController extends Controller
 
     protected $wikiPage;
 
-    protected $organization;
+    protected $team;
 
     protected $request;
 
     protected $category;
 
-    public function __construct(Request $request, 
-                                Wiki $wiki, 
-                                Organization $organization, 
-                                WikiPage $wikiPage, 
-                                Category $category) {
+    public function __construct(Request $request, Wiki $wiki, Team $team, WikiPage $wikiPage, Category $category) {
         $this->wiki         = $wiki;
         $this->request      = $request;
         $this->wikiPage     = $wikiPage;
         $this->category     = $category;
-        $this->organization = $organization;
+        $this->team         = $team;
     }
 
     public function index()
@@ -46,42 +42,42 @@ class WikiController extends Controller
         return $this->wiki->getWikis();
     }
 
-    public function create(Organization $organization)
+    public function create(Team $team)
     {  
-        $categories = $this->category->getOrganizationCategories($organization->id);
+        $categories = $this->category->getTeamCategories($team->id);
 
         if($categories->count() == 0) {
-            return redirect()->route('organizations.categories.create', [$organization->slug, ])->with([
+            return redirect()->route('categories.create', [$team->slug, ])->with([
                 'alert' => 'You need to create category before creating wiki!',
                 'alert_type' => 'info'
             ]);
         }
 
-        return view('wiki.create', compact('organization', 'categories'));
+        return view('wiki.create', compact('team', 'categories'));
     }
 
-    public function store(Organization $organization)
+    public function store(Team $team)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
 
-        $wiki = $this->wiki->saveWiki($this->request->all(), $organization->id);
+        $wiki = $this->wiki->saveWiki($this->request->all(), $team->id);
 
-        return redirect()->route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug])->with([
+        return redirect()->route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully created.',
             'alert_type' => 'success'
         ]);
     }
 
-    public function show(Organization $organization, Category $category, Wiki $wiki)
+    public function show(Team $team, Category $category, Wiki $wiki)
     {
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
-        return view('wiki.wiki', compact('wikiPages', 'wiki', 'organization', 'category'));
+        return view('wiki.wiki', compact('wikiPages', 'wiki', 'team', 'category'));
     }
     
     public function getWikiPages()
     {
-        $organization =  $this->organization->where('slug', '=', $this->request->get('organization_slug'))->first();
+        $team =  $this->team->where('slug', '=', $this->request->get('team_slug'))->first();
         $category     =  $this->category->where('slug', '=', $this->request->get('category_slug'))->first();
         $wiki         =  $this->wiki->where('slug', '=', $this->request->get('wiki_slug'))->first();
         if($this->request->get('page_slug')) {
@@ -89,31 +85,31 @@ class WikiController extends Controller
         }
 
         if($this->request->get('fetch') == 'roots') {
-            return $this->wikiPage->getRootPages($organization, $category, $wiki);
+            return $this->wikiPage->getRootPages($team, $category, $wiki);
         } elseif ($this->request->get('fetch') == 'children') {
-            return $this->wikiPage->getChildrenPages($organization, $category, $wiki, $page);
+            return $this->wikiPage->getChildrenPages($team, $category, $wiki, $page);
         } else {
-            $wikiPages =  $this->wikiPage->getTreeTo($organization, $category, $wiki, $page);
+            $wikiPages =  $this->wikiPage->getTreeTo($team, $category, $wiki, $page);
          
             $html = '';
-            $this->makePageTree($organization, $wiki, $category, $wikiPages, $page->id, $html);
+            $this->makePageTree($team, $wiki, $category, $wikiPages, $page->id, $html);
         
             return $html;
         }
     }
 
-    public static function makePageTree($organization, $wiki, $category, $wikiPages, $currentPageId, &$html)
+    public static function makePageTree($team, $wiki, $category, $wikiPages, $currentPageId, &$html)
     {
         foreach ($wikiPages as $page => $value) {
             foreach($value->getSiblings() as $siblings) {
                 if($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="'.$siblings->id.'" data-slug="'.$siblings->slug.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
+                    $html .= '<li id="'.$siblings->id.'" data-slug="'.$siblings->slug.'" data-created_at="'. $siblings->created_at .'" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$team->slug, $category->slug, $wiki->slug, $siblings->slug]).'">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="'.$value->id.'" data-slug="'.$value->slug.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $value->slug]).'">' . $value->name . '</a>';
+            $html .= '<li id="'.$value->id.'" data-slug="'.$value->slug.'" data-created_at="'. $value->created_at .'" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '' ) . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '' ) . '"><a href="'.route('pages.show', [$team->slug, $category->slug, $wiki->slug, $value->slug]).'">' . $value->name . '</a>';
             if(!empty($value['children'])) {
                 $html .= '<ul>';
-                self::makePageTree($organization, $wiki, $category, $value['children'], $currentPageId, $html);
+                self::makePageTree($team, $wiki, $category, $value['children'], $currentPageId, $html);
                 $html .= '</ul></li>';
             }
         }
@@ -126,11 +122,11 @@ class WikiController extends Controller
      * @param $wikiSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Organization $organization, Category $category, Wiki $wiki)
+    public function edit(Team $team, Category $category, Wiki $wiki)
     {
-        $categories = $this->category->getOrganizationCategories($organization->id);
+        $categories = $this->category->getTeamCategories($team->id);
 
-        return view('wiki.edit', compact('wiki', 'organization', 'categories', 'category'));
+        return view('wiki.edit', compact('wiki', 'team', 'categories', 'category'));
     }
 
     /**
@@ -139,11 +135,11 @@ class WikiController extends Controller
      * @param  string  $wikiSlug
      * @return \Illuminate\Http\Response
      */
-    public function update(Organization $organization, Category $category, Wiki $wiki)
+    public function update(Team $team, Category $category, Wiki $wiki)
     {        
         $this->wiki->updateWiki($wiki->id, $this->request->all());
         
-        return redirect()->route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug])->with([
+        return redirect()->route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug])->with([
             'alert' => 'Wiki successfully updated.',
             'alert_type' => 'success'
         ]);
@@ -155,11 +151,11 @@ class WikiController extends Controller
      * @param  string  $wikiSlug
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Organization $organization, Category $category, Wiki $wiki)
+    public function destroy(Team $team, Category $category, Wiki $wiki)
     {
         $wiki = $this->wiki->deleteWiki($wiki->id);
 
-        return redirect()->route('dashboard', [$organization->slug])->with([
+        return redirect()->route('dashboard', [$team->slug])->with([
             'alert' => 'Wiki successfully deleted.',
             'alert_type' => 'success'
         ]);
@@ -178,22 +174,22 @@ class WikiController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function overview(Organization $organization, Category $category, Wiki $wiki)
+    public function overview(Team $team, Category $category, Wiki $wiki)
     {
-        return view('wiki.overview', compact('organization', 'wiki', 'category'));
+        return view('wiki.overview', compact('team', 'wiki', 'category'));
     }
 
-    public function permissions(Organization $organization, Category $category, Wiki $wiki)
+    public function permissions(Team $team, Category $category, Wiki $wiki)
     {
-        return view('wiki.permissions', compact('organization', 'wiki', 'category'));
+        return view('wiki.permissions', compact('team', 'wiki', 'category'));
     }
 
-    public function getWikis(Organization $organization)
+    public function getWikis(Team $team)
     {
-        $wikis = $this->wiki->getWikis($organization->id);
+        $wikis = $this->wiki->getTeamWikis($team->id);
 
-        $categories = $this->category->getCategories($organization->id);
+        $categories = $this->category->getTeamCategories($team->id);
 
-        return view('wiki.list', compact('organization', 'wikis', 'categories'));
+        return view('wiki.list', compact('team', 'wikis', 'categories'));
     }
 }

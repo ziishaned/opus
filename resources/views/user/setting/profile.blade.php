@@ -1,38 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
-    <div class="user-general-setting">
-        <div class="heading text-center">
-            <h1>User Settings</h1>
-        </div>
-        <div role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="active" role="presentation">
-                    <a href="{{ route('settings.profile', [$organization->slug, ]) }}">Profile</a>
-                </li>
-                <li @if(\App\Helpers\ViewHelper::getCurrentRoute() == 'organizations/{organization_slug}/settings/account') class="active" @endif role="presentation">
-                    <a href="{{ route('settings.account', [$organization->slug, ]) }}">Account</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="profile-pic-setting">
+	<div class="team-setting">
+		<div class="team-setting-header">
+		  User Settings
+		</div>
+		<div role="tabpanel">
+			@include('user.partials.tab-menu')
+			<div class="tab-content">
+				<div class="profile-pic-setting">
                     <h2>Profile Picture</h2>
                     <div class="media">
-                        <a class="pull-left" href="#">
-                            @if(empty(Auth::user()->profile_image))
-                                <img src="{!! new Avatar(Auth::user()->first_name .' '. Auth::user()->last_name, 'square', 94) !!}" class="media-object img-rounded" alt="">
-                            @else 
-                                <img src="/images/profile-pics/{{ Auth::user()->profile_image }}" class="img-rounded img-responsive media-object" width="94" height="94">
-                            @endif
-                        </a>
+                        <div class="pull-left">
+                            <img src="/img/no-image.png" class="media-object img-circle" alt="" width="155" height="155">
+                        </div>
                         <div class="media-body avatar-upload-form-con">
-                            <form action="#" enctype='multipart/form-data' id="avatar-upload-form">
+                            <form action="#" enctype="multipart/form-data" id="avatar-upload-form">
                                 <h3 class="heading">Upload new picture</h3>
                                 <div class="form-group">
                                     <label class="btn btn-default upload-btn">
                                         Browse file... <input type="file" class="hide" name="profile_image" id="profile_image">
                                     </label>
-                                    <p class="text-muted no-stroke">The maximum file size allowed is 200KB.</p>
+                                    <p class="text-muted">The maximum file size allowed is 200KB.</p>
                                 </div>
                             </form>
                         </div>
@@ -41,30 +30,25 @@
                 <div class="user-info">
                     <h2 class="heading">Personal Information</h2>
                     <p class="text-muted">Anyone who is the member of this organization can see this information.</p>
-                    <form action="{{ route('users.update', [$organization->slug, Auth::user()->slug, ]) }}" method="POST" role="form" enctype="multipart/form-data">
-                        {!! method_field('patch') !!}
+                    <form action="http://wiki.dev/organizations/black-hat/users/zeeshan_ahmed" method="POST" role="form" enctype="multipart/form-data">
+                        <input type="hidden" name="_method" value="patch">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="first-name">First name</label>
-                                    <input type="text" name="first_name" id="first-name" class="form-control input" value="@if(old('first_name')){{ old('first_name') }}@else{{Auth::user()->first_name}}@endif" autocomplete="off">
+                                    <input type="text" name="first_name" id="first-name" class="form-control input" value="Zeeshan" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="last-name">Last name</label>
-                                    <input type="text" name="last_name" id="last-name" class="form-control input" value="@if(old('last_name')){{ old('last_name') }}@else{{Auth::user()->last_name}}@endif" autocomplete="off">
+                                    <input type="text" name="last_name" id="last-name" class="form-control input" value="Ahmed" autocomplete="off">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" name="email" id="email" class="form-control input" value="@if(old('email')){{ old('email') }}@else{{ Auth::user()->email }}@endif" required="required" autocomplete="off">
-                            @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
+                            <input type="text" name="email" id="email" class="form-control input" value="ziishaned@gmail.com" required="required" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label for="timezone">Time zone</label>
@@ -217,7 +201,7 @@
                         <input type="submit" class="btn btn-success update-btn" value="Update">  
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 @endsection

@@ -4,70 +4,65 @@ Route::get('logout', 'UserController@logout')->name('logout');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', 'HomeController@home')->name('home');
-    Route::get('login', 'OrganizationController@login')->name('organizations.login');
-    Route::post('login', 'OrganizationController@postLogin')->name('organizations.postlogin');
-    Route::get('create', 'OrganizationController@create')->name('organizations.create');
-    Route::post('create', 'OrganizationController@store')->name('organizations.store');
-    Route::get('join', 'OrganizationController@join')->name('organizations.join');
-    Route::post('join', 'OrganizationController@postJoin')->name('organizations.postjoin');
-    Route::get('user/organizations', 'UserController@getOrganizations')->name('user.organizations');
+    Route::get('team/login', 'TeamController@login')->name('team.login');
+    Route::post('team/login', 'TeamController@postLogin')->name('team.postlogin');
+    Route::get('team/create', 'TeamController@create')->name('team.create');
+    Route::post('team/create', 'TeamController@store')->name('team.store');
+    Route::get('team/join', 'TeamController@join')->name('team.join');
+    Route::post('team/join', 'TeamController@postJoin')->name('team.postjoin');
 });
 
 Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');
 
-Route::group(['prefix' => 'organizations', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
 
-    Route::group(['prefix' => '{organization_slug}/users/settings'], function () {
+    Route::group(['prefix' => '{team_slug}/users/{user_slug}/settings'], function () {
         Route::get('profile', 'UserController@profileSettings')->name('settings.profile');
         Route::get('account', 'UserController@accountSettings')->name('settings.account');
     });
 
-    Route::group([ 'prefix' => '{organization_slug}/settings'], function() {
-        Route::get('general', 'OrganizationController@generalSettings')->name('organizations.settings.general');
-        Route::get('members', 'OrganizationController@membersSettings')->name('organizations.settings.members');
+    Route::group([ 'prefix' => '{team_slug}/settings'], function() {
+        Route::get('general', 'TeamController@generalSettings')->name('teams.settings.general');
+        Route::get('members', 'TeamController@membersSettings')->name('teams.settings.members');
     });
 
-    Route::group(['prefix' => '{organization_slug}/users'], function () {
+    Route::group(['prefix' => '{team_slug}/users'], function () {
         Route::get('activity', 'UserController@activity');
         Route::delete('{user_slug}', 'UserController@deleteAccount')->name('users.destroy');
-        Route::get('search/{text}', 'UserController@filterUser');
         Route::patch('{user_slug}/password', 'UserController@updatePassword')->name('users.password.update');
         Route::get('{user_slug}/readlist', 'UserController@getReadList')->name('users.readlist');
         Route::get('{user_slug}', 'UserController@show')->name('users.show');
         Route::patch('{user_slug}', 'UserController@update')->name('users.update');
-        Route::get('{user_slug}/wikis', 'UserController@wikis')->name('users.wikis');
         Route::post('avatar/store', 'UserController@storeAvatar');
         Route::post('avatar/crop', 'UserController@cropAvatar');
     });
 
-    Route::group(['prefix' => '{organization_slug}/categories'], function () {
-        Route::post('', 'CategoryConroller@store')->name('organizations.categories.store');
-        Route::delete('{category_slug}', 'CategoryConroller@destroy')->name('organizations.categories.destroy');
-        Route::patch('{category_slug}', 'CategoryConroller@update')->name('organizations.categories.update');
+    Route::group(['prefix' => '{team_slug}/categories'], function () {
+        Route::get('', 'CategoryConroller@create')->name('categories.create');
+        Route::post('', 'CategoryConroller@store')->name('categories.store');
+        Route::delete('{category_slug}', 'CategoryConroller@destroy')->name('teams.categories.destroy');
+        Route::patch('{category_slug}', 'CategoryConroller@update')->name('teams.categories.update');
         Route::get('{category_slug}/wikis', 'CategoryConroller@getCategoryWikis')->name('categories.wikis');
     });
 
-    Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
+    Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');
 
-    Route::get('{organization_slug}/invite', 'OrganizationController@inviteUsers')->name('invite.users');
-    Route::get('{organization_slug}', 'UserController@dashboard')->name('dashboard')->middleware('dashboard');
-    Route::get('{organization_slug}/categories', 'OrganizationController@getCategories')->name('organizations.categories');
-    Route::get('{organization_slug}/wikis/user-contributions', 'OrganizationController@getUserContributedWikis')->name('organizations.wikis.user-contributions');
-    Route::delete('{id}', 'OrganizationController@destroy')->name('organizations.destroy');
-    Route::get('{organization_slug}/members', 'OrganizationController@getMembers')->name('organizations.members');
-    Route::get('{organization_slug}/wiki', 'WikiController@create')->name('organizations.wiki.create');
-    Route::get('search/{text}', 'OrganizationController@filterOrganizations');
+    Route::get('{team_slug}/invite', 'TeamController@inviteUsers')->name('invite.users');
+    Route::get('{team_slug}', 'UserController@dashboard')->name('dashboard')->middleware('dashboard');
+    Route::delete('{id}', 'TeamController@destroy')->name('teams.destroy');
+    Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');
+    Route::get('{team_slug}/wiki', 'WikiController@create')->name('teams.wiki.create');
 
-    Route::post('{organization_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
-    Route::patch('{organization_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.update');
+    Route::post('{team_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
+    Route::patch('{team_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.update');
 
-    Route::group(['prefix' => '{organization_slug}/wikis'], function () {
+    Route::group(['prefix' => '{team_slug}/wikis'], function () {
         Route::post('', 'WikiController@store')->name('wikis.store');
-        Route::get('create', 'WikiController@create')->name('organizations.wikis.create');
-        Route::get('', 'WikiController@getWikis')->name('organizations.wikis');
+        Route::get('create', 'WikiController@create')->name('wikis.create');
+        Route::get('', 'WikiController@getWikis')->name('teams.wikis');
     });
 
-    Route::group(['prefix' => '{organization_slug}/categories/{category_slug}/wikis'], function () {
+    Route::group(['prefix' => '{team_slug}/categories/{category_slug}/wikis'], function () {
         Route::patch('{wiki_slug}', 'WikiController@update')->name('wikis.update');
         Route::get('{wiki_slug}', 'WikiController@show')->name('wikis.show');
         Route::get('{wiki_slug}/overview', 'WikiController@overview')->name('wikis.overview');

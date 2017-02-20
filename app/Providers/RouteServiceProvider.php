@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Wiki;
+use App\Models\Team;
+use App\Models\WikiPage;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -31,46 +36,46 @@ class RouteServiceProvider extends ServiceProvider
             'wiki_slug'         =>  '(\w+-*\d*)+',
             'category_slug'     =>  '(\w+-*\d*)+',
             'text'              =>  '[a-zA-Z0-9]+',
-            'organization_slug' =>  '(\w+-*\d*)+',
-            'organization_id'   =>  '[0-9]+',
+            'team_slug'         =>  '(\w+-*\d*)+',
+            'team_id'           =>  '[0-9]+',
             'page_id'           =>  '[0-9]+',
             'wiki_id'           =>  '[0-9]+',
             'user_slug'         =>  '(\w+-*\d*)+',
         ]);
 
         Route::bind('user_slug', function($slug) {
-            return \App\Models\User::where('slug', '=', $slug)->first();
+            return User::where('slug', '=', $slug)->first();
         });
 
         Route::bind('page_slug', function($slug) {
-            return \App\Models\WikiPage::where('slug', '=', $slug)->first();
+            return WikiPage::where('slug', '=', $slug)->first();
         });
 
         Route::bind('page_id', function($id) {
-            return \App\Models\WikiPage::where('id', '=', $id)->first();
+            return WikiPage::where('id', '=', $id)->first();
         });
 
         Route::bind('wiki_id', function($id) {
-            return \App\Models\Wiki::where('id', '=', $id)->first();
+            return Wiki::where('id', '=', $id)->first();
         });
 
-        Route::bind('organization_id', function($id) {
-            return \App\Models\Organization::where('id', '=', $id)->first();
+        Route::bind('team_id', function($id) {
+            return Team::where('id', '=', $id)->first();
         });
 
-        Route::bind('organization_slug', function($slug) {
-            return \App\Models\Organization::where('slug', '=', $slug)->first();
+        Route::bind('team_slug', function($slug) {
+            return Team::where('slug', '=', $slug)->first();
         });
 
         Route::bind('wiki_slug', function($slug) {
-            $organizationId = \Auth::user()->organization->id;
-            return \App\Models\Wiki::where('slug', '=', $slug)
-                                    ->where('organization_id', '=', $organizationId)
+            $teamId = \Auth::user()->team->id;
+            return Wiki::where('slug', '=', $slug)
+                                    ->where('team_id', '=', $teamId)
                                     ->first();
         });
 
         Route::bind('category_slug', function($slug) {
-            return \App\Models\Category::where('slug', '=', $slug)->first();
+            return Category::where('slug', '=', $slug)->first();
         });
     }
 

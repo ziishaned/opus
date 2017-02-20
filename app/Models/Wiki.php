@@ -49,7 +49,7 @@ class Wiki extends Model
         'description',
         'visibilty',
         'user_id',
-        'organization_id',
+        'team_id',
         'updated_at',
         'created_at',
     ];
@@ -92,42 +92,33 @@ class Wiki extends Model
     /** 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function organization() {
-        return $this->belongsTo(Organization::class, 'organization_id', 'id');
+    public function team() {
+        return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
-    public function getWikis($organizationId)
+    public function getTeamWikis($teamId, $total = null)
     {
-        return $this->where('organization_id', '=', $organizationId)
-                    ->latest()
-                    ->get();
+        if(!is_null($total)) {
+            $wikis = $this->where('team_id', $teamId)->latest()->take(5);
+            
+            return $wikis;
+        }
+        
+        $wikis = $this->where('team_id', $teamId)->latest()->paginate(10);
+
+        return $wikis;
     }
 
-    /**
-     * Get a specific resource.
-     *
-     * @param $wikiSlug
-     * @param $organizationId
-     *
-     * @return bool
-     * @internal param string $nameSlug
-     */
-    public function getWiki($wikiSlug, $organizationId)
+    public function getWiki($wikiSlug, $teamId)
     {
-        $wiki = $this->where('slug', '=', $wikiSlug)->where('organization_id', '=', $organizationId)->with(['user', 'category'])->first();
+        $wiki = $this->where('slug', '=', $wikiSlug)->where('team_id', '=', $teamId)->with(['user', 'category'])->first();
         if(is_null($wiki)) {
             return false;
         }
         return $wiki;
     }
 
-    /**
-     * Create a wiki
-     *
-     * @param  array $data
-     * @return bool
-     */
-    public function saveWiki($data, $organizationId)
+    public function saveWiki($data, $teamId)
     {
         $wiki = $this->create([
             'name'            =>  $data['wiki_name'],
@@ -136,7 +127,7 @@ class Wiki extends Model
             'description'     =>  $data['wiki_description'],
             'user_id'         =>  Auth::user()->id,
             'visibilty'       =>  $data['wiki_visibility'],
-            'organization_id' =>  $organizationId,
+            'team_id'         =>  $teamId,
         ]);
 
         return $wiki;

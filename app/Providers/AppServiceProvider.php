@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Organization;
 use Session;
+use Request;
 use Validator;
+use App\Models\Team;
 use App\Http\Validators\HashValidator;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,15 +21,15 @@ class AppServiceProvider extends ServiceProvider
         Validator::resolver(function ($translator, $data, $rules, $messages) {
             return new HashValidator($translator, $data, $rules, $messages);
         });
-        Validator::extend('organization_has_email', function ($attribute, $email, $id, $validator) {
-            $users = Organization::where('id', $id)
+        Validator::extend('team_has_email', function ($attribute, $email, $id, $validator) {
+            $team = Team::where('name', Request::get('team_name'))
                                  ->with([
                                      'members' => function ($query) use ($email) {
                                          $query->where('email', $email);
                                      },
                                  ])->first();
 
-            if ($users->members->count() > 0) {
+            if (!$team || $team->members->count() > 0) {
                 return false;
             }
 

@@ -26,7 +26,7 @@ class CreateWikiTable extends Migration
 
             $table->integer('user_id')->unsigned();
             $table->integer('category_id')->unsigned();
-            $table->integer('organization_id')->unsigned()->nullable();
+            $table->integer('team_id')->unsigned()->nullable();
 
             $table->softDeletes();
             $table->timestamps();

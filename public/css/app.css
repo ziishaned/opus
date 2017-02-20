@@ -1,48 +1,451 @@
-* {
-    -webkit-font-smoothing: antialiased;
+body, html {
+	font-family: "segoe ui";
+	height: 100%;
 }
 
-.no-container {
-    margin-left: 0;
-    margin-right: 0;
-}
-
-html {
-    box-sizing: border-box;
-    font-family: sans-serif;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-}
-
-html, body {
-    margin: 0;
-    height: 100%;
-    font-family: "segoe ui", Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #333333;
+body {
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #333333;
+	background-color: #fff;
+	font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
 }
 
 a {
-    color: #4078c0;
-    text-decoration: none;
+	color: #333333;
 }
 
-/*.heading {
-    font-family: "Lato";
+a:hover {
+	color: #333333;
+}
+
+pre {
+	background-color: #f4f4f4;
+    padding: 5px 15px;
+    border-radius: 3px;
+}
+
+input, select, textarea {
+	box-shadow: none !important;
+	border-radius: 3px !important;
+	border-width: 1px !important;
+}
+
+/*input:focus, select:focus, textarea:focus {	
+	border-color: #6844a7 !important;
 }*/
 
-a:hover, a:focus {
-    text-decoration: none;
+.v-center {
+	display: flex;
+	align-items: center;
+}
+
+.side-menu {
+	/*overflow: auto;*/
+	position: fixed;
+	height: calc(100% - 60px);
+	left: 0;
+	top: 62px;
+	width: 248px;
+	background-color: #eeeeee;
+    border-right: 1px solid #e2e2e2;
+}
+
+.side-menu.create-wiki {
+	width: 60px;
+	z-index: 100;
+}
+
+.side-menu-top {
+	/*margin-top: 10px;*/
+	margin-top: 20px;
+}
+
+.side-menu-top .icon {
+	margin-right: 10px;
+}
+
+.side-menu .nav-header {
+	color: #5f5f5f;
+	font-size: 13px;
+	text-transform: uppercase;
+	padding: 5px 13px;
+	font-weight: 500;
+}
+
+.side-menu-top .item.active {
+	background-color: rgba(1,1,1,0.1);
+}
+
+.side-menu-top .item.active a:hover {
+	background-color: initial;
+}
+
+.side-menu-top .item a {
+	color: #777777;
+	font-size: 13px;
+	font-weight: normal;
+	line-height: 33px;
+	padding: 5px 13px;
+	width: 100%;
+	display: block;
+	display: flex;
+	align-items: center;
+}
+
+.side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .recent-wikis-list li.item:hover a {
+	background-color: rgba(1,1,1,0.1);
+	text-decoration: none;
+}
+
+.tooltip {
+	z-index: 1000 !important;
+}
+
+.tooltip.bottom {
+     margin-top: 0px; 
+}
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    background-color: #121518;
+    font-size: 11px;
+    font-family: lato;
+}
+
+.side-menu-wiki-list li.item a, .recent-wikis-list li.item a {
+	color: #777777;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 8px 13px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.side-menu-wiki-list li.item .wiki-name, .recent-wikis-list li.item .wiki-name {
+	/*position: relative;
+	top: 3px;*/
+	margin-bottom: 0;
+}
+
+.navbar-inner {
+    min-height: 0px;
+}
+
+.navbar-brand,
+.navbar-nav>li>a {
+    line-height: 60px;
+    height: 60px;
+    padding-top: 0;
+    color: #fff !important;
+}
+
+.main-menu .navbar-nav>.open>a, .main-menu .navbar-nav>.open>a:focus, .main-menu .navbar-nav>.open>a:hover {
+    color: #fff !important;
+    background-color: initial !important;
+}
+
+@media (max-width: 778px) {
+	.main-menu .navbar-nav>li>a {
+	    line-height: 30px !important;
+	    height: 30px !important;
+	    padding-top: 0;
+	}	
+}
+
+.main-menu {
+	background-color: #323b44;
+    border-color: #323b44;
+    border-radius: 0px;
+}
+
+.navbar-form {
+	line-height: 50px;
+    margin: 0px;
+}
+
+.navbar-brand {
+	text-transform: uppercase;
+	font-family: Cambria;
+	font-size: 18px;
+	color: #ddd;
+}
+
+.navbar-brand:hover {
+	color: #ccc;
+}
+
+.navbar-brand span {
+	font-weight: 900;
+	border-radius: 2px;
+	padding: 3px; 
+	padding: 0px 5px;
+	font-size: 29px;
+}
+
+.main-menu .navbar-nav>li>.dropdown-menu {
+	background-color: #323b44;
+}
+
+.main-menu .dropdown-menu>li>a {
+	color: #fff;
+	padding: 5px 12px; 
+}
+
+.main-menu .dropdown-menu>li>a:hover {
+	background-color: #000;
+	color: #fff; 
+}
+
+.dropdown-menu-right:before {
+	position: absolute;
+	top: -7px;
+	right: 15px;
+	display: inline-block;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #323b44;
+	border-left: 7px solid transparent;
+	border-bottom-color: rgba(0, 0, 0, 0.2);
+	content: '';
+}
+
+.dropdown-menu-right:after {
+	position: absolute;
+	top: -6px;
+	right: 16px;
+	display: inline-block;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid #323b44;
+	border-left: 6px solid transparent;
+	content: '';
+}
+
+.dropdown-menu.white-pointer:after {
+	border-bottom: 7px solid #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin: 0;
+	padding: 0;
+}
+
+.no-container {
+	margin: 0;
+}
+
+.aside-content {
+	margin-left: 260px;
+	margin-top: 20px;
+}
+
+.create-wiki-aside {
+	/*margin-left: 60px;*/
+	margin-left: 0px;
+}
+
+.page-header {
+	margin: 0;
+}
+
+.page-header .icon {
+	margin-right: 10px;
+}
+
+.page-header, .wikis-list-header {
+	font-size: 24px;
+	font-weight: bold;
+	font-family: "Lato";
+}
+
+.wikis-list-inner {
+	border-bottom: 1px solid #eee;
+	padding-bottom: 9px;
+}
+
+.events-list .event {
+	display: flex;
+	align-items: center;
+	margin-bottom: 25px;
+}
+
+.events-list {
+	margin-top: 15px;
+}
+
+.events-list .event .event-icon {
+	margin-right: 15px;
+}
+
+.events-list .event .event-top {
+	margin-bottom: 5px;
+}
+
+.events-list .event .event-user-image {
+	margin-right: 7px;
+}
+
+.recent-wikis-list {
+	margin-bottom: 0;
+}
+
+.recent-wikis-list .media-body {
+	display: table-row;
+}
+
+.side-menu-wiki-list .cateogry-icon {
+	border-radius: 4px;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	vertical-align: -3px;
+	margin-left: 1px;
+	background: #e7edf3;
+}
+
+.wikis-list {
+	margin-top: 15px;
+}
+
+/********************************* CKEEDITOR ************************************/
+
+.cke_source {
+	font-family: consolas !important;
+	font-size: 15px !important;
 }
 
 label {
-    font-weight: normal !important;
-    margin-bottom: 5px;
+	font-weight: 600;
+	font-family: roboto;
+	font-size: 14px;
+	color: #424242;
 }
 
-.form-group.has-error label {
-    color: #a94442;
+.cke_chrome {
+	border: none !important;
+	border: 1px solid #d1d1d1 !important;
+}
+
+.actions-btn li:last-child {
+	padding-right: 0px;
+}
+
+.create-wiki-aside .page-header {
+	margin-bottom: 20px;	
+}
+
+.btn-link:hover {
+	text-decoration: none;
+}
+
+.btn {
+	font-family: "lato";
+	font-weight: 500;
+}
+
+/************************ Read List **************************************/
+
+.read-list-con {
+	padding: 0; 
+}
+
+.read-list-con .read-list-item {
+	border-left: 0 !important;
+	border-right: 0 !important;
+	border-radius: 0 !important;
+}
+
+.read-list-con .read-list-item.active .text-muted, .read-list-con .read-list-item.active .icon {
+	color: #fff;
+}
+
+.read-list-con .read-list-item:first-child {
+	border-top: 0;
+}
+
+.read-list-con .read-list-item:last-child {
+	border-bottom: 0;
+	border-radius: 4px !important;
+}
+
+.read-list-con .read-list-item .item-name {
+	margin-bottom: 4px;
+}
+
+.read-list-con .read-list-item .item-description {
+	font-size: 13px;
+}
+
+.read-list-con .read-list-item .icon {
+	color: #b9b9b9;
+}
+
+.read-list-item-detail .list-group-item {
+	border-radius: 0 !important; 
+	border-left: 0;
+	border-right: 0;
+}
+
+.read-list-item-detail .list-group-item:first-child {
+	border-top: 0;
+}
+
+.read-list-item-detail .list-group-item:last-child {
+	border-bottom: 0;
+}
+
+.read-list-item-detail h5, .read-list-con .read-list-item .item-name {
+	font-size: 15px;
+	font-weight: 600;
+    font-family: lato;
+}
+
+.read-list-item-detail p {
+	margin-bottom: 6px;
+}
+
+.wikis-list .wikis-list-item {
+	border: none;
+	padding: 18px 6px;
+}
+
+.wikis-list .wikis-list-item .media-heading {
+	font-weight: 600;
+	font-family: lato;
+	font-size: 15px;
+	color: #111;
+	margin-bottom: 3px;
+}
+
+.wiki-item-heading-bottom {
+	font-size: 13px;
+	font-weight: 500;
+	color: #777;
+	font-family: lato;
+	margin-bottom: 6px;
+}
+
+.wiki-item-heading-bottom .person-name {
+	font-weight: 700;
+}
+
+.wiki-item-description {
+	color: #777;
+}
+
+.item-category-label {
+	border-radius: 3px;
+    padding: 2px 10px;
+    color: #fff;
+    font-size: 11px;
+    font-family: lato;
+    margin-right: 20px;
+    background: #484848;
 }
 
 .form-group.with-icon {
@@ -64,9 +467,6 @@ label {
     height: 100%;
     width: 2.67142857em;
     opacity: .5;
-    border-radius: 0 .28571429rem .28571429rem 0;
-    -webkit-transition: opacity .3s ease;
-    transition: opacity .3s ease;
 }
 
 .form-group.with-icon .icon:before {
@@ -78,672 +478,25 @@ label {
     margin-top: -.5em;
 }
 
-.wikis-table>tbody>tr>td {
-        padding: 10px 0px;
+.team-setting, .user-profile, .wiki-setting {
+	max-width: 800px;
+	margin: auto;
+	margin-top: 30px;
 }
 
-.wikis-table>tbody>tr:last-child {
-    border-bottom: 1px solid #ddd; 
+.team-setting .team-setting-header, .wiki-setting .wiki-setting-header {
+	margin: 0;
+	margin-bottom: 40px;
+	font-size: 45px;
+	font-weight: 900;
+	text-align: center;
+	font-family: lato;
 }
 
-.wikis-table>thead>tr>th {
-    font-weight: 400;
-    border-bottom-width: 1px;
+.wiki-setting .wiki-setting-header {
+	font-size: 35px;
+	margin-bottom: 30px;
 }
-
-.activity-text a:hover, .organization-member-item .member-info a:hover, .wikis-table a:hover {
-    text-decoration: underline;
-}
-
-.wikis-table .wiki-category-list li {
-    margin-bottom: 5px;
-}
-
-.wikis-table .wiki-category-list li:last-child {
-    margin-bottom: 0;
-}
-
-.no-hoverable:hover {
-    text-decoration: none !important;
-}
-
-.readlist-item-unread {
-    font-weight: 600;
-    -webkit-text-stroke: 0px !important;
-}
-
-.readlist-item-time {
-    font-size: 13px;
-}
-
-.comment-list .comment-item {
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.comment-list .comment-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.comment-list .comment-item:first-child {
-    padding-top: 0;
-}
-
-.media-foot ul.actions li {
-    padding: 0 10px; 
-}
-
-.cus-nav>li>a {
-    position: relative;
-    display: block;
-    padding: 6px 8px;
-    border-radius: 4px;
-    color: #777;
-}
-
-.cus-nav-right {
-    text-align: right;
-}
-
-.activity-head {
-    background-color: #ffffff;
-    z-index: 10;
-}
-
-.dropdown.open .wiki-setting-btn, .cus-nav>li.dropdown.open>a {
-    outline: 0;
-    -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-    border: 1px solid #adadad;
-    background: #e6e6e6 none;
-    margin: -1px;
-    border-bottom-width: 0;
-    border-radius: 4px 4px 0 0;
-}
-
-.wiki-setting-btn {
-    border-radius: 4px;
-    padding: 5px;
-    position: relative;
-    right: 2px;
-    color: #777;
-}
-
-.wiki-setting-btn:active, 
-.wiki-setting-btn:hover, 
-.wiki-setting-btn:focus, 
-.cus-nav>li>a:active, 
-.cus-nav>li>a:hover,
-.cus-nav>li>a:focus {
-    color: #333;
-}
-
-.wiki-setting-btn:hover, .cus-nav>li>a:hover {
-    margin: -1px;
-    border: 1px solid #adadad;
-    background-color: #e6e6e6;
-}
-
-.media-icon {
-    color: #9E9E9E;
-    margin-right: 6px;
-}
-
-ul.list-bordered li:last-child {
-    border-bottom: 0;
-}
-
-ul.list-bordered>li {
-    border-bottom: 1px solid #ddd;
-    padding: 12px 0;
-}
-
-.activity-time, .activity-content {
-    font-size: 13px;
-}
-
-#category-outline {
-    font-size: 13px;
-    line-height: 1.7em;
-}
-
-.cur-default {
-    cursor: default;
-}
-
-.headin-no-margin {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.ml5 {
-    margin-left: 5px;
-}
-
-.ml10 {
-    margin-left: 10px;
-}
-
-.ml15 {
-    margin-left: 15px;
-}
-
-.ml20 {
-    margin-left: 20px;
-}
- 
-.mb15 {
-    margin-bottom: 15px;
-}
-
-.mb20 {
-    margin-bottom: 20px;
-}
-
-.mb25 {
-    margin-bottom: 25px;
-}
-
-.mb5 {
-    margin-bottom: 5px !important;
-}
-
-.mt0 {
-    margin-top: 0;
-}
-
-.plr15 {
-    padding: 0 15px;
-}
-
-.m10, .mb10 {
-    margin-bottom: 10px !important;
-}
-
-.mb0 {
-    margin-bottom: 0;
-}
-
-.p0 {
-    padding: 0;
-}
-
-.m0 {
-    margin-bottom: 0;
-}
-
-.text-lead {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.category-item:hover .category-item-inner {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
-}
-
-.category-foot .category-foot-inner {
-    height: 30px;
-}
-
-.category-actions {
-    display: none;
-}
-
-.category-item-inner:hover .category-actions {
-    display: block;
-}
-
-.category-foot .category-actions li button:hover, .category-foot .category-actions li a:hover {
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    color: #616161;
-    background-color: #f8f8f8;
-}
-
-.category-foot .glyphicon-book {
-    width: 1.28571429em; 
-    text-align: center;
-}
-
-.category-foot .category-actions li a.delete-btn:hover {
-    color: #fff !important;
-    background-color: #c9302c !important;
-    border-color: #ac2925 !important;
-    -webkit-text-stroke: 0px !important;
-}
-
-.category-foot .category-actions li {
-    padding: 0;
-}
-
-.category-foot p, .category-foot button, .category-foot a {
-    font-size: 13px; 
-    color: #616161; 
-    -webkit-text-stroke: 0px;
-}
-
-.category-foot .category-actions button, 
-.category-foot .category-actions li button:focus, 
-.category-foot .category-actions a, 
-.category-foot .category-actions a:focus {
-    padding: 5px 8px;
-}
-
-.v-center {
-    display: flex;
-    align-items: center;
-}
-
-.header-menu .navbar-right {
-    margin-right: 0 !important;
-}
-
-.header-menu {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e7edf3;
-    transition: box-shadow 0.2s, -webkit-transform 0.2s;
-}
-
-.header-menu li a {
-    /*font-family: "Lato";*/
-    font-size: 13px;
-    font-weight: 400;
-}
-
-.create-organization {
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
-.create-organization .create-organization-head {
-    margin: 0 0 20px;
-}
-
-.create-organization .create-organization-body ul>li>a.step-completed h4, .create-organization .create-organization-body ul>li>a.step-completed p {
-    color: #3c763d;
-}
-
-.create-organization .create-organization-body ul>li.active>a h4, .create-organization .create-organization-body ul>li.active>a p {
-    -webkit-text-stroke: 0px;
-    color: #ffffff;
-}
-
-.vertical-center {
-    display: flex;
-    align-items: center;
-}
-
-.header-menu .nav-btn {
-    padding: 5px 12px;
-    margin: 9px 0;
-}
-
-@media (max-width: 767px) {
-    .affix {
-        position: static !important;
-        top: 0 !important;
-    }
-}
-
-.affix {
-    top: 50px;
-    padding-top: 15px;
-}
-
-.wiki-name::first-letter, .page-name::first-letter {
-    text-transform: uppercase;
-}
-
-input, select, .btn, textarea {
-    border-radius: 3px !important;
-    transition: all 0.12s linear 0s !important;
-}
-
-input , input:focus, select:focus, .input:focus, textarea, textarea:focus {
-    box-shadow: none !important;
-}
-
-label {
-    font-size: 13px;
-    font-weight: 500;
-    text-transform: none;
-}
-
-
-.wikis-categories-con .wiki-category li {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 6px;
-}
-
-.wikis-categories-con .wiki-category li:last-child {
-    margin-bottom: 0;
-}
-
-code {
-    font-family: monaco !important;
-}
-
-button {
-    outline: none !important;
-}
-
-.syntaxhighlighter { 
-    overflow-y: hidden !important; 
-    overflow-x: auto !important; 
-    margin: 0 5px !important;
-}
-
-.syntaxhighlighter::-webkit-scrollbar {
-    width: 8px; 
-    height: 8px;
-    background-color: rgba(0,0,0,0);
-    -webkit-border-radius: 100px;
-}
-.syntaxhighlighter::-webkit-scrollbar:hover {
-    background-color: rgba(0, 0, 0, 0.09);
-}
-.syntaxhighlighter::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.5);
-    -webkit-border-radius: 100px;
-}
-.syntaxhighlighter::-webkit-scrollbar-thumb:active {
-    background: rgba(0,0,0,0.61); / Some darker color when you click it */
-    -webkit-border-radius: 100px;
-}
-
-.page-description pre, .page-description code {
-    line-height: 1.45;
-    font-size: 14px;
-    background-color: #f7f7f7;
-    border-radius: 3px;
-    border: none;
-    font-family: 'consolas' !important;
-}
-
-.page-description h1, 
-.page-description h2, 
-.page-description h3, 
-.page-description h4,
-.page-description h5,
-.page-description h6 {
-    margin-top: 0;
-}
-
-.mce-toolbar button, .mce-stack-layout-item, .mce-toolbar-grp {
-    background-color: white !important;
-}
-
-.mce-tinymce {
-    border: 1px solid rgba(34,36,38,.15) !important;
-    box-shadow: none !important;
-}
-
-.mce-panel {
-    border-color: rgba(34,36,38,.15) !important;
-}
-
-/*Jstree*/
-
-.jstree-selected>a {
-    color: black !important;
-    font-weight: 500 !important;
-}
-
-.jstree-default .jstree-anchor {
-    /*color: #3572b0 !important;*/
-    font-size: 13px !important;
-}
-
-.jstree-loading a {
-    color: #333 !important;
-}
-
-.jstree-default .jstree-hovered {
-    /*background-color: white !important;*/
-    border: none !important;
-    box-shadow: none !important;
-    /*text-decoration: underline !important;*/
-}
-
-.jstree-default .jstree-clicked {
-    background-color: white !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-.page-path li.active {
-    border-bottom: none !important;
-}
-
-.rte-autocomplete li a {
-    cursor: pointer !important;
-}
-
-.upload-btn {
-    margin-bottom: 8px;
-}
-
-.rte-autocomplete::before, .rte-autocomplete::after {
-    border: none !important;
-}
-
-.mce-tooltip {
-    font-family: 'segoe ui', sans-serif !important;
-}
-
-.mce-menu-item-normal.mce-active {
-    background-color: #3498db !important;
-}
-
-text tspan {
-    font-family: "segoe ui", sans-serif !important;
-    font-size: 14px !important;
-}
-
-.category-icon {
-    border-radius: 4px;
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    background: #e7edf3;
-    position: relative;
-    top: 3px;
-}
-
-/********************************** Index Page *************************************/
-
-@media (max-width: 770px) {
-    .page-side-navbar-con {
-        display: none;
-    }
-
-    .aside-content {
-        margin-left: 0 !important;
-        padding-left: 0 !important;
-    }
-}
-
-.intro { padding: 50px 0px; margin-bottom: 60px; }
-
-.index-intro { margin-bottom: 45px; }
-
-.index-intro .brand { font-size: 74px; text-transform: uppercase; font-weight: 700; }
-
-.index-intro .content h1 { font-size: 34px; font-weight: 400; color: #464646; }
-
-.index-intro .content p { max-width: 500px; font-size: 20px; margin: auto; }
-
-.index-buttons .index-button { font-size: 17px; border: 2px solid #CCD6E4; border-radius: 6px; padding: 15px 30px; color: #7E96B3; display: inline-flex; margin-right: 15px; }
-
-.index-buttons .index-button:last-child { margin-right: 0; }
-
-@media (max-width: 500px) {
-    .index-buttons .index-button {
-        display: block !important;
-        width: 100% !important;
-        margin-bottom: 15px;
-    }
-
-    .index-buttons {
-        margin-left: 14px;
-        margin-right: 14px;
-    }
-}
-
-.index-buttons .index-button:hover { border-color: #6844a7; color: #6844a7; }
-
-/* Features */
-
-.features { background: #EFF2F6; padding: 60px 0px 50px 0px; color: #7E96B3; }
-
-.Carousel { height: 140px; position: relative; white-space: nowrap; overflow: hidden; max-width: 1200px; margin: 0 auto 30px; }
-
-.CarouselGroup { display: inline-block; }
-
-.CarouselItem { display: inline-block; vertical-align: top; width: 130px; padding: 0 10px; white-space: normal; }
-
-.Carousel:after { position: absolute; top: 0; right: 0; bottom: 0; left: 0; content: ' '; background-image: linear-gradient(to right, #eff2f6 0%, rgba(239, 242, 246, 0) 50%, #eff2f6 100%); }
-
-.CarouselItem .icon { margin-bottom: 20px; font-size: 55px; display: inline-block; font-size: 55px; vertical-align: top; }
-
-.CarouselItem-label { font-size: 16px; }
-
-.features-text { font-size: 20px; margin-bottom: 30px; color: #3C5675; max-width: 590px; margin-left: auto; margin-right: auto; padding: 0 20px; }
-
-.feature-button { border-color: #6844a7 !important; color: #6844a7 !important;  }
-.feature-button:hover { border-color: #5d00ff !important; color: #5d00ff !important;  }
-
-.index-wikis-item:first-letter { text-transform: uppercase; }
-
-/******************************* Team create ************************************************/
-
-.team-create, .team-join, .team-login { max-width: 600px; margin: auto; margin-top: 20px; margin-bottom: 13px; }
-.team-create .heading { font-size: 45px; font-weight: 600; margin-bottom: 30px; margin-top: 0px;  }
-
-@media (max-width: 630px) {
-    .team-create, .team-join, .team-login {
-        margin-left: 14px;
-        margin-right: 14px;
-    }
-}
-
-/***************************** End Team create *********************************************/
-
-/****************************** Join Team **************************************************/
-
-.team-join .create-button, .team-create .create-button, .team-login .create-button {
-    border: 2px solid #CCD6E4;
-    padding: 7px 25px;
-    color: #7E96B3;
-    display: inline-flex;
-    margin-right: 15px;
-    background-color: #fff;
-}
-
-.team-join .create-button:hover, .team-create .create-button:hover, .team-login .create-button:hover {
-    border-color: #6844a7;
-    color: #6844a7;
-}
-
-/****************************** End Join Team **********************************************/
-
-/****************************** Login Team **********************************************/
-@media (max-width: 370px) {
-    .team-login .create-button, .team-join .create-button, .team-create .create-button {
-        display: block;
-        margin-bottom: 10px;
-    }
-}
-/****************************** End Login Team **********************************************/
-
-/****************************** Page Side Nav **********************************************/
-
-/****************************** End Page Side Nav **********************************************/
-
-/****************************** Team Feed Page **********************************************/
-
-.news-feed .heading, .recent-wikis .heading, .readlist .heading {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 16px;
-}
-
-.news-feed .heading h3, .recent-wikis .heading h3, .readlist .heading h3 {
-    margin: 0px;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.recent-wikis {
-    margin-bottom: 25px;
-}
-
-.recent-wikis .heading, .readlist .heading {
-    margin-bottom: 10px;
-}
-
-.news-feed .heading .icon, .recent-wikis .heading .icon, .readlist .heading .icon {
-    margin-right: 7px;
-}
-
-/****************************** End Team Feed Page **********************************************/
-
-/****************************** Wikis list Page **********************************************/
-
-.wiki-side-nav {
-    margin-top: 20px;
-}
-
-.wiki-side-nav .major-link {
-    margin-bottom: 15px;
-}
-
-.minor-links .nav-stacked li a, .wiki-side-nav .major-link .nav-stacked a {
-    padding: 7px 10px;
-    border-radius: 0px;
-    color: inherit;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.minor-links .nav-stacked li a:hover, .wiki-side-nav .major-link .nav-stacked a:hover {
-    color: inherit;
-}
-
-.minor-links .nav-stacked li a .category-icon {
-    margin-right: 12px;
-}
-
-.wiki-side-nav .minor-links .heading {
-    margin: 0 0 9px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-left: 3px;
-    color: #8e8e8e;
-    text-transform: uppercase;
-}
-
-.wiki-side-nav .major-link .nav-stacked .icon {
-    margin-right: 16px;
-}
-
-.wiki-list-head .heading {
-    margin: 0px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.wiki-list-head {
-    margin: 20px 0px;
-}
-
-/****************************** End Wikis list Page **********************************************/
-
-/****************************** Team Settings Page **********************************************/
 
 .team-general-setting, .user-general-setting {
     max-width: 800px;
@@ -763,38 +516,25 @@ text tspan {
 .delete-team h2, 
 .team-members h2, 
 .profile-pic-setting h2,
-.user-info h2 {
+.user-info h2,
+.wiki-info h2 {
     margin: 0;
     margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 800;
+    font-family: lato;
 }
 
-.team-info, .team-logo, .delete-team, .team-members, .profile-pic-setting, .user-info {
+.team-info, .team-logo, .delete-team, .team-members, .profile-pic-setting, .user-info, .wiki-info {
     margin-top: 40px;
     border-bottom: 1px solid #eee;
     padding-bottom: 40px;
     min-height: 110px;
 }
 
-.team-info .action-info, .upload-team-logo,.delete-team {
+.team-info .action-info, .upload-team-logo, .delete-team .action-info, .wiki-info .action-info {
     max-width: 400px;
-}
-
-.team-info form .save-team-info, .upload-team-logo, .profile-pic-setting .upload-btn, .user-info .update-btn {
-    border-radius: 3px;
-    border: 2px solid #CCD6E4;
-    padding: 5px 20px;
-    color: #7E96B3;
-    display: inline-flex;
-    margin-right: 15px;
-    background-color: #fff;
-}
-
-.team-info form .save-team-info:hover, .upload-team-logo:hover, .profile-pic-setting .upload-btn:hover, .user-info .update-btn:hover {   
-    border-color: #6844a7;
-    color: #6844a7;
-    background-color: #fff;
+    margin-bottom: 10px;
 }
 
 .team-members {
@@ -806,12 +546,40 @@ text tspan {
 }
 
 .member-list  .member-role {
-    font-size: 12px;
+    font-size: 10px;
+    font-family: lato;
 }
 
-/****************************** End Team Settings Page **********************************************/
+.member-list .member-list-item {
+	padding: 10px 15px;
+	margin: 0;
+	display: flex;
+	align-items: center;
+}
 
-/****************************** User Settings Page **********************************************/
+.member-list .member-list-item:hover {
+	color: #555;
+    background-color: #f5f5f5;
+}
+
+.member-list .member-list-item .user-info-con {
+	margin-left: 10px;
+}
+
+.user-profile .user-image {
+	margin-bottom: 25px;
+}
+
+.user-profile .user-detail .header {
+	font-size: 23px;
+	font-family: lato;
+	font-weight: 700;
+	margin-bottom: 5px;
+}
+
+.user-profile .user-detail .icon {
+	margin-right: 5px;
+}
 
 #avatar-upload-form .heading {
     margin-top: 0;
@@ -839,4 +607,336 @@ text tspan {
     margin-bottom: 10px;
 }
 
-/****************************** End User Settings Page **********************************************/
+.profile-pic-setting .upload-btn {
+	margin-bottom: 5px;
+}
+
+.side-menu .side-menu-inner .wiki-intro .header {
+	/*font-family: lato;*/
+	font-size: 17px;
+	font-weight: 500;
+	color: #484848; 
+}
+
+.side-menu .side-menu-inner .wiki-intro {
+	margin-top: 25px;
+}
+
+.side-menu .side-menu-inner .wiki-intro {
+	padding: 5px 13px;
+}
+
+.wiki-contributer-list {
+	margin-bottom: 0;
+}
+
+.wiki-contributer-list li {
+	margin-bottom: 12px;
+}
+
+.main-menu .overall-search-input {
+	width: 250px;
+    background-color: #525558;
+    border-color: #5d5d5d;
+    border-radius: 3px !important;
+    color: #fff;
+}
+
+.main-menu .overall-search-input:focus {
+	background-color: #4b4d50;
+}
+
+.media-object {
+    margin: 2px 0px 0px 0px;
+}
+
+.comments .comment .comment-time {
+	font-size: 12px;
+    margin-left: 5px;
+}
+
+.comments .comment .user-name {
+	font-size: 15px;
+}
+
+.comments .comment {
+	margin-bottom: 12px;
+}
+
+.comments .comment:last-child {
+	margin-bottom: 0;
+}
+
+.wiki-comments-con {
+	padding: 0;
+}
+
+.wiki-comments-con .comments {
+	max-height: 440px;
+	overflow: auto;
+	position: relative;
+	padding: 15px 12px;
+}
+
+.wiki-comment-form {
+	background-color: #f5f5f5;
+	border-top: 1px solid #ddd;
+	padding: 12px 8px;
+}
+
+.side-menu .wiki-side-menu {
+	position: relative;
+	height: calc(100% - 2px);
+}
+
+.wiki-side-menu .wiki-setting-bottom {
+    position: absolute;
+    bottom: 0px;
+    background-color: #e2e2e2;
+    width: 100%;
+    padding: 6px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.wiki-side-menu .side-menu-inner {
+	overflow: auto;
+	height: calc(100% - 51px);
+}
+
+.wiki-setting-bottom .wiki-setting-button {
+	font-size: 13px;
+	font-weight: 500;
+	font-family: "Lato";
+	background-color: #e2e2e2;
+}
+
+.wiki-setting-bottom .wiki-setting-button:hover {
+	background-color: #ccc;
+	border: 1px solid #e2e2e2;
+}
+
+.wiki-setting-bottom .wiki-setting-button:focus {
+	-webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+	box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+	background-color: #ccc;
+}
+
+.home-nav {
+	background-color: #EFF2F6;
+	padding: 30px 0px;
+}
+
+.home-nav nav {
+	width: 500px;
+	margin: auto;
+	text-align: center;
+	background-color: #EFF2F6;
+}
+
+.home-nav ul {
+	margin-bottom: 0;
+}
+
+.home-nav ul li {
+	padding: 0;
+	margin-right: 20px;
+}
+
+.home-nav ul li a {
+	font-size: 13px;
+	font-weight: 500;
+	font-family: lato;
+	color: #3C5675;
+	padding-bottom: 6px;
+}
+
+.home-nav ul li.active a {
+    border-bottom: 2px solid #323b44;
+    font-weight: 600 !important;
+}
+
+.home-nav ul li a:hover {
+	text-decoration: none;
+}
+
+.home-page {
+	padding-top: 40px;
+	background-color: #EFF2F6;
+}
+
+.home-page .brand-intro {
+	max-width: 500px;
+	margin: auto;
+}
+
+.home-page .brand-intro .brand-name {
+	font-size: 65px;
+	text-transform: uppercase;
+	text-align: center;
+	font-family: Cambria;
+	font-weight: 900;
+	color: #323b44;
+	margin-bottom: 20px;
+}
+
+.home-page .brand-intro .minor-text {
+	font-size: 18px;
+	text-align: center;
+	max-width: 420px;
+	margin: auto;
+	text-align: center;
+	color: #323b44;
+}
+
+.brand-buttons {
+	margin-top: 30px;
+	margin-bottom: 45px;
+}
+
+.brand-buttons a {
+	margin-right: 15px;
+	padding: 9px 25px;
+	border: 1px solid #eee;
+	background-color: #fff;
+	color: #323b44;
+}
+
+.features { background: #ffffff; padding: 60px 0px 50px 0px; color: #7E96B3; }
+
+.Carousel { height: 140px; position: relative; white-space: nowrap; overflow: hidden; max-width: 1200px; margin: 0 auto 30px; }
+
+.CarouselGroup { display: inline-block; }
+
+.CarouselItem { display: inline-block; vertical-align: top; width: 130px; padding: 0 10px; white-space: normal; }
+
+.Carousel:after { position: absolute; top: 0; right: 0; bottom: 0; left: 0; content: ' '; background-image: linear-gradient(to right, #ffffff 0%, rgba(239, 242, 246, 0) 50%, #ffffff 100%); }
+
+.CarouselItem .icon { margin-bottom: 20px; font-size: 55px; display: inline-block; font-size: 55px; vertical-align: top; }
+
+.CarouselItem-label { font-size: 16px; }
+
+.features-text { font-family: lato; font-size: 17px; margin-bottom: 30px; color: #3C5675; max-width: 590px; margin-left: auto; margin-right: auto; padding: 0 20px; }
+
+.more-feature-button {
+	padding: 9px 25px;
+	background-color: #3C5675;
+	color: #fff; 
+}
+
+.more-feature-button:hover {
+	color: #fff;
+	background-color: #4c5561;
+}
+
+.browser-buttons {
+	background-color: #fff;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	border-radius: 3px 3px 0px 0px;
+}
+
+.browser-buttons .browser-buttons-inner {
+	margin-left: 15px;
+}
+
+.brand-img {
+	width: 1100px;
+	margin: auto;
+	box-shadow: 0px 1px 14px rgba(0, 0, 0, 0.23);
+	border-radius: 7px;
+}
+
+.login-form-con {
+	width: 500px;
+    margin: auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.login-form-con .header, .create-category-form-con .header {
+	margin-bottom: 30px;
+	font-size: 34px;
+	font-family: lato;
+	color: #323b44;
+	font-weight: 800;
+}
+
+.login-page {
+	padding-top: 10px;
+    background-color: #EFF2F6;
+    padding-bottom: 40px;
+}
+
+.features-con {
+	width: 1200px;
+	margin: auto;
+	margin-top: 40px;
+
+	background-color: #fff;
+	padding: 40px;
+	border-radius: 4px;
+	border: 1px solid #ddd;
+}
+
+.features-con .feature-icon {
+	text-align: center;
+    display: block;
+    margin-bottom: 25px;
+}
+
+.features-con .feature-detail .feature-label {
+	text-align: center;
+	font-size: 18px;
+	font-weight: 600;
+	color: #323b44;
+	margin-bottom: 8px;
+	display: block;
+}
+
+.features-con .feature-detail .feature-content {
+	font-size: 15px;
+	color: #323b44;
+}
+
+.feature-item {
+	margin-bottom: 30px;
+}
+
+.brand-page-con {
+	height: 570px;
+	overflow: hidden;
+	border-bottom: 1px solid #eee;
+}
+
+.home-con {
+	height: 100%;
+	background-color: #eff2f6;
+}
+
+#app {
+	height: 100%;
+}
+
+.nothing-found {
+	text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+.panel-body .nothing-found {
+	margin-top: 0;
+}
+
+.nothing-found img {
+	margin-right: 15px;
+}
+
+.create-category-form-con {
+	width: 600px; 
+	margin: auto;
+	margin-top: 70px;
+}

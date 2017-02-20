@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Auth;
-use Emojione;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,7 +23,7 @@ class Category extends Model
     protected static $recordEvents = ['created', 'updated', 'deleted'];
 
     const CATEGORY_RULES = [
-        'category_name' => 'required',
+        'name' => 'required|max:15',
     ];
 
     protected $table = 'category';
@@ -34,7 +33,7 @@ class Category extends Model
         'slug',
     	'outline',
     	'user_id',
-    	'organization_id',
+    	'team_id',
     	'created_at',
     	'updated_at',
     ];
@@ -46,9 +45,9 @@ class Category extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function organization()
+    public function team()
     {
-        return $this->belongsTo(Organization::class, 'organization_id', 'id');
+        return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
     public function wikis()
@@ -56,20 +55,20 @@ class Category extends Model
         return $this->hasMany(Wiki::class, 'category_id', 'id');
     }
 
-    public function createCategory($data, $organizationId)
+    public function createCategory($data, $teamId)
     {
     	$this->create([
-    		'name' 			  => $data['category_name'],
-            'outline'         => $data['description'],
-	    	'user_id' 		  => Auth::user()->id,
-	    	'organization_id' => $organizationId,
+    		'name' 		=> $data['name'],
+            'outline'   => $data['description'],
+	    	'user_id' 	=> Auth::user()->id,
+	    	'team_id'   => $teamId,
     	]);
     	return true;
     }
 
-    public function getCategories($organizationId)
+    public function getTeamCategories($teamId)
     {
-        return $this->where('organization_id', '=', $organizationId)->get();
+        return $this->where('team_id', '=', $teamId)->get();
     }
 
     public function deleteCategory($categoryId)
@@ -78,7 +77,7 @@ class Category extends Model
         return true;
     }
 
-    public function updateCategory($data, $categoryId, $organizationId)
+    public function updateCategory($data, $categoryId, $teamId)
     {
         $this->find($categoryId)->update([
                                     'name' => $data['category_name'],
@@ -87,15 +86,10 @@ class Category extends Model
         return true;
     }
 
-    public function getOrganizationCategories($id)
-    {
-        return $this->where('organization_id', '=', $id)->get();
-    }
-
-    public function getCategory($categorySlug, $organizationId)
+    public function getCategory($categorySlug, $teamId)
     {
         return $this->where('slug', '=', $categorySlug)
-                    ->where('organization_id', '=', $organizationId)
+                    ->where('team_id', '=', $teamId)
                     ->with(['wikis'])
                     ->first();   
     }

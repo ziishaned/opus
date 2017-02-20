@@ -18,7 +18,9 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/organizations/'.$_COOKIE['organization_slug']);
+            return redirect()->route('dashboard', [
+                Auth::user()->team->slug
+            ]);
         }
 
         return $next($request);

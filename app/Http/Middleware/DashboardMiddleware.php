@@ -20,7 +20,7 @@ class DashboardMiddleware
     {
         if(Auth::user()) {
             if(!Session::get('user_timezone')) {
-                Session::put('user_timezone', Timezone::where('user_id', '=', Auth::user()->id)->pluck('timezone')->first());
+                Session::put('user_timezone', Auth::user()->timezone);
             }
         }
         return $next($request);

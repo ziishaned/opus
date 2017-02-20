@@ -1,185 +1,257 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
-    <div class="row no-container">
-        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
-            <div class="wiki-side-nav">
-                <div class="major-link">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-book icon"></span>All wikis</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="minor-links">
-                    <div class="heading">Categories list</div>
-                    @if($categories->count() > 0)
-                        <ul class="nav nav-pills nav-stacked">
-                            @foreach($categories as $category)
-                                <li>
-                                    <a href="#"><span class="category-icon" style="background-color: {{ ViewHelper::getBackgroundColor($category->name) }}"></span> {{ $category->name }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-muted text-center">No categories...</p>
-                    @endif
-                </div>
-            </div>    
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-            <div class="wiki-list-head">
-                <div class="row v-center">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="heading">
-                            All Wikis
-                        </div>
-                    </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
-                        <form class="form-inline" role="search">
-                            <div class="form-group with-icon">
-                                <input type="text" class="form-control input" placeholder="Filter by name" style="width: 300px;">
-                                <i class="fa fa-search icon"></i>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="index-body">
-                <table class="table table-condensed wikis-table">
-                    <thead>
-                        <tr>
-                            <th>Wiki</th>
-                            <th>Description</th>
-                            <th>Categories</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($wikis as $wiki)
-                            <tr>
-                                <td>
-                                    <div class="v-center">
-                                        <a href="#" class="pull-left"><img src="{!! new Avatar($wiki->name, 'square', 34) !!}" class="media-object img-rounded" alt=""></a>
-                                        <a href="#" class="pull-left" style="font-size: 15px; margin-left: 25px;">{{ $wiki->name }}</a>
-                                    </div>
-                                </td>
-                                <td>
-                                    {{ $wiki->outline }}
-                                </td>
-                                <td>
-                                    <ul class="list-unstyled mb0 wiki-category-list">
-                                        <li>
-                                            <span class="label label-default" style="background-color: {{ ViewHelper::getBackgroundColor($wiki->category->name) }}">{{ $wiki->category->name }}</span>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <a href="#"><i class="fa fa-info-circle fa-fw"></i></a>
-                                </td>
-                                <td>
-                                    <a href="#"><i class="fa fa-star-o fa-fw"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <p class="mb20">Hint: Organization administrators can organise spaces into categories.</p>
-            </div>
-        </div>
-    </div>
-    {{-- <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            <div data-spy="affix" data-offset-top="10">
-                <div class="tabs-vertical" style="margin-bottom: 30px;">
-                    <div class="index-head">
-                        <h4 class=""><i class="fa fa-link fa-fw"></i> Quick links</h4>
-                    </div>
-                    <div class="index-body">
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#"><span class="glyphicon glyphicon-book"></span> <span class="ml15">All wikis</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="tabs-vertical">
-                    <div class="index-head">
-                        <h4 class=""><i class="fa fa-tags fa-fw"></i> Categories</h4>
-                    </div>
-                    <div class="index-body">
-                        @if($categories->count() > 0)
-                            <ul class="list-unstyled">
-                                @foreach($categories as $category)
-                                    <li>
-                                        <a href="#"><span class="category-icon" style="background-color: {{ ViewHelper::genColorCodeFromText($category->name) }}"></span> <span class="ml15">{{ $category->name }}</span></a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="text-muted text-center">Fovourite list is empty...</p>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-            <div style="min-height: 38px;">
-                <div class="index-head affix-top" data-spy="affix" data-offset-top="10" style="background-color: rgb(255, 255, 255); z-index: 10;">
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                            <h4><span class="glyphicon glyphicon-book"></span> <span class="ml10">All Wikis</span></h4>
-                        </div>
-                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
-                            <form class="form-inline" role="search">
-                                <div class="form-group">
-                                    <input type="text" class="form-control input-sm" placeholder="Filter by name..." style="width: 258px;">
-                                </div>
-                                <button type="submit" class="btn btn-default btn-sm">Search</button>
-                                <a href="#" class="btn btn-link">Clear</a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="index-body">
-                <table class="table table-condensed wikis-table">
-                    <thead>
-                        <tr>
-                            <th>Wiki</th>
-                            <th>Description</th>
-                            <th>Categories</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($wikis as $wiki)
-                            <tr>
-                                <td>
-                                    <div class="v-center">
-                                        <a href="#" class="pull-left"><img src="{!! new Avatar($wiki->name, 'square', 34) !!}" class="media-object img-rounded" alt=""></a>
-                                        <a href="#" class="pull-left" style="font-size: 15px; margin-left: 25px;">{{ $wiki->name }}</a>
-                                    </div>
-                                </td>
-                                <td>
-                                    {{ $wiki->outline }}
-                                </td>
-                                <td>
-                                    <ul class="list-unstyled mb0 wiki-category-list">
-                                        <li>
-                                            <a href="#" class="no-hoverable"><span class="label label-default">{{ $wiki->category->name }}</span></a>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <i class="fa fa-info-circle fa-fw"></i>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <p class="mb20">Hint: Organization administrators can organise spaces into categories.</p>
-            </div>
-        </div>
-    </div> --}}
+	<div class="side-menu hidden-sm hidden-xs">
+		<div class="side-menu-inner">
+			<ul class="list-unstyled side-menu-top">
+				<li class="item">
+					<a href="wikis-list.html">
+						<img src="/img/icons/basic_notebook.svg" width="24" height="24" class="icon">
+						<span class="item-name">All wikis</span>
+					</a>
+				</li>
+			</ul>
+			<div class="side-menu-wiki-list">
+				<ul class="list-unstyled">
+					<li class="nav-header">All categories</li>
+					<li class="item">
+						<a href="#">
+							<div class="media">
+								<div class="pull-left">
+									<div class="cateogry-icon" style="background-color: #1e88e5;"></div>
+								</div>
+								<div class="media-body">
+									<p class="wiki-name">Demonstration Space</p>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="item">
+						<a href="#">
+							<div class="media">
+								<div class="pull-left">
+									<div class="cateogry-icon" style="background-color: #5c6bc0;"></div>
+								</div>
+								<div class="media-body">
+									<p class="wiki-name">Web QA Automation</p>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="item">
+						<a href="#">
+							<div class="media">
+								<div class="pull-left">
+									<div class="cateogry-icon" style="background-color: #ad1457;"></div>
+								</div>
+								<div class="media-body">
+									<p class="wiki-name">Almosafer web</p>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="item">
+						<a href="#">
+							<div class="media">
+								<div class="pull-left">
+									<div class="cateogry-icon" style="background-color: #b71c1c;"></div>
+								</div>
+								<div class="media-body">
+									<p class="wiki-name">Mobile App Project</p>
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="aside-content">
+		<div class="row no-container">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="wikis-list-inner">
+					<div class="pull-left">
+						<h1 class="wikis-list-header">All Wikis</h1>
+					</div>
+					<div class="pull-right">
+						<form action="" method="POST" role="form" class="form-inline">
+							<div class="form-group with-icon">
+								<input type="text" class="form-control" id="" style="width: 250px;">
+								<i class="fa fa-search icon"></i>
+							</div>
+							<button type="submit" class="btn btn-default"><i class="fa fa-filter fa-fw"></i> Filter</button>
+						</form>	
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="wikis-list">
+					<div class="list-group">
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Dingo project management</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">Zeeshan Ahmed</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label">Demonstration Space</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">A full-featured personal project management tool with task boards.</p>
+								</div>
+							</div>	
+						</a>
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Git profile</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">John Doe</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label" style="background-color: #1e88e5;">Mobile App Project</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">Utility that helps you switch git configurations with ease.</p>
+								</div>
+							</div>	
+						</a>
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Inspector</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">Elloit</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label" style="background-color: #ad1457;">Almosafer web</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								</div>
+							</div>	
+						</a>
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Demonstration Space</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">Elloit</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label" style="background-color: #1e88e5;">Web QA Automation</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">PHP library that fetches the social accounts, website, name, photos, employment history and other details possible for the user by their email.</p>
+								</div>
+							</div>	
+						</a>
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Yell</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">Elloit</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label" style="background-color: #b71c1c;">Demonstration Space</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">PHP package to make your objects strict and throw exception when you try to access or set some undefined property in your objects.</p>
+								</div>
+							</div>	
+						</a>
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Web QA Automation</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">Elloit</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label">Demonstration Space</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+								</div>
+							</div>	
+						</a>
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Almosafer web</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">Elloit</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label">Demonstration Space</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">Duis aute irure dolor in reprehenderit in voluptate velit esse
+									cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+									proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+								</div>
+							</div>	
+						</a>
+						<a href="#" class="list-group-item wikis-list-item">
+							<div class="media">
+								<div class="pull-left">
+									<img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">Mobile App Project</h4>
+									<div class="wiki-item-heading-bottom">
+										<div class="pull-left">
+											<i class="fa fa-refresh fa-fw"></i> Last updated by <object><a href="#" class="person-name">Elloit</a></object> about 2 hours ago
+										</div>
+										<div class="pull-right">
+											<div class="item-category-label">Demonstration Space</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<p class="wiki-item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+									tempor incididunt ut labore et dolore magna aliqua.</p>
+								</div>
+							</div>	
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection

@@ -1,12 +1,21 @@
+new Vue({
+    el: '#app',
+    mounted() {
+        
+    },
+    methods: {
+
+    }
+});
+
 var App = {
     init: function(params = null) {
         this.params = params;
         this.bindUI();
         this.initJcrop();
-        this.initTooltip();
-        this.loadCategories();
-        this.initMasonry();
         this.initCarousel();
+        this.initTooltip();
+        this.initCKEditor();
 
         var fixAffixWidth = function() {
             $('[data-spy="affix"]').each(function() {
@@ -15,24 +24,48 @@ var App = {
         }
         fixAffixWidth();
         $(window).resize(fixAffixWidth);
-
-        var navbar = $('.navbar');
-        $(window).scroll(function(){
-            if($(window).scrollTop() <= 40){
-                navbar.css({
-                    'box-shadow': 'none',
-                    'border-bottom': '1px solid #e7edf3',
-                });
-            } else {
-                navbar.css({
-                    'box-shadow': '0 2px 6px rgba(0,0,0,0.35)',
-                    'border-bottom': 'none',
-                }); 
-            }
-        }); 
     },
-    initCarousel: function() {
-        if ($('.Carousel').length > 0) {
+    initCKEditor() {
+        if($('#my1').length) {
+            
+            CKEDITOR.replace('my1', {
+                width: "100%",
+                height: 340,
+                enableTabKeyTools: true,
+                removePlugins: 'elementspath',
+                pbckcode: {
+                    highlighter: 'HIGHLIGHT',
+                    modes: [
+                        ['HTML', 'html'], ['CSS', 'css'], ['PHP', 'php'], ['JS', 'javascript'], ['SQL', 'sql'],
+                        ['Text', 'text'], ['SH', 'sh']
+                    ],
+                    theme: 'textmate',
+                    js: '/plugins/ckeditor/plugins/pbckcode/ace/',
+                },
+                extraPlugins: 'pbckcode',
+                codeSnippet_theme: 'monokai_sublime',
+                resize_enabled: false,
+                uiColor: '#eeeeee',
+                toolbar: [
+                    { name: 'justify3', items: ['Format'] },
+                    { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Bold', 'Italic', 'Underline', 'Strike'] },
+                    { name: 'colors', items: ['TextColor', 'BGColor', 'RemoveFormat', 'SelectAll', '-', 'NumberedList', 'BulletedList'] },
+                    { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                    { name: 'insert', items: ['Table', 'HorizontalRule', 'PageBreak', '-', 'Link', 'Iframe'] },
+                    { name: 'editing', items: ['SpellCheck', '-', 'Find', 'Replace', ] },
+                    { name: 'paragraph', items: ['-', 'Outdent', 'Indent'] },
+                    { name: 'justify2', items: ['pbckcode', 'Source', 'Maximize', '-', 'Undo', 'Redo'] },
+                ]
+            });
+        }
+    },
+    initTooltip() {
+        $('[data-toggle="tooltip"]').tooltip({
+            container: 'body'
+        });
+    },
+    initCarousel() {
+        if ($(document).find('.Carousel').length) {
             var $carousel = $('.Carousel');
             $carousel.wrapInner($('<div class="CarouselGroup"/>'));
             var $group = $('.CarouselGroup');
@@ -46,36 +79,6 @@ var App = {
 
             animate();
         }
-    },
-    initMasonry: function() {
-        var that = this;  
-        if($('#ms-container').length > 0 && $('#ms-container').find('.ms-item').length > 0) {
-            new Masonry(document.querySelector('#ms-container'), {
-                itemSelector: '.ms-item',
-                columnWidth: '.ms-item',                
-            });      
-        }
-    },
-    initTooltip: function() {
-        $('[data-toggle="tooltip"]').tooltip();
-    },
-    loadCategories: function() {
-        $('.categories-con').infinitescroll({
-            loading : {
-                finished: undefined,
-                finishedMsg: null,
-                msg: '',
-                msgText: '',
-                speed: 0,
-                start: undefined,
-                img: "/images/loader.gif",
-                selector: ".infinitescroll-loader-con",
-            },
-            navSelector : ".categories-pagination-con .pagination",
-            nextSelector : ".categories-pagination-con .pagination li.active + li a",
-            itemSelector : ".categories-item",
-        });
-
     },
     initJcrop: function() {
         var that = this;
@@ -97,65 +100,11 @@ var App = {
     },
     bindUI: function () {
         var that = this;
-        $('#update-category-modal').on('hidden.bs.modal', function (e) {
-            $('#update-category-form').find('#name').val('');
-            $('#update-category-form').find('#update-outline').val('');
-        });
-        $(document).on('click', '#edit-category', function(event) {
-            event.preventDefault();
-            var curEle       =  $(this).closest('.category-item'),
-                categoryslug =  $(curEle).data('category-slug'),
-                name         =  $(curEle).find('#category-name').text(),
-                outline      =  $(curEle).find('#category-outline').text();
-            $('#update-category-form').find('#name').val(name);         
-            $('#update-category-form').find('#update-outline').val(outline);
-            $('#update-category-form').attr('action', laroute.action('organizations.categories.update', { organization_slug: that.params.organizationSlug, category_slug: categoryslug}));
-        });
-        $(document).on('click', '#add-invitation-input', function(event) {
-            event.preventDefault();
-            var invitationInput = `<li>
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 hidden-md hidden-lg">
-                                                <div class="remove-invitation-input-con">
-                                                    <button type="button" class="btn-link" id="remove-invitation-input"><i class="fa fa-close"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                                                <div class="form-group">
-                                                    <label for="">Email Address</label>
-                                                    <input type="text" class="form-control input" id="" placeholder="example@example.com">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                <div class="form-group">
-                                                    <label for="">First Name</label>
-                                                    <input type="text" class="form-control input" id="" placeholder="Optional">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                <div class="form-group">
-                                                    <label for="">Last Name</label>
-                                                    <input type="text" class="form-control input" id="" placeholder="Optional">
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1 hidden-sm hidden-xs">
-                                                <div class="remove-invitation-input-con" style="text-align: center; position: relative; top: 27px;">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Remove invitation" class="btn-link" id="remove-invitation-input"><i class="fa fa-close"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>`;
-            $('#user-invitation-form .invitations-input-con').append(invitationInput);
-            $('.total-invitations').text($('.invitations-input-con li').length);
-            that.initTooltip();
-        });
-        $(document).on('click', '#remove-invitation-input', function(event) {
-            event.preventDefault();
-            if($('.invitations-input-con li').length > 1) {
-                $(this).closest('li').remove();
-            }
-            $('.total-invitations').text($('.invitations-input-con li').length);
-        });
+
+        if(document.getElementById('timezone')) {
+            $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
+        }
+
         $('#update-image-size').on('click', function(event) {
             event.preventDefault();
             $.ajax({
@@ -203,75 +152,7 @@ var App = {
 };
 
 $(document).ready(function() {
-    App.init({
-        userInviteList       : $('.user-invite-list'),
-        selectOrganization   : $('#organization-input'),
-        selectWiki           : $('#wiki-input'),
-        selectPageParent     : $('#page-parent'),
-        inviteUserInput      : $('#invite-people-input'),
-        inviteToOrganization : $('#invite-to-organization-id'),
-    });
-
-    if($('#timezone').length > 0) {
-        $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
-    }
-
-    tinymce.init({
-        selector: "#page-description, #wiki-description",
-        content_css : "/plugins/tinymce/tinymce.css,/plugins/tinymce/plugins/leaui_code_editor/css/pre.css", 
-
-        theme: "modern",
-        skin: "lightgray",
-        
-        width: "100%",
-        height: 400,
-        
-        menubar: false,
-        statusbar: false,
-        valid_elements: '*[*]',
-        
-        plugins: [
-            "advlist autolink link image lists charmap print preview hr anchor pagebreak localautosave",
-            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
-            "save table contextmenu directionality template paste textcolor",
-            "leaui_code_editor codemirror autoresize"
-        ],
-        autoresize_min_height: 400,
-		paste_webkit_styles: "all",
-		paste_retain_style_properties: "all",
-
-		browser_spellcheck: true,
-		nonbreaking_force_tab: true,
-        relative_urls: false,
-        
-        toolbar: [
-        	"styleselect | bold italic underline forecolor backcolor | leaui_code_editor | bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | link unlink table | preview code | undo redo | localautosave",
-        ],
-        codemirror: {
-            indentOnInit: true,
-            fullscreen: false,
-            path: 'CodeMirror',
-            config: {
-                tabSize: 4, 
-                mode: 'htmlmixed',
-                extraKeys: {"Ctrl-Space": "autocomplete"},
-                lineNumbers: true,
-                styleActiveLine: true
-            },
-            width: 800,
-            height: 500,        
-            cssFiles: [
-                'addon/hint/show-hint.css',
-            ],
-            jsFiles: [          
-               'mode/htmlmixed/htmlmixed.js',
-               'addon/hint/show-hint.js',
-               'addon/hint/html-hint.js',
-               'addon/hint/css-hint.js',
-               'addon/hint/xml-hint.js',
-            ]
-        },
-    });
+    App.init();
 });
 
 $(function() {
