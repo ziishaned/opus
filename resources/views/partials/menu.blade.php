@@ -36,7 +36,7 @@
                         <li><a href="{{ route('teams.settings.general', [$team->slug,]) }}"><i class="fa fa-users fa-fw"></i> Team Settings</a></li>
                         <li><a href="{{ route('teams.settings.members', [$team->slug,]) }}"><i class="fa fa-envelope-o fa-fw"></i> Invite user</a></li>
                         <li class="divider"></li>
-                        <li><a href="home.html"><i class="fa fa-power-off fa-fw"></i> Logout </a></li>
+                        <li><a href="{{ route('logout') }}"><i class="fa fa-power-off fa-fw"></i> Logout </a></li>
                     </ul>
 				</li>
 			</ul>

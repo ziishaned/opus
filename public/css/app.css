@@ -74,7 +74,7 @@ input, select, textarea {
 	font-weight: 500;
 }
 
-.side-menu-top .item.active {
+.side-menu-top .item.active, .side-menu-categories-list li.active {
 	background-color: rgba(1,1,1,0.1);
 }
 
@@ -245,8 +245,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .create-wiki-aside {
-	/*margin-left: 60px;*/
 	margin-left: 0px;
+	padding-bottom: 15px;
 }
 
 .page-header {
@@ -438,14 +438,23 @@ label {
 	color: #777;
 }
 
+.wikis-list-item .wiki-top {
+	display: inline-flex;
+	margin-bottom: 0px;
+}
+
 .item-category-label {
+	margin-left: 15px;
 	border-radius: 3px;
     padding: 2px 10px;
     color: #fff;
-    font-size: 11px;
+    font-size: 12px;
+    font-weight: 600;
     font-family: lato;
-    margin-right: 20px;
     background: #484848;
+    border: 1px solid #ddd;
+    position: relative;
+    top: -3px;
 }
 
 .form-group.with-icon {

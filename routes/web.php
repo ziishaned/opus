@@ -14,8 +14,12 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');
 
-Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
+    Route::get('/teams/{team_slug}/wikis', 'WikiController@getTeamWikis')->name('api.teams.wikis');
+    Route::get('/teams/{team_slug}/categories', 'CategoryConroller@getTeamCategories')->name('api.teams.categories');
+});
 
+Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => '{team_slug}/users/{user_slug}/settings'], function () {
         Route::get('profile', 'UserController@profileSettings')->name('settings.profile');
         Route::get('account', 'UserController@accountSettings')->name('settings.account');

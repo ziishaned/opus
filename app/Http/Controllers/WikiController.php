@@ -72,7 +72,7 @@ class WikiController extends Controller
     {
         $wikiPages = $this->wikiPage->getPages($wiki->id);
 
-        return view('wiki.wiki', compact('wikiPages', 'wiki', 'team', 'category'));
+        return view('wiki.index', compact('wikiPages', 'wiki', 'team', 'category'));
     }
     
     public function getWikiPages()
@@ -191,5 +191,16 @@ class WikiController extends Controller
         $categories = $this->category->getTeamCategories($team->id);
 
         return view('wiki.list', compact('team', 'wikis', 'categories'));
+    }
+
+    public function getTeamWikis(Team $team)
+    {
+        if($this->request->get('category_slug')) {
+            $category = $this->category->where('slug', $this->request->get('category_slug'))->first();
+            
+            return $this->wiki->where('team_id', $team->id)->where('category_id', $category->id)->with(['user', 'category', 'team'])->latest()->paginate(10);
+        } 
+
+        return $this->wiki->where('team_id', $team->id)->with(['user', 'category', 'team'])->latest()->paginate(10);
     }
 }

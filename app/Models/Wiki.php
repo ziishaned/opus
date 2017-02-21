@@ -47,7 +47,6 @@ class Wiki extends Model
         'category_id',
         'outline',
         'description',
-        'visibilty',
         'user_id',
         'team_id',
         'updated_at',
@@ -60,15 +59,8 @@ class Wiki extends Model
      * @const array
      */
     const WIKI_RULES = [
-        'wiki_name'       => 'required|max:45|min:1',
-        'wiki_visibility' => 'required',
-    ];
-
-    /**
-     * @const array
-     */
-    const WIKI_PAGE_RULES = [
-        'page_name' => 'required|max:35|min:3',
+        'name'     => 'required|max:45|min:3',
+        'category' => 'required',
     ];
 
     public function category()
@@ -121,12 +113,11 @@ class Wiki extends Model
     public function saveWiki($data, $teamId)
     {
         $wiki = $this->create([
-            'name'            =>  $data['wiki_name'],
-            'category_id'     =>  $data['category_id'],
+            'name'            =>  $data['name'],
+            'category_id'     =>  $data['category'],
             'outline'         =>  $data['outline'],
-            'description'     =>  $data['wiki_description'],
+            'description'     =>  $data['description'],
             'user_id'         =>  Auth::user()->id,
-            'visibilty'       =>  $data['wiki_visibility'],
             'team_id'         =>  $teamId,
         ]);
 

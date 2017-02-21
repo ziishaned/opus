@@ -11,10 +11,10 @@
 					</a>
 				</li>
 			</ul>
-			<div class="side-menu-wiki-list">
+			<div class="side-menu-wiki-list side-menu-categories-list">
 				<ul class="list-unstyled">
 					<li class="nav-header">All categories</li>
-					<aside-category-list team="{{ $team->slug }}" category=""></aside-category-list>
+					<aside-category-list team="{{ $team->slug }}" category="{{ $category->slug }}"></aside-category-list>
 				</ul>
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="wikis-list-inner">
 					<div class="pull-left">
-						<h1 class="wikis-list-header">All Wikis</h1>
+						<h1 class="wikis-list-header">{{ $category->name }} wikis</h1>
 					</div>
 					<div class="pull-right">
 						<form action="" method="POST" role="form" class="form-inline">
@@ -37,7 +37,7 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="wikis-list">
-					<wikis-list team="{{ $team->slug }}" category=""></wikis-list>
+					<wikis-list team="{{ $team->slug }}" category="{{ $category->slug }}"></wikis-list>
 				</div>
 			</div>
 		</div>

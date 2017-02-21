@@ -62,6 +62,11 @@ class CategoryConroller extends Controller
 
     public function getCategoryWikis(Team $team, Category $category)
     {
-        return view('team.categories.wikis', compact('team', 'category'));
+        return view('category.index', compact('team', 'category'));
+    }
+
+    public function getTeamCategories(Team $team)
+    {
+        return $this->category->where('team_id', $team->id)->with(['team'])->orderBy('name', 'asc')->get();
     }
 }

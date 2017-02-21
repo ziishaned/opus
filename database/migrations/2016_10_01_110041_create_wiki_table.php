@@ -19,10 +19,6 @@ class CreateWikiTable extends Migration
             $table->string('slug', 65535);
             $table->string('outline', 1000);
             $table->longText('description')->nullable();
-            $table->enum('visibilty', [
-                'private',
-                'public'
-            ]);
 
             $table->integer('user_id')->unsigned();
             $table->integer('category_id')->unsigned();
