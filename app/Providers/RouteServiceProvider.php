@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use App\Models\Wiki;
 use App\Models\Team;
-use App\Models\WikiPage;
+use App\Models\Page;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -48,11 +48,11 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('page_slug', function($slug) {
-            return WikiPage::where('slug', '=', $slug)->first();
+            return Page::where('slug', '=', $slug)->first();
         });
 
         Route::bind('page_id', function($id) {
-            return WikiPage::where('id', '=', $id)->first();
+            return Page::where('id', '=', $id)->first();
         });
 
         Route::bind('wiki_id', function($id) {

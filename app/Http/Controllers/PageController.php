@@ -5,98 +5,99 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 use App\Models\Wiki;
-use App\Models\WikiPage;
+use App\Models\Team;
+use App\Models\Page;
 use App\Models\Category;
-use App\Models\Organization;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class PageController extends Controller
 {
-	protected $wiki;
+    protected $wiki;
 
-    protected $wikiPage;
+    protected $page;
 
-    protected $organization;
+    protected $team;
 
     protected $request;
 
     protected $category;
 
-    public function __construct(Request $request, 
-                                Wiki $wiki, 
-                                Organization $organization, 
-                                WikiPage $wikiPage,  
-                                Category $category) {
-        $this->wiki         = $wiki;
-        $this->request      = $request;
-        $this->wikiPage     = $wikiPage;
-        $this->category     = $category;
-        $this->organization = $organization;
+    public function __construct(Request $request,
+                                Wiki $wiki,
+                                Team $team,
+                                Page $page,
+                                Category $category)
+    {
+        $this->wiki     = $wiki;
+        $this->request  = $request;
+        $this->page     = $page;
+        $this->category = $category;
+        $this->team     = $team;
     }
 
-	public function pagesReorder(Organization $organization, Category $category, Wiki $wiki)
+    public function pagesReorder(Organization $organization, Category $category, Wiki $wiki)
     {
-        return view('wiki.page.reorder', compact('wiki', 'organization', 'category'));        
+        return view('wiki.page.reorder', compact('wiki', 'organization', 'category'));
     }
 
-    public function reorder($organizationId, $wikiId)
+    public function reorder($teamId, $wikiId)
     {
-        $this->wikiPage->changePageParent($this->request->get('nodeId'), $this->request->get('parentId'));   
+        $this->page->changePageParent($this->request->get('nodeId'), $this->request->get('parentId'));
+
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 
-    public function destroy(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
+    public function destroy(Team $team, Category $category, Wiki $wiki, Page $page)
     {
-        $pageDeleted = $this->wikiPage->deletePage($page->id);
+        $this->page->deletePage($page->id);
 
-        return redirect()->route('wikis.show', [$organization->slug, $wiki->category->slug, $wiki->slug])->with([
-            'alert' => 'Page successfully deleted.',
-            'alert_type' => 'success'
+        return redirect()->route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug])->with([
+            'alert'      => 'Page successfully deleted.',
+            'alert_type' => 'success',
         ]);
-    }   
-
-    public function edit(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
-    {   
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
-
-        return view('wiki.page.edit', compact('page', 'wiki', 'wikiPages', 'organization', 'category'));
     }
 
-    public function store(Organization $organization, Category $category, Wiki $wiki)
+    public function edit(Team $team, Category $category, Wiki $wiki, Page $page)
     {
-        $this->validate($this->request, Wiki::WIKI_PAGE_RULES);
+        $pages = $this->page->getPages($wiki->id);
 
-        $page = $this->wikiPage->saveWikiPage($wiki->id, $this->request->all());
-        
-        return redirect()->route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug])->with([
+        return view('wiki.page.edit', compact('page', 'wiki', 'pages', 'team', 'category'));
+    }
+
+    public function store(Team $team, Category $category, Wiki $wiki)
+    {
+        $this->validate($this->request, Page::PAGE_RULES);
+
+        $page = $this->page->saveWikiPage($wiki, $this->request->all());
+
+        return redirect()->route('pages.show', [$team->slug, $category->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
-            'alert_type' => 'success'
+            'alert_type' => 'success',
         ]);
     }
 
-    public function create(Organization $organization, Category $category, Wiki $wiki)
+    public function create(Team $team, Category $category, Wiki $wiki)
     {
-        $wikiPages = $this->wikiPage->getPages($wiki->id);
-        
-        return view('wiki.page.create', compact('wiki', 'wikiPages', 'organization', 'category'));
+        $pages = $this->page->getPages($wiki->id);
+
+        return view('page.create', compact('team', 'wiki', 'pages', 'category'));
     }
 
-    public function show(Organization $organization , Category $category, Wiki $wiki, WikiPage $page)
+    public function show(Team $team, Category $category, Wiki $wiki, Page $page)
     {
-        return view('wiki.page.page', compact('organization', 'page', 'wiki', 'pagePath', 'category'));
+        return view('page.index', compact('team', 'page', 'wiki', 'category'));
     }
 
-    public function update(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
+    public function update(Team $team, Category $category, Wiki $wiki, Page $page)
     {
-        $this->wikiPage->updatePage($page->id, $this->request->all());
-        $page = $this->wikiPage->find($page->id);
+        $this->page->updatePage($page->id, $this->request->all());
+        $page = $this->page->find($page->id);
 
-        return redirect()->route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug])->with([
+        return redirect()->route('pages.show', [$team->slug, $category->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully updated.',
-            'alert_type' => 'success'
+            'alert_type' => 'success',
         ]);
     }
 }

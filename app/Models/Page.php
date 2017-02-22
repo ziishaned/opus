@@ -10,21 +10,10 @@ use Illuminate\Support\Facades\DB;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class WikiPage
- *
- * @author Zeeshan Ahmed <ziishaned@gmail.com>
- * @package App\Models
- */
-class WikiPage extends Node
+class Page extends Node
 {
     use Sluggable, RecordsActivity, SoftDeletes;
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
     public function sluggable()
     {
         return [
@@ -34,19 +23,10 @@ class WikiPage extends Node
         ];
     }
 
-    /**
-     * @var \App\Models\Wiki
-     */
     protected $wiki;
 
-    /**
-     * @var string
-     */
     protected $table = 'wiki_page';
 
-    /**
-     * @var array
-     */
     protected $fillable = [
         'name',
         'outline',
@@ -61,36 +41,25 @@ class WikiPage extends Node
         'depth',
     ];
 
+    const PAGE_RULES = [
+        'name' => 'required|max:35',
+    ];
+
     protected $dates = ['deleted_at'];
 
-    /**
-     * @return mixed
-     */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'page_id', 'id')->latest()->with('user');
     }    
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function wiki() {
         return $this->belongsTo(Wiki::class, 'wiki_id', 'id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    
-    /**
-     * Retrieve all the pages of a wiki from database.
-     *
-     * @param $wikiId
-     * @return mixed
-     */
+
     public function getPages($wikiId)
     {
         $query = $this;
@@ -160,46 +129,20 @@ class WikiPage extends Node
         return $nodes;
     }
 
-    /**
-     * Filter wiki pges where wiki pages with a specific id.
-     *
-     * @param  int    $wikiId
-     * @param  string $text
-     * @return mixed
-     */
-    public function filterWikiPages($wikiId, $text)
-    {
-        $query = $this->where('wiki_id', '=', $wikiId)->where('name', 'like', '%' . $text . '%')->get();
-        return $query;
-    }
-
-    /**
-     * Create a new resource.
-     *
-     * @param  string $wikiSlug
-     * @param  array  $data
-     * @return static
-     */
-    public function saveWikiPage($wikiId, $data)
+    public function saveWikiPage($wiki, $data)
     {
         $page = $this->create([
-            'name'         =>  $data['page_name'],
+            'name'         =>  $data['name'],
             'outline'      =>  !empty($data['outline']) ? $data['outline'] : null,
-            'description'  =>  !empty($data['page_description']) ? $data['page_description'] : null,
+            'description'  =>  !empty($data['description']) ? $data['description'] : null,
             'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
             'user_id'      =>  Auth::user()->id,
-            'wiki_id'      =>  $wikiId,
+            'wiki_id'      =>  $wiki->id,
         ]);
 
         return $page;
     }
 
-    /**
-     * Get a specific resource.
-     *
-     * @param string $slug
-     * @return bool
-     */
     public function getPage($slug)
     {
         $page = $this->where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->with(['comments', 'wiki'])->first();
@@ -209,13 +152,6 @@ class WikiPage extends Node
         return $page;
     }
 
-    /**
-     * Update a specific resource.
-     *
-     * @param  int   $id
-     * @param  array $data
-     * @return bool
-     */
     public function updatePage($id, $data)
     {
         $this->find($id)->update([
@@ -228,12 +164,6 @@ class WikiPage extends Node
         return true;
     }
 
-    /**
-     * Delete a specific resource.
-     *
-     * @param  int $id
-     * @return bool
-     */
     public function deletePage($id)
     {
         $this->find($id)->delete();
@@ -241,17 +171,10 @@ class WikiPage extends Node
         return true;
     }
 
-    /**
-     * Change the parent of a page.
-     *
-     * @param  array $data
-     * @return bool
-     */
     public function changePageParent($nodeId, $parentId)
     {
         $node   = $this->find($nodeId);
         if ($parentId == '#') {
-            $parent = 'null';
             $node->makeRoot();
         } else {
             $parent = $this->find($parentId);

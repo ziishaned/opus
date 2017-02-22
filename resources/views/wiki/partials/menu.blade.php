@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li class="item">
-                    <a href="wikis-list.html">
+                    <a href="{{ route('pages.create', [ $team->slug, $category->slug, $wiki->slug]) }}">
                         <img src="/img/icons/basic_elaboration_document_plus.svg" width="24" height="24" class="icon">
                         <span class="item-name">Create a Page</span>
                     </a>
@@ -35,6 +35,7 @@
                 <ul class="list-unstyled">
                     <li class="nav-header">Page tree</li>
                 </ul>
+                <p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet. You can <a href="#" class="text-muted">create one here</a>.</p>
             </div>
         </div>
         <div class="wiki-setting-bottom">
