@@ -22,8 +22,19 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/icons/basic_gear.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Settings</a>
 								<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 8px;">
-			                        <li><a href="{{ route('wikis.create', [ $team->slug ]) }}">Create Wiki</a></li>
-			                        <li><a href="{{ route('categories.create', [ $team->slug ]) }}">Create Category</a></li>
+			                        <li><a href="#"><i class="fa fa-info-circle fa-fw"></i> Page Overview</a></li>
+			                        <li><a href="#"><i class="fa fa-history fa-fw"></i> Page History</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a></li>
+			                        <li><a href="#"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a></li>
+									<li class="divider"></li>
+									<li>
+										<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+										<form id="delete-wiki" action="{{ route('wikis.destroy', [$team->slug, $wiki->category->slug, $wiki->slug]) }}" method="POST" class="hide">
+											{!! method_field('delete') !!}
+											{!! csrf_field() !!}
+										</form>
+									</li>
 			                    </ul>
 			              	</li>
 						</ul>

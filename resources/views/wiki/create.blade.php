@@ -51,7 +51,7 @@
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="wiki-description">Description</label>
-						<textarea name="description" class="form-control" rows="22" id="wiki-description"></textarea>
+						<textarea name="description" class="form-control" data-height="380" id="wiki-description"></textarea>
 					</div>
 					<button type="submit" class="btn btn-primary pull-right">Save</button>
 					<div class="clearfix"></div>

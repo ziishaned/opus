@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
 use Image;
 use Session;
 use App\Models\User;
 use App\Models\Wiki;
 use App\Models\Team;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class UserController

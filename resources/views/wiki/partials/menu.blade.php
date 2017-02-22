@@ -2,7 +2,7 @@
     <div class="wiki-side-menu">
         <div class="side-menu-inner">
             <div class="wiki-intro">
-                <h1 class="header"><a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
+                <h1 class="header v-center"><img src="{!! new Avatar($wiki->name, 'circle', 44) !!}" alt="" style="margin-right: 15px;"> <a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
             </div>
             <ul class="list-unstyled side-menu-top">
                 <li class="nav-header" style="margin-bottom: 8px;">Quick Links</li>
@@ -14,8 +14,14 @@
                 </li>
                 <li class="item">
                     <a href="wikis-list.html">
-                        <img src="/img/icons/basic_webpage_txt.svg" width="24" height="24" class="icon">
+                        <img src="/img/icons/basic_sheet_multiple .svg" width="24" height="24" class="icon">
                         <span class="item-name">All Pages</span>
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="wikis-list.html">
+                        <img src="/img/icons/basic_elaboration_document_plus.svg" width="24" height="24" class="icon">
+                        <span class="item-name">Create a Page</span>
                     </a>
                 </li>
             </ul>

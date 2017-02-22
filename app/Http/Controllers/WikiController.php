@@ -211,6 +211,8 @@ class WikiController extends Controller
 
     public function getWikiActivity(Team $team, Category $category, Wiki $wiki)
     {
-        return view('wiki.activity', compact('team', 'category', 'wiki'));
+        $activities = $this->wiki->getActivty($wiki->id)->activity;
+
+        return view('wiki.activity', compact('team', 'category', 'wiki', 'activities'));
     }
 }

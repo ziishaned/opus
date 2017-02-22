@@ -174,7 +174,7 @@ var App = {
             
             CKEDITOR.replace('wiki-description', {
                 width: "100%",
-                height: 340,
+                height: $('#wiki-description').data('height'),
                 enableTabKeyTools: true,
                 removePlugins: 'elementspath',
                 extraPlugins: 'codesnippet',

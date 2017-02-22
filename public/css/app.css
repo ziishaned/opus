@@ -273,11 +273,16 @@ h1, h2, h3, h4, h5, h6, p {
 .events-list .event {
 	display: flex;
 	align-items: center;
-	margin-bottom: 25px;
+    margin: 0;
+    padding: 12px 8px;
+}
+
+.events-list .event:hover {
+    background-color: #F9F9F9;
 }
 
 .events-list {
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 .events-list .event .event-icon {

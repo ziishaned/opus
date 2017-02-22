@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default" data-spy="affix" data-offset-top="1">
     <div class="panel-heading">
         <div class="pull-left">
             Comments

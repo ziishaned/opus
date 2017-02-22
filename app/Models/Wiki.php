@@ -2,28 +2,15 @@
 
 namespace App\Models;
 
-use DB;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class Wiki
- *
- * @author Zeeshan Ahmed <ziishaned@gmail.com>
- * @package App\Models
- */
 class Wiki extends Model
 {
     use Sluggable, RecordsActivity, SoftDeletes;
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
     public function sluggable()
     {
         return [
@@ -33,14 +20,8 @@ class Wiki extends Model
         ];
     }
 
-    /**
-     * @var string
-     */
     protected $table = 'wiki';
 
-    /**
-     * @var array
-     */
     protected $fillable = [
         'name',
         'slug',
@@ -55,9 +36,6 @@ class Wiki extends Model
 
     protected $dates = ['deleted_at'];
 
-    /**
-     * @const array
-     */
     const WIKI_RULES = [
         'name'     => 'required|max:45|min:3',
         'category' => 'required',
@@ -72,25 +50,29 @@ class Wiki extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    /**
-     * A wiki can have many pages.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+    public function activity()
+    {
+        return $this->hasMany(Activity::class, 'subject_id', 'id')->where('activities.subject_type', Wiki::class)->with(['user', 'subject' => function($query) {
+            $query->withTrashed();
+        }])->latest();
+    }
+
+    public function subject()
+    {
+        return $this->morphTo();
+    }
+
     public function pages() {
         return $this->hasMany(WikiPage::class, 'wiki_id', 'id');
     }
 
-    /** 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function team() {
         return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
     public function getTeamWikis($teamId, $total = null)
     {
-        if(!is_null($total)) {
+        if($total !==  null) {
             $wikis = $this->where('team_id', $teamId)->with(['category'])->latest()->take(5)->get();
 
             return $wikis;
@@ -104,7 +86,7 @@ class Wiki extends Model
     public function getWiki($wikiSlug, $teamId)
     {
         $wiki = $this->where('slug', '=', $wikiSlug)->where('team_id', '=', $teamId)->with(['user', 'category'])->first();
-        if(is_null($wiki)) {
+        if($wiki === null) {
             return false;
         }
         return $wiki;
@@ -124,29 +106,25 @@ class Wiki extends Model
         return $wiki;
     }
 
-    /**
-     * Delete wiki
-     *
-     * @param  string $slug
-     * @return bool
-     */
     public function deleteWiki($id)
     {
         $this->find($id)->delete();
         return true;
     }
 
-    /**
-     * Update wiki
-     *
-     * @param  array  $data
-     * @return bool
-     */
     public function updateWiki($id, $data)
     {
         $this->find($id)->update([
             'description' =>  $data['description'],
         ]);
+
         return true;
+    }
+
+    public function getActivty($id)
+    {
+        $team = $this->where('id', $id)->with(['activity'])->first();
+
+        return $team;
     }
 }
