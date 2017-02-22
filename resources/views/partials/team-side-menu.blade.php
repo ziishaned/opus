@@ -10,13 +10,13 @@
 			</li>
 			<li class="item">
 				<a href="{{ route('teams.wikis', [$team->slug]) }}">
-					<img src="/img/icons/basic_notebook.svg" width="24" height="24" class="icon">
+					<img src="/img/icons/basic_book.svg" width="24" height="24" class="icon">
 					<span class="item-name">Wikis</span>
 				</a>
 			</li>
 			<li class="item">
 				<a href="{{ route('wikis.create', [ $team->slug ]) }}">
-					<img src="/img/icons/basic_notebook_pen.svg" width="24" height="24" class="icon">
+					<img src="/img/icons/basic_book_pencil.svg" width="24" height="24" class="icon">
 					<span class="item-name">Create Wiki</span>
 				</a>
 			</li>
@@ -38,7 +38,7 @@
 				<li class="nav-header">Favourite Wikis</li>
 				<li class="item">
 					<a href="#">
-						<div class="media">
+						<div class="media v-center">
 							<div class="pull-left">
 								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
 							</div>
@@ -50,7 +50,7 @@
 				</li>
 				<li class="item">
 					<a href="#">
-						<div class="media">
+						<div class="media v-center">
 							<div class="pull-left">
 								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
 							</div>
@@ -62,7 +62,7 @@
 				</li>
 				<li class="item">
 					<a href="#">
-						<div class="media">
+						<div class="media v-center">
 							<div class="pull-left">
 								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
 							</div>
@@ -74,7 +74,7 @@
 				</li>
 				<li class="item">
 					<a href="#">
-						<div class="media">
+						<div class="media v-center">
 							<div class="pull-left">
 								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
 							</div>

@@ -69,6 +69,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => '{team_slug}/categories/{category_slug}/wikis'], function () {
         Route::patch('{wiki_slug}', 'WikiController@update')->name('wikis.update');
         Route::get('{wiki_slug}', 'WikiController@show')->name('wikis.show');
+        Route::get('{wiki_slug}/activity', 'WikiController@getWikiActivity')->name('wikis.activity');
         Route::get('{wiki_slug}/overview', 'WikiController@overview')->name('wikis.overview');
         Route::get('{wiki_slug}/permissions', 'WikiController@permissions')->name('wikis.permissions');
         Route::delete('{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');

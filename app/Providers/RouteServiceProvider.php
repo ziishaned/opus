@@ -56,7 +56,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('wiki_id', function($id) {
-            return Wiki::where('id', '=', $id)->first();
+            return Wiki::where('id', '=', $id)->with(['category'])->first();
         });
 
         Route::bind('team_id', function($id) {
@@ -71,6 +71,7 @@ class RouteServiceProvider extends ServiceProvider
             $teamId = \Auth::user()->team->id;
             return Wiki::where('slug', '=', $slug)
                                     ->where('team_id', '=', $teamId)
+                                    ->with(['category'])
                                     ->first();
         });
 

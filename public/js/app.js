@@ -177,17 +177,8 @@ var App = {
                 height: 340,
                 enableTabKeyTools: true,
                 removePlugins: 'elementspath',
-                pbckcode: {
-                    highlighter: 'HIGHLIGHT',
-                    modes: [
-                        ['HTML', 'html'], ['CSS', 'css'], ['PHP', 'php'], ['JS', 'javascript'], ['SQL', 'sql'],
-                        ['Text', 'text'], ['SH', 'sh']
-                    ],
-                    theme: 'textmate',
-                    js: '/plugins/ckeditor/plugins/pbckcode/ace/',
-                },
-                extraPlugins: 'pbckcode',
-                codeSnippet_theme: 'monokai_sublime',
+                extraPlugins: 'codesnippet',
+                codeSnippet_theme: 'github',
                 resize_enabled: false,
                 uiColor: '#eeeeee',
                 toolbar: [
@@ -198,7 +189,7 @@ var App = {
                     { name: 'insert', items: ['Table', 'HorizontalRule', 'PageBreak', '-', 'Link', 'Iframe'] },
                     { name: 'editing', items: ['SpellCheck', '-', 'Find', 'Replace', ] },
                     { name: 'paragraph', items: ['-', 'Outdent', 'Indent'] },
-                    { name: 'justify2', items: ['pbckcode', 'Source', 'Maximize', '-', 'Undo', 'Redo'] },
+                    { name: 'justify2', items: ['CodeSnippet', 'Source', 'Maximize', '-', 'Undo', 'Redo'] },
                 ]
             });
         }

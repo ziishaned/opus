@@ -21,7 +21,7 @@
                             @endif
 
                             @if($activity->name == 'created_wiki')
-								<img src="/img/icons/basic_notebook.svg" width="22" height="22" alt="Image">                                                
+								<img src="/img/icons/basic_book.svg" width="22" height="22" alt="Image">                                                
                             @endif
 
                             @if($activity->name == 'deleted_wiki')

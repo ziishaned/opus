@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="/css/font-awesome.min.css">
 		<link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
 		<link rel="stylesheet" href="/css/toastr.min.css">
+		<link href="/plugins/ckeditor/plugins/codesnippet/lib/highlight/styles/github.css" rel="stylesheet">
 	</head>
 	<body>
 		<div id="app">
@@ -23,7 +24,7 @@
 			@endif
 			
 		</div>
-		
+
 		<script type="text/javascript" src="/js/laroute.js"></script>
 		<script type="text/javascript" src="/js/vue.js"></script>
 		<script type="text/javascript" src="/js/jquery.js"></script>
@@ -35,6 +36,12 @@
 		<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/moment.min.js"></script>
 		<script type="text/javascript" src="/js/color-hash.js"></script>
+		<script src="/plugins/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+        <script>
+            (function() {
+                hljs.initHighlightingOnLoad();
+            })();
+        </script>
 		@include('partials.toastr')
 	</body>
 </html>

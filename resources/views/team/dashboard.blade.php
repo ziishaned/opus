@@ -16,18 +16,20 @@
 					<div class="panel-body" style="padding: 15px 0px">
 						@if($wikis->count() > 0)
 							<ul class="list-unstyled recent-wikis-list">
-								<li class="item">
-									<a href="#">
-										<div class="media">
-											<div class="pull-left">
-												<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
+								@foreach($wikis as $wiki)
+									<li class="item">
+										<a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}">
+											<div class="media v-center">
+												<div class="pull-left">
+													<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
+												</div>
+												<div class="media-body">
+													<p class="wiki-name">{{ $wiki->name }}</p>
+												</div>
 											</div>
-											<div class="media-body">
-												<p class="wiki-name">Demonstration Space</p>
-											</div>
-										</div>
-									</a>
-								</li>
+										</a>
+									</li>
+								@endforeach
 							</ul>
 						@else 
 							<h1 class="nothing-found side">No recent wikis</h1>

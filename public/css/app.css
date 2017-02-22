@@ -1,5 +1,5 @@
 body, html {
-	font-family: "segoe ui";
+    font-family: "segoe ui", arial, serif;
 	height: 100%;
 }
 
@@ -21,9 +21,16 @@ a:hover {
 }
 
 pre {
-	background-color: #f4f4f4;
-    padding: 5px 15px;
-    border-radius: 3px;
+    padding: 12px;
+    border-radius: 2px;
+    margin-bottom: 0;
+}
+pre, pre code {
+    background-color: #f5f5f5 !important;
+}
+
+pre code {
+    padding: 0 !important;
 }
 
 input, select, textarea {
@@ -48,8 +55,8 @@ input, select, textarea {
 	left: 0;
 	top: 61px;
 	width: 248px;
-	background-color: #eeeeee;
-	border-right: 1px solid #e2e2e2;
+	background-color: #f5f5f5;
+	border-right: 1px solid #ddd;
 }
 
 .side-menu.create-wiki {
@@ -189,18 +196,13 @@ input, select, textarea {
 	font-size: 29px;
 }
 
-.main-menu .navbar-nav>li>.dropdown-menu {
-	background-color: #323b44;
-}
-
 .main-menu .dropdown-menu>li>a {
-	color: #fff;
-	padding: 5px 12px; 
+	padding: 4px 10px; 
 }
 
 .main-menu .dropdown-menu>li>a:hover {
-	background-color: #000;
-	color: #fff; 
+	background-color: rgba(1,1,1,0.1);
+	color: black; 
 }
 
 .dropdown-menu-right:before {
@@ -209,7 +211,7 @@ input, select, textarea {
 	right: 15px;
 	display: inline-block;
 	border-right: 7px solid transparent;
-	border-bottom: 7px solid #323b44;
+	border-bottom: 7px solid #fff;
 	border-left: 7px solid transparent;
 	border-bottom-color: rgba(0, 0, 0, 0.2);
 	content: '';
@@ -221,7 +223,7 @@ input, select, textarea {
 	right: 16px;
 	display: inline-block;
 	border-right: 6px solid transparent;
-	border-bottom: 6px solid #323b44;
+	border-bottom: 6px solid #fff;
 	border-left: 6px solid transparent;
 	content: '';
 }
@@ -621,10 +623,9 @@ label {
 }
 
 .side-menu .side-menu-inner .wiki-intro .header {
-	/*font-family: lato;*/
-	font-size: 17px;
-	font-weight: 500;
-	color: #484848; 
+	font-family: lato;
+	font-size: 13px;
+	font-weight: 400;
 }
 
 .side-menu .side-menu-inner .wiki-intro {
@@ -701,10 +702,10 @@ label {
 .wiki-side-menu .wiki-setting-bottom {
     position: absolute;
     bottom: 0px;
-    background-color: #e2e2e2;
+    background-color: #f5f5f5;
     width: 100%;
     padding: 6px;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid #ddd;
 }
 
 .wiki-side-menu .side-menu-inner {
@@ -714,20 +715,22 @@ label {
 
 .wiki-setting-bottom .wiki-setting-button {
 	font-size: 13px;
-	font-weight: 500;
 	font-family: "Lato";
-	background-color: #e2e2e2;
+	background-color: #f5f5f5;
+    padding: 8px 8px;
+    border-radius: 2px;
 }
 
 .wiki-setting-bottom .wiki-setting-button:hover {
-	background-color: #ccc;
-	border: 1px solid #e2e2e2;
+	background-color: #eee;
+	text-decoration: none;
+	border: 1px solid #ddd;
 }
 
 .wiki-setting-bottom .wiki-setting-button:focus {
 	-webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
 	box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-	background-color: #ccc;
+	border-color: #ddd;
 }
 
 .home-nav {
@@ -948,4 +951,34 @@ label {
 	width: 600px; 
 	margin: auto;
 	margin-top: 70px;
+}
+
+.wiki-nav {
+    margin-bottom: 18px;
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 3px 3px 0px 0px;
+}
+
+.wiki-nav>nav>ul {
+	margin-bottom: 0;
+}
+
+.wiki-nav>nav>ul>li {
+	padding: 0;
+}
+
+.wiki-nav>nav>ul>li>a {
+	font-family: lato;
+	font-size: 13px;
+	padding: 8px 8px;
+	border-radius: 2px;
+}
+
+.wiki-nav>nav>ul>li>a:hover, .wiki-nav>nav>ul>li>a:focus, .wiki-nav>nav>ul>li>a:active, .wiki-nav>nav>ul>li>a:visited {
+	background-color: #eee;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	margin: -1px;
 }

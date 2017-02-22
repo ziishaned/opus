@@ -91,8 +91,8 @@ class Wiki extends Model
     public function getTeamWikis($teamId, $total = null)
     {
         if(!is_null($total)) {
-            $wikis = $this->where('team_id', $teamId)->latest()->take(5);
-            
+            $wikis = $this->where('team_id', $teamId)->with(['category'])->latest()->take(5)->get();
+
             return $wikis;
         }
         
@@ -139,14 +139,13 @@ class Wiki extends Model
     /**
      * Update wiki
      *
-     * @param  string $slug
      * @param  array  $data
      * @return bool
      */
     public function updateWiki($id, $data)
     {
         $this->find($id)->update([
-            'description' =>  $data['wiki_description'],
+            'description' =>  $data['description'],
         ]);
         return true;
     }

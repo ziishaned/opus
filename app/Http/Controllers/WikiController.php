@@ -119,7 +119,6 @@ class WikiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $wikiSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Team $team, Category $category, Wiki $wiki)
@@ -132,7 +131,10 @@ class WikiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  string  $wikiSlug
+     * @param \App\Models\Team     $team
+     * @param \App\Models\Category $category
+     * @param \App\Models\Wiki     $wiki
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Team $team, Category $category, Wiki $wiki)
@@ -148,12 +150,15 @@ class WikiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $wikiSlug
+     * @param \App\Models\Team     $team
+     * @param \App\Models\Category $category
+     * @param \App\Models\Wiki     $wiki
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Team $team, Category $category, Wiki $wiki)
     {
-        $wiki = $this->wiki->deleteWiki($wiki->id);
+        $this->wiki->deleteWiki($wiki->id);
 
         return redirect()->route('dashboard', [$team->slug])->with([
             'alert' => 'Wiki successfully deleted.',
@@ -202,5 +207,10 @@ class WikiController extends Controller
         } 
 
         return $this->wiki->where('team_id', $team->id)->with(['user', 'category', 'team'])->latest()->paginate(10);
+    }
+
+    public function getWikiActivity(Team $team, Category $category, Wiki $wiki)
+    {
+        return view('wiki.activity', compact('team', 'category', 'wiki'));
     }
 }
