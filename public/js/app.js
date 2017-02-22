@@ -1,5 +1,5 @@
 Vue.component('aside-category-list', {
-    props: ['team', 'category'], 
+    props: ['team', 'category'],
     template: `
         <div>
             <div class="text-center" style="margin-top: 15px;" v-show="loading"><i class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size: 22px;"></i></div>
@@ -171,7 +171,7 @@ var App = {
     },
     initCKEditor() {
         if($('#wiki-description').length) {
-            
+
             CKEDITOR.replace('wiki-description', {
                 width: "100%",
                 height: $('#wiki-description').data('height'),
@@ -221,7 +221,7 @@ var App = {
             onSelect: that.updateCropCoords,
             bgColor: 'black',
             bgOpacity: .6,
-            boxWidth: 300, 
+            boxWidth: 300,
             boxHeight: 300,
             aspectRatio: 1,
             setSelect: [160, 160, 160, 160],
@@ -257,7 +257,7 @@ var App = {
                 success: function(data) {
                     $("#profile-pic-cropper").modal('hide');
                     window.location.reload();
-                }, 
+                },
                 error: function(error) {
                     console.log(error);
                 }
@@ -277,7 +277,7 @@ var App = {
                     $("#profile-pic-cropper #cropimage").attr('src', '/images/profile-pics/' + data.image);
                     $("#profile-pic-cropper").modal('show');
                     $("#profile-pic-cropper").find('#profile-image-name').val(data.image);
-                }, 
+                },
                 error: function(error) {
                     console.log(error);
                 }
@@ -293,10 +293,9 @@ $(document).ready(function() {
 $(function() {
     if($('#wiki-page-tree').length > 0 ) {
         var wikiSlug = $('#wiki-page-tree').data('wiki-slug');
-        var currentPage = $('#wiki-page-tree').data('current-page');
         var organizationSlug = $('#wiki-page-tree').data('organization-slug');
         var categorySlug = $('#wiki-page-tree').data('category-slug');
-        
+
         $('#wiki-page-tree').jstree({
             core: {
                 "themes" : {
@@ -309,20 +308,20 @@ $(function() {
                             var opened_node = $('#current-page-slug').text();
                             $('#current-page-slug').remove();
 
-                            return laroute.action('wikis.pages', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: opened_node, fetch_tree: true});
-                        }  
+                            return laroute.action('wikis.pages', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: opened_node, fetch_tree: true});
+                        }
 
-                        return (node.id === '#')    
-                                ? laroute.action('wikis.pages', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, fetch: 'roots' })
-                                : laroute.action('wikis.pages', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: node.data.slug, fetch: 'children' });
+                        return (node.id === '#')
+                                ? laroute.action('wikis.pages', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, fetch: 'roots' })
+                                : laroute.action('wikis.pages', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: node.data.slug, fetch: 'children' });
                     },
                 }
             },
             sort: function (a, b) {
                 return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
             },
-            "plugins" : [ "search", "sort" ]
-        }).on("select_node.jstree", function (e, data) { 
+            "plugins" : [ "search", "sort", "wholerow" ]
+        }).on("select_node.jstree", function (e, data) {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
             if(data.instance._cnt == 0) {
@@ -345,17 +344,17 @@ $(function() {
                 },
                 'data' : {
                     url: function (node) {
-                        return (node.id === '#')    
+                        return (node.id === '#')
                                 ? laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug })
                                 : laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug, page_id: node.id });
-                    }, 
+                    },
                     data: function() {
                         if($('#current-page-id').length > 0) {
                             var openedNode = $('#current-page-id').text();
                             $('#current-page-id').remove();
 
                             return {
-                                'opened_node': openedNode 
+                                'opened_node': openedNode
                             };
                         }
                     }
@@ -365,7 +364,7 @@ $(function() {
                 return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
             },
             "plugins" : [ "search", "sort", "dnd" ]
-        }).on("select_node.jstree", function (e, data) { 
+        }).on("select_node.jstree", function (e, data) {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
             if(data.instance._cnt == 0) {
@@ -378,7 +377,7 @@ $(function() {
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    nodeId: data.node.id, 
+                    nodeId: data.node.id,
                     parentId: data.parent,
                 },
                 error: function(error) {
@@ -387,5 +386,5 @@ $(function() {
                 }
             });
         });
-    } 
+    }
 });

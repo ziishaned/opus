@@ -32,10 +32,15 @@
                 </ul>
             </div>
             <div class="side-menu-page-tree-list">
+                @if(isset($page))
+                    <div id="current-page-slug" class="hide">{{ $page->slug }}</div>
+                    <div id="current-page-id" class="hide">{{ $page->id }}</div>
+                @endif
                 <ul class="list-unstyled">
                     <li class="nav-header">Page tree</li>
                 </ul>
-                <p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet. You can <a href="#" class="text-muted">create one here</a>.</p>
+                <div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-slug="{{ $wiki->slug }}" data-organization-slug="{{ $team->slug }}" data-category-slug="{{ $category->slug }}"></div>
+                    {{--<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet. You can <a href="#" class="text-muted">create one here</a>.</p>--}}
             </div>
         </div>
         <div class="wiki-setting-bottom">

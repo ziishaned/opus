@@ -63,7 +63,7 @@ class PageController extends Controller
     {
         $pages = $this->page->getPages($wiki->id);
 
-        return view('wiki.page.edit', compact('page', 'wiki', 'pages', 'team', 'category'));
+        return view('page.edit', compact('page', 'wiki', 'pages', 'team', 'category'));
     }
 
     public function store(Team $team, Category $category, Wiki $wiki)
