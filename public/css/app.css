@@ -719,23 +719,28 @@ label {
 }
 
 .wiki-setting-bottom .wiki-setting-button {
-	font-size: 13px;
-	font-family: "Lato";
+	font-size: 14px;
+	font-family: "segoe ui";
 	background-color: #f5f5f5;
     padding: 8px 8px;
     border-radius: 2px;
+    font-weight: 400;
+    text-transform: uppercase;
+	position: relative;
+	top: 0.5px;
+}
+
+.wiki-setting-button img {
+	position: relative; 
+	top: -2px; 
+	right: 5px;
 }
 
 .wiki-setting-bottom .wiki-setting-button:hover {
 	background-color: #eee;
 	text-decoration: none;
 	border: 1px solid #ddd;
-}
-
-.wiki-setting-bottom .wiki-setting-button:focus {
-	-webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-	box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-	border-color: #ddd;
+	box-shadow: none;
 }
 
 .home-nav {
@@ -988,50 +993,51 @@ label {
 	margin: -1px;
 }
 
-/*Jstree*/
-
-.jstree-anchor {
-	/*font-family: 'Open Sans' !important;*/
-	/*font-size: 14px;*/
+/**************************** jsTree ************************************/
+.jstree-selected>.jstree-wholerow, .jstree-wholerow-hovered, .jstree-default .jstree-wholerow-clicked {
+    background-color: rgb(238, 238, 238) !important;	
 }
 
-.jstree-selected>.jstree-wholerow, .jstree-wholerow-hovered {
-    background-color: #e4e4e4 !important;
+.jstree-default .jstree-node {
+    margin-left: 15px !important;
 }
 
-.jstree-selected>.jstree-anchor {
-	/*font-weight: 600;*/
+.jstree-default .jstree-icon:empty {
+    width: 22px !important;
 }
 
-/*ul:first-child>li.jstree-selected {*/
-    /*margin-left: 0 !important;*/
-    /*padding-left: 0 !important;*/
-/*}*/
+.jstree-default .jstree-anchor {
+	/*color: rgb(65, 131, 196) !important;*/
+}
 
-/*.jstree-selected>a {*/
-    /*color: black !important;*/
-    /*font-weight: 600 !important;*/
-    /*!*font-family: lato;*!*/
-/*}*/
+#wiki-page-tree {
+	margin-top: -7px !important;
+    /*margin-left: -10px !important;*/
+}
 
-/*.jstree-default .jstree-anchor {*/
-    /*!*color: #3572b0 !important;*!*/
-    /*font-size: 13px !important;*/
-/*}*/
+.jstree-default-large > .jstree-no-dots .jstree-closed > .jstree-ocl {
+    background-position: -4px 0px !important;
+}
 
-/*.jstree-loading a {*/
-    /*color: #333 !important;*/
-/*}*/
+.jstree-default-large > .jstree-no-dots .jstree-open > .jstree-ocl {
+    background-position: -37px 0px !important;
+}
 
-/*.jstree-default .jstree-hovered {*/
-    /*background-color: #dddddd !important;*/
-	/*!*border: none !important;*!*/
-	/*!*box-shadow: none !important;*!*/
-	/*!*text-decoration: underline !important;*!*/
-/*}*/
+.jstree-default-large > .jstree-container-ul .jstree-loading > .jstree-ocl {
+	background: url("/img/throbber.gif");
+	background-repeat: no-repeat;
+	background-position: 2px 8px !important;
+}
 
-/*.jstree-default .jstree-clicked {*/
-	/*background-color: white !important;*/
-	/*border: none !important;*/
-	/*box-shadow: none !important;*/
-/*}*/
+.jstree-leaf > .jstree-ocl:before {
+    content: '.';
+    color: #717171;
+    font-family: 'Open sans';
+    font-weight: 900;
+    position: relative;
+    top: -3px;
+}
+
+.jstree-default-large > .jstree-container-ul .jstree-loading > .jstree-ocl:before {
+	content: '' !important;
+}

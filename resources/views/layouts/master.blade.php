@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="/css/toastr.min.css">
 		<link href="/plugins/ckeditor/plugins/codesnippet/lib/highlight/styles/github.css" rel="stylesheet">
 		<link href="/plugins/vakata-jstree/dist/themes/default/style.css" rel="stylesheet">
+		<link href="/plugins/jquery-mentions/jquery.mentionsInput.css" rel="stylesheet">
 	</head>
 	<body>
 		<div id="app">
@@ -39,6 +40,7 @@
 		<script type="text/javascript" src="/js/color-hash.js"></script>
 		<script src="/plugins/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
 		<script src="/plugins/vakata-jstree/dist/jstree.js"></script>
+		<script type="/plugins/jquery-mentions/jquery.mentionsInput.js"></script>
         <script>
             (function() {
                 hljs.initHighlightingOnLoad();

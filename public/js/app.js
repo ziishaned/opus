@@ -298,9 +298,13 @@ $(function() {
 
         $('#wiki-page-tree').jstree({
             core: {
+                "check_callback" : true,
+                "animation" : 250,
                 "themes" : {
                     'icons': false,
                     'dots' : false,
+                    'responsive': true,
+                    'variant': "large",
                 },
                 'data' : {
                     url: function (node) {
@@ -320,12 +324,13 @@ $(function() {
             sort: function (a, b) {
                 return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
             },
-            "plugins" : [ "search", "sort", "wholerow" ]
+            "plugins" : [ "sort", "wholerow", "dnd" ]
         }).on("select_node.jstree", function (e, data) {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
+            $('#wiki-page-tree').css('margin-left', '-10px');
             if(data.instance._cnt == 0) {
-                var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="`+laroute.action('pages.create', { organization_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug })+`">create one here</a>.</p>`;
+                var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet. You can <a href="`+laroute.action('pages.create', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug })+`" class="text-muted">create one here</a>.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
             data.instance._open_to($('#current-page-id').text());
