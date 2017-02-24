@@ -70,6 +70,11 @@ class Wiki extends Model
         return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'subject_id', 'id')->where('comments.subject_type', Wiki::class)->with(['user']);
+    }
+
     public function getTeamWikis($teamId, $total = null)
     {
         if($total !==  null) {

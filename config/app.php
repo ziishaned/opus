@@ -234,6 +234,7 @@ return [
         'ViewHelper' => App\Helpers\ViewHelper::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Avatar' => YoHang88\LetterAvatar\LetterAvatar::class,
+        'Emoji' => App\Helpers\EmojiHelper::class,
     ],
 
 ];

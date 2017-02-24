@@ -160,6 +160,7 @@ var App = {
         this.initCarousel();
         this.initTooltip();
         this.initCKEditor();
+        this.getTeamMembers();
 
         var fixAffixWidth = function() {
             $('[data-spy="affix"]').each(function() {
@@ -199,6 +200,61 @@ var App = {
             container: 'body'
         });
     },
+    getTeamMembers() {
+        let that = this;
+        $.getJSON("/api/team/members", function(data) {
+            var members = [];
+            $.each(data, function(index, val) {
+                 members.push({
+                    'id'            :  val.id,
+                    'name'          :  val.slug,
+                    'full_name'     :  val.first_name + ' ' + val.last_name,
+                    'profile_image' :  val.profile_image === null ? '/img/no-image.png' : '/img/avatars/' + val.profile_image,
+                })
+            });
+            that.members = members;
+            that.intiCommentMention();
+        });
+    },
+    intiCommentMention() {
+        var that = this;
+        var emojis = [
+            "smile", "+1", "-1", "100", "heart", "girl", "smiley", "kiss", "copyright", "iphone", "coffee",
+            "a", "ab", "airplane", "alien", "ambulance", "angel", "anger", "angry",
+            "arrow_forward", "arrow_left", "arrow_lower_left", "arrow_lower_right",
+            "arrow_right", "arrow_up", "arrow_upper_left", "arrow_upper_right",
+            "art", "astonished", "atm", "b", "baby", "baby_chick", "baby_symbol",
+            "balloon", "bamboo", "bank", "barber", "baseball", "basketball", "bath",
+            "bear", "beer", "beers", "beginner", "bell", "bento", "bike", "bikini",
+            "bird", "birthday", "black_square", "blue_car", "blue_heart", "blush",
+            "boar", "boat", "bomb", "book", "boot", "bouquet", "bow", "bowtie",
+            "boy", "bread", "briefcase", "broken_heart", "bug", "bulb",
+            "person_with_blond_hair", "phone", "pig", "pill", "pisces",
+            "point_down", "point_left", "point_right", "point_up", "point_up_2",
+            "police_car", "poop", "post_office", "postbox", "pray", "princess",
+            "punch", "purple_heart", "question", "rabbit", "racehorse", "radio",
+            "up", "us", "v", "vhs", "vibration_mode", "virgo", "vs", "walking",
+            "warning", "watermelon", "wave", "wc", "wedding", "whale", "wheelchair",
+            "white_square", "wind_chime", "wink", "wink2", "wolf", "woman",
+            "womans_hat", "womens", "x", "yellow_heart", "zap", "zzz", 
+        ];
+
+        var emojis = $.map(emojis, function(value, i) {return {key: value, name:value}});
+
+        $('#comment-input-textarea').atwho({
+            at: "@",
+            data: that.members,
+            insertTpl: '@${name}',
+            displayTpl: "<li><img src='${profile_image}' width='20' height='20' /> ${name}</li>",
+            limit: 200,
+        }).atwho({
+            at: ":",
+            data: emojis,
+            insertTpl: ':${key}:',
+            displayTpl: "<li><img src='/img/emojis/${key}.png' /> ${name}</li>",
+            delay: 400,
+        });
+    },
     initCarousel() {
         if ($(document).find('.Carousel').length) {
             var $carousel = $('.Carousel');
@@ -234,7 +290,11 @@ var App = {
         $('#h').val(c.h);
     },
     bindUI: function () {
-        var that = this;
+        var that = this;        
+
+        autosize($('#comment-input-textarea'));
+
+        $(".comments").scrollTop($('.comments').height()+120000000);
 
         if(document.getElementById('timezone')) {
             $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);

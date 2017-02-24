@@ -662,7 +662,7 @@ label {
 }
 
 .media-object {
-    margin: 2px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 .comments .comment .comment-time {
@@ -944,8 +944,8 @@ label {
 
 .nothing-found {
 	text-align: center;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
     margin-top: 30px;
 }
 
@@ -1040,4 +1040,46 @@ label {
 
 .jstree-default-large > .jstree-container-ul .jstree-loading > .jstree-ocl:before {
 	content: '' !important;
+}
+
+.wiki-comments-con .nothing-found {
+	position: relative;
+	top: 45%;
+}
+
+.wiki-comment-form #comment-input-textarea {
+	resize: none;
+	max-height: 100px;
+}
+
+.atwho-view {
+	background: #fff !important;
+	color: #000 !important;
+	min-width: 165px !important;
+	border-radius: 4px 4px 4px 4px !important;
+	box-shadow: none !important;
+}
+
+.atwho-view-ul li {
+	font-size: 15px;
+	border-color: #ddd !important;
+}
+
+.atwho-view-ul li.cur {
+	background-color: #f5f5f5;
+	color: #000;
+}
+
+.atwho-view-ul li img {
+	margin-right: 5px;
+	width: 27px;
+	height: 27px;
+}
+
+.atwho-view strong {
+	color: #000 !important;
+}
+
+.atwho-header {
+	font-size: 55px;
 }

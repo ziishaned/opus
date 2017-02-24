@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Auth;
 use App\Models\User;
 use App\Models\Wiki;
 use App\Models\Team;
@@ -68,10 +69,10 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('wiki_slug', function($slug) {
-            $teamId = \Auth::user()->team->id;
+            $teamId = Auth::user()->team->id;
             return Wiki::where('slug', '=', $slug)
                                     ->where('team_id', '=', $teamId)
-                                    ->with(['category'])
+                                    ->with(['category', 'comments'])
                                     ->first();
         });
 

@@ -146,4 +146,14 @@ class UserController extends Controller
         
         return view('team.dashboard', compact('team', 'activities', 'wikis'));
     }
+
+    public function getTeamMembers()
+    {
+        return $this
+                    ->team
+                    ->where('id', Auth::user()->team->id)
+                    ->with(['members'])
+                    ->first()
+                    ->members;
+    }
 }

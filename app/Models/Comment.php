@@ -4,17 +4,10 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
-use App\Models\WikiPage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class Comment
- *
- * @author Zeeshan Ahmed <ziishaned@gmail.com>
- * @package App\Models
- */
 class Comment extends Model
 {
 
@@ -23,14 +16,12 @@ class Comment extends Model
     /**
      * @var string
      */
-    protected $table = 'comment';
+    protected $table = 'comments';
 
-    /**
-     * @var array
-     */
     protected $fillable = [
-        'page_id',
         'content',
+        'subject_type',
+        'subject_id',
         'user_id',
         'updated_at',
         'created_at',
@@ -38,54 +29,30 @@ class Comment extends Model
 
     protected $dates = ['deleted_at'];
 
-    /**
-     * @const array COMMENT_RULES
-     */
     const COMMENT_RULES = [
-        'comment' => 'required',
+        'comment' => 'required|max:155|min:2',
     ];
     
-    /**
-     * A user can post comments.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    /**
-     * A wiki can have comments.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function wiki()
     {
-        return $this->belongsTo(Wiki::class, 'page_id', 'id');
+        return $this->belongsTo(Wiki::class, 'subject_id', 'id');
     }
 
-    /**
-     * Wiki pages can have comments.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function wikiPage()
+    public function page()
     {
-        return $this->belongsTo(WikiPage::class, 'page_id', 'id');
+        return $this->belongsTo(Page::class, 'subject_id', 'id');
     }
 
-    /**
-     * Create a new comment.
-     *
-     * @param string  $pageSlug
-     * @param array  $data
-     * @return bool
-     */
-    public function storeComment($pageId, $data)
+    public function storeWikiComment($wikiId, $data)
     {
         $this->create([
-            'page_id'    => $pageId,
+            'subject_id' => $wikiId,
+            'subject_type' => Wiki::class,
             'content'    => $data['comment'],
             'user_id'    => Auth::user()->id,
             'updated_at' => Carbon::now(),

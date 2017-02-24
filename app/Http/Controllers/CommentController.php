@@ -2,63 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organization;
+use App\Models\Team;
 use App\Models\Category;
 use App\Models\Wiki;
 use App\Models\Comment;
-use App\Models\WikiPage;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class CommentController
- *
- * @author Zeeshan Ahmed <ziishaned@gmail.com>
- * @package App\Http\Controllers
- */
 class CommentController extends Controller
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
 	protected $request;
 
-    /**
-     * @var \App\Models\Comment
-     */
 	protected $comment;
 
-    /**
-     * @var \App\Models\WikiPage
-     */
-    protected $wikiPage;
+    protected $page;
 
-    /**
-     * CommentController constructor.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Comment      $comment
-     */
-    public function __construct(Request $request, WikiPage $wikiPage, Comment $comment) {
+    public function __construct(Request $request, Page $page, Comment $comment) {
     	$this->request      =  $request;
         $this->comment      =  $comment;
-        $this->wikiPage     =  $wikiPage;
+        $this->page     =  $page;
     }
 
-    /**
-     * Create a new resource.
-     *
-     * @param string  $wikiSlug
-     * @param string $pageSlug
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Organization $organization, Category $category, Wiki $wiki, WikiPage $page)
+    public function storeWikiComment(Team $team, Category $category, Wiki $wiki)
     {
         $this->validate($this->request, Comment::COMMENT_RULES);
         
-        $this->comment->storeComment($page->id, $this->request->all());
+        $this->comment->storeWikiComment($wiki->id, $this->request->all());
 
-        return redirect()->route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $page->slug])->with([
+        return redirect()->route('wikis.show', [$team->slug, $category->slug, $wiki->slug])->with([
             'alert'      => 'Comment successfully posted.',
             'alert_type' => 'success'
         ]);

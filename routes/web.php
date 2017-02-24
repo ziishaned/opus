@@ -15,6 +15,7 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');
 
 Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
+    Route::get('/team/members', 'UserController@getTeamMembers')->name('api.teams.members');
     Route::get('/teams/{team_slug}/wikis', 'WikiController@getTeamWikis')->name('api.teams.wikis');
     Route::get('/teams/{team_slug}/categories', 'CategoryConroller@getTeamCategories')->name('api.teams.categories');
 });
@@ -83,7 +84,8 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('{wiki_slug}/edit', 'WikiController@edit')->name('wikis.edit');
         Route::patch('{wiki_slug}/pages/{page_slug}', 'PageController@update')->name('pages.update');
 
-        Route::post('{wiki_slug}/pages/{page_slug}/comments', 'CommentController@store')->name('comments.store');
+        Route::post('{wiki_slug}/comments', 'CommentController@storeWikiComment')->name('wikis.comments.store');
+        Route::post('{wiki_slug}/pages/{page_slug}/comments', 'CommentController@storePageComment')->name('pages.comments.store');
         Route::delete('{wiki_slug}/pages/{page_slug}/{comment_id}', 'CommentController@destroy')->name('comments.delete');
     });
     

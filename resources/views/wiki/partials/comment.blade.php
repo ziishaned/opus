@@ -1,4 +1,4 @@
-<div class="panel panel-default" data-spy="affix" data-offset-top="1">
+<div class="panel panel-default" style="margin-bottom: 0px;">
     <div class="panel-heading">
         <div class="pull-left">
             Comments
@@ -16,88 +16,41 @@
         <div class="clearfix"></div>
     </div>
     <div class="panel-body wiki-comments-con">
-        <div class="comments">
-            <div class="comment">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object img-circle" src="/img/elliot.jpg" alt="Image">
+        <div class="comments" style="height: 350px;">
+            @if($wiki->comments->count() > 0)
+                @foreach($wiki->comments as $comment)
+                    <div class="comment">
+                        <div class="media">
+                            <div class="pull-left">
+                                @if(!empty($comment->user->profile_image)) 
+                                    <img class="media-object img-circle" src="/img/{{ $comment->user->profile_image }}" alt="Image" width="50" height="50">
+                                @else
+                                    <img class="media-object img-circle" src="/img/no-image.png" alt="Image" width="50" height="50">
+                                @endif
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading user-name"><a href="#">{{ $comment->user->first_name . ' ' . $comment->user->last_name }}</a> <small class="comment-time">{{ $comment->updated_at->diffForHumans() }}</small></h4>
+                                <p>{!! (new Emoji)->render($comment->content) !!}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="media-body">
-                        <h4 class="media-heading user-name"><a href="#">Elliot</a> <small class="comment-time">Today at 9:00 pm</small></h4>
-                        <p>This has been very useful for my research. Thanks as well!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object img-circle" src="/img/helen.jpg" alt="Image">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading user-name"><a href="#">Helen</a> <small class="comment-time">Today at 10:05 pm</small></h4>
-                        <p>How artistic!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object img-circle" src="/img/jenny.jpg" alt="Image">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading user-name"><a href="#">Jenny</a> <small class="comment-time">Today at 10:05 pm</small></h4>
-                        <p>Elliot you are always so right :)</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object img-circle" src="/img/joe.jpg" alt="Image">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading user-name"><a href="#">Joe</a> <small class="comment-time">Today at 10:05 pm</small></h4>
-                        <p>Dude, this is awesome. Thanks so much</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object img-circle" src="/img/justen.jpg" alt="Image">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading user-name"><a href="#">Justen</a> <small class="comment-time">Today at 10:05 pm</small></h4>
-                        <p>Hey guys, I hope this example comment is helping you read this documentation.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object img-circle" src="/img/laura.jpg" alt="Image">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading user-name"><a href="#">Laura</a> <small class="comment-time">Today at 10:05 pm</small></h4>
-                        <p>Revolutionary!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object img-circle" src="/img/matt.jpg" alt="Image">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading user-name"><a href="#">Matt</a> <small class="comment-time">Today at 10:05 pm</small></h4>
-                        <p>This will be great for business reports. I will definitely download this.</p>
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @else 
+                <h1 class="nothing-found">
+                    <img src="/img/icons/basic_elaboration_message_sad.svg" width="54" height="54"> Nothing found
+                </h1>
+            @endif
         </div>
         <div class="wiki-comment-form">
-            <form action="" method="POST" role="form">
-                <textarea class="form-control" id="" placeholder="Write a comment"></textarea>
+            <form action="{{ route('wikis.comments.store', [$team->slug, $category->slug, $wiki->slug]) }}" method="POST">    
+                <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}" style="margin-bottom: 13px;">
+                    <textarea name="comment" class="form-control" id="comment-input-textarea" placeholder="Write a comment"></textarea>
+                    @if($errors->has('comment'))
+                        <p class="help-block has-error" style="margin-bottom: 0; position: absolute;">{{ $errors->first('comment') }}</p>
+                    @endif
+                </div>
+                <input type="submit" class="btn btn-success pull-right" value="Submit">
+                <div class="clearfix"></div>
             </form>
         </div>
     </div>
