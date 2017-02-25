@@ -18,6 +18,7 @@ class CreateLikesTable extends Migration
             $table->string('subject_type');
             $table->integer('subject_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

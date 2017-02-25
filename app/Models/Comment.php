@@ -30,7 +30,7 @@ class Comment extends Model
     protected $dates = ['deleted_at'];
 
     const COMMENT_RULES = [
-        'comment' => 'required|max:155|min:2',
+        'comment' => 'required|min:2',
     ];
     
     public function user()

@@ -52,6 +52,11 @@ class Page extends Node
         return $this->hasMany(Comment::class, 'page_id', 'id')->latest()->with('user');
     }    
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Page::class);
+    }
+
     public function wiki() {
         return $this->belongsTo(Wiki::class, 'wiki_id', 'id');
     }

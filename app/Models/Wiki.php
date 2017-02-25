@@ -57,6 +57,11 @@ class Wiki extends Model
         }])->latest();
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Wiki::class);
+    }
+
     public function subject()
     {
         return $this->morphTo();

@@ -18,6 +18,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/team/members', 'UserController@getTeamMembers')->name('api.teams.members');
     Route::get('/teams/{team_slug}/wikis', 'WikiController@getTeamWikis')->name('api.teams.wikis');
     Route::get('/teams/{team_slug}/categories', 'CategoryConroller@getTeamCategories')->name('api.teams.categories');
+    Route::post('/like', 'LikeController@storeLike')->name('like');
 });
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {

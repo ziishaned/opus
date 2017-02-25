@@ -67,8 +67,15 @@ class WikiController extends Controller
     public function show(Team $team, Category $category, Wiki $wiki)
     {
         $pages = $this->page->getPages($wiki->id);
+        
+        $isUserLikeWiki = false;
+        foreach ($wiki->likes as $like) {
+            if($like->user_id === Auth::user()->id) {
+                $isUserLikeWiki = true;
+            }
+        }
 
-        return view('wiki.index', compact('pages', 'wiki', 'team', 'category'));
+        return view('wiki.index', compact('pages', 'wiki', 'team', 'category', 'isUserLikeWiki'));
     }
 
     public function getWikiPages()

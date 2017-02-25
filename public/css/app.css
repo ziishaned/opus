@@ -1089,3 +1089,7 @@ label {
 .atwho-header {
 	font-size: 55px;
 }
+
+#spinner {
+	display: none;
+}

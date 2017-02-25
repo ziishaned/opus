@@ -289,8 +289,41 @@ var App = {
         $('#w').val(c.w);
         $('#h').val(c.h);
     },
+    likeSubject(subject, subjectType, element) {
+        var that = this;
+        $.ajax({
+            url: '/api/like',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                subject,
+                subjectType
+            },
+            success(data) {
+                setTimeout(function() {
+                    $(element).closest('li').find('#spinner').hide();
+                    $(element).show();
+                    if(data.like === true) {
+                        $(element).find('img[data-toggle="tooltip"]').attr('title', 'Unlike').tooltip('fixTitle');
+                        $('#likes-counter').text(parseInt($('#likes-counter').text())+1);
+                    }  else {
+                        $(element).find('img[data-toggle="tooltip"]').attr('title', 'Like').tooltip('fixTitle');
+                        $('#likes-counter').text(parseInt($('#likes-counter').text())-1);
+                    }
+                }, 800);
+            }
+        });
+    },
     bindUI: function () {
         var that = this;        
+
+        $('#like-wiki').on('click', function(e) {
+            e.preventDefault();
+            let wiki = $(this).data('wiki');
+            $(this).hide();
+            $(this).closest('li').find('#spinner').css('display', 'inline-block');
+            that.likeSubject(wiki, 'wiki', this);
+        });
 
         $(".comments").scrollTop($('.comments').height()+120000000);
 

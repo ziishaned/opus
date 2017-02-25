@@ -6,10 +6,11 @@
         <div class="pull-right">
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                 <li>
-                    <a href="#"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="Like" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"></a> 3
+                    <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
+                    <a href="#" id="like-wiki" data-wiki="{{ $wiki->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikeWiki ? 'Unlike' : 'Like' }}" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"></a> <span id="likes-counter">{{ $wiki->likes->count() }}</span>
                 </li>
                 <li>
-                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> 7
+                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> {{ $wiki->comments->count() }}
                 </li>
             </ul>
         </div>
@@ -46,7 +47,7 @@
                 <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}" style="margin-bottom: 13px;">
                     <textarea name="comment" class="form-control" id="comment-input-textarea" placeholder="Write a comment"></textarea>
                     @if($errors->has('comment'))
-                        <p class="help-block has-error" style="margin-bottom: 0; position: absolute;">{{ $errors->first('comment') }}</p>
+                        <p class="help-block has-error" style="width: 230px; margin-bottom: 0; position: absolute;">{{ $errors->first('comment') }}</p>
                     @endif
                 </div>
                 <input type="submit" class="btn btn-success pull-right" value="Submit">

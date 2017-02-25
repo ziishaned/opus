@@ -84,6 +84,11 @@ class User extends Authenticatable
         }, 'user'])->latest();
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'user_id', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id', 'user_id');
