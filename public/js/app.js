@@ -292,8 +292,6 @@ var App = {
     bindUI: function () {
         var that = this;        
 
-        autosize($('#comment-input-textarea'));
-
         $(".comments").scrollTop($('.comments').height()+120000000);
 
         if(document.getElementById('timezone')) {

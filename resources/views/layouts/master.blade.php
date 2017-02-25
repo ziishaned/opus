@@ -42,7 +42,7 @@
 		<script src="/plugins/vakata-jstree/dist/jstree.js"></script>
 		<script src="/plugins/atjs/jquery.caret.min.js"></script>
 		<script src="/plugins/atjs/jquery.atwho.min.js"></script>
-		<script src="/js/autosize.min.js"></script>
+		{{-- <script src="/js/autosize.min.js"></script> --}}
         <script>
             (function() {
                 hljs.initHighlightingOnLoad();
