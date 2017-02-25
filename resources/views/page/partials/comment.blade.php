@@ -5,8 +5,12 @@
         </div>
         <div class="pull-right">
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
+                <li class="page-like-con">
+                    <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
+                    <a href="#" id="like-page" data-page="{{ $page->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"></a> <span id="likes-counter">{{ $page->likes->count() }}</span>
+                </li>
                 <li>
-                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> {{ $wiki->comments->count() }}
+                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> {{ $page->comments->count() }}
                 </li>
             </ul>
         </div>
@@ -14,8 +18,8 @@
     </div>
     <div class="panel-body wiki-comments-con">
         <div class="comments" style="height: 350px;">
-            @if($wiki->comments->count() > 0)
-                @foreach($wiki->comments as $comment)
+            @if($page->comments->count() > 0)
+                @foreach($page->comments as $comment)
                     <div class="comment">
                         <div class="media">
                             <div class="pull-left">
@@ -39,7 +43,7 @@
             @endif
         </div>
         <div class="wiki-comment-form">
-            <form action="{{ route('wikis.comments.store', [$team->slug, $category->slug, $wiki->slug]) }}" method="POST">    
+            <form action="{{ route('pages.comments.store', [$team->slug, $category->slug, $wiki->slug, $page->slug]) }}" method="POST">    
                 <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}" style="margin-bottom: 13px;">
                     <textarea name="comment" class="form-control" id="comment-input-textarea" placeholder="Write a comment"></textarea>
                     @if($errors->has('comment'))

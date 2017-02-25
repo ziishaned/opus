@@ -38,6 +38,20 @@ class CommentController extends Controller
         ]);
     }
 
+    public function storePageComment(Team $team, Category $category, Wiki $wiki, Page $page)
+    {
+        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
+        
+        $this->validate($this->request, Comment::COMMENT_RULES);
+        
+        $this->comment->storePageComment($page->id, $this->request->all());
+
+        return redirect()->route('pages.show', [$team->slug, $category->slug, $wiki->slug, $page->slug])->with([
+            'alert'      => 'Comment successfully posted.',
+            'alert_type' => 'success'
+        ]);
+    }
+
     public function destroy($organizationSlug, $wikiSlug, $pageSlug, $id) 
     {
         $page = $this->wikiPage->getPage($pageSlug);

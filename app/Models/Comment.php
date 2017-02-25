@@ -61,6 +61,20 @@ class Comment extends Model
         return true;        
     }
 
+    public function storePageComment($pageId, $data)
+    {
+        $this->create([
+            'subject_id' => $pageId,
+            'subject_type' => Page::class,
+            'content'    => $data['comment'],
+            'user_id'    => Auth::user()->id,
+            'updated_at' => Carbon::now(),
+            'created_at' => Carbon::now(),
+        ]);
+
+        return true; 
+    }
+
     public function deleteComment($id) {
         $this->find($id)->delete();
         

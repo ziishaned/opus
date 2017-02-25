@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                @include('wiki.partials.comment')
+                @include('page.partials.comment')
             </div>
         </div>
     </div>

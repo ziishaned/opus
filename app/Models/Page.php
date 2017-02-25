@@ -49,7 +49,7 @@ class Page extends Node
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'subject_id', 'id')->where('comments.subject_type', Page::class)->latest()->with('user');
+        return $this->hasMany(Comment::class, 'subject_id', 'id')->where('comments.subject_type', Page::class)->with('user');
     }    
 
     public function likes()
