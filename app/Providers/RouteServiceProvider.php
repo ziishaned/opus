@@ -49,7 +49,9 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('page_slug', function($slug) {
-            return Page::where('slug', '=', $slug)->first();
+            return Page::where('slug', '=', $slug)
+                                    ->with(['likes', 'comments'])
+                                    ->first();
         });
 
         Route::bind('page_id', function($id) {

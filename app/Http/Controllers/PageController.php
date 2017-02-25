@@ -87,7 +87,21 @@ class PageController extends Controller
 
     public function show(Team $team, Category $category, Wiki $wiki, Page $page)
     {
-        return view('page.index', compact('team', 'page', 'wiki', 'category'));
+        $isUserLikeWiki = false;
+        foreach ($wiki->likes as $like) {
+            if($like->user_id === Auth::user()->id) {
+                $isUserLikeWiki = true;
+            }
+        }
+
+        $isUserLikePage = false;
+        foreach ($page->likes as $like) {
+            if($like->user_id === Auth::user()->id) {
+                $isUserLikePage = true;
+            }
+        }
+
+        return view('page.index', compact('team', 'page', 'wiki', 'category', 'isUserLikeWiki', 'isUserLikePage'));
     }
 
     public function update(Team $team, Category $category, Wiki $wiki, Page $page)

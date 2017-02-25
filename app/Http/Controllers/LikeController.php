@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\Page;
 use App\Models\Wiki;
 use App\Models\Like;
 use Illuminate\Http\Request;
@@ -15,11 +16,14 @@ class LikeController extends Controller
     
     protected $request;
 
-    public function __construct(Request $request, Like $like, Wiki $wiki)
+    protected $page;
+
+    public function __construct(Request $request, Like $like, Wiki $wiki, Page $page)
     {
         $this->request = $request;
         $this->like    = $like;
         $this->wiki    = $wiki;
+        $this->page    = $page;
     }
 
     public function storeLike()
@@ -28,6 +32,22 @@ class LikeController extends Controller
             $wiki = $this->wiki->where('slug', $this->request->get('subject'))->first();
             
             $like = $this->handleLike('App\Models\Wiki', $wiki->id);
+            
+            if($like) {
+                return response()->json([
+                    'like' => true
+                ], 200); 
+            }
+
+            return response()->json([
+                'like' => false
+            ], 200); 
+        }
+
+        if($this->request->get('subjectType') === 'page') {
+            $page = $this->page->where('slug', $this->request->get('subject'))->first();
+            
+            $like = $this->handleLike('App\Models\Page', $page->id);
             
             if($like) {
                 return response()->json([

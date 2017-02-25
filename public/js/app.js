@@ -301,14 +301,14 @@ var App = {
             },
             success(data) {
                 setTimeout(function() {
-                    $(element).closest('li').find('#spinner').hide();
-                    $(element).show();
+                    $(element).find('#spinner').hide();
+                    $(element).find('#like-page, #like-wiki').show();
                     if(data.like === true) {
                         $(element).find('img[data-toggle="tooltip"]').attr('title', 'Unlike').tooltip('fixTitle');
-                        $('#likes-counter').text(parseInt($('#likes-counter').text())+1);
+                        $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())+1);
                     }  else {
                         $(element).find('img[data-toggle="tooltip"]').attr('title', 'Like').tooltip('fixTitle');
-                        $('#likes-counter').text(parseInt($('#likes-counter').text())-1);
+                        $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())-1);
                     }
                 }, 800);
             }
@@ -317,12 +317,20 @@ var App = {
     bindUI: function () {
         var that = this;        
 
-        $('#like-wiki').on('click', function(e) {
+        $(document).on('click', '#like-wiki', function(e) {
             e.preventDefault();
             let wiki = $(this).data('wiki');
             $(this).hide();
-            $(this).closest('li').find('#spinner').css('display', 'inline-block');
-            that.likeSubject(wiki, 'wiki', this);
+            $(this).closest('.wiki-like-con').find('#spinner').css('display', 'inline-block');
+            that.likeSubject(wiki, 'wiki', '.wiki-like-con');
+        });
+
+        $(document).on('click', '#like-page', function(e) {
+            e.preventDefault();
+            let page = $(this).data('page');
+            $(this).hide();
+            $(this).closest('.page-like-con').find('#spinner').css('display', 'inline-block');
+            that.likeSubject(page, 'page', '.page-like-con');
         });
 
         $(".comments").scrollTop($('.comments').height()+120000000);

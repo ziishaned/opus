@@ -5,10 +5,12 @@
         </div>
         <div class="pull-right">
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
-                <li>
-                    <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
-                    <a href="#" id="like-wiki" data-wiki="{{ $wiki->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikeWiki ? 'Unlike' : 'Like' }}" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"></a> <span id="likes-counter">{{ $wiki->likes->count() }}</span>
-                </li>
+                @if($page)
+                    <li class="page-like-con">
+                        <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
+                        <a href="#" id="like-page" data-page="{{ $page->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"></a> <span id="likes-counter">{{ $page->likes->count() }}</span>
+                    </li>
+                @endif
                 <li>
                     <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> {{ $wiki->comments->count() }}
                 </li>
@@ -30,7 +32,7 @@
                                 @endif
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading user-name"><a href="#">{{ $comment->user->first_name . ' ' . $comment->user->last_name }}</a> <small class="comment-time">{{ $comment->updated_at->diffForHumans() }}</small></h4>
+                                <h4 class="media-heading user-name"><a href="{{ route('users.show', [ $team->slug, $comment->user->slug ]) }}">{{ $comment->user->first_name . ' ' . $comment->user->last_name }}</a> <small class="comment-time" data-toggle="tooltip" data-placement="bottom" title="{{ $comment->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $comment->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}">{{ $comment->updated_at->diffForHumans() }}</small></h4>
                                 <p>{!! (new Emoji)->render($comment->content) !!}</p>
                             </div>
                         </div>

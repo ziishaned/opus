@@ -2,7 +2,14 @@
     <div class="wiki-side-menu">
         <div class="side-menu-inner">
             <div class="wiki-intro">
-                <h1 class="header v-center"><img src="{!! new Avatar($wiki->name, 'circle', 44) !!}" alt="" style="margin-right: 15px;"> <a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
+                <div class="pull-left">
+                    <h1 class="header v-center"><img src="{!! new Avatar($wiki->name, 'circle', 44) !!}" alt="" style="margin-right: 15px;"> <a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
+                </div>
+                <div class="pull-right wiki-like-con" style="position: relative; top: 11px;">
+                    <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
+                    <a href="#" id="like-wiki" data-wiki="{{ $wiki->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikeWiki ? 'Unlike' : 'Like' }}" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"></a> <span class="label label-default" id="likes-counter">{{ $wiki->likes->count() }}</span>
+                </div>
+                <div class="clearfix"></div>
             </div>
             <ul class="list-unstyled side-menu-top">
                 <li class="nav-header" style="margin-bottom: 8px;">Quick Links</li>

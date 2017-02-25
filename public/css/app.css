@@ -1,5 +1,5 @@
 body, html {
-    font-family: "segoe ui", arial, serif;
+    font-family: "segoe ui", "Roboto", "Open Sans", arial, serif;
 	height: 100%;
 }
 
@@ -680,11 +680,15 @@ label {
 }
 
 .comments .comment {
-	margin-bottom: 12px;
+	padding: 9px 0px;
+}
+
+.comments .comment:first-child {
+	padding-top: 0;
 }
 
 .comments .comment:last-child {
-	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 .wiki-comments-con {
