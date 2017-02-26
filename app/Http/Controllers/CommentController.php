@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Emoji;
 use App\Models\Team;
 use App\Models\Category;
 use App\Models\Wiki;
@@ -62,16 +63,19 @@ class CommentController extends Controller
         ], 200);
     }
 
-    public function update($organizationId, $wikiId, $pageId, $commentId) {
-        $page = $this->wikiPage->find($pageId);
-
+    public function update() {
         $this->validate($this->request, Comment::COMMENT_RULES);
-        
-        $this->comment->updateComment($commentId, $this->request->all());
 
-        return redirect()->back()->with([
-            'alert'       => 'Comment successfully updated.',
-            'alert_type'  => 'success'
-        ]);
+        $this->comment->updateComment($this->request->all());
+
+        $encodedComment = $this->request->get('comment');
+
+        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
+        $this->request['comment'] = (new Emoji)->render($this->request->get('comment'));
+
+        return response()->json([
+            'encodedComment' => $encodedComment,
+            'decodedComment' => $this->request['comment'],
+        ], 200);
     }
 }

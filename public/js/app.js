@@ -363,6 +363,31 @@ var App = {
             }
         });
     },
+    updateComment(commentId, comment, element) {
+        var that = this;
+        $.ajax({
+            url: '/api/comment',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                _method: 'patch',
+                commentId,
+                comment
+            },
+            success(data) {
+                toastr.success('Comment successfully updated');
+                $(element).closest('.comment').find('.comment-content').data('comment-content', data.encodedComment);
+                $(element).closest('.comment').find('.comment-content').empty().append(data.decodedComment);
+                $(element).closest('.comment').find('#close-comment-update').trigger('click');
+            },
+            error(error) {
+                var errors = JSON.parse(error.responseText);
+                if(errors.comment) {
+                    toastr.error(errors.comment[0]);
+                }
+            }
+        });  
+    },
     bindUI: function () {
         var that = this;
 
@@ -376,10 +401,45 @@ var App = {
             that.likeComment(comment, this);
         });
 
+        $(document).on('click', '#close-comment-update', function(e) {
+            e.preventDefault();
+            $(this).closest('.comment').find('.comment-body-inner').show();
+            $(this).closest('.comment').find('.comment-body-con').find('#update-comment-form').remove();
+        });
+
+        $(document).on('click', '#update-comment-btn', function(e) {
+            e.preventDefault();
+
+            let commentId = $(this).closest('#update-comment-form').find('#comment-input-textarea').data('comment-id');
+            let oldComment = $(this).closest('.comment').find('.comment-content').data('comment-content');
+            let comment = $(this).closest('#update-comment-form').find('#comment-input-textarea').val();
+            
+            if(oldComment == comment) {
+                return $(this).closest('.comment').find('#close-comment-update').trigger('click');
+            }
+
+            that.updateComment(commentId, comment, this);
+        });
+
         $(document).on('click', '#edit-comment', function(e) {
             e.preventDefault();
-            console.log($(this).closest('.comment').find('.comment-content').text());
-            // a.match(/(?: |^)@([\w\d]+)/g)
+            let comment = $(this).closest('.comment').find('.comment-content').data('comment-content');
+            let commentId = $(this).closest('.comment').data('comment-id');
+
+            var form = `
+                <form action="#" id="update-comment-form" style="margin-top: 10px;">    
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <textarea name="comment" class="form-control" id="comment-input-textarea" data-comment-id="`+commentId+`" placeholder="Write a comment" style="height: 80px; resize: none;">`+comment+`</textarea>
+                    </div>
+                    <a href="#" class="btn btn-default btn-sm" id="close-comment-update">Cancel</a>
+                    <a href="#" class="btn btn-success btn-sm" id="update-comment-btn">Save Changes</a>
+                </form>
+            `;
+
+            $(this).closest('.comment').find('.comment-body-inner').hide();
+            $(this).closest('.comment').find('.comment-body-con').append(form);
+
+            that.intiCommentMention();
         });
 
         $(document).on('click', '#delete-comment', function(e) {

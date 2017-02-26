@@ -20,6 +20,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/teams/{team_slug}/categories', 'CategoryConroller@getTeamCategories')->name('api.teams.categories');
     Route::post('/like', 'LikeController@storeLike')->name('like');
     Route::delete('/comment', 'CommentController@destroy')->name('comments.destroy');
+    Route::patch('/comment', 'CommentController@update')->name('comments.update');
 });
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {

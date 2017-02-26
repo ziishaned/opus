@@ -86,8 +86,8 @@ class Comment extends Model
         return true;
     }
 
-    public function updateComment($id, $data) {
-        $this->find($id)->update([
+    public function updateComment($data) {
+        $this->find($data['commentId'])->update([
             'content' => $data['comment'],
         ]);
 
