@@ -78,6 +78,31 @@ class PageController extends Controller
         }
     }
 
+    public function formatePagesData($pages) 
+    {
+        $nodes = [];
+        
+        foreach ($pages as $page) {
+            $nodes[] = [
+                'id'        => $page->id,
+                'wiki_id'   => $page->wiki_id,
+                'text'      => $page->name,
+                'slug'      => $page->slug,
+                'children'  => ($page->childPages->count()) ? true : false,
+                'data'      => [
+                    'created_at' => $page->created_at,
+                    'slug'       => $page->slug,
+                ],
+                'a_attr'    => [
+                    'href'  => route('pages.show', [Auth::user()->team->slug, $page->wiki->category->slug, $page->wiki->slug, $page->slug]),
+                ],
+            ];
+        }
+
+        return $nodes;
+
+    }
+
     public static function makePageTree($team, $wiki, $category, $pages, $currentPageId, &$html)
     {
         foreach ($pages as $page => $value) {
