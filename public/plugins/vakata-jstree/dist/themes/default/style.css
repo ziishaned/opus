@@ -370,8 +370,6 @@
 }
 .jstree-default .jstree-wholerow-clicked {
   background: #beebff;
-  background: -webkit-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-  background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%);
 }
 .jstree-default .jstree-node {
   min-height: 24px;

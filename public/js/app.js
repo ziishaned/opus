@@ -578,7 +578,7 @@ $(function() {
                 var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet. You can <a href="`+laroute.action('pages.create', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug })+`" class="text-muted">create one here</a>.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
-            data.instance._open_to($('#current-page-id').text());
+            data.instance._open_to($('#wiki-page-tree').data('page'));
         }).on('move_node.jstree', function(e, data) {
             console.log(data);
             $.ajax({

@@ -19,12 +19,6 @@
                         <span class="item-name">Activity</span>
                     </a>
                 </li>
-                {{-- <li class="item">
-                    <a href="wikis-list.html">
-                        <img src="/img/icons/basic_sheet_multiple .svg" width="24" height="24" class="icon">
-                        <span class="item-name">All Pages</span>
-                    </a>
-                </li> --}}
                 <li class="item">
                     <a href="{{ route('pages.create', [ $team->slug, $category->slug, $wiki->slug]) }}">
                         <img src="/img/icons/basic_elaboration_document_plus.svg" width="24" height="24" class="icon">
@@ -40,10 +34,10 @@
             </div>
             <div class="side-menu-page-tree-list" style="margin-bottom: 15px;">
                 <div class="nav-header" style="margin-bottom: 10px;">Page tree</div>
-                @if(isset($page)) 
+                @if(isset($page))
                     <span class="hidden" id="page-open" data-page="{{ $page->slug }}"></span>
                 @endif
-                <div id="wiki-page-tree" data-wiki="{{ $wiki->slug }}"></div>
+                <div id="wiki-page-tree" data-wiki="{{ $wiki->slug }}" @if(isset($page)) data-page="{{ $page->id }}" @endif></div>
             </div>
         </div>
         <div class="wiki-setting-bottom">

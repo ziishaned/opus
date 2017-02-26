@@ -1029,7 +1029,7 @@ label {
 	cursor: default;
 }
 
-.jstree-selected>.jstree-wholerow, .jstree-wholerow-hovered, .jstree-default .jstree-wholerow-clicked {
+.jstree-selected>.jstree-wholerow, .jstree-wholerow-hovered, .jstree-default .jstree-wholerow-clicked, .jstree-wholerow-clicked.jstree-wholerow-hovered {
     background-color: rgb(238, 238, 238) !important;	
 }
 

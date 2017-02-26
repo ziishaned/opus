@@ -59,6 +59,11 @@ class Page extends Node
         return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Page::class);
     }
 
+    public function childPages()
+    {
+        return $this->hasMany(Page::class, 'parent_id', 'id')->with('childPages');
+    }
+
     public function wiki() {
         return $this->belongsTo(Wiki::class, 'wiki_id', 'id');
     }
@@ -94,7 +99,7 @@ class Page extends Node
         return $childs;
     }
 
-    public function getTreeTo($organization, $category, $wiki, $page)
+    public function getTreeTo($page)
     {
         $nodes = $this->find($page->id)->getAncestorsAndSelf()->toHierarchy();   
         return $nodes;
