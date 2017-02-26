@@ -23,7 +23,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::post('/like', 'LikeController@storeLike')->name('like');
     Route::delete('/comment', 'CommentController@destroy')->name('comments.destroy');
     Route::patch('/comment', 'CommentController@update')->name('comments.update');
-    Route::patch('/wikis/pages', 'PageController@getWikiPages');
+    Route::post('/wikis/pages', 'PageController@getWikiPages');
     Route::post('/pages/reorder', function() {
         $parent = Request::get('parent');
         $nodeToChangeParent = Request::get('nodeToChangeParent');

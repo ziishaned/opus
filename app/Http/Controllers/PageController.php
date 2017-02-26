@@ -37,6 +37,26 @@ class PageController extends Controller
 
     public function getWikiPages()
     {
+        // Implement this
+        if($this->request->get('explore')) {
+            $wiki = $this->wiki->where('slug', $this->request->get('wiki'))->with(['team'])->first();
+
+            $pageTree = $this->page->getWikiTree($wiki);
+            dd($pageTree->toArray());
+        }
+
+        if($this->request->get('wiki')) {
+            $wiki = $this->wiki->where('slug', $this->request->get('wiki'))->with(['team'])->first();
+
+            $roots = $this->page->getRootPages($wiki);
+            return $this->formatePagesData($roots);
+        }
+
+        $childs = $this->page->getPageChilds($this->request->get('page'));
+        return $this->formatePagesData($childs);
+        
+        /***********************************************************************/
+
         $team     = $this->team->where('slug', '=', $this->request->get('team_slug'))->first();
         $category = $this->category->where('slug', '=', $this->request->get('category_slug'))->first();
         $wiki     = $this->wiki->where('slug', '=', $this->request->get('wiki_slug'))->first();
