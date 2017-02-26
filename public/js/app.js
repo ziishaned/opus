@@ -532,6 +532,7 @@ $(function() {
         $('#wiki-page-tree').jstree({
             core: {
                 "check_callback" : true,
+                "check_while_dragging": true,
                 "animation" : 250,
                 "themes" : {
                     'icons': false,
@@ -554,10 +555,7 @@ $(function() {
                     },
                 }
             },
-            sort: function (a, b) {
-                return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
-            },
-            "plugins" : [ "sort", "wholerow", "dnd" ]
+            plugins: [ "wholerow", "dnd" ]
         }).on("select_node.jstree", function (e, data) {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
@@ -567,56 +565,18 @@ $(function() {
                 $('#wiki-page-tree').replaceWith(html);
             };
             data.instance._open_to($('#current-page-id').text());
-        });
-    }
-
-    if($('#reorder-page-tree').length > 0 ) {
-        var wikiSlug         = $('#reorder-page-tree').data('wiki-slug');
-        var organizationSlug = $('#reorder-page-tree').data('organization-slug');
-        $('#reorder-page-tree').jstree({
-            core: {
-                "check_callback" : true,
-                "themes" : {
-                    'icons': false,
-                    'dots' : false,
-                },
-                'data' : {
-                    url: function (node) {
-                        return (node.id === '#')
-                                ? laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug })
-                                : laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug, page_id: node.id });
-                    },
-                    data: function() {
-                        if($('#current-page-id').length > 0) {
-                            var openedNode = $('#current-page-id').text();
-                            $('#current-page-id').remove();
-
-                            return {
-                                'opened_node': openedNode
-                            };
-                        }
-                    }
-                }
-            },
-            sort: function (a, b) {
-                return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
-            },
-            "plugins" : [ "search", "sort", "dnd" ]
-        }).on("select_node.jstree", function (e, data) {
-            document.location = data.node.a_attr.href;
-        }).on("ready.jstree", function(e, data) {
-            if(data.instance._cnt == 0) {
-                var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="`+laroute.action('pages.create', { organization_slug: organizationSlug, wiki_slug: wikiSlug, page_id: node.id })+`">create one here</a>.</p>`;
-                $('#reorder-page-tree').replaceWith(html);
-            };
         }).on('move_node.jstree', function(e, data) {
+            console.log(data);
             $.ajax({
-                url: '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages/reorder',
+                url: '/api/pages/reorder',
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    nodeId: data.node.id,
-                    parentId: data.parent,
+                    'nodeToChangeParent': data.node.id,
+                    'parent': data.parent,
+                },
+                success: function() {
+                    return true;
                 },
                 error: function(error) {
                     var response = JSON.parse(error.responseText);
@@ -625,4 +585,60 @@ $(function() {
             });
         });
     }
+
+    // if($('#reorder-page-tree').length > 0 ) {
+    //     var wikiSlug         = $('#reorder-page-tree').data('wiki-slug');
+    //     var organizationSlug = $('#reorder-page-tree').data('organization-slug');
+    //     $('#reorder-page-tree').jstree({
+    //         core: {
+    //             "check_callback" : true,
+    //             "themes" : {
+    //                 'icons': false,
+    //                 'dots' : false,
+    //             },
+    //             'data' : {
+    //                 url: function (node) {
+    //                     return (node.id === '#')
+    //                             ? laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug })
+    //                             : laroute.action('wikis.pages', { organization_slug: organizationSlug, wiki_slug: wikiSlug, page_id: node.id });
+    //                 },
+    //                 data: function() {
+    //                     if($('#current-page-id').length > 0) {
+    //                         var openedNode = $('#current-page-id').text();
+    //                         $('#current-page-id').remove();
+
+    //                         return {
+    //                             'opened_node': openedNode
+    //                         };
+    //                     }
+    //                 }
+    //             }
+    //         },
+    //         sort: function (a, b) {
+    //             return moment(new Date(this.get_node(a).data.created_at)) > moment(new Date(this.get_node(b).data.created_at)) ? 1 : -1;
+    //         },
+    //         "plugins" : [ "search", "sort", "dnd" ]
+    //     }).on("select_node.jstree", function (e, data) {
+    //         document.location = data.node.a_attr.href;
+    //     }).on("ready.jstree", function(e, data) {
+    //         if(data.instance._cnt == 0) {
+    //             var html = `<p class="text-center" style="position: relative; top: -3px;">No pages yet. You can <a href="`+laroute.action('pages.create', { organization_slug: organizationSlug, wiki_slug: wikiSlug, page_id: node.id })+`">create one here</a>.</p>`;
+    //             $('#reorder-page-tree').replaceWith(html);
+    //         };
+    //     }).on('move_node.jstree', function(e, data) {
+    //         $.ajax({
+    //             url: '/organizations/'+organizationId+'/wikis/'+wikiId+'/pages/reorder',
+    //             type: 'POST',
+    //             dataType: 'json',
+    //             data: {
+    //                 nodeId: data.node.id,
+    //                 parentId: data.parent,
+    //             },
+    //             error: function(error) {
+    //                 var response = JSON.parse(error.responseText);
+    //                 console.log(response);
+    //             }
+    //         });
+    //     });
+    // }
 });

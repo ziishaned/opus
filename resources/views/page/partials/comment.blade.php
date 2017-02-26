@@ -20,21 +20,6 @@
         <div class="comments" style="height: 350px;">
             @if($page->comments->count() > 0)
                 @foreach($page->comments as $comment)
-                    {{-- <div class="comment">
-                        <div class="media">
-                            <div class="pull-left">
-                                @if(!empty($comment->user->profile_image)) 
-                                    <img class="media-object img-circle" src="/img/{{ $comment->user->profile_image }}" alt="Image" width="50" height="50">
-                                @else
-                                    <img class="media-object img-circle" src="/img/no-image.png" alt="Image" width="50" height="50">
-                                @endif
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading user-name"><a href="{{ route('users.show', [ $team->slug, $comment->user->slug ]) }}">{{ $comment->user->first_name . ' ' . $comment->user->last_name }}</a> <small class="comment-time" data-toggle="tooltip" data-placement="bottom" title="{{ $comment->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $comment->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}">{{ $comment->updated_at->diffForHumans() }}</small></h4>
-                                <p>{!! (new Emoji)->render($comment->content) !!}</p>
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="comment" data-comment-id="{{ $comment->id }}">
                         <div class="media">
                             <div class="pull-left profile-image-con">

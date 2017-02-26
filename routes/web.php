@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Page;
+
 Route::get('logout', 'UserController@logout')->name('logout');
 
 Route::group(['middleware' => 'guest'], function () {
@@ -21,6 +23,16 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::post('/like', 'LikeController@storeLike')->name('like');
     Route::delete('/comment', 'CommentController@destroy')->name('comments.destroy');
     Route::patch('/comment', 'CommentController@update')->name('comments.update');
+    Route::post('/pages/reorder', function() {
+        $parent = Request::get('parent');
+        $nodeToChangeParent = Request::get('nodeToChangeParent');
+
+        if($parent === '#') {
+            return Page::find($nodeToChangeParent)->makeRoot();
+        }
+
+        return Page::find($nodeToChangeParent)->makeChildOf($parent);
+    });
 });
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
