@@ -78,56 +78,20 @@ class Page extends Node
         return $query;
     }
 
-    public function getRootPages($organization, $category, $wiki)
+    public function getRootPages($wiki)
     {
-        $nodes = [];
+        $roots = $this->whereNull('parent_id')->where('wiki_id', '=', $wiki->id)->with(['wiki', 'childPages'])->get();
 
-        $roots = $this->roots()->where('wiki_id', '=', $wiki->id)->get();
-        foreach ($roots as $key => $value) {
-            if($wiki->id == $value->wiki_id) {
-                $nodes[] = [
-                    'id'   => $value->id,
-                    'wiki_id' => $value->wiki_id,
-                    'text' => $value->name,
-                    'slug' => $value->slug,
-                    'children' => ($value->isLeaf() == false) ? true : false,
-                    'data' => [
-                        'created_at' => $value->created_at,
-                        'slug' => $value->slug,
-                    ],
-                    'a_attr' => [
-                        'href' => route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $value->slug]),
-                    ],
-                ];
-            }
-        }
-
-        return $nodes;
+        return $roots;
     }
 
-    public function getChildrenPages($organization, $category, $wiki, $page)
+    public function getPageChilds($page) 
     {
-        $nodes = [];
+        $page = $this->where('slug', $page)->first();
 
-        $childrens = $this->find($page->id)->children()->get();
-        foreach ($childrens as $key => $value) {
-            $nodes[] = [
-                'id'   => $value->id,
-                'wiki_id' => $value->wiki_id,
-                'text' => $value->name,
-                'slug' => $value->slug,
-                'children' => ($value->isLeaf() == false) ? true : false,
-                'data' => [
-                    'created_at' => $value->created_at,
-                    'slug' => $value->slug,
-                ],
-                'a_attr' => [
-                    'href' => route('pages.show', [$organization->slug, $category->slug, $wiki->slug, $value->slug]),
-                ],
-            ];
-        }
+        $childs = $this->where('parent_id', $page->id)->with(['wiki', 'childPages'])->get();
 
-        return $nodes;   
+        return $childs;
     }
 
     public function getTreeTo($organization, $category, $wiki, $page)

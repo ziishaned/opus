@@ -37,8 +37,14 @@ class PageController extends Controller
 
     public function getWikiPages()
     {
-        // Implement this
         if($this->request->get('explore')) {
+            $pages = $this->page->getTreeTo($team, $category, $wiki, $page);
+
+            $html = '';
+            $this->makePageTree($team, $wiki, $category, $pages, $page->id, $html);
+
+            return $html;
+            ////////////////////////////////////////////////////////
             $wiki = $this->wiki->where('slug', $this->request->get('wiki'))->with(['team'])->first();
 
             $pageTree = $this->page->getWikiTree($wiki);
@@ -54,28 +60,6 @@ class PageController extends Controller
 
         $childs = $this->page->getPageChilds($this->request->get('page'));
         return $this->formatePagesData($childs);
-        
-        /***********************************************************************/
-
-        $team     = $this->team->where('slug', '=', $this->request->get('team_slug'))->first();
-        $category = $this->category->where('slug', '=', $this->request->get('category_slug'))->first();
-        $wiki     = $this->wiki->where('slug', '=', $this->request->get('wiki_slug'))->first();
-        if ($this->request->get('page_slug')) {
-            $page = $this->page->where('slug', '=', $this->request->get('page_slug'))->first();
-        }
-
-        if ($this->request->get('fetch') == 'roots') {
-            return $this->page->getRootPages($team, $category, $wiki);
-        } elseif ($this->request->get('fetch') == 'children') {
-            return $this->page->getChildrenPages($team, $category, $wiki, $page);
-        } else {
-            $pages = $this->page->getTreeTo($team, $category, $wiki, $page);
-
-            $html = '';
-            $this->makePageTree($team, $wiki, $category, $pages, $page->id, $html);
-
-            return $html;
-        }
     }
 
     public function formatePagesData($pages) 
