@@ -27,6 +27,8 @@ class Page extends Node
 
     protected $table = 'wiki_page';
 
+    protected $orderColumn = 'parent_id';
+
     protected $fillable = [
         'name',
         'outline',
