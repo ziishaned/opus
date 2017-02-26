@@ -525,9 +525,7 @@ $(document).ready(function() {
 
 $(function() {
     if($('#wiki-page-tree').length > 0 ) {
-        var wikiSlug = $('#wiki-page-tree').data('wiki-slug');
-        var organizationSlug = $('#wiki-page-tree').data('organization-slug');
-        var categorySlug = $('#wiki-page-tree').data('category-slug');
+        let wiki = $('#wiki-page-tree').data('wiki');
 
         $('#wiki-page-tree').jstree({
             core: {
@@ -542,24 +540,40 @@ $(function() {
                 },
                 'data' : {
                     url: function (node) {
-                        if($('#current-page-slug').length > 0) {
-                            var opened_node = $('#current-page-slug').text();
-                            $('#current-page-slug').remove();
-
-                            return laroute.action('wikis.pages', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: opened_node, fetch_tree: true});
+                        return '/api/wikis/pages';
+                    },
+                    type: 'POST',
+                    data: function(node) {
+                        // Open Tree to a node
+                        if($('#page-open').length > 0) {
+                            var page = $('#page-open').data('page');
+                            $('#page-open').remove();
+                            return {
+                                'page' : page,
+                                'wiki' : wiki,
+                                'explore': true,   
+                            }
+                        }
+                        
+                        // Get root nodes
+                        if(node.id === '#') {
+                            return {
+                                'wiki' : wiki,
+                            }
                         }
 
-                        return (node.id === '#')
-                                ? laroute.action('wikis.pages', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, fetch: 'roots' })
-                                : laroute.action('wikis.pages', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug, page_slug: node.data.slug, fetch: 'children' });
-                    },
+                        // Get the child nodes of a page
+                        return {
+                            'page' : node.data.slug,
+                        }
+                    }
                 }
             },
             plugins: [ "wholerow", "dnd" ]
         }).on("select_node.jstree", function (e, data) {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
-            $('#wiki-page-tree').css('margin-left', '-10px');
+            $('#wiki-page-tree').css('margin-left', '-7px');
             if(data.instance._cnt == 0) {
                 var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet. You can <a href="`+laroute.action('pages.create', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug })+`" class="text-muted">create one here</a>.</p>`;
                 $('#wiki-page-tree').replaceWith(html);

@@ -1021,6 +1021,14 @@ label {
 }
 
 /**************************** jsTree ************************************/
+.jstree-loading {
+	padding-left: 13px;
+}
+
+.jstree-loading .jstree-anchor {
+	cursor: default;
+}
+
 .jstree-selected>.jstree-wholerow, .jstree-wholerow-hovered, .jstree-default .jstree-wholerow-clicked {
     background-color: rgb(238, 238, 238) !important;	
 }

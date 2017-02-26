@@ -38,13 +38,12 @@
                     <li class="text-center text-muted" style="margin-top: 5px;">Nothing found...</li>
                 </ul>
             </div>
-            <div class="side-menu-page-tree-list">
+            <div class="side-menu-page-tree-list" style="margin-bottom: 15px;">
                 <div class="nav-header" style="margin-bottom: 10px;">Page tree</div>
-                @if(isset($page))
-                    <div id="current-page-slug" class="hide">{{ $page->slug }}</div>
-                    <div id="current-page-id" class="hide">{{ $page->id }}</div>
+                @if(isset($page)) 
+                    <span class="hidden" id="page-open" data-page="{{ $page->slug }}"></span>
                 @endif
-                <div id="wiki-page-tree" style="margin-top: -7px;" data-wiki-slug="{{ $wiki->slug }}" data-organization-slug="{{ $team->slug }}" data-category-slug="{{ $category->slug }}"></div>
+                <div id="wiki-page-tree" data-wiki="{{ $wiki->slug }}"></div>
             </div>
         </div>
         <div class="wiki-setting-bottom">
