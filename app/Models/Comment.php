@@ -48,6 +48,11 @@ class Comment extends Model
         return $this->belongsTo(Page::class, 'subject_id', 'id');
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Comment::class);
+    }
+
     public function storeWikiComment($wikiId, $data)
     {
         $this->create([

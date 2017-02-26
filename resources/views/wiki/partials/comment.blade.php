@@ -6,7 +6,7 @@
         <div class="pull-right">
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                 <li>
-                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> {{ $wiki->comments->count() }}
+                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> <span id="total-subject-comments">{{ $wiki->comments->count() }}</span>
                 </li>
             </ul>
         </div>
@@ -18,16 +18,39 @@
                 @foreach($wiki->comments as $comment)
                     <div class="comment">
                         <div class="media">
-                            <div class="pull-left">
+                            <div class="pull-left profile-image-con">
                                 @if(!empty($comment->user->profile_image)) 
-                                    <img class="media-object img-circle" src="/img/{{ $comment->user->profile_image }}" alt="Image" width="50" height="50">
+                                    <img class="media-object img-rounded profile-image" src="/img/{{ $comment->user->profile_image }}" alt="Image" width="44" height="44">
                                 @else
-                                    <img class="media-object img-circle" src="/img/no-image.png" alt="Image" width="50" height="50">
+                                    <img class="media-object img-rounded profile-image" src="/img/no-image.png" alt="Image" width="44" height="44">
                                 @endif
                             </div>
-                            <div class="media-body">
-                                <h4 class="media-heading user-name"><a href="{{ route('users.show', [ $team->slug, $comment->user->slug ]) }}">{{ $comment->user->first_name . ' ' . $comment->user->last_name }}</a> <small class="comment-time" data-toggle="tooltip" data-placement="bottom" title="{{ $comment->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $comment->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}">{{ $comment->updated_at->diffForHumans() }}</small></h4>
-                                <p>{!! (new Emoji)->render($comment->content) !!}</p>
+                            <div class="media-body comment-body-con">
+                                <div class="comment-body">
+                                    <h4 class="media-heading user-name"><a href="{{ route('users.show', [ $team->slug, $comment->user->slug ]) }}">{{ $comment->user->first_name . ' ' . $comment->user->last_name }}</a> <small class="comment-time" data-toggle="tooltip" data-placement="bottom" title="{{ $comment->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $comment->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}">{{ $comment->updated_at->diffForHumans() }}</small></h4>
+                                    <p class="comment-content">{!! (new Emoji)->render($comment->content) !!}</p>
+                                </div>
+                                <div class="comment-actions">
+                                    <ul class="list-unstyled list-inline">
+                                        <li>
+                                            <?php $userLikeComment = false; ?>
+                                            @foreach($comment->likes as $like)
+                                                @if($like->user_id === Auth::user()->id)
+                                                    <?php $userLikeComment = true; ?>
+                                                @endif
+                                            @endforeach
+                                            <span class="label label-default {{ $comment->likes->count() > 0 ? '' : 'hidden' }}" style="display: inline-block;" id="comment-like-counter">{{ $comment->likes->count() }}</span> <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i> <a href="#" id="like-comment" data-comment-id="{{ $comment->id }}">{{ $userLikeComment ? 'Unlike' : 'Like' }}</a>
+                                        </li>
+                                        @if($comment->user_id === Auth::user()->id)
+                                            <li>
+                                                <a href="#" id="edit-comment">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="delete-comment" data-comment-id="{{ $comment->id }}">Delete</a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

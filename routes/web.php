@@ -19,6 +19,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/teams/{team_slug}/wikis', 'WikiController@getTeamWikis')->name('api.teams.wikis');
     Route::get('/teams/{team_slug}/categories', 'CategoryConroller@getTeamCategories')->name('api.teams.categories');
     Route::post('/like', 'LikeController@storeLike')->name('like');
+    Route::delete('/comment', 'CommentController@destroy')->name('comments.destroy');
 });
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {

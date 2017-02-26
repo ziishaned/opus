@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Team;
 use App\Models\Category;
 use App\Models\Wiki;
@@ -52,17 +53,13 @@ class CommentController extends Controller
         ]);
     }
 
-    public function destroy($organizationSlug, $wikiSlug, $pageSlug, $id) 
+    public function destroy() 
     {
-        $page = $this->wikiPage->getPage($pageSlug);
-        $organization = (new \App\Models\Organization)->getOrganization($organizationSlug);
-
-        $this->comment->deleteComment($id);
-
-        return redirect()->back()->with([
-            'alert' => 'Comment successfully deleted.',
-            'alert_type' => 'success'
-        ]);
+        $this->comment->where('id', $this->request->get('commentId'))->where('user_id', Auth::user()->id)->delete();
+        
+        return response()->json([
+            'deleted' => true,
+        ], 200);
     }
 
     public function update($organizationId, $wikiId, $pageId, $commentId) {

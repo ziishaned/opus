@@ -77,7 +77,7 @@ class Wiki extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'subject_id', 'id')->where('comments.subject_type', Wiki::class)->with(['user']);
+        return $this->hasMany(Comment::class, 'subject_id', 'id')->where('comments.subject_type', Wiki::class)->with(['user', 'likes']);
     }
 
     public function getTeamWikis($teamId, $total = null)

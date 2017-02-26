@@ -6,6 +6,7 @@ use Auth;
 use App\Models\Page;
 use App\Models\Wiki;
 use App\Models\Like;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -18,12 +19,15 @@ class LikeController extends Controller
 
     protected $page;
 
-    public function __construct(Request $request, Like $like, Wiki $wiki, Page $page)
+    protected $comment;
+
+    public function __construct(Request $request, Like $like, Wiki $wiki, Page $page, Comment $comment)
     {
         $this->request = $request;
         $this->like    = $like;
         $this->wiki    = $wiki;
         $this->page    = $page;
+        $this->comment = $comment;
     }
 
     public function storeLike()
@@ -48,6 +52,22 @@ class LikeController extends Controller
             $page = $this->page->where('slug', $this->request->get('subject'))->first();
             
             $like = $this->handleLike('App\Models\Page', $page->id);
+            
+            if($like) {
+                return response()->json([
+                    'like' => true
+                ], 200); 
+            }
+
+            return response()->json([
+                'like' => false
+            ], 200); 
+        }
+
+        if($this->request->get('subjectType') === 'comment') {
+            $comment = $this->comment->find($this->request->get('subject'));
+
+            $like = $this->handleLike('App\Models\Comment', $comment->id);
             
             if($like) {
                 return response()->json([

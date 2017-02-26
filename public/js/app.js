@@ -314,8 +314,82 @@ var App = {
             }
         });
     },
+    deleteComment(commentId, element) {
+        $.ajax({
+            url: '/api/comment',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                _method: 'delete',
+                commentId: commentId
+            },
+            success: function(data) {
+                if(data.deleted === true) {
+                    $('#total-subject-comments').text(parseInt($('#total-subject-comments').text())-1);
+                    $(element).closest('.comment').animate({
+                        'opacity' : '0.5'
+                    }, 100).slideUp(100, function() {
+                        $(element).closest('.comment').remove();
+                    });
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });      
+    },
+    likeComment(comment, element) {
+        var that = this;
+        $.ajax({
+            url: '/api/like',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                subject : comment,
+                subjectType : 'comment'
+            },
+            success(data) {
+                setTimeout(function() {
+                    $(element).closest('li').find('#spinner').hide();
+                    $(element).show();
+                    if(data.like === true) {
+                        $(element).text('Unlike');
+                        $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())+1);
+                    }  else {
+                        $(element).text('Like');
+                        $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())-1);
+                    }
+                }, 800);
+            }
+        });
+    },
     bindUI: function () {
-        var that = this;        
+        var that = this;
+
+        $(document).on('click', '#like-comment', function(e) {
+            e.preventDefault();
+            let comment = $(this).data('comment-id');
+
+            $(this).hide();
+            $(this).closest('li').find('#spinner').css('display', 'inline-block');
+
+            that.likeComment(comment, this);
+        });
+
+        $(document).on('click', '#edit-comment', function(e) {
+            e.preventDefault();
+            console.log($(this).closest('.comment').find('.comment-content').text());
+            // a.match(/(?: |^)@([\w\d]+)/g)
+        });
+
+        $(document).on('click', '#delete-comment', function(e) {
+            e.preventDefault();
+            if(confirm('Are you sure?')) {
+                event.preventDefault();
+                var commentId = $(this).data('comment-id');
+                that.deleteComment(commentId, this);
+            }
+        });      
 
         $(document).on('click', '#like-wiki', function(e) {
             e.preventDefault();

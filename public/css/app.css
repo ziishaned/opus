@@ -676,7 +676,25 @@ label {
 }
 
 .comments .comment .user-name {
-	font-size: 15px;
+	font-size: 14px;
+	font-family: lato;
+	font-weight: bold;
+}
+
+.comments .comment .profile-image {
+	border-radius: 3.5px;
+	margin-top: 3px;
+}
+
+.comments .comment .profile-image-con {
+	padding-right: 13px;
+}
+
+.comments .comment .comment-body .comment-content {
+	font-size: 14px;
+	line-height: 18.2px;
+	margin-bottom: 4px;
+	margin-top: 3.5px;
 }
 
 .comments .comment {
@@ -1096,4 +1114,24 @@ label {
 
 #spinner {
 	display: none;
+}
+
+.comment-actions {
+	height: 25px;
+	display: flex;
+	align-items: center;
+}
+
+.comment-actions ul {
+	margin-bottom: 0;
+}
+
+.comment-actions ul li a {
+	color: #777;
+	font-size: 12px;
+}
+
+.comment-actions ul li a:hover {
+	text-decoration: none;
+	color: #000;
 }
