@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWikiPageTable extends Migration
+class CreatePageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateWikiPageTable extends Migration
      */
     public function up()
     {
-        Schema::create('wiki_page', function (Blueprint $table) {
+        Schema::create('page', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->nullable()->index();
+            $table->integer('position')->unsigned();
             $table->integer('lft')->nullable()->index();
             $table->integer('rgt')->nullable()->index();
             $table->integer('depth')->nullable();
@@ -37,6 +38,6 @@ class CreateWikiPageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wiki_page');
+        Schema::dropIfExists('page');
     }
 }

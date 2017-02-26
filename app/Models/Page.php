@@ -25,14 +25,15 @@ class Page extends Node
 
     protected $wiki;
 
-    protected $table = 'wiki_page';
+    protected $table = 'page';
 
-    protected $orderColumn = 'parent_id';
+    protected $orderColumn = 'position';
 
     protected $fillable = [
         'name',
         'outline',
         'description',
+        'position',
         'parent_id',
         'user_id',
         'wiki_id',
