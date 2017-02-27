@@ -24,16 +24,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::delete('/comment', 'CommentController@destroy')->name('comments.destroy');
     Route::patch('/comment', 'CommentController@update')->name('comments.update');
     Route::post('/wikis/pages', 'PageController@getWikiPages');
-    Route::post('/pages/reorder', function() {
-        $parent = Request::get('parent');
-        $nodeToChangeParent = Request::get('nodeToChangeParent');
-
-        if($parent === '#') {
-            return Page::find($nodeToChangeParent)->makeRoot();
-        }
-
-        return Page::find($nodeToChangeParent)->makeChildOf($parent);
-    });
+    Route::post('/pages/reorder', 'PageController@reorder');
 });
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {

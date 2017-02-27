@@ -106,13 +106,39 @@ class PageController extends Controller
         return true;
     }
 
-    public function reorder($teamId, $wikiId)
+    public function changeSiblingsPositions($node, $nodePosition)
     {
-        $this->page->changePageParent($this->request->get('nodeId'), $this->request->get('parentId'));
+        // Change the node position that is dragged by user
+        $node = $this->page->find($node->id);
+        $node->position = $nodePosition;
+        $node->save();
 
-        return response()->json([
-            'success' => true,
-        ]);
+        // Change the siblings position +1 step
+        foreach ($node->siblingsAndSelf()->get() as $key => $x) {
+            if($x->position >= $nodePosition && $x->id !== $node->id) {
+                $page = $this->page->find($x->id);
+                $page->position = $x->position+1;
+                $page->save();
+            }
+        }
+    }
+
+    public function reorder()
+    {   
+        $node = $this->page->find($this->request->get('nodeToChangeParent'));
+
+        if ($this->request->get('parent') === '#') {
+            $node->makeRoot();
+            $this->changeSiblingsPositions($node, $this->request->get('position'));
+        } else {
+            $parent = $this->page->find($this->request->get('parent'));
+            $node->makeChildOf($parent);
+            $this->changeSiblingsPositions($node, $this->request->get('position'));
+        }
+
+        return [
+            'Position changed' => true
+        ];   
     }
 
     public function destroy(Team $team, Category $category, Wiki $wiki, Page $page)

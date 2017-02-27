@@ -16,7 +16,7 @@ class CreatePageTable extends Migration
         Schema::create('page', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->nullable()->index();
-            $table->integer('position')->unsigned();
+            $table->integer('position');
             $table->integer('lft')->nullable()->index();
             $table->integer('rgt')->nullable()->index();
             $table->integer('depth')->nullable();

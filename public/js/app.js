@@ -578,15 +578,16 @@ $(function() {
                 var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
-            
+
             data.instance._open_to($('#wiki-page-tree').data('page'));
 
             // Sorting Tree
-            $("#wiki-page-tree ul li").sort(sort_li).appendTo('#wiki-page-tree ul');
+            $("#wiki-page-tree>ul").each(function(){
+                $(this).html($(this).children('li').sort(function(a, b){
+                    return ($(b).data('position')) < ($(a).data('position')) ? 1 : -1;
+                }));
+            });
 
-            function sort_li(a, b) {
-                return data.instance.get_node(a).data.position > data.instance.get_node(b).data.position ? 1 : -1;
-            }
         }).on('move_node.jstree', function(e, data) {
             $.ajax({
                 url: '/api/pages/reorder',
@@ -595,6 +596,7 @@ $(function() {
                 data: {
                     'nodeToChangeParent': data.node.id,
                     'parent': data.parent,
+                    'position': data.position,
                 },
                 success: function() {
                     return true;

@@ -148,16 +148,4 @@ class Page extends Node
 
         return true;
     }
-
-    public function changePageParent($nodeId, $parentId)
-    {
-        $node   = $this->find($nodeId);
-        if ($parentId == '#') {
-            $node->makeRoot();
-        } else {
-            $parent = $this->find($parentId);
-            $node->makeChildOf($parent);
-        }
-        return true;   
-    }
 }
