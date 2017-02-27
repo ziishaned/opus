@@ -90,8 +90,8 @@ input, select, textarea {
 }
 
 .side-menu-top .item a {
-	color: #777777;
-	font-size: 13px;
+	color: #333;
+	font-size: 14px;
 	font-weight: normal;
 	line-height: 33px;
 	padding: 5px 13px;
@@ -102,7 +102,7 @@ input, select, textarea {
 }
 
 .side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .recent-wikis-list li.item:hover a {
-	background-color: rgba(1,1,1,0.1);
+	background-color: rgb(238, 238, 238) !important;
 	text-decoration: none;
 }
 
