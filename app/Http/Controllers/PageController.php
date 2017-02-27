@@ -72,6 +72,9 @@ class PageController extends Controller
                 'text'      => $page->name,
                 'slug'      => $page->slug,
                 'children'  => ($page->childPages->count()) ? true : false,
+                'li_attr' => [
+                    'class'     => 'jstree-drop',
+                ],
                 'data'      => [
                     'created_at' => $page->created_at,
                     'slug'       => $page->slug,
@@ -114,7 +117,7 @@ class PageController extends Controller
         $node->save();
 
         // Change the siblings position +1 step
-        foreach ($node->siblingsAndSelf()->get() as $key => $x) {
+        foreach ($node->siblingsAndSelf()->where('position', '>=', $nodePosition)->get() as $key => $x) {
             if($x->position >= $nodePosition && $x->id !== $node->id) {
                 $page = $this->page->find($x->id);
                 $page->position = $x->position+1;
