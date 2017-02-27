@@ -7,10 +7,10 @@
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                 <li class="page-like-con">
                     <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
-                    <a href="#" id="like-page" data-page="{{ $page->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"></a> <span id="likes-counter">{{ $page->likes->count() }}</span>
+                    <a href="#" id="like-page" data-page="{{ $page->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" width="20" height="20" style="margin-right: 3px;"></a> <span class="label label-default" id="likes-counter">{{ $page->likes->count() }}</span>
                 </li>
                 <li>
-                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> {{ $page->comments->count() }}
+                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="margin-right: 3px;"> <span class="label label-default">{{ $page->comments->count() }}</span>
                 </li>
             </ul>
         </div>

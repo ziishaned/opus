@@ -63,31 +63,13 @@ class PageController extends Controller
 
     public function formatePagesData($pages) 
     {
-        $nodes = [];
-        
+        $html = '<ul>'; 
         foreach ($pages as $page) {
-            $nodes[] = [
-                'id'        => $page->id,
-                'wiki_id'   => $page->wiki_id,
-                'text'      => $page->name,
-                'slug'      => $page->slug,
-                'children'  => ($page->childPages->count()) ? true : false,
-                'li_attr' => [
-                    'class'     => 'jstree-drop',
-                ],
-                'data'      => [
-                    'created_at' => $page->created_at,
-                    'slug'       => $page->slug,
-                    'position'   => $page->position,
-                ],
-                'a_attr'    => [
-                    'href'  => route('pages.show', [Auth::user()->team->slug, $page->wiki->category->slug, $page->wiki->slug, $page->slug]),
-                ],
-            ];
+            $html .= '<li id="' . $page->id . '" data-slug="' . $page->slug . '" data-position="'. $page->position .'" data-created_at="' . $page->created_at . '" class="' . ($page->isLeaf() == false ? 'jstree-closed' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $page->wiki->category->slug, $page->wiki->slug, $page->slug]) . '">' . $page->name . '</a>';
         }
+        $html .= '</ul>'; 
 
-        return $nodes;
-
+        return $html;
     }
 
     public static function makePageTree($wiki, $pages, $currentPageId, &$html)
