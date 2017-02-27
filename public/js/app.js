@@ -575,12 +575,19 @@ $(function() {
         }).on("ready.jstree", function(e, data) {
             $('#wiki-page-tree').css('margin-left', '-7px');
             if(data.instance._cnt == 0) {
-                var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet. You can <a href="`+laroute.action('pages.create', { team_slug: organizationSlug, category_slug: categorySlug, wiki_slug: wikiSlug })+`" class="text-muted">create one here</a>.</p>`;
+                var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
+            
             data.instance._open_to($('#wiki-page-tree').data('page'));
+
+            // Sorting Tree
+            $("#wiki-page-tree ul li").sort(sort_li).appendTo('#wiki-page-tree ul');
+
+            function sort_li(a, b) {
+                return data.instance.get_node(a).data.position > data.instance.get_node(b).data.position ? 1 : -1;
+            }
         }).on('move_node.jstree', function(e, data) {
-            console.log(data);
             $.ajax({
                 url: '/api/pages/reorder',
                 type: 'POST',

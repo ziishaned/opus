@@ -75,6 +75,7 @@ class PageController extends Controller
                 'data'      => [
                     'created_at' => $page->created_at,
                     'slug'       => $page->slug,
+                    'position'   => $page->position,
                 ],
                 'a_attr'    => [
                     'href'  => route('pages.show', [Auth::user()->team->slug, $page->wiki->category->slug, $page->wiki->slug, $page->slug]),
@@ -91,10 +92,10 @@ class PageController extends Controller
         foreach ($pages as $page => $value) {
             foreach ($value->getSiblings() as $siblings) {
                 if ($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $wiki->category->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
+                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="'. $siblings->position .'" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $wiki->category->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $wiki->category->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
+            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="'. $value->position .'" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $wiki->category->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
             if (!empty($value['children'])) {
                 $html .= '<ul>';
                 self::makePageTree($wiki, $value['children'], $currentPageId, $html);
@@ -135,12 +136,46 @@ class PageController extends Controller
     {
         $this->validate($this->request, Page::PAGE_RULES);
 
+        $this->request['position'] = $this->getNodePosition($this->request->all(), $wiki);
+
         $page = $this->page->saveWikiPage($wiki, $this->request->all());
 
         return redirect()->route('pages.show', [$team->slug, $category->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success',
         ]);
+    }
+
+    public function getNodePosition($data, $wiki)
+    {
+        if(empty($data['page_parent'])) {
+            $pages = $this->page->where('wiki_id', $wiki->id)->whereNull('parent_id')->get();
+            if(!empty($pages->toArray())) {
+                $position = 0;
+                foreach ($pages as $page) {
+                    if($page->position > $position) {
+                        $position = $page->position;
+                    }
+                }
+                return $position+1;
+            } else {
+                return 0;
+            }
+        }
+        
+
+        $childPages = $this->page->where('wiki_id', $wiki->id)->where('parent_id', $data['page_parent'])->get();
+        if(!empty($childPages->toArray())) {
+            $position = 0;
+            foreach ($childPages as $page) {
+                if($page->position > $position) {
+                    $position = $page->position;
+                }
+            }
+            return $position+1;
+        } else {
+            return 0;
+        }
     }
 
     public function create(Team $team, Category $category, Wiki $wiki)

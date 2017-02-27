@@ -76,7 +76,7 @@ class Page extends Node
     public function getPages($wikiId)
     {
         $query = $this;
-        $query = $query->where('wiki_page.wiki_id', '=', $wikiId);
+        $query = $query->where('wiki_id', '=', $wikiId);
         $query = $query->with(['wiki'])->get();
         if(!$query) {
             return false;
@@ -113,6 +113,7 @@ class Page extends Node
             'outline'      =>  !empty($data['outline']) ? $data['outline'] : null,
             'description'  =>  !empty($data['description']) ? $data['description'] : null,
             'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
+            'position'     =>  $data['position'],
             'user_id'      =>  Auth::user()->id,
             'wiki_id'      =>  $wiki->id,
         ]);
