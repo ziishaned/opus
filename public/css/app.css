@@ -81,10 +81,6 @@ input, select, textarea {
 	font-weight: 500;
 }
 
-.side-menu-top .item.active, .side-menu-categories-list li.active {
-	background-color: rgba(1,1,1,0.1);
-}
-
 .side-menu-top .item.active a:hover {
 	background-color: initial;
 }
@@ -101,7 +97,7 @@ input, select, textarea {
 	align-items: center;
 }
 
-.side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .recent-wikis-list li.item:hover a {
+.side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .recent-wikis-list li.item:hover a, .side-menu-top .item.active, .side-menu-categories-list li.active {
 	background-color: rgb(238, 238, 238) !important;
 	text-decoration: none;
 }
@@ -498,20 +494,15 @@ label {
 	max-width: 800px;
 	margin: auto;
 	margin-top: 30px;
+	position: relative;
+	left: -8px;
 }
 
 .team-setting .team-setting-header, .wiki-setting .wiki-setting-header {
-	margin: 0;
 	margin-bottom: 40px;
-	font-size: 45px;
-	font-weight: 900;
+	font-size: 28px;
+	font-weight: 500;
 	text-align: center;
-	font-family: lato;
-}
-
-.wiki-setting .wiki-setting-header {
-	font-size: 35px;
-	margin-bottom: 30px;
 }
 
 .team-general-setting, .user-general-setting {
@@ -546,6 +537,39 @@ label {
     border-bottom: 1px solid #eee;
     padding-bottom: 40px;
     min-height: 110px;
+}
+
+.administrators-list {
+    margin-top: 40px;
+}
+
+.administrators-list .list-heading {
+	font-size: 14px;
+	font-family: lato;
+}
+
+.administrators-list .panel-top .list-total {
+	position: relative;
+	top: 4px;
+}
+
+.administrators-list .panel-top { 
+    margin-bottom: 15px;
+}
+
+.administrators-list ul {
+	position: relative;
+	left: 2px;
+}
+
+.administrators-list ul li {
+	margin: 1px;
+	margin-bottom: 4px;
+	padding: 0;
+}
+
+.administrators-list ul li img {
+	border-radius: 3px;
 }
 
 .team-info .action-info, .upload-team-logo, .delete-team .action-info, .wiki-info .action-info {
@@ -1142,4 +1166,60 @@ label {
 .comment-actions ul li a:hover {
 	text-decoration: none;
 	color: #000;
+}
+
+/******************** Wiki Description Styles *********************/
+
+.formated-wiki-description {
+	font-family: "Open Sans";
+	line-height: 22px;
+	font-size: 14px;
+}
+
+.formated-wiki-description h1 {
+	font-size: 28px;
+	margin: 12px 0 8px 0;
+}
+
+.formated-wiki-description h1 strong {
+	font-weight: 600 !important;
+}
+
+.formated-wiki-description h2 {
+	font-size: 20px;
+}
+
+.formated-wiki-description h2 strong, 
+.formated-wiki-description h3 strong,
+.formated-wiki-description h4 strong,
+.formated-wiki-description h5 strong,
+.formated-wiki-description h6 strong {
+	font-weight: 500 !important;
+}
+
+.formated-wiki-description h3 {
+	font-size: 18px;
+}
+
+.formated-wiki-description p {
+	margin-bottom: 6px;
+}
+
+.formated-wiki-description h2,
+.formated-wiki-description h3,
+.formated-wiki-description h4,
+.formated-wiki-description h5,
+.formated-wiki-description h6 {
+	margin: 8px 0 5px 0;
+	padding: 0;
+}
+
+.formated-wiki-description pre {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.formated-wiki-description pre, .formated-wiki-description code  {
+	border: none;
+	font-family: consolas, monaco !important;
 }

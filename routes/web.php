@@ -81,7 +81,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('{wiki_slug}/overview', 'WikiController@overview')->name('wikis.overview');
         Route::get('{wiki_slug}/permissions', 'WikiController@permissions')->name('wikis.permissions');
         Route::delete('{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
-        Route::get('{wiki_slug}/pages/reorder', 'PageController@pagesReorder')->name('pages.reorder');
+        Route::get('{wiki_slug}/setting/overview', 'WikiController@wikiSetting')->name('wikis.setting');
 
         Route::get('{wiki_slug}/pages/create', 'PageController@create')->name('pages.create');
         Route::get('{wiki_slug}/pages/{page_slug}', 'PageController@show')->name('pages.show');

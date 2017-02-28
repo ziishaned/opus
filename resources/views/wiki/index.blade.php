@@ -12,7 +12,10 @@
 								<a href="#"><img src="/img/icons/basic_eye.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Watch</a>
 							</li>
 							<li>
-								<a href="#"><img src="/img/icons/basic_todo_txt.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Add to Read list</a>
+								<a href="#"><img src="/img/icons/basic_elaboration_todolist_check.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Add to Read list</a>
+							</li>
+							<li>
+								<a href="#"><img src="/img/icons/software_paragraph_space_after.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Insert into Shortcut</a>
 							</li>
 						</ul>
 						<ul class="list-unstyled list-inline pull-right">

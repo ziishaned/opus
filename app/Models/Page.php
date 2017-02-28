@@ -133,8 +133,8 @@ class Page extends Node
     public function updatePage($id, $data)
     {
         $this->find($id)->update([
-            'name' => $data['page_name'],
-            'description' => $data['page_description'],
+            'name' => $data['name'],
+            'description' => $data['description'],
             'outline' => $data['outline'],
             'parent_id'    =>  !empty($data['page_parent']) ? $data['page_parent'] : null,
         ]);
