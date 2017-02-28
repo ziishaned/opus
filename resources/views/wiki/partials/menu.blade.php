@@ -33,7 +33,7 @@
                 </ul>
             </div>
             <div class="side-menu-page-tree-list" style="margin-bottom: 15px;">
-                <div class="nav-header" style="margin-bottom: 10px;">Page tree</div>
+                <div class="nav-header" style="margin-bottom: 10px;" title="You can move any page by dragging it to a new position in the tree.">Page tree</div>
                 @if(isset($page))
                     <span class="hidden" id="page-open" data-page="{{ $page->slug }}"></span>
                 @endif
