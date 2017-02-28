@@ -10,20 +10,7 @@
 					  	Wiki Settings
 					</div>
 					<div role="tabpanel">
-						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active">
-								<a href="wiki-overview.html">General</a>
-							</li>
-							<li role="presentation" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="You don't have access to this option.">
-								<a href="#"><i class="fa fa-lock"></i> Permissions</a>
-							</li>
-							<li role="presentation">
-								<a href="#">Integrations</a>
-							</li>
-							<li role="presentation">
-								<a href="#">Notifications</a>
-							</li>
-						</ul>
+						@include('wiki.setting.partials.menu')
 						<div class="tab-content">
 							<div class="row">
 								<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">

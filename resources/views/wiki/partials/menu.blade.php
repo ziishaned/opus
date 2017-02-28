@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="wiki-setting-bottom">
-            <a href="{{ route('wikis.setting', [$team->slug, $category->slug, $wiki->slug, ]) }}" class="btn wiki-setting-button btn-block">
+            <a href="{{ route('wikis.overview', [$team->slug, $category->slug, $wiki->slug, ]) }}" class="btn wiki-setting-button btn-block">
                 <img src="/img/icons/basic_gear.svg" width="20" height="20"> Wiki Settings
             </a>
         </div>

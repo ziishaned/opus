@@ -110,16 +110,6 @@ class WikiController extends Controller
         return array_combine(array_keys($data), array_reverse(array_values($data)));
     }
 
-    public function overview(Team $team, Category $category, Wiki $wiki)
-    {
-        return view('wiki.overview', compact('team', 'wiki', 'category'));
-    }
-
-    public function permissions(Team $team, Category $category, Wiki $wiki)
-    {
-        return view('wiki.permissions', compact('team', 'wiki', 'category'));
-    }
-
     public function getWikis(Team $team)
     {
         $wikis = $this->wiki->getTeamWikis($team->id);
@@ -147,11 +137,18 @@ class WikiController extends Controller
         return view('wiki.activity', compact('team', 'category', 'wiki', 'activities'));
     }
 
-    public function wikiSetting(Team $team, Category $category, Wiki $wiki)
+    public function overview(Team $team, Category $category, Wiki $wiki)
     {
         $isUserLikeWiki = $this->isUserLikeWiki($wiki); 
 
         return view('wiki.setting.overview', compact('team', 'category', 'wiki', 'isUserLikeWiki'));
+    }
+
+    public function permission(Team $team, Category $category, Wiki $wiki)
+    {
+        $isUserLikeWiki = $this->isUserLikeWiki($wiki); 
+
+        return view('wiki.setting.permission', compact('team', 'category', 'wiki', 'isUserLikeWiki'));
     }
 
     public function isUserLikeWiki($wiki)
