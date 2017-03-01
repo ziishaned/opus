@@ -172,4 +172,19 @@ class TeamController extends Controller
     {
         return view('team.setting.members', compact('team'));
     }
+
+    public function permissionSettings(Team $team)
+    {
+        return view('team.setting.permission', compact('team'));
+    }
+
+    public function groupSettings(Team $team)
+    {
+        return view('team.setting.group', compact('team'));
+    }
+
+    public function createGroup(Team $team)
+    {
+        return view('team.setting.create-group', compact('team'));
+    }
 }

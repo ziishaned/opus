@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable, Sluggable, SoftDeletes;
+    use EntrustUserTrait, Notifiable, Sluggable;
 
     /**
      * Return the sluggable configuration array for this model.

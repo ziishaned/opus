@@ -36,6 +36,9 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::group([ 'prefix' => '{team_slug}/settings'], function() {
         Route::get('general', 'TeamController@generalSettings')->name('teams.settings.general');
         Route::get('members', 'TeamController@membersSettings')->name('teams.settings.members');
+        Route::get('permissions', 'TeamController@permissionSettings')->name('teams.settings.permissins');
+        Route::get('groups', 'TeamController@groupSettings')->name('teams.settings.groups');
+        Route::get('groups/create', 'TeamController@createGroup')->name('groups.create');
     });
 
     Route::group(['prefix' => '{team_slug}/users'], function () {

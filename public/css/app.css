@@ -572,6 +572,10 @@ label {
 	border-radius: 3px;
 }
 
+.team-group-list ul li {
+	margin-bottom: 15px;
+}
+
 .team-info .action-info, .upload-team-logo, .delete-team .action-info, .wiki-info .action-info {
     max-width: 400px;
     margin-bottom: 10px;
@@ -1222,4 +1226,49 @@ label {
 .formated-wiki-description pre, .formated-wiki-description code  {
 	border: none;
 	font-family: consolas, monaco !important;
+}
+
+.permissions-input-group .permissions-top {
+	height: 35px;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #ddd;
+	border-left: 0px;
+	border-right: 0px;
+	font-weight: 700;
+	margin-bottom: 8px;
+	font-family: lato;
+}
+
+.permissions-input-group .permissions-top ul li, .permissions-input-group .permission-body .permission-group ul li {
+	width: 65px;
+	text-align: center;
+}
+
+.permissions-input-group .permissions-top ul li:first-child, .permissions-input-group .permission-body .permission-group ul li:first-child {
+	width: 360px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+	border-color: #66afe9 !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+	border-radius: 3px !important;
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+	border-radius: 1px solid #ccc;
 }

@@ -13,6 +13,7 @@
 		<link href="/plugins/ckeditor/plugins/codesnippet/lib/highlight/styles/github.css" rel="stylesheet">
 		<link href="/plugins/vakata-jstree/dist/themes/default/style.css" rel="stylesheet">
 		<link href="/plugins/atjs/jquery.atwho.min.css" rel="stylesheet">
+		<link href="/plugins/select2/select2.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<div id="app">
@@ -42,7 +43,7 @@
 		<script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
 		<script src="/plugins/atjs/jquery.caret.min.js"></script>
 		<script src="/plugins/atjs/jquery.atwho.min.js"></script>
-		{{-- <script src="/js/autosize.min.js"></script> --}}
+		<script src="/plugins/select2/select2.full.min.js"></script>
         <script>
             (function() {
                 hljs.initHighlightingOnLoad();

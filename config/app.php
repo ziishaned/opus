@@ -184,6 +184,8 @@ return [
         Baum\Providers\BaumServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Lord\Laroute\LarouteServiceProvider::class,
+
+        Zizaco\Entrust\EntrustServiceProvider::class,
     ],
 
     /*
@@ -235,6 +237,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Avatar' => YoHang88\LetterAvatar\LetterAvatar::class,
         'Emoji' => App\Helpers\EmojiHelper::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
     ],
 
 ];
