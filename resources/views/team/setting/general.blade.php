@@ -11,14 +11,15 @@
 				<div class="team-info">
                     <h2>Team Name</h2>
                     <p class="text-muted action-info">
-                        Renaming company name will also change the Company URL and will render all bookmarks to company pages invalid.        
+                        Renaming team name will also change the team URL and will render all bookmarks to team pages invalid.        
                     </p>
-                    <form action="" method="POST" class="form-inline" role="form">
+                    <form action="{{ route('teams.update', [ $team->slug ]) }}" method="POST" class="form-inline" role="form">
+                        {{ method_field('patch') }}
                         <div class="form-group">
-                            <label class="sr-only" for="">Team Name</label>
-                            <input type="email" class="form-control" value="Black Hat" placeholder="Input field">
+                            <input type="text" id="team-name" name="team_name" class="form-control" value="{{ $team->name }}" placeholder="Enter team name" required>
                         </div>
                         <button type="submit" class="btn btn-success pull-right">Save</button>
+                        <div class="clearfix"></div>
                     </form>
                 </div>
                 <div class="team-logo">

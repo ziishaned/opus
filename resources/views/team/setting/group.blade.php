@@ -8,159 +8,93 @@
         <div role="tabpanel">
             @include('team.partials.tab-menu')
             <div class="tab-content">
-                <div class="team-members team-groups-con">
-                    <div class="current-groups-head">
-                        <div class="pull-left">
-                            <h2 style="margin-bottom: 0; position: relative; top: 7px;">Current Groups</h2>
+                <div class="s-groups-con">
+                    <div class="s-group-header">
+                        <div class="header">
+                            <div class="pull-left">
+                                <h2>Current Groups</h2>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{{ route('groups.create', [ $team->slug ]) }}" class="btn btn-link create-group-btn"><i class="fa fa-plus fa-fw"></i> Create Group</a>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="pull-right">
-                            <a href="{{ route('groups.create', [$team->slug,]) }}" class="btn btn-link"><i class="fa fa-plus fa-fw"></i> Create group</a>   
-                        </div>
-                        <div class="clearfix"></div>
                     </div>
-                    <div class="panel panel-default administrators-list team-group-list">
-                        <div class="panel-body">
-                            <div class="panel-top">
-                                <div class="list-heading pull-left">
-                                    <a href="#">Administrators</a> <div class="label label-default">5</div> 
-                                </div> 
-                                <div class="pull-right">
-                                    <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
-                                        <li style="margin-bottom: 0;">
-                                            <a href="#" class="btn btn-default btn-sm"><img src="/img/icons/software_pencil.svg" width="16" height="16"></a>
-                                        </li>
-                                        <li style="margin-bottom: 0;">
-                                            <a href="#" class="btn btn-default btn-sm"><img src="/img/icons/basic_trashcan.svg" width="16" height="16"></a>
-                                        </li>
-                                    </ul>
+                    <div class="s-groups-body">
+                        <div class="panel panel-default s-group-item">
+                            <div class="panel-body">
+                                <div class="group-item-header">
+                                    <div class="pull-left">
+                                        <p class="group-name"><span class="name-inner">Administrators</span> <span class="label label-default">5</span></p> 
+                                    </div>
+                                    <div class="pull-right">
+                                        <ul class="list-unstyled list-inline">
+                                            <li><a href="#"><i class="fa fa-pencil fa-fw" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-trash-o fa-fw" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="clearfix"></div>
-                            </div> 
-                            <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/christian.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Christian">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Christian</h4>
-                                            <a href="#">christian@gmail.com</a>
+                                <div class="group-members-con">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 group-member-item">
+                                            <div class="media">
+                                                <a class="pull-left group-member-img" href="#">
+                                                    <img class="media-object" src="/img/christian.jpg" alt="Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="Christian">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading group-member-name">Christian</h4>
+                                                    <p class="grou-member-email">christian@gmail.com</p>
+                                                </div>
+                                            </div>      
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 group-member-item">
+                                            <div class="media">
+                                                <a class="pull-left group-member-img" href="#">
+                                                    <img class="media-object" src="/img/elliot.jpg" alt="Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elliot">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading group-member-name">Elliot</h4>
+                                                    <p class="grou-member-email">elliot@gmail.com</p>
+                                                </div>
+                                            </div>      
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 group-member-item">
+                                            <div class="media">
+                                                <a class="pull-left group-member-img" href="#">
+                                                    <img class="media-object" src="/img/helen.jpg" alt="Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="Helen">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading group-member-name">Helen</h4>
+                                                    <p class="group-member-email">helen@gmail.com</p>
+                                                </div>
+                                            </div>      
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 group-member-item">
+                                            <div class="media">
+                                                <a class="pull-left group-member-img" href="#">
+                                                    <img class="media-object" src="/img/jenny.jpg" alt="Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="Jenny">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading group-member-name">Jenny</h4>
+                                                    <p class="grou-member-email">jenny@gmail.com</p>
+                                                </div>
+                                            </div>      
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 group-member-item">
+                                            <div class="media">
+                                                <a class="pull-left group-member-img" href="#">
+                                                    <img class="media-object" src="/img/joe.jpg" alt="Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="joe">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading group-member-name">Joe</h4>
+                                                    <p class="grou-member-email">joe@gmail.com</p>
+                                                </div>
+                                            </div>      
                                         </div>
                                     </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/elliot.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Elliot">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Elliot</h4>
-                                            <a href="#">elliot@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/helen.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Helen">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Helen</h4>
-                                            <a href="#">helen@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/jenny.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Jenny">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Jenny</h4>
-                                            <a href="#">jenny@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/joe.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Joe">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Joe</h4>
-                                            <a href="#">joe@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel panel-default administrators-list team-group-list">
-                        <div class="panel-body">
-                            <div class="panel-top">
-                                <div class="list-heading pull-left">
-                                    <a href="#">IT</a>
-                                </div> 
-                                <div class="list-total label label-default pull-right">5</div> 
-                                <div class="clearfix"></div>
-                            </div> 
-                            <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/justen.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Justen">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Justen</h4>
-                                            <a href="#">justen@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/laura.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Laura">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Laura</h4>
-                                            <a href="#">laura@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/matt.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Matt">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Matt</h4>
-                                            <a href="#">matt@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/steve.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Steve">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Steve</h4>
-                                            <a href="#">steve@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <a class="pull-left" href="#" style="padding-right: 15px;">
-                                            <img src="/img/stevie.jpg" class="media-object" data-toggle="tooltip" data-placement="bottom" title="Stevie">
-                                        </a>
-                                        <div class="media-body" style="width: 180px;">
-                                            <h4 class="media-heading">Stevie</h4>
-                                            <a href="#">stevie@gmail.com</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

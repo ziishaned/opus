@@ -58,19 +58,25 @@ class TeamController extends Controller
 
     }
 
-    public function update($id)
+    public function update(Team $team)
     {
-        $this->validate($this->request, Team::Team_RULES);
-        $updated = $this->team->updateTeam($id, $this->request->get('team_name'));
-        if ($updated) {
-            return response()->json([
-                'message' => 'Team successfully updated.',
-            ], Response::HTTP_OK);
+        if($team->name === $this->request->get('team_name')) {
+            return redirect()->back()->with([
+                'alert'      => 'Team name successfully updated.',
+                'alert_type' => 'success',
+            ]);
         }
+        
+        $this->validate($this->request, Team::TEAM_RULES);
 
-        return response()->json([
-            'message' => 'Resource not found.',
-        ], Response::HTTP_NOT_FOUND);
+        $this->team->updateTeam($team->id, $this->request->get('team_name'));
+        
+        Auth::logout();
+
+        return redirect()->route('team.login')->with([
+            'alert'      => 'Team name successfully updated. You need to login to team again.',
+            'alert_type' => 'success',
+        ]);
     }
 
     public function destroy($id)

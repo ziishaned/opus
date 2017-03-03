@@ -116,7 +116,6 @@ class Team extends Model
     {
         $this->create([
             'name'        => $team['team_name'],
-            'description' => $team['team_description'],
             'user_id'     => $team['user_id'],
         ]);
 
@@ -125,14 +124,11 @@ class Team extends Model
 
     public function updateTeam($id, $teamName)
     {
-        $team = $this->find($id)->update([
+        $this->find($id)->update([
             'name' => $teamName,
         ]);
-        if ($team) {
-            return true;
-        }
 
-        return false;
+        return true;
     }
 
     public function deleteTeam($id)
