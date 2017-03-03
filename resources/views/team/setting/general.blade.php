@@ -23,16 +23,24 @@
                     </form>
                 </div>
                 <div class="team-logo">
-                    <h2>Upload Team logo</h2>
-                    <form action="" method="POST" role="form">
-                        <div class="form-group">
-                            <label class="btn btn-default upload-btn">
-                                Browse file... <input type="file" class="hide" name="profile_image" id="profile_image">
-                            </label>
-                            <button type="submit" class="btn btn-success pull-right">Upload</button>
-                            <p class="text-muted no-stroke">The maximum file size allowed is 200KB.</p>
+                    <h2>Team logo</h2>
+                    <div class="media">
+                        <div class="pull-left">
+                            <img src="/img/no-image.png" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
+                        </div> 
+                        <div class="media-body avatar-upload-form-con">
+                            <form action="#" enctype="multipart/form-data" id="avatar-upload-form">
+                                <h3 class="heading">Upload new picture</h3> 
+                                <div class="form-group">
+                                    <label class="btn btn-default upload-btn" style="margin-bottom: 7px;">
+                                        Browse file... 
+                                        <input type="file" name="profile_image" id="profile_image" class="hide">
+                                    </label> 
+                                    <p class="text-muted">The maximum file size allowed is 200KB.</p>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="delete-team">
                     <h2>Delete Team</h2>
