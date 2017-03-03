@@ -68,6 +68,8 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');
     Route::get('{team_slug}/wiki', 'WikiController@create')->name('teams.wiki.create');
     Route::patch('{team_slug}', 'TeamController@update')->name('teams.update');
+    Route::post('{team_slug}/logo', 'TeamController@uploadLogo')->name('teams.logo');
+    Route::delete('{team_slug}/logo', 'TeamController@destroy')->name('teams.destroy');
 
     Route::post('{team_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
     Route::patch('{team_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.update');

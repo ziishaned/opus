@@ -46,6 +46,7 @@ class Team extends Model
 
     protected $fillable = [
         'name',
+        'team_logo',
         'user_id',
         'updated_at',
         'created_at',
@@ -133,11 +134,9 @@ class Team extends Model
 
     public function deleteTeam($id)
     {
-        if ($this->find($id)->delete()) {
-            return true;
-        };
-
-        return false;
+        $this->find($id)->delete();
+            
+        return true;
     }
 
     public function inviteUser($data)
@@ -197,5 +196,14 @@ class Team extends Model
         $team = $this->where('id', $id)->with(['activity'])->first();
         
         return $team;
+    }
+
+    public function updateImage($id, $image)
+    {
+        $this->find($id)->update([
+            'team_logo' => $image,
+        ]);
+
+        return true;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Mail;
+use Image;
 use Redirect;
 use Carbon\Carbon;
 use App\Models\User;
@@ -79,19 +80,16 @@ class TeamController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(Team $team)
     {
-        $teamDeleted = $this->team->deleteTeam($id);
-        if ($teamDeleted) {
-            return redirect()->route('dashboard')->with([
-                'alert'      => 'team successfully deleted.',
-                'alert_type' => 'success',
-            ]);
-        }
+        $this->team->deleteTeam($team->id);
+        
+        Auth::logout();
 
-        return response()->json([
-            'message' => 'We are having some issues.',
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return redirect()->route('team.login')->with([
+            'alert'      => 'Team successfully deleted.',
+            'alert_type' => 'success',
+        ]);
     }
 
     public function postJoin()
@@ -192,5 +190,23 @@ class TeamController extends Controller
     public function createGroup(Team $team)
     {
         return view('team.setting.create-group', compact('team'));
+    }
+
+    public function uploadLogo(Team $team)
+    {
+        $image = $this->request->file('team_logo');
+        
+        $imageName = 'img_' . date('Y-m-d-H-s') .  '.' . $this->request->file('team_logo')->getClientOriginalExtension();
+
+        $img = Image::make($image);
+        $img->crop((int) $this->request->get('w'), (int) $this->request->get('h'), (int) $this->request->get('x'), (int) $this->request->get('y'));
+        $img->save('img/avatars/' . $imageName);
+        
+        $this->team->updateImage($team->id, $imageName);
+
+        return redirect()->back()->with([
+            'alert'      => 'Team logo successfully uploaded.',
+            'alert_type' => 'success',
+        ]);
     }
 }

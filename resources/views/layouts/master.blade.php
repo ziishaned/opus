@@ -16,6 +16,23 @@
 		<link href="/plugins/select2/select2.min.css" rel="stylesheet">
 	</head>
 	<body>
+		<div class="modal fade" id="team-logo-modal" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Crop Image</h4>
+					</div>
+					<div class="modal-body" style="display: table; margin: 0 auto;">
+						<img id="team-logo-crop" class="crop" src="#" alt="Crop Image" />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="$('#avatar-upload-form').submit();">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="app">
 			@if(Auth::user()) 
 				@include('partials.menu')

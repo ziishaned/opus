@@ -26,17 +26,25 @@
                     <h2>Team logo</h2>
                     <div class="media">
                         <div class="pull-left">
-                            <img src="/img/no-image.png" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
-                        </div> 
+                            @if($team->team_logo)
+                                <img src="/img/avatars/{{ $team->team_logo }}" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
+                            @else
+                                <img src="/img/no-image.png" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
+                            @endif
+                        </div>
                         <div class="media-body avatar-upload-form-con">
-                            <form action="#" enctype="multipart/form-data" id="avatar-upload-form">
+                            <form action="{{ route('teams.logo', [ $team->slug ]) }}" enctype="multipart/form-data" id="avatar-upload-form" method="POST">
                                 <h3 class="heading">Upload new picture</h3> 
                                 <div class="form-group">
                                     <label class="btn btn-default upload-btn" style="margin-bottom: 7px;">
                                         Browse file... 
-                                        <input type="file" name="profile_image" id="profile_image" class="hide">
-                                    </label> 
+                                        <input type="file" name="team_logo" id="team_logo" class="hide">
+                                    </label>
                                     <p class="text-muted">The maximum file size allowed is 200KB.</p>
+                                    <input type="hidden" id="x" name="x" />
+                                    <input type="hidden" id="y" name="y" />
+                                    <input type="hidden" id="w" name="w" />
+                                    <input type="hidden" id="h" name="h" />
                                 </div>
                             </form>
                         </div>
@@ -47,7 +55,8 @@
                     <p class="text-muted action-info">
                         Deleting this team will permanently delete all wikis and users in this account.
                     </p>
-                    <form action="" method="POST" role="form">
+                    <form action="{{ route('teams.destroy', [ $team->slug ]) }}" method="POST" role="form">
+                        {{ method_field('delete') }}
                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Yes I understand, delete my account</button>
                     </form>
                 </div>
