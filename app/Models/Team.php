@@ -134,7 +134,7 @@ class Team extends Model
 
     public function deleteTeam($id)
     {
-        $this->find($id)->delete();
+        $this->find($id)->forceDelete();
             
         return true;
     }
