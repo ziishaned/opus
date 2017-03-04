@@ -14,29 +14,19 @@ class PermissionTableSeeder extends Seeder
     {
         $permission = [
         	[
-        		'name' => 'admin', 
-        		'display_name' => 'Administrtor',
+        		'name' => 'administrator', 
+        		'display_name' => 'Administrator',
         		'description' => 'User have access to everything.'
         	],
         	[
-        		'name' => 'page-read',
-        		'display_name' => 'Read Pages',
-        		'description' => 'User can only access to read wiki pages.'
+        		'name' => 'viewer',
+        		'display_name' => 'Viewer',
+        		'description' => 'User can only view pages.'
         	],
         	[
-        		'name' => 'page-write',
-        		'display_name' => 'Update page',
+        		'name' => 'editor',
+        		'display_name' => 'Editor',
         		'description' => 'User can update, delete or insert new pages in wiki.'
-        	],
-        	[
-        		'name' => 'comment-add',
-        		'display_name' => 'Add Comment',
-        		'description' => 'Add comments to page and wiki.'
-        	],
-        	[
-        		'name' => 'invite-users',
-        		'display_name' => 'Invite Users',
-        		'description' => 'Invite users to team.'
         	],
         ];
 

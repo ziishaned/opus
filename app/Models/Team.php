@@ -91,6 +91,11 @@ class Team extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function groups()
+    {
+        return $this->hasMany(TeamGroups::class, 'team_id', 'id');
+    }
+
     public function members()
     {
         return $this->belongsToMany(User::class, 'user_teams', 'team_id', 'user_id')->withPivot('created_at as joined_date', 'user_type as user_role');

@@ -209,4 +209,13 @@ class TeamController extends Controller
             'alert_type' => 'success',
         ]);
     }
+
+    public function filterMembers()
+    {
+        $members = $this->team->find(Auth::user()->team->id)->with(['members' => function($query) {
+            $query->where('slug', 'like', '%'.$this->request->get('q').'%')->get();
+        }])->first()->members;
+        
+        return $members;
+    }
 }

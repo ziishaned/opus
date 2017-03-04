@@ -1265,13 +1265,13 @@ label {
 	font-family: lato;
 }
 
-.permissions-input-group .permissions-top ul li, .permissions-input-group .permission-body .permission-group ul li {
+.permissions-input-group .permissions-top ul li {
 	width: 65px;
 	text-align: center;
 }
 
 .permissions-input-group .permissions-top ul li:first-child, .permissions-input-group .permission-body .permission-group ul li:first-child {
-	width: 660px;
+	width: 770px;
 	text-align: left;
 	padding-left: 10px;
 }

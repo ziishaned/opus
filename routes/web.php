@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Page;
-
 Route::get('logout', 'UserController@logout')->name('logout');
 
 Route::group(['middleware' => 'guest'], function () {
@@ -25,6 +23,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::patch('/comment', 'CommentController@update')->name('comments.update');
     Route::post('/wikis/pages', 'PageController@getWikiPages');
     Route::post('/pages/reorder', 'PageController@reorder');
+    Route::post('/team/members/filter', 'TeamController@filterMembers');
 });
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
@@ -32,6 +31,11 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('profile', 'UserController@profileSettings')->name('settings.profile');
         Route::get('account', 'UserController@accountSettings')->name('settings.account');
     });
+
+    Route::group(['prefix' => '{team_slug}/groups'], function () {
+        Route::post('', 'TeamGroupsController@store')->name('groups.post');
+        Route::get('account', 'UserController@accountSettings')->name('settings.account');
+    });    
 
     Route::group([ 'prefix' => '{team_slug}/settings'], function() {
         Route::get('general', 'TeamController@generalSettings')->name('teams.settings.general');

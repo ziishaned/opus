@@ -73,6 +73,11 @@ class User extends Authenticatable
         return $this->hasOne(Team::class, 'user_id', 'id');
     }
 
+    public function groups()
+    {
+        return $this->hasMany(TeamGroups::class, 'user_id', 'id');
+    }
+
     /**
      * DESC
      *

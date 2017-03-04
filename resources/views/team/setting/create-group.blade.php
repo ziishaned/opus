@@ -15,10 +15,10 @@
                         </div>
                     </div>
                     <div class="">
-                        <form action="" method="POST" role="form">
+                        <form action="{{ route('groups.post', [ $team->slug ]) }}" method="POST" role="form">
                             <div class="form-group with-icon">
-                                <label>Group Name</label> 
-                                <input type="text" class="form-control input"> 
+                                <label for="group-name">Group Name</label> 
+                                <input type="text" name="group_name" class="form-control" id="group-name" required>
                                 <i class="fa fa-users icon" style="line-height: 2.8;"></i>
                             </div> 
                             <div class="form-group">
@@ -27,52 +27,35 @@
                                     <div class="permissions-top">
                                         <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
                                             <li>Roles</li> 
-                                            <li>Add</li> 
-                                            <li>Delete</li>
                                         </ul>
                                     </div> 
                                     <div class="permission-body">
                                         <div class="permission-group">
                                             <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                                <li>Teams</li> 
+                                                <li>Administrator</li>                                              
                                                 <li>
                                                     <label>
-                                                        <input type="checkbox" value="" checked="checked">
-                                                    </label>
-                                                </li> 
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" value="">
+                                                        <input type="checkbox" name="administrator">
                                                     </label>
                                                 </li>
                                             </ul>
                                         </div> 
                                         <div class="permission-group">
                                             <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                                <li>Comments</li>
+                                                <li>Viewer</li> 
                                                 <li>
                                                     <label>
-                                                        <input type="checkbox" value="" checked="checked">
-                                                    </label>
-                                                </li> 
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" value="">
+                                                        <input type="checkbox" name="viewer">
                                                     </label>
                                                 </li>
                                             </ul>
                                         </div> 
                                         <div class="permission-group">
                                             <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                                <li>Pages</li> 
+                                                <li>Editor</li> 
                                                 <li>
                                                     <label>
-                                                        <input type="checkbox" value="" checked="checked">
-                                                    </label>
-                                                </li> 
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" value="">
+                                                        <input type="checkbox" name="editor">
                                                     </label>
                                                 </li>
                                             </ul>
@@ -81,8 +64,8 @@
                                 </div>
                             </div> 
                             <div class="form-group">
-                                <label>Select Members</label> 
-                                <select multiple="" class="js-example-basic-multiple form-control"></select>
+                                <label for="group-member-select">Select Members</label> 
+                                <select multiple="" name="group_members[]" class="form-control" id="group-member-select" required></select>
                             </div> 
                             <ul class="list-unstyled list-inline pull-right">
                                 <li>
