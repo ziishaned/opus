@@ -14,20 +14,23 @@ class PermissionTableSeeder extends Seeder
     {
         $permission = [
         	[
-        		'name' => 'administrator', 
-        		'display_name' => 'Administrator',
-        		'description' => 'User have access to everything.'
+        		'name' => 'admin', 
         	],
         	[
-        		'name' => 'viewer',
-        		'display_name' => 'Viewer',
-        		'description' => 'User can only view pages.'
+        		'name' => 'view_page',
         	],
         	[
-        		'name' => 'editor',
-        		'display_name' => 'Editor',
-        		'description' => 'User can update, delete or insert new pages in wiki.'
+        		'name' => 'add_page',
         	],
+            [
+                'name' => 'delete_page',
+            ],
+            [
+                'name' => 'add_comment',
+            ],
+            [
+                'name' => 'delete_comment',
+            ],
         ];
 
         foreach ($permission as $key => $value) {

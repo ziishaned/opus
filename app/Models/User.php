@@ -60,8 +60,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $profileImagePath = 'images/profile-pics';
-
     public function category()
     {
         return $this->hasMany(Category::class, 'user_id', 'id');

@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('group_slug', function($slug) {
-            return TeamGroups::where('slug', '=', $slug)->with('members')->first();
+            return TeamGroups::where('slug', '=', $slug)->with(['members', 'permissions'])->first();
         });
 
         Route::bind('category_slug', function($slug) {

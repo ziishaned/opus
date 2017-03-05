@@ -32,7 +32,6 @@ class TeamGroupsController extends Controller
 
     public function store(Team $team)
     {
-        dd($this->request->all());
         $this->validate($this->request, TeamGroups::GROUP_RULES);
 
         $group = $this->group->createGroup($this->request->all());
@@ -42,6 +41,15 @@ class TeamGroupsController extends Controller
                 'group_id' => $group->id,
                 'user_id' => $member,
                 'team_id' => $team->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        foreach ($this->request->get('permissions') as $permission) {
+            DB::table('group_permissions')->insert([
+                'group_id' => $group->id,
+                'permission_id' => (int)$permission,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
@@ -72,12 +80,22 @@ class TeamGroupsController extends Controller
         $this->group->updateGroup($group->id, $this->request->all());
 
         DB::table('users_groups')->where('group_id', $group->id)->delete();
+        DB::table('group_permissions')->where('group_id', $group->id)->delete();
 
         foreach ($this->request->get('group_members') as $member) {
             DB::table('users_groups')->insert([
                 'group_id' => $group->id,
                 'user_id' => $member,
                 'team_id' => $team->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        foreach ($this->request->get('permissions') as $permission) {
+            DB::table('group_permissions')->insert([
+                'group_id' => $group->id,
+                'permission_id' => (int)$permission,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

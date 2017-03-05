@@ -82,7 +82,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
 
     Route::group(['prefix' => '{team_slug}/wikis'], function () {
         Route::post('', 'WikiController@store')->name('wikis.store');
-        Route::get('create', 'WikiController@create')->name('wikis.create');
+        Route::get('create', 'WikiController@create')->name('wikis.create')->middleware('acl:admin');
         Route::get('', 'WikiController@getWikis')->name('teams.wikis');
     });
 

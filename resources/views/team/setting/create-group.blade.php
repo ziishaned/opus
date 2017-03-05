@@ -22,46 +22,15 @@
                                 <i class="fa fa-users icon" style="line-height: 2.8;"></i>
                             </div> 
                             <div class="form-group">
-                                <label style="margin-top: 5px; margin-bottom: 0px;">Permissions</label> 
-                                <div class="permissions-input-group">
-                                    <div class="permissions-top">
-                                        <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                            <li>Roles</li> 
-                                        </ul>
-                                    </div> 
-                                    <div class="permission-body">
-                                        <div class="permission-group">
-                                            <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                                <li>Administrator</li>                                              
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" name="administrator">
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div> 
-                                        <div class="permission-group">
-                                            <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                                <li>Viewer</li> 
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" name="viewer">
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div> 
-                                        <div class="permission-group">
-                                            <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
-                                                <li>Editor</li> 
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" name="editor">
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                <label>Select Permissions</label> 
+                                <select multiple="" name="permissions[]" class="form-control" id="permissions-select">
+                                    <option value="1">Admin</option>
+                                    <option value="2">View Page</option>
+                                    <option value="3">Add Page</option>
+                                    <option value="4">Delete Page</option>
+                                    <option value="5">Add Comment</option>
+                                    <option value="6">Delete Comment</option>
+                                </select>
                             </div> 
                             <div class="form-group">
                                 <label for="group-member-select">Select Members</label> 

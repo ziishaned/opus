@@ -162,6 +162,9 @@ var App = {
         this.initCKEditor();
         this.getTeamMembers();
 
+        $('#permissions-select').val($('#permissions-select').data('val'));
+        $('#permissions-select').select2();
+
         $("#group-member-select").select2({
             ajax: {
                 url: "/api/team/members/filter",
