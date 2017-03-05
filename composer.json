@@ -12,7 +12,7 @@
         "intervention/image": "^2.3",
         "lord/laroute": "^2.4",
         "yohang88/letter-avatar": "^1.0",
-        "fenos/notifynder": "^4.1",
+        "fenos/notifynder": "^4.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
