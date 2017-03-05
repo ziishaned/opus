@@ -33,7 +33,7 @@ class TeamGroups extends Model
 
     public function members()
     {
-    	return $this->morphToMany(User::class, 'users_groups', 'group_id', 'user_id', 'id');
+    	return $this->belongsToMany(User::class, 'users_groups', 'group_id', 'user_id');
     }
 
     public function createGroup($data)

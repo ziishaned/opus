@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Team;
+use App\Models\TeamGroups;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -23,18 +24,21 @@ class TeamController extends Controller
 
     private $user;
 
+    private $groups;
 
     private $category;
 
     public function __construct(Request $request,
                                 Team $team,
+                                TeamGroups $groups,
                                 User $user,
                                 Category $category)
     {
         $this->user         = $user;
         $this->request      = $request;
         $this->category     = $category;
-        $this->team = $team;
+        $this->team         = $team;
+        $this->groups       = $groups;
     }
 
     public function getMembers(Team $team)
@@ -184,7 +188,9 @@ class TeamController extends Controller
 
     public function groupSettings(Team $team)
     {
-        return view('team.setting.group', compact('team'));
+        $groups = $this->groups->where('team_id', $team->id)->latest()->with(['members'])->get();
+
+        return view('team.setting.group', compact('team', 'groups'));
     }
 
     public function createGroup(Team $team)
