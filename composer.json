@@ -13,7 +13,6 @@
         "lord/laroute": "^2.4",
         "yohang88/letter-avatar": "^1.0",
         "fenos/notifynder": "^4.1",
-        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

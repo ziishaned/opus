@@ -32,6 +32,7 @@ class TeamGroupsController extends Controller
 
     public function store(Team $team)
     {
+        dd($this->request->all());
         $this->validate($this->request, TeamGroups::GROUP_RULES);
 
         $group = $this->group->createGroup($this->request->all());
