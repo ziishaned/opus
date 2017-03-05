@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TeamGroups extends Model
 {
-	use SoftDeletes;
+	use SoftDeletes, Sluggable;
 
     protected $table = 'team_groups';
 
@@ -26,6 +27,15 @@ class TeamGroups extends Model
         'group_name' => 'required|unique:team_groups,name'
     ];
 
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+            ],
+        ];
+    }
+
     public function team()
     {
     	return $this->belongsTo(Team::class, 'team_id', 'id');
@@ -39,6 +49,17 @@ class TeamGroups extends Model
     public function createGroup($data)
     {
         $group = $this->create([
+            'name' => $data['group_name'],
+            'user_id' => Auth::user()->id,
+            'team_id' => Auth::user()->team->id,
+        ]);
+
+        return $group;
+    }
+
+    public function updateGroup($id, $data)
+    {
+        $group = $this->find($id)->update([
             'name' => $data['group_name'],
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->team->id,

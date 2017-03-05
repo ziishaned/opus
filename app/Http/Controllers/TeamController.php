@@ -181,11 +181,6 @@ class TeamController extends Controller
         return view('team.setting.members', compact('team'));
     }
 
-    public function permissionSettings(Team $team)
-    {
-        return view('team.setting.permission', compact('team'));
-    }
-
     public function groupSettings(Team $team)
     {
         $groups = $this->groups->where('team_id', $team->id)->latest()->with(['members'])->get();

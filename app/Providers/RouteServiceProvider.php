@@ -8,6 +8,7 @@ use App\Models\Wiki;
 use App\Models\Team;
 use App\Models\Page;
 use App\Models\Category;
+use App\Models\TeamGroups;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -38,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
             'category_slug'     =>  '(\w+-*\d*)+',
             'text'              =>  '[a-zA-Z0-9]+',
             'team_slug'         =>  '(\w+-*\d*)+',
+            'group_slug'        =>  '(\w+-*\d*)+',
             'team_id'           =>  '[0-9]+',
             'page_id'           =>  '[0-9]+',
             'wiki_id'           =>  '[0-9]+',
@@ -77,6 +79,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('team_slug', function($slug) {
             return Team::where('slug', '=', $slug)->first();
+        });
+
+        Route::bind('group_slug', function($slug) {
+            return TeamGroups::where('slug', '=', $slug)->with('members')->first();
         });
 
         Route::bind('category_slug', function($slug) {

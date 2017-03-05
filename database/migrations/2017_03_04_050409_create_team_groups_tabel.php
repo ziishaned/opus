@@ -16,6 +16,7 @@ class CreateTeamGroupsTabel extends Migration
         Schema::create('team_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('slug', 65535);
             $table->integer('user_id')->unsigned();
             $table->integer('team_id')->unsigned();
             $table->softDeletes();

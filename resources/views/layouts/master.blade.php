@@ -56,6 +56,7 @@
 		<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/moment.min.js"></script>
 		<script type="text/javascript" src="/js/color-hash.js"></script>
+		<script type="text/javascript" src="/js/laravel-delete-req.js"></script>
 		<script src="/plugins/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
 		<script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
 		<script src="/plugins/atjs/jquery.caret.min.js"></script>

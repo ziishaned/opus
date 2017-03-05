@@ -12,7 +12,8 @@
                     <div class="s-group-header">
                         <div class="header">
                             <div class="pull-left">
-                                <h2>Current Groups</h2>
+                                <h2 style="margin-bottom: 10px;">Current Groups</h2>
+                                <p class="text-muted">You can edit the groups and set there permissions.</p>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ route('groups.create', [ $team->slug ]) }}" class="btn btn-link create-group-btn"><i class="fa fa-plus fa-fw"></i> Create Group</a>
@@ -30,8 +31,12 @@
                                         </div>
                                         <div class="pull-right">
                                             <ul class="list-unstyled list-inline">
-                                                <li><a href="#"><i class="fa fa-pencil fa-fw" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-trash-o fa-fw" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i></a></li>
+                                                <li>
+                                                    <a href="{{ route('groups.edit', [$team->slug, $group->slug]) }}"><i class="fa fa-pencil fa-fw" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('groups.delete', [$team->slug, $group->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                                </li>
                                             </ul>
                                         </div>
                                         <div class="clearfix"></div>

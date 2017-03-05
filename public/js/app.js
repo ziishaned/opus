@@ -183,7 +183,7 @@ var App = {
             escapeMarkup: function (markup) { return markup; },
             minimumInputLength: 1,
             templateResult: formatMember,
-            templateSelection: formatMemberSelection
+            templateSelection: formatMemberSelection,
         });
         function formatMember(member) {
             if (member.loading) return member.text;
@@ -203,6 +203,9 @@ var App = {
         }
 
         function formatMemberSelection(member) {
+            if (member.selected === true) {
+                return member.text;
+            }
             return member.first_name + ' ' + member.last_name;
         }
 

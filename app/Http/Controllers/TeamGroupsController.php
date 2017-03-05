@@ -19,32 +19,17 @@ class TeamGroupsController extends Controller
         $this->request  = $request;
         $this->group    = $group;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Team $team)
     {
         $this->validate($this->request, TeamGroups::GROUP_RULES);
@@ -67,48 +52,49 @@ class TeamGroupsController extends Controller
         ]);        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Team $team, TeamGroups $group)
     {
-        //
+        return view('group.edit', compact('team', 'group'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Team $team, TeamGroups $group)
     {
-        //
+        $this->validate($this->request, [
+            'group_name' => 'required',
+        ]);
+
+        $this->group->updateGroup($group->id, $this->request->all());
+
+        DB::table('users_groups')->where('group_id', $group->id)->delete();
+
+        foreach ($this->request->get('group_members') as $member) {
+            DB::table('users_groups')->insert([
+                'group_id' => $group->id,
+                'user_id' => $member,
+                'team_id' => $team->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        return redirect()->route('teams.settings.groups', [$team->slug])->with([
+            'alert'      => 'Group successfully updated.',
+            'alert_type' => 'success',
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Team $team, TeamGroups $group)
     {
-        //
+        $this->group->find($group->id)->delete();
+
+        return redirect()->route('teams.settings.groups', [$team->slug])->with([
+            'alert'      => 'Group successfully deleted.',
+            'alert_type' => 'success',
+        ]); 
     }
 }
