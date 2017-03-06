@@ -65,7 +65,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('wiki_slug', function($slug) {
-            $teamId = Auth::user()->team->id;
+            $teamId = Auth::user()->getTeam()->id;
             
             return Wiki::where('slug', '=', $slug)
                                     ->where('team_id', '=', $teamId)

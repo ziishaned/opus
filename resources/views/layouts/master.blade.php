@@ -7,7 +7,7 @@
 		<title>OPUS</title>
 		<link rel="stylesheet" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/app.css">
-		<link rel="stylesheet" href="/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/font-awesome.css">
 		<link rel="stylesheet" href="/plugins/jcrop/Jcrop.min.css">
 		<link rel="stylesheet" href="/css/toastr.min.css">
 		<link href="/plugins/ckeditor/plugins/codesnippet/lib/highlight/styles/github.css" rel="stylesheet">
@@ -36,7 +36,7 @@
 		<div id="app">
 			@if(Auth::user()) 
 				@include('partials.menu')
-				<div style="position: absolute; top: 62px; width: 100%; height: calc(100% - 62px);">
+				<div style="position: absolute; top: 50px; width: 100%; height: calc(100% - 62px);">
 					@yield('content')
 				</div>
 			@else 

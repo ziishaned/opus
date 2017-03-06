@@ -67,7 +67,12 @@ class User extends Authenticatable
 
     public function team()
     {
-        return $this->hasOne(Team::class, 'user_id', 'id');
+        return $this->belongsToMany(Team::class, 'user_teams', 'user_id', 'team_id');
+    }
+
+    public function getTeam()
+    {
+        return $this->team->first();
     }
 
     public function groups()
@@ -208,8 +213,8 @@ class User extends Authenticatable
     public function validate($data) 
     {
         $user = $this
-            ->join('teams', 'teams.user_id', '=', 'users.id')
-            ->join('user_teams', 'user_teams.user_id', '=', 'users.id')
+            ->join('user_teams', 'users.id', '=', 'user_teams.user_id')
+            ->join('teams', 'user_teams.team_id', '=', 'teams.id')
             ->where('teams.name', '=', $data['team_name'])
             ->where('users.email', '=', $data['email'])
             ->select('users.*', 'teams.slug as team_slug')

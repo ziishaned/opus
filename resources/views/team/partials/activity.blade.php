@@ -3,7 +3,7 @@
 		@foreach($activities as $activity)
 			<div class="media event">
 				<a class="pull-left event-user-image" href="#">
-					<img class="media-object img-circle" src="/img/no-image.png" width="50" height="50" alt="Image">
+					<img class="media-object" style="border-radius: 3px;" src="/img/no-image.png" width="50" height="50" alt="Image">
 				</a>
 				<div class="media-body">
 					<div class="event-top">

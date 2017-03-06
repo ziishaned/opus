@@ -6,7 +6,7 @@
 	<div class="aside-content">
 		<div class="row no-container">
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-				<div class="page-header">All activities</div>
+				<div class="page-header"><img src="/img/icons/basic_rss.svg" width="24" height="24" style="position: relative; top: -5px; margin-right: 10px;"> All activities</div>
 				@include('team.partials.activity')
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">

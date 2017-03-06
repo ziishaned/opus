@@ -151,7 +151,7 @@ class UserController extends Controller
     {
         return $this
                     ->team
-                    ->where('id', Auth::user()->team->id)
+                    ->where('id', Auth::user()->getTeam()->id)
                     ->with(['members'])
                     ->first()
                     ->members;

@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return redirect()->route('dashboard', [
-                Auth::user()->team->slug
+                Auth::user()->getTeam()->slug
             ]);
         }
 

@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{{ route('dashboard', [ Auth::user()->team->slug ]) }}"><span>opus</span></a>
+			<a class="navbar-brand" href="{{ route('dashboard', [ Auth::user()->getTeam()->slug ]) }}"><span>opus</span></a>
 		</div>
 
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -23,25 +23,25 @@
 					</div>
 				</form>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus fa-fw"></i></a>
-					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 6px;">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 0; padding-right: 0;"><i class="fa fa-plus fa-fw"></i></a>
+					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 6px; margin-right: -15px;">
                         <li><a href="{{ route('wikis.create', [ $team->slug ]) }}">Create wiki</a></li>
                         <li><a href="{{ route('wikis.create', [ $team->slug ]) }}">Craete category</a></li>
                     </ul>
               	</li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/no-image.png" width="no-image.png" width="40" height="40" class="img-circle"> <i class="fa fa-caret-down fa-fw"></i></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down fa-fw"></i></a>
 					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 6px;">
-                        <li><a href="{{ route('users.show', [$team->slug, Auth::user()->slug]) }}"><i class="fa fa-user-o fa-fw"></i> Profile</a></li>
+                        <li><a href="{{ route('users.show', [$team->slug, Auth::user()->slug]) }}">Profile</a></li>
                         <li>
-                            <a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}"><i class="fa fa-newspaper-o fa-fw"></i> Read list</a>
+                            <a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}">Read list</a>
                         </li>
-                        <li><a href="{{ route('settings.profile', [$team->slug, Auth::user()->slug]) }}"><i class="fa fa-gear fa-fw"></i> User Settings</a></li>
+                        <li><a href="{{ route('settings.profile', [$team->slug, Auth::user()->slug]) }}">User Settings</a></li>
                         <li class="divider"></li>
-                        <li><a href="{{ route('teams.settings.general', [$team->slug,]) }}"><i class="fa fa-users fa-fw"></i> Team Settings</a></li>
-                        <li><a href="{{ route('teams.settings.members', [$team->slug,]) }}"><i class="fa fa-envelope-o fa-fw"></i> Invite user</a></li>
+                        <li><a href="{{ route('teams.settings.general', [$team->slug,]) }}">Team Settings</a></li>
+                        <li><a href="{{ route('teams.settings.members', [$team->slug,]) }}">Invite user</a></li>
                         <li class="divider"></li>
-                        <li><a href="{{ route('logout') }}"><i class="fa fa-power-off fa-fw"></i> Logout </a></li>
+                        <li><a href="{{ route('logout') }}">Logout </a></li>
                     </ul>
 				</li>
 			</ul>
