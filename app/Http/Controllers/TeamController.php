@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use DB;
 use Mail;
+use Image;
 use Redirect;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Team;
+use App\Models\TeamGroups;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -22,18 +24,21 @@ class TeamController extends Controller
 
     private $user;
 
+    private $groups;
 
     private $category;
 
     public function __construct(Request $request,
                                 Team $team,
+                                TeamGroups $groups,
                                 User $user,
                                 Category $category)
     {
         $this->user         = $user;
         $this->request      = $request;
         $this->category     = $category;
-        $this->team = $team;
+        $this->team         = $team;
+        $this->groups       = $groups;
     }
 
     public function getMembers(Team $team)
@@ -58,34 +63,37 @@ class TeamController extends Controller
 
     }
 
-    public function update($id)
+    public function update(Team $team)
     {
-        $this->validate($this->request, Team::Team_RULES);
-        $updated = $this->team->updateTeam($id, $this->request->get('team_name'));
-        if ($updated) {
-            return response()->json([
-                'message' => 'Team successfully updated.',
-            ], Response::HTTP_OK);
-        }
-
-        return response()->json([
-            'message' => 'Resource not found.',
-        ], Response::HTTP_NOT_FOUND);
-    }
-
-    public function destroy($id)
-    {
-        $teamDeleted = $this->team->deleteTeam($id);
-        if ($teamDeleted) {
-            return redirect()->route('dashboard')->with([
-                'alert'      => 'team successfully deleted.',
+        if($team->name === $this->request->get('team_name')) {
+            return redirect()->back()->with([
+                'alert'      => 'Team name successfully updated.',
                 'alert_type' => 'success',
             ]);
         }
+        
+        $this->validate($this->request, Team::TEAM_RULES);
 
-        return response()->json([
-            'message' => 'We are having some issues.',
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        $this->team->updateTeam($team->id, $this->request->get('team_name'));
+        
+        Auth::logout();
+
+        return redirect()->route('team.login')->with([
+            'alert'      => 'Team name successfully updated. You need to login to team again.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function destroy(Team $team)
+    {
+        $this->team->deleteTeam($team->id);
+        
+        Auth::logout();
+
+        return redirect()->route('team.login')->with([
+            'alert'      => 'Team successfully deleted.',
+            'alert_type' => 'success',
+        ]);
     }
 
     public function postJoin()
@@ -171,5 +179,44 @@ class TeamController extends Controller
     public function membersSettings(Team $team)
     {
         return view('team.setting.members', compact('team'));
+    }
+
+    public function groupSettings(Team $team)
+    {
+        $groups = $this->groups->where('team_id', $team->id)->latest()->with(['members', 'permissions'])->get();
+
+        return view('team.setting.group', compact('team', 'groups'));
+    }
+
+    public function createGroup(Team $team)
+    {
+        return view('team.setting.create-group', compact('team'));
+    }
+
+    public function uploadLogo(Team $team)
+    {
+        $image = $this->request->file('team_logo');
+        
+        $imageName = 'img_' . date('Y-m-d-H-s') .  '.' . $this->request->file('team_logo')->getClientOriginalExtension();
+
+        $img = Image::make($image);
+        $img->crop((int) $this->request->get('w'), (int) $this->request->get('h'), (int) $this->request->get('x'), (int) $this->request->get('y'));
+        $img->save('img/avatars/' . $imageName);
+        
+        $this->team->updateImage($team->id, $imageName);
+
+        return redirect()->back()->with([
+            'alert'      => 'Team logo successfully uploaded.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function filterMembers()
+    {
+        $members = $this->team->find(Auth::user()->team->id)->with(['members' => function($query) {
+            $query->where('slug', 'like', '%'.$this->request->get('q').'%')->get();
+        }])->first()->members;
+        
+        return $members;
     }
 }

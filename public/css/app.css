@@ -524,7 +524,7 @@ label {
 .team-members h2, 
 .profile-pic-setting h2,
 .user-info h2,
-.wiki-info h2 {
+.wiki-info h2, .s-group-header .header h2 {
     margin: 0;
     margin-bottom: 20px;
     font-size: 18px;
@@ -539,37 +539,66 @@ label {
     min-height: 110px;
 }
 
-.administrators-list {
-    margin-top: 40px;
+.s-groups-con {
+	margin-top: 22px;
 }
 
-.administrators-list .list-heading {
-	font-size: 14px;
-	font-family: lato;
+.s-group-header {
+	margin-bottom: 20px;
 }
 
-.administrators-list .panel-top .list-total {
+.s-group-header .header h2 {
 	position: relative;
-	top: 4px;
+	top: 8px;
+	margin-bottom: 0;
 }
 
-.administrators-list .panel-top { 
-    margin-bottom: 15px;
+.s-groups-body .group-name .name-inner {
+	font-weight: 500;
 }
 
-.administrators-list ul {
+.s-group-item {
+	margin-bottom: 28px;
+}
+
+.s-groups-body .group-name .label {
+	margin-left: 15px;
 	position: relative;
-	left: 2px;
+	top: -1px;
 }
 
-.administrators-list ul li {
-	margin: 1px;
-	margin-bottom: 4px;
-	padding: 0;
+.group-members-con .group-member-item {
+	margin-top: 15px;
 }
 
-.administrators-list ul li img {
+.group-members-con .group-member-item:nth-last-child(n+3) {
+	margin-top: 10px;
+}
+
+.group-members-con .group-member-item .group-member-img {
+	padding-right: 20px;
+}
+
+.group-members-con .group-member-item .group-member-img img {
 	border-radius: 3px;
+}
+
+.group-members-con .group-member-name {
+	font-size: 13px;
+	font-family: "Open Sans";
+	margin-bottom: 3px;
+}
+
+.s-groups-con .s-group-header .create-group-btn {
+	font-size: 13px;
+	font-family: "open sans";
+	color: #333333;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+}
+
+.s-groups-con .s-group-header .create-group-btn:hover {
+	background: #ddd;
 }
 
 .team-info .action-info, .upload-team-logo, .delete-team .action-info, .wiki-info .action-info {
@@ -1222,4 +1251,38 @@ label {
 .formated-wiki-description pre, .formated-wiki-description code  {
 	border: none;
 	font-family: consolas, monaco !important;
+}
+
+.select2-dropdown {
+	border-color: #66afe9 !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+	border-color: #66afe9 !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+	border-radius: 3px !important;
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom: 0px !important;
+    padding-bottom: 3px !important;
+}
+
+.select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-top: 0px !important;
+    padding-top: 3px !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+	border-radius: 1px solid #ccc;
+}
+
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #ccc !important;
 }

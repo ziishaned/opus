@@ -6,7 +6,7 @@
 		<a href="{{ route('wikis.permission', [ $team->slug, $category->slug, $wiki->slug ]) }}">Permissions</a>
 	</li>
 	<li role="presentation" class="{{ (Route::currentRouteName() == 'wikis.notification' ? 'active' : '') }}">
-		<a href="{{ route('wikis.notification', [ $team->slug, $category->slug, $wiki->slug ]) }}">Notifications</a>
+		<a href="#">Notifications</a>
 	</li>
 	<li role="presentation">
 		<a href="#">Integrations</a>

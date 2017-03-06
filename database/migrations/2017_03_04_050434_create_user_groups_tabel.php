@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamsTable extends Migration
+class CreateUserGroupsTabel extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateTeamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('teams', function (Blueprint $table) {
+        Schema::create('users_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('team_logo')->nullable();
-            $table->string('slug', 65535);
-            $table->enum('visibilty', [
-                'private',
-                'public'
-            ]);
+            $table->integer('group_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->integer('team_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,6 +30,6 @@ class CreateTeamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('users_groups');
     }
 }

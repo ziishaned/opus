@@ -162,6 +162,56 @@ var App = {
         this.initCKEditor();
         this.getTeamMembers();
 
+        $('#permissions-select').val($('#permissions-select').data('val'));
+        $('#permissions-select').select2();
+
+        $("#group-member-select").select2({
+            ajax: {
+                url: "/api/team/members/filter",
+                type: 'POST',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term,
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; },
+            minimumInputLength: 1,
+            templateResult: formatMember,
+            templateSelection: formatMemberSelection,
+        });
+        function formatMember(member) {
+            if (member.loading) return member.text;
+
+            var markup = `
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="/img/no-image.png" alt="Image" width="28" height="28" style="border-radius: 3px;">
+                    </a>
+                    <div class="media-body">
+                        <p style="font-family: 'lato';"><span style="margin-right: 4px; font-weight: 700;">`+member.slug+`</span> `+member.first_name + ' ' + member.last_name +`</p>
+                    </div>
+                </div>
+            `;
+
+            return markup;
+        }
+
+        function formatMemberSelection(member) {
+            if (member.selected === true) {
+                return member.text;
+            }
+            return member.first_name + ' ' + member.last_name;
+        }
+
         var fixAffixWidth = function() {
             $('[data-spy="affix"]').each(function() {
                 $(this).width( $(this).parent().width() );
@@ -388,8 +438,45 @@ var App = {
             }
         });  
     },
+    readURL(input) {
+        var that = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#team-logo-crop').attr('src', e.target.result);
+                $('#team-logo-modal').modal('show');
+                $('.crop').Jcrop({
+                    onSelect: that.updateCoords,
+                    bgColor: 'black',
+                    bgOpacity: .6,
+                    boxWidth: 300,
+                    boxHeight: 300,
+                    aspectRatio: 1,
+                    setSelect: [160, 160, 160, 160],
+                });
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    },
+    updateCoords(c) {
+        $('#avatar-upload-form').find('#x').val(c.x);
+        $('#avatar-upload-form').find('#y').val(c.y);
+        $('#avatar-upload-form').find('#w').val(c.w);
+        $('#avatar-upload-form').find('#h').val(c.h);
+    },
     bindUI: function () {
         var that = this;
+
+        $("#team_logo").change(function(){
+            that.readURL(this);
+        });
+
+        $('#team-logo-modal').on('hidden.bs.modal', function () {
+            JcropAPI = $('#team-logo-crop').data('Jcrop');
+            JcropAPI.destroy();
+        });
 
         $(document).on('click', '#like-comment', function(e) {
             e.preventDefault();

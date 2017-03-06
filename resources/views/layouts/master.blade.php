@@ -13,8 +13,26 @@
 		<link href="/plugins/ckeditor/plugins/codesnippet/lib/highlight/styles/github.css" rel="stylesheet">
 		<link href="/plugins/vakata-jstree/dist/themes/default/style.css" rel="stylesheet">
 		<link href="/plugins/atjs/jquery.atwho.min.css" rel="stylesheet">
+		<link href="/plugins/select2/select2.min.css" rel="stylesheet">
 	</head>
 	<body>
+		<div class="modal fade" id="team-logo-modal" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Crop Image</h4>
+					</div>
+					<div class="modal-body" style="display: table; margin: 0 auto;">
+						<img id="team-logo-crop" class="crop" src="#" alt="Crop Image" />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="$('#avatar-upload-form').submit();">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="app">
 			@if(Auth::user()) 
 				@include('partials.menu')
@@ -38,11 +56,12 @@
 		<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
 		<script type="text/javascript" src="/js/moment.min.js"></script>
 		<script type="text/javascript" src="/js/color-hash.js"></script>
+		<script type="text/javascript" src="/js/laravel-delete-req.js"></script>
 		<script src="/plugins/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
 		<script src="/plugins/vakata-jstree/dist/jstree.min.js"></script>
 		<script src="/plugins/atjs/jquery.caret.min.js"></script>
 		<script src="/plugins/atjs/jquery.atwho.min.js"></script>
-		{{-- <script src="/js/autosize.min.js"></script> --}}
+		<script src="/plugins/select2/select2.full.min.js"></script>
         <script>
             (function() {
                 hljs.initHighlightingOnLoad();

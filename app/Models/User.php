@@ -17,7 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable, Sluggable, SoftDeletes;
+    use Notifiable, Sluggable;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -60,8 +60,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $profileImagePath = 'images/profile-pics';
-
     public function category()
     {
         return $this->hasMany(Category::class, 'user_id', 'id');
@@ -70,6 +68,11 @@ class User extends Authenticatable
     public function team()
     {
         return $this->hasOne(Team::class, 'user_id', 'id');
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(TeamGroups::class, 'user_id', 'id')->with('permissions');
     }
 
     /**
@@ -214,6 +217,25 @@ class User extends Authenticatable
 
         if ($user && Hash::check($data['password'], $user->password)) {
             return $user;
+        }
+
+        return false;
+    }
+
+    public function hasPermission($routePermissions)
+    {
+        $routePermissions = explode('|', $routePermissions);
+        
+        $groups = $this->find(Auth::user()->id)->with('groups')->first()->groups;
+
+        foreach ($groups as $group) {
+            foreach ($group->permissions as $permission) {
+                foreach ($routePermissions as $routePer) {
+                    if($permission->name === $routePer) {
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;

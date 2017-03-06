@@ -46,6 +46,7 @@ class Team extends Model
 
     protected $fillable = [
         'name',
+        'team_logo',
         'user_id',
         'updated_at',
         'created_at',
@@ -90,6 +91,11 @@ class Team extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function groups()
+    {
+        return $this->hasMany(TeamGroups::class, 'team_id', 'id');
+    }
+
     public function members()
     {
         return $this->belongsToMany(User::class, 'user_teams', 'team_id', 'user_id')->withPivot('created_at as joined_date', 'user_type as user_role');
@@ -116,7 +122,6 @@ class Team extends Model
     {
         $this->create([
             'name'        => $team['team_name'],
-            'description' => $team['team_description'],
             'user_id'     => $team['user_id'],
         ]);
 
@@ -125,23 +130,18 @@ class Team extends Model
 
     public function updateTeam($id, $teamName)
     {
-        $team = $this->find($id)->update([
+        $this->find($id)->update([
             'name' => $teamName,
         ]);
-        if ($team) {
-            return true;
-        }
 
-        return false;
+        return true;
     }
 
     public function deleteTeam($id)
     {
-        if ($this->find($id)->delete()) {
-            return true;
-        };
-
-        return false;
+        $this->find($id)->forceDelete();
+            
+        return true;
     }
 
     public function inviteUser($data)
@@ -201,5 +201,14 @@ class Team extends Model
         $team = $this->where('id', $id)->with(['activity'])->first();
         
         return $team;
+    }
+
+    public function updateImage($id, $image)
+    {
+        $this->find($id)->update([
+            'team_logo' => $image,
+        ]);
+
+        return true;
     }
 }

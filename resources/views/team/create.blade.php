@@ -63,11 +63,6 @@
                             <p class="help-block">Enter your team name here. e.g. Google</p>
                         @endif
                     </div>
-	                <div class="form-group">
-	                    <label class="control-label" for="team-description">Description</label>
-	                    <textarea name="team_description" id="team-description" class="form-control" rows="2"></textarea>
-	                    <p class="help-block">Describe a little about your team.</p>
-	                </div>
 		            <div style="margin-top: 15px;">
 			            <input type="submit" class="btn btn-success" value="Submit"> <span class="text-muted" style="margin-left: 15px;">Already have a team?</span> <a href="{{ route('team.login') }}"> Login now</a>
 		            </div>

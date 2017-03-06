@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Page;
-
 Route::get('logout', 'UserController@logout')->name('logout');
 
 Route::group(['middleware' => 'guest'], function () {
@@ -25,6 +23,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::patch('/comment', 'CommentController@update')->name('comments.update');
     Route::post('/wikis/pages', 'PageController@getWikiPages');
     Route::post('/pages/reorder', 'PageController@reorder');
+    Route::post('/team/members/filter', 'TeamController@filterMembers');
 });
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
@@ -33,9 +32,19 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('account', 'UserController@accountSettings')->name('settings.account');
     });
 
+    Route::group(['prefix' => '{team_slug}/groups'], function () {
+        Route::delete('/{group_slug}', 'TeamGroupsController@destroy')->name('groups.delete');
+        Route::patch('/{group_slug}', 'TeamGroupsController@update')->name('groups.update');
+        Route::post('', 'TeamGroupsController@store')->name('groups.post');
+        Route::get('/{group_slug}/edit', 'TeamGroupsController@edit')->name('groups.edit');
+        Route::get('account', 'UserController@accountSettings')->name('settings.account');
+    });    
+
     Route::group([ 'prefix' => '{team_slug}/settings'], function() {
         Route::get('general', 'TeamController@generalSettings')->name('teams.settings.general');
         Route::get('members', 'TeamController@membersSettings')->name('teams.settings.members');
+        Route::get('groups', 'TeamController@groupSettings')->name('teams.settings.groups');
+        Route::get('groups/create', 'TeamController@createGroup')->name('groups.create');
     });
 
     Route::group(['prefix' => '{team_slug}/users'], function () {
@@ -64,13 +73,16 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::delete('{id}', 'TeamController@destroy')->name('teams.destroy');
     Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');
     Route::get('{team_slug}/wiki', 'WikiController@create')->name('teams.wiki.create');
+    Route::patch('{team_slug}', 'TeamController@update')->name('teams.update');
+    Route::post('{team_slug}/logo', 'TeamController@uploadLogo')->name('teams.logo');
+    Route::delete('{team_slug}/logo', 'TeamController@destroy')->name('teams.destroy');
 
     Route::post('{team_id}/wikis/{wiki_id}/pages/reorder', 'PageController@reorder');
     Route::patch('{team_id}/wikis/{wiki_id}/pages/{page_id}/comments/{comment_id}', 'CommentController@update')->name('comments.update');
 
     Route::group(['prefix' => '{team_slug}/wikis'], function () {
         Route::post('', 'WikiController@store')->name('wikis.store');
-        Route::get('create', 'WikiController@create')->name('wikis.create');
+        Route::get('create', 'WikiController@create')->name('wikis.create')->middleware('acl:admin|add_page|view_page');
         Route::get('', 'WikiController@getWikis')->name('teams.wikis');
     });
 
