@@ -14,19 +14,15 @@
 					<div class="panel-heading">
 						Recent Wikis
 					</div>
-					<div class="panel-body" style="padding: 15px 0px">
+					<div class="panel-body" style="padding: 0px 0px">
 						@if($wikis->count() > 0)
 							<ul class="list-unstyled recent-wikis-list">
 								@foreach($wikis as $wiki)
 									<li class="item">
-										<a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}">
-											<div class="media v-center">
-												<div class="pull-left">
-													<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
-												</div>
-												<div class="media-body">
-													<p class="wiki-name">{{ $wiki->name }}</p>
-												</div>
+										<a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}" style="position: relative;">
+											<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">{{ $wiki->name }}</span>
+											<div style="position: absolute; right: 10px; top: 8px;">
+												<img src="/img/icons/basic_heart.svg" width="16" height="16" style="margin-right: 2px; position: relative; top: -2px;"> 5
 											</div>
 										</a>
 									</li>

@@ -38,50 +38,22 @@
 				<li class="nav-header">Favourite Wikis</li>
 				<li class="item">
 					<a href="#">
-						<div class="media v-center">
-							<div class="pull-left">
-								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
-							</div>
-							<div class="media-body">
-								<p class="wiki-name">Demonstration Space</p>
-							</div>
-						</div>
+						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Demonstration Space</span>
 					</a>
 				</li>
 				<li class="item">
 					<a href="#">
-						<div class="media v-center">
-							<div class="pull-left">
-								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
-							</div>
-							<div class="media-body">
-								<p class="wiki-name">Web QA Automation</p>
-							</div>
-						</div>
+						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Web QA Automation</span>
 					</a>
 				</li>
 				<li class="item">
 					<a href="#">
-						<div class="media v-center">
-							<div class="pull-left">
-								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
-							</div>
-							<div class="media-body">
-								<p class="wiki-name">Almosafer web</p>
-							</div>
-						</div>
+						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Almosafer web</span>
 					</a>
 				</li>
 				<li class="item">
 					<a href="#">
-						<div class="media v-center">
-							<div class="pull-left">
-								<img class="media-object" src="/img/icons/basic_book.svg" width="24" height="24" alt="Image">
-							</div>
-							<div class="media-body">
-								<p class="wiki-name">Mobile App Project</p>
-							</div>
-						</div>
+						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Mobile App Project</span>
 					</a>
 				</li>
 			</ul>

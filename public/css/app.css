@@ -99,8 +99,13 @@ input, select, textarea {
     align-items: center;
 }
 
-.side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .recent-wikis-list li.item:hover a, .side-menu-top .item.active, .side-menu-categories-list li.active {
-	background-color: rgb(238, 238, 238) !important;
+.side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .side-menu-top .item.active, .side-menu-categories-list li.active {
+	background-color: rgba(228, 228, 228, 0.65) !important;
+	text-decoration: none;
+}
+
+.recent-wikis-list li.item:hover a {
+	background-color: rgba(245, 245, 245, 0.69) !important;
 	text-decoration: none;
 }
 
@@ -124,7 +129,7 @@ input, select, textarea {
 }
 
 .side-menu-wiki-list li.item a, .recent-wikis-list li.item a {
-	color: #777777;
+	color: #333;
 	font-size: 13px;
 	font-weight: normal;
 	padding: 8px 13px;
