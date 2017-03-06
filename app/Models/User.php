@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     public function groups()
     {
-        return $this->hasMany(TeamGroups::class, 'user_id', 'id');
+        return $this->hasMany(TeamGroups::class, 'user_id', 'id')->with('permissions');
     }
 
     /**
@@ -217,6 +217,25 @@ class User extends Authenticatable
 
         if ($user && Hash::check($data['password'], $user->password)) {
             return $user;
+        }
+
+        return false;
+    }
+
+    public function hasPermission($routePermissions)
+    {
+        $routePermissions = explode('|', $routePermissions);
+        
+        $groups = $this->find(Auth::user()->id)->with('groups')->first()->groups;
+
+        foreach ($groups as $group) {
+            foreach ($group->permissions as $permission) {
+                foreach ($routePermissions as $routePer) {
+                    if($permission->name === $routePer) {
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;

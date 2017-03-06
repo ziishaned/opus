@@ -14,11 +14,10 @@ class CheckPermission
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $permission = null)
+    public function handle($request, Closure $next, $permissions = null)
     {
-        dd($request->user());
         if(Auth::user()) {
-            if ($request->user()->can($permission)) {
+            if ($request->user()->hasPermission($permissions)) {
                 return $next($request);
             }
         }

@@ -72,31 +72,4 @@ class TeamGroups extends Model
 
         return $group;
     }
-
-    public function can($permission = null)
-    {
-        return !is_null($permission) && $this->checkPermission($permission);
-    }
-
-    protected function checkPermission($perm)
-    {
-        $permissions = $this->getAllPernissionsFormAllRoles();
-
-        $permissionArray = is_array($perm) ? $perm : [$perm];
-        
-        return count(array_intersect($permissions, $permissionArray));
-    }
-
-    protected function getAllPernissionsFormAllRoles()
-    {
-        $permissionsArray = [];
-
-        $permissions = $this->roles->load('permissions')->fetch('permissions')->toArray();
-        
-        return array_map('strtolower', array_unique(array_flatten(array_map(function ($permission) {
-
-            return array_fetch($permission, 'permission_slug');
-
-        }, $permissions))));
-    }
 }
