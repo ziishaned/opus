@@ -125,7 +125,7 @@ input, select, textarea {
     border-radius: 2px;
     background-color: #121518;
     font-size: 11px;
-    font-family: lato;
+    font-family: "Open Sans";
 }
 
 .side-menu-wiki-list li.item a, .recent-wikis-list li.item a {
@@ -148,16 +148,6 @@ input, select, textarea {
     min-height: 0px;
 }
 
-.navbar-brand,
-.navbar-nav>li>a {
-    /*line-height: 60px;*/
-    /*height: 60px;*/
-    /*padding-top: 0;*/
-    /*color: #fff !important;*/
-    
-    color: #333 !important;
-}
-
 .main-menu .navbar-nav>.open>a, .main-menu .navbar-nav>.open>a:focus, .main-menu .navbar-nav>.open>a:hover {
     background-color: initial !important;
 }
@@ -171,9 +161,6 @@ input, select, textarea {
 }
 
 .main-menu {
-	/*background-color: #323b44;*/
-    /*border-color: #323b44;*/
-
 	font-size: 13px;
 	background-color: #f5f5f5;
     border-color: #ddd;
@@ -186,26 +173,6 @@ input, select, textarea {
 .navbar-form {
     line-height: 40px;
     margin: 0px;
-}
-
-.navbar-brand {
-	text-transform: uppercase;
-	font-family: Cambria;
-	font-size: 18px;
-	color: #ddd;
-}
-
-.navbar-brand:hover {
-	color: #ccc;
-}
-
-.navbar-brand span {
-	/*border-radius: 2px;*/
-
-	font-weight: 900;
-	padding: 3px; 
-	padding: 0px 5px;
-	font-size: 22px;
 }
 
 .main-menu .dropdown-menu>li>a:hover {
@@ -354,8 +321,7 @@ label {
 }
 
 .btn {
-	font-family: "lato";
-	font-weight: 500;
+	font-family: "Open Sans";
 }
 
 /************************ Read List **************************************/
@@ -412,7 +378,7 @@ label {
 .read-list-item-detail h5, .read-list-con .read-list-item .item-name {
 	font-size: 15px;
 	font-weight: 600;
-    font-family: lato;
+    font-family: "Open Sans";
 }
 
 .read-list-item-detail p {
@@ -426,7 +392,7 @@ label {
 
 .wikis-list .wikis-list-item .media-heading {
 	font-weight: 600;
-	font-family: lato;
+	font-family: "Open Sans";
 	font-size: 15px;
 	color: #111;
 	margin-bottom: 3px;
@@ -436,7 +402,7 @@ label {
 	font-size: 13px;
 	font-weight: 500;
 	color: #777;
-	font-family: lato;
+	font-family: "Open Sans";
 	margin-bottom: 6px;
 }
 
@@ -460,7 +426,7 @@ label {
     color: #fff;
     font-size: 12px;
     font-weight: 600;
-    font-family: lato;
+    font-family: "Open Sans";
     background: #484848;
     border: 1px solid #ddd;
     position: relative;
@@ -535,8 +501,8 @@ label {
     margin: 0;
     margin-bottom: 20px;
     font-size: 18px;
-    font-weight: 800;
-    font-family: lato;
+    font-weight: 600;
+    font-family: "Open Sans";
 }
 
 .team-info, .team-logo, .delete-team, .team-members, .profile-pic-setting, .user-info, .wiki-info {
@@ -623,7 +589,7 @@ label {
 
 .member-list  .member-role {
     font-size: 10px;
-    font-family: lato;
+    font-family: "Open Sans";
 }
 
 .member-list .member-list-item {
@@ -648,7 +614,7 @@ label {
 
 .user-profile .user-detail .header {
 	font-size: 23px;
-	font-family: lato;
+	font-family: "Open Sans";
 	font-weight: 700;
 	margin-bottom: 5px;
 }
@@ -688,7 +654,7 @@ label {
 }
 
 .side-menu .side-menu-inner .wiki-intro .header {
-	font-family: lato;
+	font-family: "Open Sans";
 	font-size: 13px;
 	font-weight: 400;
 }
@@ -736,7 +702,7 @@ label {
 
 .comments .comment .user-name {
 	font-size: 14px;
-	font-family: lato;
+	font-family: "Open Sans";
 	font-weight: bold;
 }
 
@@ -853,7 +819,7 @@ label {
 .home-nav ul li a {
 	font-size: 13px;
 	font-weight: 500;
-	font-family: lato;
+	font-family: "Open Sans";
 	color: #3C5675;
 	padding-bottom: 6px;
 }
@@ -923,7 +889,7 @@ label {
 
 .CarouselItem-label { font-size: 16px; }
 
-.features-text { font-family: lato; font-size: 17px; margin-bottom: 30px; color: #3C5675; max-width: 590px; margin-left: auto; margin-right: auto; padding: 0 20px; }
+.features-text { font-family: "Open Sans"; font-size: 17px; margin-bottom: 30px; color: #3C5675; max-width: 590px; margin-left: auto; margin-right: auto; padding: 0 20px; }
 
 .more-feature-button {
 	padding: 9px 25px;
@@ -967,7 +933,7 @@ label {
 .login-form-con .header, .create-category-form-con .header {
 	margin-bottom: 30px;
 	font-size: 34px;
-	font-family: lato;
+	font-family: "Open Sans";
 	color: #323b44;
 	font-weight: 800;
 }
@@ -1066,7 +1032,7 @@ label {
 }
 
 .wiki-nav>nav>ul>li>a {
-	font-family: lato;
+	font-family: "Open Sans";
 	font-size: 13px;
 	padding: 8px 8px;
 	border-radius: 2px;
@@ -1291,4 +1257,16 @@ label {
 
 .select2-container--default .select2-selection--multiple {
     border: 1px solid #ccc !important;
+}
+
+li.with-img img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+li.with-img a {
+	padding: 10px;
+	display: flex;
+	align-items: center;
 }

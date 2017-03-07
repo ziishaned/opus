@@ -7,11 +7,20 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{{ route('dashboard', [ Auth::user()->getTeam()->slug ]) }}"><span>opus</span></a>
 		</div>
 
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav">
+				<li class="with-img">
+					<a href="{{ route('dashboard', [ Auth::user()->getTeam()->slug ]) }}">
+						@if($team->team_logo)
+                            <img src="/img/avatars/{{ $team->team_logo }}" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
+                        @else
+                            <img src="/img/no-image.png" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
+                        @endif
+                        {{ $team->name }}
+					</a>
+				</li>
 				<li>
 					<a href="#">Wikis</a>
 				</li>
