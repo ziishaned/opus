@@ -55,7 +55,8 @@ input, select, textarea {
 	left: 0;
 	top: 50px;
 	width: 248px;
-	background-color: #f5f5f5;
+	/*background-color: #f5f5f5;*/
+    background: linear-gradient(#fbfbfb, #fbfbfb);
 	border-right: 1px solid #ddd;
 }
 
@@ -100,7 +101,7 @@ input, select, textarea {
 }
 
 .side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .side-menu-top .item.active, .side-menu-categories-list li.active {
-	background-color: rgba(228, 228, 228, 0.65) !important;
+	background-color: #f3f3f3 !important;
 	text-decoration: none;
 }
 
@@ -162,11 +163,12 @@ input, select, textarea {
 
 .main-menu {
 	font-size: 13px;
-	background-color: #f5f5f5;
+	/*background-color: #f5f5f5;*/
     border-color: #ddd;
     height: 50px;
     min-height: 50px;
-
+	
+    background: linear-gradient(#fbfbfb, #fbfbfb);
     border-radius: 0px;
 }
 
@@ -297,10 +299,10 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 label {
-	font-weight: 600;
-	font-family: roboto;
-	font-size: 14px;
-	color: #424242;
+	font-weight: 500;
+	font-family: "Open Sans";
+	font-size: 13px;
+	color: #000;
 }
 
 .cke_chrome {
