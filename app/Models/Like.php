@@ -30,4 +30,11 @@ class Like extends Model
     {
         return $this->morphTo();
     }
+
+    public function getUserLikeWikis($id)
+    {
+        $likes = $this->where('user_id', $id)->where('subject_type', 'App\Models\Wiki')->with(['subject'])->limit(15)->latest()->get();
+
+        return $likes;
+    }
 }

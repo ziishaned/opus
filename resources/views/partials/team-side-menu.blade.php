@@ -36,26 +36,17 @@
 		<div class="side-menu-wiki-list">
 			<ul class="list-unstyled">
 				<li class="nav-header">Favourite Wikis</li>
-				<li class="item">
-					<a href="#">
-						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Demonstration Space</span>
-					</a>
-				</li>
-				<li class="item">
-					<a href="#">
-						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Web QA Automation</span>
-					</a>
-				</li>
-				<li class="item">
-					<a href="#">
-						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Almosafer web</span>
-					</a>
-				</li>
-				<li class="item">
-					<a href="#">
-						<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">Mobile App Project</span>
-					</a>
-				</li>
+				@if($likeWikis->count() > 0) 
+					@foreach($likeWikis as $wiki)
+						<li class="item">
+							<a href="{{ route('wikis.show', [$team->slug, $wiki->subject->category->slug, $wiki->subject->slug]) }}">
+								<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">{{ $wiki->subject->name }}</span>
+							</a>
+						</li>
+					@endforeach
+				@else
+					<li class="text-center text-muted" style="margin-top: 5px; font-size: 13px;">Nothing found...</li>
+				@endif
 			</ul>
 		</div>
 	</div>
