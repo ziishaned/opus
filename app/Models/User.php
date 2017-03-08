@@ -77,7 +77,7 @@ class User extends Authenticatable
 
     public function groups()
     {
-        return $this->hasMany(TeamGroups::class, 'user_id', 'id')->with('permissions');
+        return $this->hasMany(Group::class, 'user_id', 'id')->with('permissions');
     }
 
     /**

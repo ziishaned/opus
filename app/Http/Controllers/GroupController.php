@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Team;
-use App\Models\TeamGroups;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class TeamGroupsController extends Controller
+class GroupController extends Controller
 {
     protected $request;
     
     protected $group;
 
-    public function __construct(Request $request, TeamGroups $group)
+    public function __construct(Request $request, Group $group)
     {
         $this->request  = $request;
         $this->group    = $group;
@@ -32,7 +32,7 @@ class TeamGroupsController extends Controller
 
     public function store(Team $team)
     {
-        $this->validate($this->request, TeamGroups::GROUP_RULES);
+        $this->validate($this->request, Group::GROUP_RULES);
 
         $group = $this->group->createGroup($this->request->all());
 
@@ -66,12 +66,12 @@ class TeamGroupsController extends Controller
         
     }
 
-    public function edit(Team $team, TeamGroups $group)
+    public function edit(Team $team, Group $group)
     {
         return view('group.edit', compact('team', 'group'));
     }
 
-    public function update(Team $team, TeamGroups $group)
+    public function update(Team $team, Group $group)
     {
         $this->validate($this->request, [
             'group_name' => 'required',
@@ -107,7 +107,7 @@ class TeamGroupsController extends Controller
         ]);
     }
 
-    public function destroy(Team $team, TeamGroups $group)
+    public function destroy(Team $team, Group $group)
     {
         $this->group->find($group->id)->delete();
 

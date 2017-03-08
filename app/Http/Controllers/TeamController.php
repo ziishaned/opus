@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Team;
-use App\Models\TeamGroups;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -24,13 +24,13 @@ class TeamController extends Controller
 
     private $user;
 
-    private $groups;
+    private $group;
 
     private $category;
 
     public function __construct(Request $request,
                                 Team $team,
-                                TeamGroups $groups,
+                                Group $group,
                                 User $user,
                                 Category $category)
     {
@@ -38,7 +38,7 @@ class TeamController extends Controller
         $this->request      = $request;
         $this->category     = $category;
         $this->team         = $team;
-        $this->groups       = $groups;
+        $this->group       = $group;
     }
 
     public function getMembers(Team $team)
@@ -183,7 +183,7 @@ class TeamController extends Controller
 
     public function groupSettings(Team $team)
     {
-        $groups = $this->groups->where('team_id', $team->id)->latest()->with(['members', 'permissions'])->get();
+        $groups = $this->group->where('team_id', $team->id)->latest()->with(['members', 'permissions'])->get();
 
         return view('team.setting.group', compact('team', 'groups'));
     }
@@ -213,7 +213,7 @@ class TeamController extends Controller
 
     public function filterMembers()
     {
-        $members = $this->team->find(Auth::user()->team->id)->with(['members' => function($query) {
+        $members = $this->team->find(Auth::user()->getTeam()->id)->with(['members' => function($query) {
             $query->where('slug', 'like', '%'.$this->request->get('q').'%')->get();
         }])->first()->members;
         

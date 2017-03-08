@@ -65,7 +65,7 @@ class PageController extends Controller
     {
         $html = '<ul>'; 
         foreach ($pages as $page) {
-            $html .= '<li id="' . $page->id . '" data-slug="' . $page->slug . '" data-position="'. $page->position .'" data-created_at="' . $page->created_at . '" class="' . ($page->isLeaf() == false ? 'jstree-closed' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $page->wiki->category->slug, $page->wiki->slug, $page->slug]) . '">' . $page->name . '</a>';
+            $html .= '<li id="' . $page->id . '" data-slug="' . $page->slug . '" data-position="'. $page->position .'" data-created_at="' . $page->created_at . '" class="' . ($page->isLeaf() == false ? 'jstree-closed' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $page->wiki->category->slug, $page->wiki->slug, $page->slug]) . '">' . $page->name . '</a>';
         }
         $html .= '</ul>'; 
 
@@ -77,10 +77,10 @@ class PageController extends Controller
         foreach ($pages as $page => $value) {
             foreach ($value->getSiblings() as $siblings) {
                 if ($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="'. $siblings->position .'" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $wiki->category->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
+                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="'. $siblings->position .'" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->category->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="'. $value->position .'" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->team->slug, $wiki->category->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
+            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="'. $value->position .'" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->category->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
             if (!empty($value['children'])) {
                 $html .= '<ul>';
                 self::makePageTree($wiki, $value['children'], $currentPageId, $html);

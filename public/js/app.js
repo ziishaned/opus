@@ -662,7 +662,7 @@ $(function() {
         }).on("ready.jstree", function(e, data) {
             $('#wiki-page-tree').css('margin-left', '-7px');
             if(data.instance._cnt == 0) {
-                var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto;">No pages yet.</p>`;
+                var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto; font-size: 13px;">No pages yet.</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
 

@@ -27,20 +27,21 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<form class="navbar-form navbar-left" role="search">
-					<div class="form-group">
-						<input type="text" class="form-control overall-search-input" placeholder="Search">
+					<div class="form-group with-icon">
+						<input type="text" class="form-control overall-search-input" placeholder="Search...">
+						<i class="fa fa-search icon"></i>
 					</div>
 				</form>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 0; padding-right: 0;"><i class="fa fa-plus fa-fw"></i></a>
-					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 6px; margin-right: -15px;">
+					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: -3px; margin-right: -15px;">
                         <li><a href="{{ route('wikis.create', [ $team->slug ]) }}">Create wiki</a></li>
-                        <li><a href="{{ route('wikis.create', [ $team->slug ]) }}">Craete category</a></li>
+                        <li><a href="{{ route('categories.create', [ $team->slug ]) }}">Craete category</a></li>
                     </ul>
               	</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down fa-fw"></i></a>
-					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 6px;">
+					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: -3px;">
                         <li><a href="{{ route('users.show', [$team->slug, Auth::user()->slug]) }}">Profile</a></li>
                         <li>
                             <a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}">Read list</a>

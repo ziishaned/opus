@@ -93,7 +93,7 @@ class Team extends Model
 
     public function groups()
     {
-        return $this->hasMany(TeamGroups::class, 'team_id', 'id');
+        return $this->hasMany(Group::class, 'team_id', 'id');
     }
 
     public function members()

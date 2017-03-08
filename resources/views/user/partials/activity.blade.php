@@ -113,5 +113,5 @@
 		</div>
 	@endforeach
 @else 
-	<h1 class="nothing-found"><img src="/img/icons/basic_info.svg" width="44"> No activity found</h1>
+	<h1 class="nothing-found">No activity found</h1>
 @endif

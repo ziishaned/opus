@@ -3,16 +3,16 @@
         <div class="side-menu-inner">
             <div class="wiki-intro">
                 <div class="pull-left">
-                    <h1 class="header v-center"><img src="{!! new Avatar($wiki->name, 'circle', 44) !!}" alt="" style="margin-right: 15px;"> <a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
+                    <h1 class="header v-center"><img src="{!! new Avatar($wiki->name, 'square', 32) !!}" alt="" style="margin-right: 12px; border-radius: 3px;"> <a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
                 </div>
-                <div class="pull-right wiki-like-con" style="position: relative; top: 11px;">
+                <div class="pull-right wiki-like-con" style="position: relative; top: 4px;">
                     <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
                     <a href="#" id="like-wiki" data-wiki="{{ $wiki->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikeWiki ? 'Unlike' : 'Like' }}" width="20" height="20" style="margin-right: 3px;"></a> <span class="label label-default" id="likes-counter">{{ $wiki->likes->count() }}</span>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <ul class="list-unstyled side-menu-top">
-                <li class="nav-header" style="margin-bottom: 8px;">Quick Links</li>
+                <li class="nav-header" style="margin-bottom: 5px;">Quick Links</li>
                 <li class="item {{ (Route::currentRouteName() == 'wikis.activity' ? 'active' : '') }}">
                     <a href="{{ route('wikis.activity', [$team->slug, $category->slug, $wiki->slug]) }}">
                         <img src="/img/icons/basic_clockwise.svg" width="24" height="24" class="icon">
@@ -29,7 +29,7 @@
             <div class="side-menu-page-shortcuts-list">
                 <ul class="list-unstyled">
                     <li class="nav-header">Shortcuts</li>
-                    <li class="text-center text-muted" style="margin-top: 5px;">Nothing found...</li>
+                    <li class="text-center text-muted" style="margin-top: 5px; font-size: 13px;">Nothing found...</li>
                 </ul>
             </div>
             <div class="side-menu-page-tree-list" style="margin-bottom: 15px;">

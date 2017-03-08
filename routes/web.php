@@ -33,10 +33,10 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => '{team_slug}/groups'], function () {
-        Route::delete('/{group_slug}', 'TeamGroupsController@destroy')->name('groups.delete');
-        Route::patch('/{group_slug}', 'TeamGroupsController@update')->name('groups.update');
-        Route::post('', 'TeamGroupsController@store')->name('groups.post');
-        Route::get('/{group_slug}/edit', 'TeamGroupsController@edit')->name('groups.edit');
+        Route::delete('/{group_slug}', 'GroupController@destroy')->name('groups.delete');
+        Route::patch('/{group_slug}', 'GroupController@update')->name('groups.update');
+        Route::post('', 'GroupController@store')->name('groups.post');
+        Route::get('/{group_slug}/edit', 'GroupController@edit')->name('groups.edit');
         Route::get('account', 'UserController@accountSettings')->name('settings.account');
     });    
 

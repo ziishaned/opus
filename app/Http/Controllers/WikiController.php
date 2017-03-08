@@ -6,8 +6,8 @@ use DB;
 use Auth;
 use App\Models\Wiki;
 use App\Models\Page;
-use App\Models\Category;
 use App\Models\Team;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

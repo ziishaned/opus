@@ -8,7 +8,7 @@ use App\Models\Wiki;
 use App\Models\Team;
 use App\Models\Page;
 use App\Models\Category;
-use App\Models\TeamGroups;
+use App\Models\Group;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('group_slug', function($slug) {
-            return TeamGroups::where('slug', '=', $slug)->with(['members', 'permissions'])->first();
+            return Group::where('slug', '=', $slug)->with(['members', 'permissions'])->first();
         });
 
         Route::bind('category_slug', function($slug) {

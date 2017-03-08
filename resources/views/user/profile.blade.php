@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-center">
 				<div class="user-image">
-					<img src="/img/no-image.png" class="img-circle" width="180" height="180">
+					<img src="/img/no-image.png" width="180" height="180" style="border-radius: 3px;">
 				</div>
 				<div class="user-detail">
 					<h1 class="header">John Doe</h1>
@@ -13,7 +13,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-				<div class="page-header">All activities</div>
+				<div class="page-header"><img src="/img/icons/basic_rss.svg" width="24" height="24" style="position: relative; top: -5px; margin-right: 10px;"> All activities</div>
 				<div class="events-list">
 					@include('user.partials.activity')
 				</div>

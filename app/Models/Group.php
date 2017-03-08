@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TeamGroups extends Model
+class Group extends Model
 {
 	use SoftDeletes, Sluggable;
 
-    protected $table = 'team_groups';
+    protected $table = 'groups';
 
     protected $fillable = [
     	'name',
@@ -24,7 +24,7 @@ class TeamGroups extends Model
     protected $dates = ['deleted_at'];
 
     const GROUP_RULES = [
-        'group_name' => 'required|unique:team_groups,name'
+        'group_name' => 'required|unique:groups,name'
     ];
 
     public function sluggable()
@@ -56,7 +56,7 @@ class TeamGroups extends Model
         $group = $this->create([
             'name' => $data['group_name'],
             'user_id' => Auth::user()->id,
-            'team_id' => Auth::user()->team->id,
+            'team_id' => Auth::user()->getTeam()->id,
         ]);
 
         return $group;
@@ -67,7 +67,7 @@ class TeamGroups extends Model
         $group = $this->find($id)->update([
             'name' => $data['group_name'],
             'user_id' => Auth::user()->id,
-            'team_id' => Auth::user()->team->id,
+            'team_id' => Auth::user()->getTeam()->id,
         ]);
 
         return $group;

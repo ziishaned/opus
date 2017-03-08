@@ -126,7 +126,6 @@ input, select, textarea {
     border-radius: 2px;
     background-color: #121518;
     font-size: 11px;
-    font-family: "Open Sans";
 }
 
 .side-menu-wiki-list li.item a, .recent-wikis-list li.item a {
@@ -247,8 +246,6 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .events-list .event {
-	display: flex;
-	align-items: center;
     margin: 0;
     padding: 12px 8px;
 }
@@ -300,7 +297,6 @@ h1, h2, h3, h4, h5, h6, p {
 
 label {
 	font-weight: 500;
-	font-family: "Open Sans";
 	font-size: 13px;
 	color: #000;
 }
@@ -320,10 +316,6 @@ label {
 
 .btn-link:hover {
 	text-decoration: none;
-}
-
-.btn {
-	font-family: "Open Sans";
 }
 
 /************************ Read List **************************************/
@@ -380,7 +372,6 @@ label {
 .read-list-item-detail h5, .read-list-con .read-list-item .item-name {
 	font-size: 15px;
 	font-weight: 600;
-    font-family: "Open Sans";
 }
 
 .read-list-item-detail p {
@@ -394,7 +385,6 @@ label {
 
 .wikis-list .wikis-list-item .media-heading {
 	font-weight: 600;
-	font-family: "Open Sans";
 	font-size: 15px;
 	color: #111;
 	margin-bottom: 3px;
@@ -404,7 +394,6 @@ label {
 	font-size: 13px;
 	font-weight: 500;
 	color: #777;
-	font-family: "Open Sans";
 	margin-bottom: 6px;
 }
 
@@ -428,7 +417,6 @@ label {
     color: #fff;
     font-size: 12px;
     font-weight: 600;
-    font-family: "Open Sans";
     background: #484848;
     border: 1px solid #ddd;
     position: relative;
@@ -440,13 +428,13 @@ label {
 }
 
 .form-group.with-icon input {
-    padding-right: 2.67142857em!important;
+    padding-right: 2.2em !important;
 }
 
 .form-group.with-icon .icon {
-    cursor: default;
+	cursor: default;
     position: absolute;
-    line-height: 1;
+    line-height: 1.2em;
     text-align: center;
     top: 0;
     right: 0;
@@ -504,7 +492,6 @@ label {
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: 600;
-    font-family: "Open Sans";
 }
 
 .team-info, .team-logo, .delete-team, .team-members, .profile-pic-setting, .user-info, .wiki-info {
@@ -560,13 +547,11 @@ label {
 
 .group-members-con .group-member-name {
 	font-size: 13px;
-	font-family: "Open Sans";
 	margin-bottom: 3px;
 }
 
 .s-groups-con .s-group-header .create-group-btn {
 	font-size: 13px;
-	font-family: "open sans";
 	color: #333333;
 	border: 1px solid #ccc;
 	border-radius: 2px;
@@ -591,7 +576,6 @@ label {
 
 .member-list  .member-role {
     font-size: 10px;
-    font-family: "Open Sans";
 }
 
 .member-list .member-list-item {
@@ -615,10 +599,9 @@ label {
 }
 
 .user-profile .user-detail .header {
-	font-size: 23px;
-	font-family: "Open Sans";
-	font-weight: 700;
-	margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
 }
 
 .user-profile .user-detail .icon {
@@ -656,13 +639,12 @@ label {
 }
 
 .side-menu .side-menu-inner .wiki-intro .header {
-	font-family: "Open Sans";
 	font-size: 13px;
 	font-weight: 400;
 }
 
 .side-menu .side-menu-inner .wiki-intro {
-	margin-top: 25px;
+	margin-top: 19px;
 }
 
 .side-menu .side-menu-inner .wiki-intro {
@@ -704,7 +686,6 @@ label {
 
 .comments .comment .user-name {
 	font-size: 14px;
-	font-family: "Open Sans";
 	font-weight: bold;
 }
 
@@ -821,7 +802,6 @@ label {
 .home-nav ul li a {
 	font-size: 13px;
 	font-weight: 500;
-	font-family: "Open Sans";
 	color: #3C5675;
 	padding-bottom: 6px;
 }
@@ -891,7 +871,7 @@ label {
 
 .CarouselItem-label { font-size: 16px; }
 
-.features-text { font-family: "Open Sans"; font-size: 17px; margin-bottom: 30px; color: #3C5675; max-width: 590px; margin-left: auto; margin-right: auto; padding: 0 20px; }
+/*.features-text { font-family: "Open Sans"; font-size: 17px; margin-bottom: 30px; color: #3C5675; max-width: 590px; margin-left: auto; margin-right: auto; padding: 0 20px; }*/
 
 .more-feature-button {
 	padding: 9px 25px;
@@ -933,11 +913,10 @@ label {
 }
 
 .login-form-con .header, .create-category-form-con .header {
-	margin-bottom: 30px;
-	font-size: 34px;
-	font-family: "Open Sans";
-	color: #323b44;
-	font-weight: 800;
+    margin-bottom: 30px;
+    font-size: 23px;
+    color: #323b44;
+    font-weight: 500;
 }
 
 .login-page {
@@ -998,17 +977,14 @@ label {
 
 .nothing-found {
 	text-align: center;
-    font-size: 15px;
+	font-size: 13px;
     font-weight: 500;
     margin-top: 30px;
 }
 
 .panel-body .nothing-found {
 	margin-top: 0;
-}
-
-.nothing-found img {
-	margin-right: 15px;
+	padding: 15px;
 }
 
 .create-category-form-con {
@@ -1034,7 +1010,6 @@ label {
 }
 
 .wiki-nav>nav>ul>li>a {
-	font-family: "Open Sans";
 	font-size: 13px;
 	padding: 8px 8px;
 	border-radius: 2px;
@@ -1057,7 +1032,7 @@ label {
 }
 
 .jstree-selected>.jstree-wholerow, .jstree-wholerow-hovered, .jstree-default .jstree-wholerow-clicked, .jstree-wholerow-clicked.jstree-wholerow-hovered {
-    background-color: rgb(238, 238, 238) !important;	
+    background-color: #f3f3f3 !important;	
 }
 
 .jstree-default .jstree-node {
@@ -1094,7 +1069,7 @@ label {
 .jstree-leaf > .jstree-ocl:before {
     content: '.';
     color: #717171;
-    font-family: 'Open sans';
+    font-family: "segoe ui";
     font-weight: 900;
     position: relative;
     top: -3px;
@@ -1174,7 +1149,6 @@ label {
 /******************** Wiki Description Styles *********************/
 
 .formated-wiki-description {
-	font-family: "Open Sans";
 	line-height: 22px;
 	font-size: 14px;
 }
