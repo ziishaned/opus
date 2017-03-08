@@ -2,7 +2,7 @@
 	<div class="events-list">
 		@foreach($activities as $activity)
 			<div class="media event">
-				<a class="pull-left event-user-image" href="#">
+				<a class="pull-left event-user-image" href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}">
 					<img class="media-object" style="border-radius: 3px;" src="/img/no-image.png" width="42" height="42" alt="Image">
 				</a>
 				<div class="media-body">
@@ -58,62 +58,62 @@
 						</div>
 						<div class="pull-left">
 							@if($activity->name == 'created_category')
-								<a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created category <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+								<a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created category <a href="{{ route('categories.wikis', [$team->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a>.
 							@endif
 							
                             @if($activity->name == 'deleted_category')
-								<a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted category <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+								<a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted category <a href="{{ route('categories.wikis', [$team->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a>.
                             @endif
 
                             @if($activity->name == 'updated_category')
-                                <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated category <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+                                <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated category <a href="{{ route('categories.wikis', [$team->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a>.
                             @endif
 
                             @if($activity->name == 'created_wiki')
-                                <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created wiki <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+                                <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->category->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a>.
                             @endif
 
                             @if($activity->name == 'deleted_wiki')
-                                <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted wiki <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+                                <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->category->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a>.
                             @endif
 
                             @if($activity->name == 'updated_wiki')
-                                <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated wiki <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+                                <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->category->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a>.
                             @endif
 
                             @if($activity->name == 'created_page')
-                                <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created page <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+                                <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> created page <a href="{{ route('pages.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a> at wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
                             @endif
 
                             @if($activity->name == 'deleted_page')
-                                <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted page <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a>.
+                                <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted page <a href="{{ route('pages.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject->name }}</a> at wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
                             @endif
 
                             @if($activity->name == 'updated_page')
-                                <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated page <a href="" style="color: #337ab7;">{{ $activity->subject['name'] }}</a> at wiki <a href="" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
+                                <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated page <a href="{{ route('pages.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug, $activity->subject->slug]) }}" style="color: #337ab7;">{{ $activity->subject['name'] }}</a> at wiki <a href="" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a> at wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
                             @endif
 
                             @if($activity->name == 'created_comment')
                                 @if($activity->subject->subject_type === 'App\Models\Wiki')
-                                    <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> commented on wiki <a href="" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
+                                    <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> commented on wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
                                 @else
-                                    <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> commented on page <a href="" style="color: #337ab7;">{{ $activity->subject->page->name }}</a> at wiki <a href="" style="color: #337ab7;">{{ $activity->subject->page->wiki->name }}</a>.
+                                    <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> commented on page <a href="{{ route('pages.show', [$team->slug, $activity->subject->page->wiki->category->slug, $activity->subject->page->wiki->slug, $activity->subject->page->slug]) }}" style="color: #337ab7;">{{ $activity->subject->page->name }}</a> at wiki <a href="" style="color: #337ab7;">{{ $activity->subject->page->wiki->name }}</a>.
                                 @endif
                             @endif
 
                             @if($activity->name == 'deleted_comment')
                                 @if($activity->subject->subject_type === 'App\Models\Wiki')
-                                    <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted comment from wiki <a href="" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a> at wiki .
+                                    <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted comment from wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a> at wiki .
                                 @else
-                                    <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted comment from page <a href="" style="color: #337ab7;">{{ $activity->subject->page->name }}</a> at wiki <a href="" style="color: #337ab7;">{{ $activity->subject->page->wiki->name }}</a>.
+                                    <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> deleted comment from page <a href="{{ route('pages.show', [$team->slug, $activity->subject->page->wiki->category->slug, $activity->subject->page->wiki->slug, $activity->subject->page->slug]) }}" style="color: #337ab7;">{{ $activity->subject->page->name }}</a> at wiki <a href="" style="color: #337ab7;">{{ $activity->subject->page->wiki->name }}</a>.
                                 @endif
                             @endif
 
                             @if($activity->name == 'updated_comment')
                                 @if($activity->subject->subject_type === 'App\Models\Wiki')
-                                    <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated comment on wiki <a href="" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
+                                    <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated comment on wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7;">{{ $activity->subject->wiki->name }}</a>.
                                 @else
-                                    <a href="#" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated comment on page <a href="" style="color: #337ab7;">{{ $activity->subject->page->name }}</a> at wiki <a href="" style="color: #337ab7;">{{ $activity->subject->page->wiki->name }}</a>.
+                                    <a href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}" style="color: #337ab7;">{{ $activity->user->first_name .' '. $activity->user->last_name }}</a> updated comment on page <a href="" style="color: #337ab7;">{{ $activity->subject->page->name }}</a> at wiki <a href="{{ route('pages.show', [$team->slug, $activity->subject->page->wiki->category->slug, $activity->subject->page->wiki->slug, $activity->subject->page->slug]) }}" style="color: #337ab7;">{{ $activity->subject->page->wiki->name }}</a>.
                                 @endif
                             @endif
 						</div>

@@ -83,7 +83,7 @@ class Wiki extends Model
     public function getTeamWikis($teamId, $total = null)
     {
         if($total !==  null) {
-            $wikis = $this->where('team_id', $teamId)->with(['category'])->latest()->take(5)->get();
+            $wikis = $this->where('team_id', $teamId)->with(['category', 'likes'])->latest()->take(5)->get();
 
             return $wikis;
         }

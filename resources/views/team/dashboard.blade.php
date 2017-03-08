@@ -22,7 +22,7 @@
 										<a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}" style="position: relative;">
 											<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">{{ $wiki->name }}</span>
 											<div style="position: absolute; right: 10px; top: 8px;">
-												<img src="/img/icons/basic_heart.svg" width="16" height="16" style="margin-right: 2px; position: relative; top: -2px;"> 5
+												<img src="/img/icons/basic_heart.svg" width="16" height="16" style="margin-right: 2px; position: relative; top: -2px;"> {{ $wiki->likes->count() }}
 											</div>
 										</a>
 									</li>
