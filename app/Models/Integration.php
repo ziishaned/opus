@@ -41,12 +41,12 @@ class Integration extends Model
     	return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
-    public function members()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function permissions()
+    public function integrationActions()
     {
     	return $this->belongsToMany(IntegrationAction::class, 'team_integration_actions', 'integration_id', 'integration_action_id');
     }
@@ -61,5 +61,12 @@ class Integration extends Model
         ]);
 
         return $integration;
+    }
+
+    public function getTeamIntegration($teamId)
+    {
+        $integrations = $this->where('team_id', $teamId)->with(['integrationActions'])->get();
+
+        return $integrations;
     }
 }

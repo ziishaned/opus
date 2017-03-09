@@ -223,7 +223,9 @@ class TeamController extends Controller
 
     public function integration(Team $team)
     {
-        return view('team.setting.integration', compact('team'));
+        $integrations = (new Integration)->getTeamIntegration($team->id);
+
+        return view('team.setting.integration', compact('team', 'integrations'));
     }
 
     public function slackIntegration(Team $team)
