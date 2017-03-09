@@ -38,9 +38,13 @@ class AppCommand extends Command
      */
     public function handle()
     {
+        $this->call('config:cache');
         $this->call('migrate:refresh');
         $this->call('db:seed', [
             '--class' => 'PermissionTableSeeder',
+        ]);
+        $this->call('db:seed', [
+            '--class' => 'IntegrationActionsTableSeeder',
         ]);
     }
 }
