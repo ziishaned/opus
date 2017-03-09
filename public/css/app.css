@@ -661,13 +661,12 @@ label {
 
 .main-menu .overall-search-input {
 	width: 250px;
-    /*background-color: #525558;*/
-    /*border-color: #5d5d5d;*/
-    /*color: #fff;*/
-    background-color: #fff;
-    border-color: #ddd;
-    border-radius: 3px !important;
+    background-color: #fbfbfb;
+    border: none;
+    border-radius: 0px !important;
+    border-bottom: 1px solid #ddd;
     color: #333;
+    padding-left: 0;
 }
 
 .media-object {

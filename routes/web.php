@@ -44,6 +44,8 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('general', 'TeamController@generalSettings')->name('teams.settings.general');
         Route::get('members', 'TeamController@membersSettings')->name('teams.settings.members');
         Route::get('groups', 'TeamController@groupSettings')->name('teams.settings.groups');
+        Route::get('integration', 'TeamController@integration')->name('teams.integration');
+        Route::get('integration/slack', 'TeamController@slackIntegration')->name('integration.slack');
         Route::get('groups/create', 'TeamController@createGroup')->name('groups.create');
     });
 

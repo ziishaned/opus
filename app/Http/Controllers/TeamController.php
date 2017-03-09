@@ -219,4 +219,14 @@ class TeamController extends Controller
         
         return $members;
     }
+
+    public function integration(Team $team)
+    {
+        return view('team.setting.integration', compact('team'));
+    }
+
+    public function slackIntegration(Team $team)
+    {
+        return view('team.setting.slack', compact('team'));
+    }
 }
