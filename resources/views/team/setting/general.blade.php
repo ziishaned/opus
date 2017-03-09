@@ -16,7 +16,7 @@
                     <form action="{{ route('teams.update', [ $team->slug ]) }}" method="POST" class="form-inline" role="form">
                         {{ method_field('patch') }}
                         <div class="form-group">
-                            <input type="text" id="team-name" name="team_name" class="form-control" value="{{ $team->name }}" placeholder="Enter team name" required>
+                            <input type="text" id="team-name" name="team_name" class="form-control" value="{{ $team->name }}" placeholder="Enter team name" required style="width: 295px;">
                         </div>
                         <button type="submit" class="btn btn-success pull-right">Save</button>
                         <div class="clearfix"></div>

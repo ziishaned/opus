@@ -13,9 +13,6 @@
 			<li>
 				<a href="#">About Us</a>
 			</li>
-			<li>
-				<a class="btn btn-default" href="{{ route('team.login') }}">Login</a>
-			</li>
 		</ul>
 	</nav>
 </div>

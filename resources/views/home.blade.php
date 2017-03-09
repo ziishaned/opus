@@ -9,7 +9,8 @@
 				<p class="minor-text">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
 				<div class="text-center brand-buttons">
 					<a href="{{ route('team.create') }}" class="btn btn-success">Create Team</a>
-					<a href="{{ route('team.join') }}" class="btn btn-default">Join Team</a>
+					<a class="btn btn-default" href="{{ route('team.login') }}">Login</a>
+					{{-- <a href="{{ route('team.join') }}" class="btn btn-default">Join Team</a> --}}
 				</div>
 			</div>
 			<div class="brand-img">

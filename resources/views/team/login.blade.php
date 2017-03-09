@@ -9,7 +9,7 @@
 		        <form action="{{ route('team.postlogin') }}" method="POST" role="form">
 		            <div class="form-group {{ $errors->has('team_name') ? 'has-error' : '' }}">
                         <label for="team-name" class="control-label">Team Name</label>
-                        <input type="text" name="team_name" class="form-control" id="team-name" autocomplete="off" required>
+                        <input type="text" name="team_name" class="form-control" id="team-name" autocomplete="on" required>
                         @if($errors->has('team_name'))
                             <p class="help-block has-error">{{ $errors->first('team_name') }}</p>
                         @else
