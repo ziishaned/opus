@@ -469,7 +469,7 @@ var App = {
     bindUI: function () {
         var that = this;
 
-        $("#team_logo").change(function(){
+        $("#team_logo, #profile_image").change(function(){
             that.readURL(this);
         });
 
@@ -557,7 +557,11 @@ var App = {
         $(".comments").scrollTop($('.comments').height()+120000000);
 
         if(document.getElementById('timezone')) {
-            $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
+            if($('#timezone').data('selected').length) {
+                $('#timezone').val($('#timezone').data('selected'));
+            } else {
+                $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
+            }
         }
 
         $('#update-image-size').on('click', function(event) {

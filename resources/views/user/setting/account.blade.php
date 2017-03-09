@@ -13,7 +13,8 @@
                     <p class="text-muted action-info">
                         After a successful password update, you will be redirected to the login page where you can log in with your new password.
                     </p>
-                    <form action="#" method="POST" role="form">
+                    <form action="{{ route('users.password', [$team->slug, Auth::user()->slug]) }}" method="POST" role="form">
+                        {{ method_field('patch') }}
                         <div class="form-group">  
                             <label for="password">Current password</label>
                             <input type="password" id="password" name="password" class="form-control input" autocomplete="off">
@@ -41,7 +42,9 @@
                         Once you clicked the delete your account button your account will be deleted from this organization. Please be certain.
                     </p>
                     <a href="#" style="color: #fff;" class="btn btn-danger" onclick="if(confirm('Are you sure you want to delete your account?')) {event.preventDefault(); document.getElementById('delete-user-account').submit();}" id="delete-account"><i class="fa fa-trash-o fa-fw"></i> Delete your account</a>
-                    <form id="delete-user-account" action="#" method="POST"></form>
+                    <form action="{{ route('users.destroy', [$team->slug, Auth::user()->slug]) }}" id="delete-user-account" method="POST">
+                        {{ method_field('delete') }}
+                    </form>
                 </div>
             </div>
         </div>

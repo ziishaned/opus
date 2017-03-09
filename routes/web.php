@@ -49,8 +49,9 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
 
     Route::group(['prefix' => '{team_slug}/users'], function () {
         Route::get('activity', 'UserController@activity');
+        Route::post('{user_slug}', 'UserController@uploadAvatar')->name('users.avatar');
         Route::delete('{user_slug}', 'UserController@deleteAccount')->name('users.destroy');
-        Route::patch('{user_slug}/password', 'UserController@updatePassword')->name('users.password.update');
+        Route::patch('{user_slug}/password', 'UserController@updatePassword')->name('users.password');
         Route::get('{user_slug}/readlist', 'UserController@getReadList')->name('users.readlist');
         Route::get('{user_slug}', 'UserController@show')->name('users.show');
         Route::patch('{user_slug}', 'UserController@update')->name('users.update');

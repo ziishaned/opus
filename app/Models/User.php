@@ -47,6 +47,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'profile_image',
+        'timezone',
         'email',
         'password',
     ];
@@ -169,14 +170,13 @@ class User extends Authenticatable
         return $userWikis;
     }
 
-    public function updateUser($slug, $data, $profile_image)
+    public function updateUser($slug, $data)
     {
         $this->where('slug', '=', $slug)->update([
             'first_name'    => $data['first_name'],
             'last_name'     => $data['last_name'],
-            'profile_image' => !empty($profile_image) ? $profile_image : Auth::user()->profile_image,
+            'timezone'      => !empty($data['timezone']) ? $data['timezone'] : null,
             'email'         => $data['email'],
-            'timezone'      => $data['timezone'],
         ]);
 
         return true;
@@ -184,7 +184,7 @@ class User extends Authenticatable
 
     public function updatePassword($slug, $data)
     {
-        $this->where('slug', '=', $slug)->update([
+        $this->where('slug', $slug)->update([
             'password' => Hash::make($data['new_password']),
         ]);
 
@@ -244,5 +244,14 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function updateAvatar($id, $image)
+    {
+        $this->find($id)->update([
+            'profile_image' => $image,
+        ]);
+
+        return true;
     }
 }

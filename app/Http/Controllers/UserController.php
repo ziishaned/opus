@@ -83,21 +83,15 @@ class UserController extends Controller
         return view('user.setting.account', compact('team'));
     }
 
-    public function update($slug)
+    public function update(Team $team, User $user)
     {
         $this->validate($this->request, [
-            'email'         => 'required|unique:users,email,' . Auth::user()->id . '|email',
-            'profile_image' => 'mimes:jpeg,jpg,png|max:1000',
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|unique:users,email,' . Auth::user()->id . '|email',
         ]);
 
-        $profile_image = '';
-        if($this->request->file('profile_image')) {
-            $file = $this->request->file('profile_image');
-            $profile_image = md5(microtime() . $file->getClientOriginalName()) . "." . $file->getClientOriginalExtension();
-            $this->request->file('profile_image')->move($this->profileImagePath, $profile_image);
-        }
-
-        $this->user->updateUser($slug, $this->request->all(), $profile_image);
+        $this->user->updateUser($user->slug, $this->request->all());
 
         return redirect()->back()->with([
             'alert' => 'Profile successfully updated.',
@@ -105,7 +99,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function updatePassword($slug)
+    public function updatePassword(Team $team, User $user)
     {
         $this->validate($this->request, [
             'password' => 'required|hash:' . Auth::user()->password,
@@ -113,16 +107,22 @@ class UserController extends Controller
             'password_confirmation'  => 'required'
         ]);
 
-        $this->user->updatePassword($slug, $this->request->all());
+        $this->user->updatePassword($user->slug, $this->request->all());
 
-        return $this->logout();
+        return $this->logout()->with([
+            'alert' => 'Your password successfully changed. You have to login again.',
+            'alert_type' => 'success'
+        ]);
     }
 
     public function deleteAccount($slug)
     {
         $this->user->where('slug', '=', $slug)->delete();
 
-        return $this->logout();
+        return $this->logout()->with([
+            'alert' => 'Your account successfully deleted.',
+            'alert_type' => 'success'
+        ]);
     }
 
     public function logout()
@@ -157,5 +157,23 @@ class UserController extends Controller
                     ->with(['members'])
                     ->first()
                     ->members;
+    }
+
+    public function uploadAvatar(Team $team, User $user)
+    {
+        $image = $this->request->file('profile_image');
+        
+        $imageName = 'img_' . date('Y-m-d-H-s') .  '.' . $this->request->file('profile_image')->getClientOriginalExtension();
+
+        $img = Image::make($image);
+        $img->crop((int) $this->request->get('w'), (int) $this->request->get('h'), (int) $this->request->get('x'), (int) $this->request->get('y'));
+        $img->save('img/avatars/' . $imageName);
+        
+        $this->user->updateAvatar($user->id, $imageName);
+
+        return redirect()->back()->with([
+            'alert'      => 'Profile image successfully updated.',
+            'alert_type' => 'success',
+        ]);
     }
 }

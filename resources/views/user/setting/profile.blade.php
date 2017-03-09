@@ -12,16 +12,25 @@
                     <h2>Profile Picture</h2>
                     <div class="media">
                         <div class="pull-left">
-                            <img src="/img/no-image.png" class="media-object img-circle" alt="" width="155" height="155">
+                            @if(Auth::user()->profile_image)
+                                <img src="/img/avatars/{{ Auth::user()->profile_image }}" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
+                            @else
+                                <img src="/img/no-image.png" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
+                            @endif
                         </div>
                         <div class="media-body avatar-upload-form-con">
-                            <form action="#" enctype="multipart/form-data" id="avatar-upload-form">
+                            <form action="{{ route('users.avatar', [ $team->slug, Auth::user()->slug ]) }}" enctype="multipart/form-data" id="avatar-upload-form" method="POST">
                                 <h3 class="heading">Upload new picture</h3>
                                 <div class="form-group">
-                                    <label class="btn btn-default upload-btn">
-                                        Browse file... <input type="file" class="hide" name="profile_image" id="profile_image">
+                                    <label class="btn btn-default upload-btn" style="margin-bottom: 7px;">
+                                        Browse file... 
+                                        <input type="file" class="hide" name="profile_image" id="profile_image">
                                     </label>
                                     <p class="text-muted">The maximum file size allowed is 200KB.</p>
+                                    <input type="hidden" id="x" name="x" />
+                                    <input type="hidden" id="y" name="y" />
+                                    <input type="hidden" id="w" name="w" />
+                                    <input type="hidden" id="h" name="h" />
                                 </div>
                             </form>
                         </div>
@@ -30,29 +39,30 @@
                 <div class="user-info">
                     <h2 class="heading">Personal Information</h2>
                     <p class="text-muted">Anyone who is the member of this organization can see this information.</p>
-                    <form action="http://wiki.dev/organizations/black-hat/users/zeeshan_ahmed" method="POST" role="form" enctype="multipart/form-data">
-                        <input type="hidden" name="_method" value="patch">
+                    <form action="{{ route('users.update', [$team->slug, Auth::user()->slug]) }}" method="POST" role="form">
+                        {{ method_field('patch') }}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="first-name">First name</label>
-                                    <input type="text" name="first_name" id="first-name" class="form-control input" value="Zeeshan" autocomplete="off">
+                                    <input type="text" name="first_name" id="first-name" class="form-control input" value="{{ Auth::user()->first_name }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="last-name">Last name</label>
-                                    <input type="text" name="last_name" id="last-name" class="form-control input" value="Ahmed" autocomplete="off">
+                                    <input type="text" name="last_name" id="last-name" class="form-control input" value="{{ Auth::user()->last_name }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" name="email" id="email" class="form-control input" value="ziishaned@gmail.com" required="required" autocomplete="off">
+                            <input type="text" name="email" id="email" class="form-control input" value="{{ Auth::user()->email }}" required="required" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label for="timezone">Time zone</label>
-                            <select class="form-control" name="timezone" id="timezone">
+                            <select class="form-control" name="timezone" id="timezone" data-selected="{{ Auth::user()->timezone }}">
+                                <option value="">Select your timezone</option>
                                 <option value="Pacific/Midway">(UTC-11:00) Midway Island</option>
                                 <option value="Pacific/Samoa">(UTC-11:00) Samoa</option>
                                 <option value="Pacific/Honolulu">(UTC-10:00) Hawaii</option>
@@ -65,7 +75,7 @@
                                 <option value="America/Mazatlan">(UTC-07:00) Mazatlan</option>
                                 <option value="US/Mountain">(UTC-07:00) Mountain Time (US &amp; Canada)</option>
                                 <option value="America/Managua">(UTC-06:00) Central America</option>
-                                <option value="US/Central" selected="US/Central">(UTC-06:00) Central Time (US &amp; Canada)</option>
+                                <option value="US/Central">(UTC-06:00) Central Time (US &amp; Canada)</option>
                                 <option value="America/Mexico_City">(UTC-06:00) Guadalajara</option>
                                 <option value="America/Mexico_City">(UTC-06:00) Mexico City</option>
                                 <option value="America/Monterrey">(UTC-06:00) Monterrey</option>
