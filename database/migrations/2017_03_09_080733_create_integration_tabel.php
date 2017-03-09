@@ -15,6 +15,9 @@ class CreateIntegrationTabel extends Migration
     {
         Schema::create('integration', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->longText('url');
+            $table->integer('team_id');
             $table->timestamps();
         });
     }

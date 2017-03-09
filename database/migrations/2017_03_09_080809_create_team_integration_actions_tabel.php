@@ -15,6 +15,8 @@ class CreateTeamIntegrationActionsTabel extends Migration
     {
         Schema::create('team_integration_actions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('integration_id');
+            $table->integer('integration_action_id');
             $table->timestamps();
         });
     }
