@@ -18,14 +18,20 @@
                             <p style="font-size: 15px;">A messaging app for teams</p>
                         </div>
                     </div>
-                    <form action="" method="POST" role="form" style="margin-top: 20px; margin-bottom: 20px;">
-                        <div class="form-group">
-                            <label for="">Title</label>
-                            <input type="text" class="form-control" id="">
+                    <form action="{{ route('integration.slack.store', [$team->slug, ]) }}" method="POST" role="form" style="margin-top: 20px; margin-bottom: 20px;">
+                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                            <label for="integration-title" class="control-label">Title</label>
+                            <input type="text" name="title" class="form-control" value="{{ old('title') }}" id="integration-title">
+                            @if($errors->has('title'))
+                                <p class="help-block has-error">{{ $errors->first('title') }}</p>
+                            @endif
                         </div>
-                        <div class="form-group">
-                            <label for="">URL</label>
-                            <input type="text" class="form-control" id="">
+                        <div class="form-group {{ $errors->has('url') ? 'has-error' : '' }}">
+                            <label for="integration-url" class="control-label">URL</label>
+                            <input type="text" name="url" class="form-control" value="{{ old('url') }}" id="integration-url">
+                            @if($errors->has('url'))
+                                <p class="help-block has-error">{{ $errors->first('url') }}</p>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="">Receive Notifications</label>
@@ -34,19 +40,19 @@
                                     <label style="width: 100%; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Wiki</label>
                                     <div class="checkbox" style="margin-top: 0;">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="1" {{ in_array('1', old('integrations', [])) ? 'checked' : '' }}>
                                             Created
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="2" {{ in_array('2', old('integrations', [])) ? 'checked' : '' }}>
                                             Updated
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="3" {{ in_array('3', old('integrations', [])) ? 'checked' : '' }}>
                                             Deleted
                                         </label>
                                     </div>
@@ -55,19 +61,19 @@
                                     <label style="width: 100%; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Page</label>
                                     <div class="checkbox" style="margin-top: 0;">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="4" {{ in_array('4', old('integrations', [])) ? 'checked' : '' }}>
                                             Created
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="5" {{ in_array('5', old('integrations', [])) ? 'checked' : '' }}>
                                             Updated
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="6" {{ in_array('6', old('integrations', [])) ? 'checked' : '' }}>
                                             Deleted
                                         </label>
                                     </div>
@@ -76,19 +82,19 @@
                                     <label style="width: 100%; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Comment</label>
                                     <div class="checkbox" style="margin-top: 0;">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="7" {{ in_array('7', old('integrations', [])) ? 'checked' : '' }}>
                                             Created
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="8" {{ in_array('8', old('integrations', [])) ? 'checked' : '' }}>
                                             Updated
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="9" {{ in_array('9', old('integrations', [])) ? 'checked' : '' }}>
                                             Deleted
                                         </label>
                                     </div>
@@ -97,7 +103,7 @@
                                     <label style="width: 100%; border-bottom: 1px solid #ddd; padding-bottom: 5px;">More</label>
                                     <div class="checkbox" style="margin-top: 0;">
                                         <label>
-                                            <input type="checkbox" value="">
+                                            <input type="checkbox" name="integrations[]" value="10" {{ in_array('10', old('integrations', [])) ? 'checked' : '' }}>
                                             Someone join team
                                         </label>
                                     </div>
