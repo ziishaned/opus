@@ -115,9 +115,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function deleteAccount($slug)
+    public function deleteAccount(Team $team, User $user)
     {
-        $this->user->where('slug', '=', $slug)->delete();
+        $this->user->where('slug', '=', $user->slug)->delete();
 
         return $this->logout()->with([
             'alert' => 'Your account successfully deleted.',
