@@ -90,7 +90,7 @@
                             @endif
 
                             @if($activity->name == 'updated_page')
-                                You updated page <a href="{{ route('pages.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug, $activity->subject->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject['name'] }}</a> at wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject->wiki->name }}</a> at wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject->wiki->name }}</a>.
+                                You updated page <a href="{{ route('pages.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug, $activity->subject->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject['name'] }}</a> at wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject->wiki->name }}</a>.
                             @endif
 
                             @if($activity->name == 'created_comment')
@@ -103,7 +103,7 @@
 
                             @if($activity->name == 'deleted_comment')
                                 @if($activity->subject->subject_type === 'App\Models\Wiki')
-                                    You deleted comment from wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject->wiki->name }}</a> at wiki .
+                                    You deleted comment from wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->wiki->category->slug, $activity->subject->wiki->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject->wiki->name }}</a>.
                                 @else
                                     You deleted comment from page <a href="{{ route('pages.show', [$team->slug, $activity->subject->page->wiki->category->slug, $activity->subject->page->wiki->slug, $activity->subject->page->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject->page->name }}</a> at wiki <a href="{{ route('wikis.show', [$team->slug, $activity->subject->page->wiki->category->slug, $activity->subject->page->wiki->slug]) }}" style="color: #337ab7; font-weight: 500;">{{ $activity->subject->page->wiki->name }}</a>.
                                 @endif
