@@ -7,12 +7,16 @@ use Baum\Node;
 use Carbon\Carbon;
 use App\Models\Wiki;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Notifications\Page\CreatePageNotification;
+use App\Notifications\Page\DeletePageNotification;
+use App\Notifications\Page\UpdatePageNotification;
 
 class Page extends Node
 {
-    use Sluggable, RecordsActivity, SoftDeletes;
+    use Sluggable, RecordsActivity, SoftDeletes, Notifiable;
 
     public function sluggable()
     {
@@ -49,6 +53,28 @@ class Page extends Node
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function routeNotificationForSlack()
+    {
+        return Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration->url;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($page) {
+            (new Page)->notify(new CreatePageNotification($page));
+        });
+
+        static::updated(function($page) {
+            (new Page)->notify(new UpdatePageNotification($page));
+        });
+
+        static::deleting(function($page) {
+            (new Page)->notify(new DeletePageNotification($page));
+        });
+    }
 
     public function comments()
     {
