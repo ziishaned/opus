@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Notifications\Comment\CreateCommentNotification;
 
 class Comment extends Model
 {
-
-    use RecordsActivity, SoftDeletes;
+    use RecordsActivity, SoftDeletes, Notifiable;
 
     /**
      * @var string
@@ -32,6 +32,25 @@ class Comment extends Model
     const COMMENT_RULES = [
         'comment' => 'required|min:2',
     ];
+
+    public function routeNotificationForSlack()
+    {
+        return Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration->url;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($comment) {
+            (new Comment)->notify(new CreateCommentNotification($comment));
+        });
+    }
+
+    public function subject()
+    {
+        return $this->morphTo();
+    }
     
     public function user()
     {

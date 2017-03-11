@@ -28,10 +28,10 @@ class CommentController extends Controller
 
     public function storeWikiComment(Team $team, Category $category, Wiki $wiki)
     {
-        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
-        
         $this->validate($this->request, Comment::COMMENT_RULES);
-        
+
+        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
+
         $this->comment->storeWikiComment($wiki->id, $this->request->all());
 
         return redirect()->route('wikis.show', [$team->slug, $category->slug, $wiki->slug])->with([
