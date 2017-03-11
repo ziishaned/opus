@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Auth;
-use Notification;
 use Illuminate\Database\Eloquent\Model;
-use App\Notifications\SlackNotification;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Notifications\Category\CreateCategoryNotification;
+use App\Notifications\Category\DeleteCategoryNotification;
+use App\Notifications\Category\UpdateCategoryNotification;
 
 class Category extends Model
 {
@@ -52,16 +53,16 @@ class Category extends Model
     {
         parent::boot();
 
-        static::created(function($category) {            
-            (new Category)->notify(new SlackNotification($category));
+        static::created(function($category) {
+            (new Category)->notify(new CreateCategoryNotification($category));
         });
 
         static::updated(function($category) {
-            
+            (new Category)->notify(new UpdateCategoryNotification($category));
         });
 
-        static::deleted(function($category) {
-            
+        static::deleting(function($category) {
+            (new Category)->notify(new DeleteCategoryNotification($category));
         });
     }
 

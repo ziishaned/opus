@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Notifications\Wiki\DeleteWikiNotification;
+use App\Notifications\Wiki\UpdateWikiNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Notifications\Wiki\CreateWikiNotification;
 
 class Wiki extends Model
 {
-    use Sluggable, RecordsActivity, SoftDeletes;
+    use Sluggable, RecordsActivity, SoftDeletes, Notifiable;
 
     public function sluggable()
     {
@@ -40,6 +44,28 @@ class Wiki extends Model
         'name'     => 'required|max:45|min:3',
         'category' => 'required',
     ];
+
+    public function routeNotificationForSlack()
+    {
+        return Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration->url;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($wiki) {
+            (new Wiki)->notify(new CreateWikiNotification($wiki));
+        });
+
+        static::updated(function($wiki) {
+            (new Wiki)->notify(new UpdateWikiNotification($wiki));
+        });
+
+        static::deleting(function($wiki) {
+            (new Wiki)->notify(new DeleteWikiNotification($wiki));
+        });
+    }
 
     public function category()
     {
