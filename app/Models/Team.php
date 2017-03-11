@@ -81,6 +81,11 @@ class Team extends Model
         }])->latest();
     }
 
+    public function integration()
+    {
+        return $this->hasOne(Integration::class, 'team_id', 'id');
+    }
+
     public function subject()
     {
         return $this->morphTo();

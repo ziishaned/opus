@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use Auth;
+use Notification;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\SlackNotification;
+use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use Sluggable, RecordsActivity, SoftDeletes;
+    use Sluggable, RecordsActivity, SoftDeletes, Notifiable;
 
     public function sluggable()
     {
@@ -39,6 +42,28 @@ class Category extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function routeNotificationForSlack()
+    {
+        return Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration->url;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($category) {            
+            (new Category)->notify(new SlackNotification($category));
+        });
+
+        static::updated(function($category) {
+            
+        });
+
+        static::deleted(function($category) {
+            
+        });
+    }
 
     public function user()
     {
