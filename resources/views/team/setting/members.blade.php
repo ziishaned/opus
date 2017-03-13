@@ -9,7 +9,7 @@
             @include('team.partials.tab-menu')
             <div class="tab-content">
                 <div class="team-info">
-                    <h2>Invite New User</h2>
+                    <h2>Invite user</h2>
                     <form action="" method="POST" class="form-inline" role="form">
                         <div class="form-group with-icon">
                             <input type="text" class="form-control input" placeholder="example@example.com" style="width: 255px;">
@@ -23,7 +23,7 @@
                     </form>
                 </div>
                 <div class="team-members">
-                    <h2>Current Members <span class="label label-default" style="margin-left: 16px; padding: 2px 7px;">8</span></h2>
+                    <h2>Members <span class="label label-default" style="margin-left: 16px; padding: 2px 7px;">8</span></h2>
                     <div class="member-list">
                         <div class="media member-list-item">
                             <a class="pull-left" href="#">

@@ -55,9 +55,8 @@ input, select, textarea {
 	left: 0;
 	top: 50px;
 	width: 248px;
-	/*background-color: #f5f5f5;*/
-    background: linear-gradient(#fbfbfb, #fbfbfb);
-	border-right: 1px solid #ddd;
+    background: #fbfbfb;
+	border-right: 1px solid #eee;
 }
 
 .side-menu.create-wiki {
@@ -67,7 +66,11 @@ input, select, textarea {
 
 .side-menu-top {
 	margin-top: 10px;
-	/*margin-top: 20px;*/
+	margin-top: 15px;
+}
+
+.side-menu-inner {
+    padding: 0px 9px;
 }
 
 .side-menu-top .icon {
@@ -77,23 +80,24 @@ input, select, textarea {
 }
 
 .side-menu .nav-header {
-	color: #5f5f5f;
-	font-size: 13px;
-	text-transform: uppercase;
-	padding: 5px 13px;
+	color: #9c9c9c;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.side-menu-top .item.active a {
+	background-color: initial;
 	font-weight: 500;
 }
 
-.side-menu-top .item.active a:hover {
-	background-color: initial;
-}
-
 .side-menu-top .item a {
-    color: #333;
-    font-size: 13px;
-    font-weight: normal;
+	color: #666;
+    font-size: 12px;
+    font-weight: 400;
     line-height: 27px;
-    padding: 5px 13px;
+    padding: 5px 5px;
     width: 100%;
     display: block;
     display: flex;
@@ -129,13 +133,15 @@ input, select, textarea {
 }
 
 .side-menu-wiki-list li.item a, .recent-wikis-list li.item a {
-	color: #333;
-	font-size: 13px;
-	font-weight: normal;
-	padding: 8px 13px;
-	width: 100%;
-	display: flex;
-	align-items: center;
+	color: #666;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 27px;
+    padding: 5px 5px;
+    width: 100%;
+    display: block;
+    display: flex;
+    align-items: center;
 }
 
 .side-menu-wiki-list li.item .wiki-name, .recent-wikis-list li.item .wiki-name {
@@ -162,13 +168,13 @@ input, select, textarea {
 
 .main-menu {
 	font-size: 13px;
-	/*background-color: #f5f5f5;*/
-    border-color: #ddd;
+    border-color: #eee;
     height: 50px;
     min-height: 50px;
-	
-    background: linear-gradient(#fbfbfb, #fbfbfb);
+	box-shadow: 0px 0px 0px black;
+    background: #fbfbfb;
     border-radius: 0px;
+    margin-bottom: 0px;
 }
 
 .navbar-form {
@@ -177,8 +183,9 @@ input, select, textarea {
 }
 
 .main-menu .dropdown-menu>li>a:hover {
-    background-color: rgb(238, 238, 238) !important;
+    background-color: #777 !important;
     text-decoration: none;
+    color: #fff;
 }
 
 .dropdown-menu-right:before {
@@ -275,17 +282,13 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .side-menu-wiki-list .cateogry-icon {
-	border-radius: 4px;
-	width: 16px;
-	height: 16px;
+	border-radius: 50%;
+	width: 13px;
+	height: 13px;
 	display: inline-block;
 	vertical-align: -3px;
 	margin-left: 1px;
 	background: #e7edf3;
-}
-
-.wikis-list {
-	margin-top: 15px;
 }
 
 /********************************* CKEEDITOR ************************************/
@@ -378,16 +381,26 @@ label {
 	margin-bottom: 6px;
 }
 
+.wikis-list .wikis-list-item:first-child {
+	border-top: 0px;
+}
+
+.wikis-list .wikis-list-item:last-child {
+	border-bottom: 0px;
+}
+
 .wikis-list .wikis-list-item {
-	border: none;
-	padding: 18px 6px;
+	border-left: none;
+	border-right: none;
+	padding: 13px 6px;
+	border-color: #eee;
 }
 
 .wikis-list .wikis-list-item .media-heading {
-	font-weight: 600;
-	font-size: 15px;
-	color: #111;
-	margin-bottom: 3px;
+	font-weight: 400;
+    font-size: 15px;
+    margin-bottom: 5px;
+    color: #333
 }
 
 .wiki-item-heading-bottom {
@@ -403,24 +416,17 @@ label {
 
 .wiki-item-description {
 	color: #777;
-}
-
-.wikis-list-item .wiki-top {
-	display: inline-flex;
-	margin-bottom: 0px;
+	font-size: 13px;
+    margin-bottom: 9px;
 }
 
 .item-category-label {
-	margin-left: 15px;
 	border-radius: 3px;
-    padding: 2px 10px;
-    color: #fff;
+    padding: 3px 10px;
+    color: #9b9999;
     font-size: 12px;
-    font-weight: 600;
-    background: #484848;
-    border: 1px solid #ddd;
-    position: relative;
-    top: -3px;
+    background: #e8e8e8;
+    text-transform: uppercase;
 }
 
 .form-group.with-icon {
@@ -563,7 +569,7 @@ label {
 
 .team-info .action-info, .upload-team-logo, .delete-team .action-info, .wiki-info .action-info {
     max-width: 400px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .team-members {
@@ -627,11 +633,11 @@ label {
 }
 
 .user-info .heading {
-    margin-bottom: 5px;   
+    margin-bottom: 3px;
 }
 
 .user-info .text-muted {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .profile-pic-setting .upload-btn {
@@ -660,13 +666,14 @@ label {
 }
 
 .main-menu .overall-search-input {
-	width: 250px;
+    width: 250px;
     background-color: #fbfbfb;
     border: none;
-    border-radius: 0px !important;
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #eee;
     color: #333;
     padding-left: 0;
+    border-radius: 3px;
+    padding-left: 10px;
 }
 
 .media-object {
@@ -1244,4 +1251,18 @@ li.with-img a {
 	padding: 10px;
 	display: flex;
 	align-items: center;
+}
+
+ul.dot-divider li:first-child:before {
+	content: '';
+	margin-right: 0;
+}
+
+ul.dot-divider li:before {
+	color: #000;
+	content: '.';
+	font-weight: 700;
+	margin-right: 12px;
+	position: relative;
+	top: -5px;
 }

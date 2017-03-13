@@ -9,6 +9,6 @@
 		<a href="{{ route('teams.settings.groups', [$team->slug,]) }}">Groups</a>
 	</li>
 	<li role="presentation" class="{{ (Route::currentRouteName() == 'teams.integration' || Route::currentRouteName() == 'integration.slack') ? 'active' : '' }}">
-		<a href="{{ route('teams.integration', [$team->slug,]) }}">Integration</a>
+		<a href="{{ route('teams.integration', [$team->slug,]) }}">Slack</a>
 	</li>
 </ul>

@@ -12,7 +12,7 @@
                     <div class="s-group-header">
                         <div class="header">
                             <div class="pull-left">
-                                <h2 style="margin-bottom: 10px;">Current Groups</h2>
+                                <h2 style="margin-bottom: 10px;">Groups</h2>
                                 <p class="text-muted">You can edit the groups and set there permissions.</p>
                             </div>
                             <div class="pull-right">

@@ -94,7 +94,7 @@ class Category extends Model
 
     public function getTeamCategories($teamId)
     {
-        return $this->where('team_id', '=', $teamId)->get();
+        return $this->where('team_id', $teamId)->get();
     }
 
     public function deleteCategory($categoryId)

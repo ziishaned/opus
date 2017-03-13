@@ -12,9 +12,19 @@
 				</li>
 			</ul>
 			<div class="side-menu-wiki-list">
-				<ul class="list-unstyled">
-					<li class="nav-header">All categories</li>
-					<aside-category-list team="{{ $team->slug }}" category=""></aside-category-list>
+				<ul class="list-unstyled" id="categories-list">
+					<li class="nav-header">Categories</li>
+					@foreach($categories as $category)
+						<li class="item" id="categories-list-item" data-name="{{ $category->name }}">
+			                <a href="{{ route('categories.wikis', [$team->slug, $category->slug, ]) }}">
+			                    <div class="cateogry-icon" style="margin-right: 13px; position: relative; top: 1px;"></div>
+								<span class="item-name">{{ $category->name }}</span>
+								@if($category->wikis->count())
+									<span style="color: #c1c1c1; margin-left: auto; margin-right: 2px;">{{ $category->wikis->count() }}</span>
+								@endif
+			                </a>
+			            </li>
+		           @endforeach
 				</ul>
 			</div>
 		</div>
@@ -29,7 +39,7 @@
 					<div class="pull-right">
 						<form action="" method="POST" role="form" class="form-inline">
 							<div class="form-group with-icon">
-								<input type="text" class="form-control" id="" style="width: 250px;">
+								<input type="text" class="form-control" placeholder="Filter by name" id="" style="width: 250px;">
 								<i class="fa fa-search icon"></i>
 							</div>
 						</form>	
@@ -37,7 +47,38 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="wikis-list">
-					<wikis-list team="{{ $team->slug }}" category=""></wikis-list>
+					<div class="list-group">
+			            @foreach($wikis as $wiki)
+				            <a href="" class="list-group-item wikis-list-item">
+				                <div class="media">
+				                    <div class="pull-left">
+				                        <img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="24" height="24">
+				                    </div>
+				                    <div class="media-body">
+				                        <div class="wiki-top">
+				                            <h4 class="media-heading">{{ $wiki->name}}</h4>
+				                        </div>
+				                        <p class="wiki-item-description">{{ $wiki->outline }}</p>
+				                        <div class="wiki-bottom">
+				                        	<ul class="list-unstyled list-inline dot-divider" style="margin-bottom: 0;">
+				                        		<li>
+						                        	<div class="item-category-label">{{ $wiki->category->name }}</div>
+				                        		</li>
+				                        		@if($wiki->likes->count())
+					                        		<li style="color: #c1c1c1;">
+					                        			<i class="fa fa-heart fa-fw"></i> {{ $wiki->likes->count() }}
+					                        		</li>
+					                        	@endif
+				                        	</ul>
+				                        </div>
+				                    </div>
+				                </div>  
+				            </a>
+				        @endforeach
+			        </div>
+			        <div class="text-center">
+			        	{{ $wikis->links() }}
+			        </div>
 				</div>
 			</div>
 		</div>

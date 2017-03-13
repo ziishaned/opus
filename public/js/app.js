@@ -1,157 +1,3 @@
-Vue.component('aside-category-list', {
-    props: ['team', 'category'],
-    template: `
-        <div>
-            <div class="text-center" style="margin-top: 15px;" v-show="loading"><i class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size: 22px;"></i></div>
-            <li class="item" :class="{active: isCategoryActive(category) }" v-for="category of categories">
-                <a :href="getCategoryUrl(category)">
-                    <div class="media">
-                        <div class="pull-left">
-                            <div class="cateogry-icon" :style="{ 'background-color': getBackgroundColor(category.name) }"></div>
-                        </div>
-                        <div class="media-body">
-                            <p class="wiki-name">{{ category.name }}</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
-        </div>
-    `,
-    data() {
-        return {
-            loading: true,
-            categories: [],
-        }
-    },
-    mounted() {
-        var that = this;
-        $.ajax({
-            url: laroute.action('api.teams.categories', { team_slug: this.team, }),
-            type: 'GET',
-            dataType: 'json',
-            success(data) {
-                setTimeout(function() {
-                    that.categories = data;
-                    that.loading = false;
-                }, 1500);
-            },
-        });
-    },
-    methods: {
-        isCategoryActive(category) {
-            return (this.category === category.slug) ? true : false;
-        },
-        getBackgroundColor(text) {
-            let colorHash = new ColorHash();
-            return colorHash.hex(text);
-        },
-        getCategoryUrl(category) {
-            return laroute.action('categories.wikis', { team_slug: category.team.slug, category_slug: category.slug });
-        }
-    }
-});
-
-Vue.component('wikis-list', {
-    props: ['team', 'category'],
-    template: `
-        <div class="list-group">
-            <a :href="getWikiUrl(wiki)" class="list-group-item wikis-list-item" v-for="wiki of wikis">
-                <div class="media">
-                    <div class="pull-left">
-                        <img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="34" height="34">
-                    </div>
-                    <div class="media-body">
-                        <div class="wiki-top">
-                            <h4 class="media-heading">{{wiki.name}}</h4>
-                            <div class="item-category-label" :style="{ 'background-color': getBackgroundColor(wiki.category.name) }">{{ wiki.category.name }}</div>
-                        </div>
-                        <div class="wiki-item-heading-bottom">
-                            <i class="fa fa-refresh fa-fw"></i> Last updated by <object><a :href="getProfileUrl(wiki)" class="person-name">{{wiki.user.first_name + ' ' + wiki.user.last_name}}</a></object> about 2 hours ago
-                        </div>
-                        <p class="wiki-item-description">{{ wiki.outline }}</p>
-                    </div>
-                </div>  
-            </a>
-            <div class="text-center" style="margin-top: 30px;" v-show="loading"><i class="fa fa-spinner fa-spin fa-3x fa-fw" style="font-size: 35px;"></i></div>
-            <div class="text-center" style="margin-top: 20px;">
-                <button type="button" class="btn btn-default" v-on:click="loadWikis" v-show="hasMoreWikis">Load More</button>
-            </div>
-        </div>
-    `,
-    data() {
-        return {
-            loading: true,
-            wikis: [],
-            nextPageUrl: '',
-            hasMoreWikis: false,
-        }
-    },
-    mounted() {
-        var that = this;
-        $.ajax({
-            url: laroute.action('api.teams.wikis', { team_slug: this.team }),
-            type: 'GET',
-            dataType: 'json',
-            data: {
-                category_slug: this.category
-            },
-            success(data) {
-                setTimeout(function() {
-                    that.wikis = data.data;
-                    that.loading = false;
-                    if(data.next_page_url != null) {
-                        that.nextPage = data.next_page_url;
-                        that.hasMoreWikis = true;
-                    } else {
-                        that.hasMoreWikis = false;
-                    }
-                }, 1500);
-            },
-        });
-    },
-    methods: {
-        loadWikis() {
-            var that = this;
-            that.hasMoreWikis = false;
-            that.loading = true;
-            $.ajax({
-                url: that.nextPage,
-                type: 'GET',
-                dataType: 'json',
-                success(data) {
-                    setTimeout(function() {
-                        $(data.data).each(function(index, el) {
-                            that.wikis.push(el);
-                        });
-                        that.loading = false;
-                        if(data.next_page_url != null) {
-                            that.nextPage = data.next_page_url;
-                            that.lodaing = false;
-                            that.hasMoreWikis = true;
-                        } else {
-                            that.hasMoreWikis = false;
-                        }
-                    }, 1500);
-                },
-            });
-        },
-        getBackgroundColor(text) {
-            let colorHash = new ColorHash();
-            return colorHash.hex(text);
-        },
-        getProfileUrl(wiki) {
-            return laroute.action('users.show', { team_slug: wiki.team.slug, user_slug: wiki.user.slug });
-        },
-        getWikiUrl(wiki) {
-            return laroute.action('wikis.show', { team_slug: wiki.team.slug, category_slug: wiki.category.slug, wiki_slug: wiki.slug });
-        }
-    }
-});
-
-new Vue({
-    el: '#app',
-});
-
 var App = {
     init: function(params = null) {
         this.params = params;
@@ -161,6 +7,7 @@ var App = {
         this.initTooltip();
         this.initCKEditor();
         this.getTeamMembers();
+        this.setCategoryItemBgColor();
 
         $('#permissions-select').val($('#permissions-select').data('val'));
         $('#permissions-select').select2();
@@ -219,6 +66,13 @@ var App = {
         }
         fixAffixWidth();
         $(window).resize(fixAffixWidth);
+    },
+    setCategoryItemBgColor() {
+        $('#categories-list #categories-list-item').each(function(index, el) {
+            let categoryName = $(el).data('name');
+            let colorHash = new ColorHash();
+            $(el).find('.cateogry-icon').css('background-color', colorHash.hex(categoryName));
+        });
     },
     initCKEditor() {
         if($('#wiki-description').length) {

@@ -45,7 +45,7 @@
 						</li>
 					@endforeach
 				@else
-					<li class="text-center text-muted" style="margin-top: 5px; font-size: 13px;">Nothing found...</li>
+					<li class="text-center text-muted" style="margin-top: 15px; font-size: 13px;">Nothing found...</li>
 				@endif
 			</ul>
 		</div>

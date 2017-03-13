@@ -45,9 +45,8 @@
 			
 		</div>
 
-		<script type="text/javascript" src="/js/laroute.js"></script>
-		<script type="text/javascript" src="/js/vue.js"></script>
 		<script type="text/javascript" src="/js/jquery.js"></script>
+		<script type="text/javascript" src="/js/laroute.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/plugins/jcrop/Jcrop.min.js"></script>
 		<script type="text/javascript" src="/plugins/jquery-infinitescroll/jquery.infinitescroll.min.js"></script>
