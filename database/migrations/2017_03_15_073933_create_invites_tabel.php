@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTeamsTable extends Migration
+class CreateInvitesTabel extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateUserTeamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_teams', function (Blueprint $table) {
+        Schema::create('invites', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('user_id')->unsigned();
-
-            $table->integer('team_id')->unsigned();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateUserTeamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_teams');
+        Schema::dropIfExists('invites');
     }
 }

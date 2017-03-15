@@ -60,7 +60,6 @@ class Team extends Model
         
         Team::created(function($team) {
             DB::table('user_teams')->insert([
-                'user_type'       => 'admin',
                 'user_id'         => $team->user_id,
                 'team_id'         => $team->id,
                 'created_at'      => Carbon::now(),
@@ -103,7 +102,7 @@ class Team extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'user_teams', 'team_id', 'user_id')->withPivot('created_at as joined_date', 'user_type as user_role');
+        return $this->belongsToMany(User::class, 'user_teams', 'team_id', 'user_id');
     }
 
     public function wikis()
@@ -151,23 +150,24 @@ class Team extends Model
 
     public function inviteUser($data)
     {
-        $userHaveTeam = DB::table('user_teams')
-                                  ->whereIn('user_id', [$data['userId']])
-                                  ->whereIn('team_id', [$data['teamId']])
-                                  ->first();
-        if (!$userHaveTeam) {
-            DB::table('user_teams')->insert([
-                'user_type'       => 'normal',
-                'user_id'         => $data['userId'],
-                'team_id' => $data['teamId'],
-                'created_at'      => Carbon::now(),
-                'updated_at'      => Carbon::now(),
-            ]);
+        dd('ok');
+        // $userHaveTeam = DB::table('user_teams')
+        //                           ->whereIn('user_id', [$data['userId']])
+        //                           ->whereIn('team_id', [$data['teamId']])
+        //                           ->first();
+        // if (!$userHaveTeam) {
+        //     DB::table('user_teams')->insert([
+        //         'user_type'       => 'normal',
+        //         'user_id'         => $data['userId'],
+        //         'team_id' => $data['teamId'],
+        //         'created_at'      => Carbon::now(),
+        //         'updated_at'      => Carbon::now(),
+        //     ]);
 
-            return true;
-        }
+        //     return true;
+        // }
 
-        return true;
+        // return true;
     }
 
     public function removeInvite($data)
@@ -182,7 +182,7 @@ class Team extends Model
 
     public function getMembers($team)
     {
-        $members = $this->find($team->id)->members()->paginate(10);
+        $members = $this->find($team->id)->members()->paginate(30);
 
         return $members;
     }

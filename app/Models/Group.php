@@ -72,4 +72,11 @@ class Group extends Model
 
         return $group;
     }
+
+    public function getTeamGroups($teamId)
+    {
+        $groups = $this->where('team_id', $teamId)->latest()->with(['members', 'permissions'])->get();
+
+        return $groups;
+    }
 }

@@ -34,9 +34,11 @@
                                                 <li>
                                                     <a href="{{ route('groups.edit', [$team->slug, $group->slug]) }}"><i class="fa fa-pencil fa-fw" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
                                                 </li>
-                                                <li>
-                                                    <a href="{{ route('groups.delete', [$team->slug, $group->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
-                                                </li>
+                                                @if($group->slug !== 'admins') 
+                                                    <li>
+                                                        <a href="{{ route('groups.delete', [$team->slug, $group->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </div>
                                         <div class="clearfix"></div>

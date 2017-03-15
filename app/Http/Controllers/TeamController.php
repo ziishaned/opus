@@ -197,6 +197,15 @@ class TeamController extends Controller
             ]);
         }
 
+        // Inserting user into group.
+        DB::table('users_groups')->insertGetId([
+            'group_id'   => $groupId,
+            'user_id'    => $team->user_id,
+            'team_id'    => $team->id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
         return true;
     }
 
@@ -207,7 +216,11 @@ class TeamController extends Controller
 
     public function membersSettings(Team $team)
     {
-        return view('team.setting.members', compact('team'));
+        $members = $this->team->getMembers($team);
+
+        $groups = $this->group->getTeamGroups($team->id);
+
+        return view('team.setting.members', compact('team', 'members', 'groups'));
     }
 
     public function groupSettings(Team $team)
