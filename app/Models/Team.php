@@ -125,12 +125,12 @@ class Team extends Model
 
     public function postTeam($team)
     {
-        $this->create([
+        $team = $this->create([
             'name'        => $team['team_name'],
             'user_id'     => $team['user_id'],
         ]);
 
-        return true;
+        return $team;
     }
 
     public function updateTeam($id, $teamName)

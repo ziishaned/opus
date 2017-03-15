@@ -163,13 +163,41 @@ class TeamController extends Controller
 
         $user = $this->user->createUser($this->request->all());
         
-        $team = collect($this->request->all())->put('user_id', $user->id);
-        $this->team->postTeam($team);
+        $teamRequestData = collect($this->request->all())->put('user_id', $user->id);
+        $team = $this->team->postTeam($teamRequestData);
+
+        $this->createAdminsGroup($team);
 
         return redirect()->route('home')->with([
             'alert'      => 'Team successfully created. Now login to your team!',
             'alert_type' => 'success',
         ]);
+    }
+
+    public function createAdminsGroup($team)
+    {
+        // Create group
+        $groupId = DB::table('groups')->insertGetId([
+            'name'       => 'Admins',
+            'slug'       => str_slug('Admins', '-'),
+            'user_id'    => $team->user_id,
+            'team_id'    => $team->id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        // Implementing permissions on group
+        $permissions = DB::table('permissions')->get();
+        foreach ($permissions as $permission) {
+            DB::table('group_permissions')->insert([
+                'group_id' => $groupId,
+                'permission_id' => $permission->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        return true;
     }
 
     public function generalSettings(Team $team)
