@@ -38,7 +38,7 @@ class UserController extends Controller
 
     public function show(Team $team, User $user)
     {   
-        $activities = $this->user->getActivty($user->id)->activity;
+        $activities = $this->user->getActivty($user->id);
 
         $likeWikis = (new \App\Models\Like)->getUserLikeWikis(Auth::user()->id);
 

@@ -205,7 +205,7 @@ class User extends Authenticatable
 
     public function getActivty($id)
     {
-        $activity = $this->where('id', $id)->with('activity')->first();
+        $activity = $this->find($id)->activity()->paginate(30);
 
         return $activity;
     }
