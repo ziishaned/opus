@@ -10,12 +10,16 @@
             <div class="tab-content">
                 <div class="team-info">
                     <h2>Invite user</h2>
-                    <form action="" method="POST" class="form-inline" role="form">
-                        <div class="form-group with-icon">
-                            <input type="text" class="form-control input" placeholder="example@example.com" style="width: 255px;">
+                    <form action="{{ route('invites.create', [$team->slug]) }}" method="POST" class="form-inline" role="form">
+                        <input type="text" name="team_slug" class="hidden" value="{{ $team->slug }}">
+                        <div class="form-group with-icon {{ $errors->has('email') ? 'has-error' : '' }}">
+                            <input type="text" name="email" class="form-control" placeholder="example@example.com" style="width: 255px;" required>
                             <i class="fa fa-user-o icon"></i>
+                            @if($errors->has('email'))
+                                <p class="help-block has-error" style="position: absolute;">{{ $errors->first('email') }}</p>
+                            @endif
                         </div>
-                        <select name="" id="input" class="form-control" required="required">
+                        <select name="group" id="input" class="form-control" required>
                             @foreach($groups as $group)
                                 <option value="{{ $group->slug }}">{{ $group->name }}</option>
                             @endforeach

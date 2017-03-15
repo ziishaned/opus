@@ -452,6 +452,10 @@ label {
     position: relative !important;
 }
 
+.has-error.with-icon .icon {
+	color: #a94442;
+}
+
 .form-group.with-icon input {
     padding-right: 2.2em !important;
 }

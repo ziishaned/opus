@@ -7,8 +7,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('team/login', 'TeamController@login')->name('team.login');
     Route::post('team/login', 'TeamController@postLogin')->name('team.postlogin');
     Route::get('team/create', 'TeamController@create')->name('team.create');
+    Route::get('{team_slug}/invite/{hash}', 'TeamController@join')->name('team.join');
     Route::post('team/create', 'TeamController@store')->name('team.store');
-    Route::get('team/join', 'TeamController@join')->name('team.join');
     Route::post('team/join', 'TeamController@postJoin')->name('team.postjoin');
 });
 
@@ -74,6 +74,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
 
     Route::get('{team_slug}/invite', 'TeamController@inviteUsers')->name('invite.users');
     Route::get('{team_slug}', 'UserController@dashboard')->name('dashboard')->middleware('dashboard');
+    Route::post('{team_slug}/invite', 'InviteController@store')->name('invites.create');
     Route::delete('{id}', 'TeamController@destroy')->name('teams.destroy');
     Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');
     Route::get('{team_slug}/wiki', 'WikiController@create')->name('teams.wiki.create');
