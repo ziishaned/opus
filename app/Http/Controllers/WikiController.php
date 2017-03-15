@@ -82,7 +82,9 @@ class WikiController extends Controller
     {
         $categories = $this->category->getTeamCategories($team->id);
 
-        return view('wiki.edit', compact('wiki', 'team', 'categories', 'category'));
+        $editWiki = true; 
+
+        return view('wiki.edit', compact('wiki', 'team', 'categories', 'category', 'editWiki'));
     }
 
     public function update(Team $team, Category $category, Wiki $wiki)

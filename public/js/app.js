@@ -68,10 +68,13 @@ var App = {
         $(window).resize(fixAffixWidth);
     },
     setCategoryItemBgColor() {
-        $('#categories-list #categories-list-item').each(function(index, el) {
+        $('#categories-list #categories-list-item, .wikis-list-item').each(function(index, el) {
             let categoryName = $(el).data('name');
             let colorHash = new ColorHash();
-            $(el).find('.cateogry-icon').css('background-color', colorHash.hex(categoryName));
+            $(el).find('.cateogry-icon, .item-category-label').css({
+                'background-color': colorHash.hex(categoryName),
+                'color': '#ffffff',
+            });
         });
     },
     initCKEditor() {
@@ -79,6 +82,7 @@ var App = {
 
             CKEDITOR.replace('wiki-description', {
                 width: "100%",
+                contentsCss: "/css/ckeditor-custom.css" ,
                 height: $('#wiki-description').data('height'),
                 enableTabKeyTools: true,
                 removePlugins: 'elementspath',

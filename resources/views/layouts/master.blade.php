@@ -15,7 +15,7 @@
 		<link href="/plugins/atjs/jquery.atwho.min.css" rel="stylesheet">
 		<link href="/plugins/select2/select2.min.css" rel="stylesheet">
 	</head>
-	<body>
+	<body @if(isset($editWiki) && $editWiki === true) style="overflow: hidden;" @endif>
 		<div class="modal fade" id="team-logo-modal" data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -34,9 +34,11 @@
 			</div>
 		</div>
 		<div id="app">
-			@if(Auth::user()) 
-				@include('partials.menu')
-				<div style="position: absolute; top: 50px; width: 100%; height: calc(100% - 62px);">
+			@if(Auth::user())
+				@if(!isset($editWiki))  
+					@include('partials.menu')
+				@endif
+				<div @if(!isset($editWiki)) style="position: absolute; top: 50px; width: 100%; height: calc(100% - 62px);" @endif>
 					@yield('content')
 				</div>
 			@else 

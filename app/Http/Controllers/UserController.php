@@ -40,7 +40,9 @@ class UserController extends Controller
     {   
         $activities = $this->user->getActivty($user->id)->activity;
 
-        return view('user.profile', compact('user', 'team', 'activities'));
+        $likeWikis = (new \App\Models\Like)->getUserLikeWikis(Auth::user()->id);
+
+        return view('user.profile', compact('user', 'team', 'activities', 'likeWikis'));
     }
 
     public function storeAvatar() {
@@ -142,7 +144,7 @@ class UserController extends Controller
     {
         $likeWikis = (new \App\Models\Like)->getUserLikeWikis(Auth::user()->id);
         
-        $activities = $this->team->getActivty($team->id)->activity;
+        $activities = $this->team->getActivty($team->id);
      
         $wikis      = $this->wiki->getTeamWikis($team->id, 5);
         

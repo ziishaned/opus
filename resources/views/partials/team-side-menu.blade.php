@@ -2,7 +2,7 @@
 	<div class="side-menu-inner">
 		<ul class="list-unstyled side-menu-top">
 			<li class="nav-header">Quick Links</li>
-			<li class="item active">
+			<li class="item {{ (Route::currentRouteName() == 'dashboard' ? 'active' : '') }}">
 				<a href="dashboard.html">
 					<img src="/img/icons/basic_rss.svg" width="20" height="20" class="icon">
 					<span class="item-name">Activities</span>

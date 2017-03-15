@@ -19,10 +19,10 @@
                     <div class="comment" data-comment-id="{{ $comment->id }}">
                         <div class="media">
                             <div class="pull-left profile-image-con">
-                                @if(!empty($comment->user->profile_image)) 
-                                    <img class="media-object img-rounded profile-image" src="/img/{{ $comment->user->profile_image }}" alt="Image" width="44" height="44">
-                                @else
+                                @if(!$comment->user->profile_image) 
                                     <img class="media-object img-rounded profile-image" src="/img/no-image.png" alt="Image" width="44" height="44">
+                                @else
+                                    <img class="media-object img-rounded profile-image" src="/img/avatars/{{ $comment->user->profile_image }}" alt="Image" width="44" height="44">
                                 @endif
                             </div>
                             <div class="media-body">

@@ -203,7 +203,7 @@ class Team extends Model
 
     public function getActivty($id)
     {
-        $team = $this->where('id', $id)->with(['activity'])->first();
+        $team = $this->find($id)->activity()->paginate(30);
         
         return $team;
     }
