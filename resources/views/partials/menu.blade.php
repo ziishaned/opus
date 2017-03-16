@@ -39,7 +39,7 @@
                         <li><a href="{{ route('categories.create', [ $team->slug ]) }}" style="padding: 5px 6px;">Craete category</a></li>
                     </ul>
               	</li>
-              	<li class="dropdown">
+              	{{-- <li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 9px; padding-left: 9px; position: relative;"><i class="fa fa-bell fa-fw"></i><span class="unread-notification" style="background-color: #03A9F4; height: 11px; width: 11px; display: inline-block; border-radius: 50%; position: absolute; top: 13px; right: 8px; border: 2px solid #fbfbfb;"></span></a>
 					<div class="dropdown-menu dropdown-menu-right" style="margin-top: -3px; margin-right: -6px; width: 400px; padding: 12px 18px;">
                         <div class="menu-notifications">
@@ -59,7 +59,7 @@
                         	</div>
                         </div>
                     </div>
-                </li>
+                </li> --}}
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }} <i class="fa fa-caret-down fa-fw"></i></a>
 					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: -3px; padding: 4px 5px;">
