@@ -3,7 +3,11 @@
         @foreach($activities as $activity)
             <div class="media event">
                 <a class="pull-left event-user-image" href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}">
-                    <img class="media-object" style="border-radius: 3px;" src="/img/no-image.png" width="42" height="42" alt="Image">
+                    @if(!empty($user->profile_image)) 
+                        <img class="media-object" style="border-radius: 3px;" src="/img/avatars/{{ $user->profile_image }}" width="42" height="42" alt="Image">
+                    @else
+                        <img class="media-object" style="border-radius: 3px;" src="/img/no-image.png" width="42" height="42" alt="Image">
+                    @endif
                 </a>
                 <div class="media-body">
                     <div class="event-top">

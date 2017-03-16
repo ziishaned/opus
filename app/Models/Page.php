@@ -63,17 +63,17 @@ class Page extends Node
     {
         parent::boot();
 
-        static::created(function($page) {
-            (new Page)->notify(new CreatePageNotification($page));
-        });
+        // static::created(function($page) {
+        //     (new Page)->notify(new CreatePageNotification($page));
+        // });
 
-        static::updated(function($page) {
-            (new Page)->notify(new UpdatePageNotification($page));
-        });
+        // static::updated(function($page) {
+        //     (new Page)->notify(new UpdatePageNotification($page));
+        // });
 
-        static::deleting(function($page) {
-            (new Page)->notify(new DeletePageNotification($page));
-        });
+        // static::deleting(function($page) {
+        //     (new Page)->notify(new DeletePageNotification($page));
+        // });
     }
 
     public function comments()

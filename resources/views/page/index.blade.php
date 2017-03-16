@@ -34,7 +34,7 @@
                         <div class="clearfix"></div>
                     </nav>
                 </div>
-                <div class="formated-wiki-description">
+                <div class="markdown-body">
                     {!! $page->description !!}
                 </div>
             </div>
