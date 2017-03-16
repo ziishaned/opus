@@ -35,7 +35,7 @@ There are spaces for every team, department or major project. Then employees can
 
 - Clone the repository
   ```bash
-  git clone https://github.com/zeeshanu/wiki.git
+  git clone https://github.com/zeeshanu/opus.git
   ```
 - Create `.env` using `.env.example` and populate the relevant information
 - Open the project directory and run the below
