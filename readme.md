@@ -1,30 +1,80 @@
-# Wiki
-
-> This tool helps you to create your organization or projects wiki with simple steps.
+# Opus
+<center>![Imgur](http://i.imgur.com/wukY9xm.png)</center>
+> Opus is a place for your team to document who you are, what you do and how to achieve results. Opus helps you to create your team wikis. 
 
 ## Features
 
 * You can create thousand of wikis.
 * Invite your organization employees so that can also work on your organization wikis.   
 * Instantly get notification if someone modify wiki.
-* Add wiki pages to your favourite list so that you can read it after a while.
+* Add wiki pages to your favorite list so that you can read it after a while.
 * Add wiki to your watch list.
-* and more features are comming... 
+* and more features are coming... 
+
+## Requirements
+
+For running this project/repository on your desktop you have following required things:
+
+* Apache 2+
+* PHP 7.0+
+* MYSQL 5+
+* Composer (Dependency Manager)
+
+## Optional Requirements
+
+- [MailHog](https://github.com/mailhog/MailHog) (MailHog is an email testing tool)
 
 ## Installation
 
-```
+1. First step you have to clone this repository/project on your desktop by running the following command: 
+```bash
 $ git clone git@gitlab.com:zeeshanu/wiki.git
+```
 
-# Create following database `wiki`
+2. You have to configure the database for the application e.g.
+> Create a database with the following name  `opus`
 
+3. After creating database you have to create tables. Don't worry it's the simplest step in the installing of this project. just open your terminal and open the root directory in terminal and run the following command:
+```bash
 $ php artisan migrate
+``` 
+**Note:**
+If you want to fill the tables with dummy data after running `php artisan migrate` just run the following command:
+```
 $ php artisan db:seed
+```
+
+4. Now you have to create `.env` file at the root of cloned project/repository. Open the `.env` in code editor ( Sublime Text ) and set the required parameters.
+> If you don't know how to create to create `.env` just rename `.env.example` to `.env` and write the required parameters.
+
+5. After configuring the database open the root directory of the project that you cloned in first step and run the following command.
+```bash
+    composer install
+```
+
+6. Hurray! you installed the application.
+
+## Running application
+
+There are two options to run this application on your machine first option is little difficult but not that difficult. It is recommended to run application by virtual host.
+
+* ### Virtual host:
+To run this application in your browser you have to create a virtual host in you machine. If you don't know how to create one just go through this link and you will figure out how to create a virtual host.
+> [How to configure virtual host on windows.](http://stackoverflow.com/a/2658510/4094987)
+ 
+* ### Artisan Command
+You can also run this application in your browser by running following command in your terminal at the root of this application:
+```bash
 $ php artisan serve
 ```
+Now you just need to open your browser and go to the following link `localhost:8000`.
 
-Now go to this url
+## Contribution
 
-```
-localhost:8000
-```
+* Report issues
+* Open pull request with improvements
+* Spread the word
+* Reach out to me directly at ziishaned@gmail.com or on twitter [@ziishaned](https://twitter.com/ziishaned)
+
+## License
+MIT © [Zeeshan Ahmed](https://github.com/zeeshanu)

@@ -20,12 +20,12 @@
 					<span class="item-name">Create Wiki</span>
 				</a>
 			</li>
-			<li class="item">
+			{{-- <li class="item">
 				<a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}">
 					<img src="/img/icons/basic_todo_txt.svg" width="20" height="20" class="icon">
 					<span class="item-name">Read List</span>
 				</a>
-			</li>
+			</li> --}}
 			<li class="item">
 				<a href="{{ route('teams.settings.members', [$team->slug,]) }}">
 					<img src="/img/icons/basic_mail.svg" width="20" height="20" class="icon">

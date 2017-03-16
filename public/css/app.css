@@ -108,7 +108,7 @@ input, select, textarea {
     align-items: center;
 }
 
-.side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .side-menu-top .item.active, .side-menu-categories-list li.active {
+.side-menu-top .item:hover a, .side-menu-wiki-list .item:hover a, .side-menu-top .item.active, #categories-list li.active a {
 	background-color: #f3f3f3 !important;
 	text-decoration: none;
 }
@@ -669,16 +669,12 @@ label {
 }
 
 .side-menu .side-menu-inner .wiki-intro .header {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 }
 
 .side-menu .side-menu-inner .wiki-intro {
 	margin-top: 19px;
-}
-
-.side-menu .side-menu-inner .wiki-intro {
-	padding: 5px 13px;
 }
 
 .wiki-contributer-list {

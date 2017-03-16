@@ -54,7 +54,7 @@
 					@if($wikis->count() > 0)
 						<div class="list-group">
 				            @foreach($wikis as $wiki)
-					            <a href="" class="list-group-item wikis-list-item" data-name="{{ $wiki->name }}">
+					            <a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}" class="list-group-item wikis-list-item" data-name="{{ $wiki->name }}">
 					                <div class="media">
 					                    <div class="pull-left">
 					                        <img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="19" height="19">

@@ -208,17 +208,15 @@ var App = {
                 subjectType
             },
             success(data) {
-                setTimeout(function() {
-                    $(element).find('#spinner').hide();
-                    $(element).find('#like-page, #like-wiki').show();
-                    if(data.like === true) {
-                        $(element).find('img[data-toggle="tooltip"]').attr('title', 'Unlike').tooltip('fixTitle');
-                        $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())+1);
-                    }  else {
-                        $(element).find('img[data-toggle="tooltip"]').attr('title', 'Like').tooltip('fixTitle');
-                        $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())-1);
-                    }
-                }, 800);
+                $(element).find('#spinner').hide();
+                $(element).find('#like-page, #like-wiki').show();
+                if(data.like === true) {
+                    $(element).find('img[data-toggle="tooltip"], i[data-toggle="tooltip"]').attr('title', 'Unlike').tooltip('fixTitle');
+                    $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())+1);
+                }  else {
+                    $(element).find('img[data-toggle="tooltip"], i[data-toggle="tooltip"]').attr('title', 'Like').tooltip('fixTitle');
+                    $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())-1);
+                }
             }
         });
     },
@@ -257,17 +255,15 @@ var App = {
                 subjectType : 'comment'
             },
             success(data) {
-                setTimeout(function() {
-                    $(element).closest('li').find('#spinner').hide();
-                    $(element).show();
-                    if(data.like === true) {
-                        $(element).text('Unlike');
-                        $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())+1);
-                    }  else {
-                        $(element).text('Like');
-                        $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())-1);
-                    }
-                }, 800);
+                $(element).closest('li').find('#spinner').hide();
+                $(element).show();
+                if(data.like === true) {
+                    $(element).text('Unlike');
+                    $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())+1);
+                }  else {
+                    $(element).text('Like');
+                    $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())-1);
+                }
             }
         });
     },

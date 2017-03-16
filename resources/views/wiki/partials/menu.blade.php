@@ -3,11 +3,11 @@
         <div class="side-menu-inner">
             <div class="wiki-intro">
                 <div class="pull-left">
-                    <h1 class="header v-center"><img src="{!! new Avatar($wiki->name, 'square', 32) !!}" alt="" style="margin-right: 12px; border-radius: 3px;"> <a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
+                    <h1 class="header" style="position: relative; top: 4px;"><a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
                 </div>
-                <div class="pull-right wiki-like-con" style="position: relative; top: 4px;">
+                <div class="pull-right wiki-like-con">
                     <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
-                    <a href="#" id="like-wiki" data-wiki="{{ $wiki->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikeWiki ? 'Unlike' : 'Like' }}" width="20" height="20" style="margin-right: 3px;"></a> <span class="label label-default" id="likes-counter">{{ $wiki->likes->count() }}</span>
+                    <a href="#" id="like-wiki" data-wiki="{{ $wiki->slug }}"><i class="fa fa-star-o fa-fw" data-toggle="tooltip" data-placement="bottom" title="{{ $isUserLikeWiki ? 'Unlike' : 'Like' }}" style="margin-right: 3px; font-size: 16px;"></i></a> <span class="label label-default" id="likes-counter" style="padding: 3px 8px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $wiki->likes->count() }}</span>
                 </div>
                 <div class="clearfix"></div>
             </div>

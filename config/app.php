@@ -182,8 +182,6 @@ return [
         
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-        Lord\Laroute\LarouteServiceProvider::class,
     ],
 
     /*
@@ -233,7 +231,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'ViewHelper' => App\Helpers\ViewHelper::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Avatar' => YoHang88\LetterAvatar\LetterAvatar::class,
         'Emoji' => App\Helpers\EmojiHelper::class,
     ],
 

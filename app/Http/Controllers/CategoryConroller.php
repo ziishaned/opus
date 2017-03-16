@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
+use App\Models\Wiki;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\Team;
 
 class CategoryConroller extends Controller
 {
@@ -62,7 +63,11 @@ class CategoryConroller extends Controller
 
     public function getCategoryWikis(Team $team, Category $category)
     {
-        return view('category.index', compact('team', 'category'));
+        $wikis = (new Wiki)->where('team_id', $team->id)->where('category_id', $category->id)->latest()->paginate(30);
+
+        $categories = $this->category->getTeamCategories($team->id);
+
+        return view('category.index', compact('team', 'category', 'categories', 'wikis'));
     }
 
     public function getTeamCategories(Team $team)

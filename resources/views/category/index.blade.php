@@ -11,10 +11,24 @@
 					</a>
 				</li>
 			</ul>
-			<div class="side-menu-wiki-list side-menu-categories-list">
-				<ul class="list-unstyled">
-					<li class="nav-header">All categories</li>
-					<aside-category-list team="{{ $team->slug }}" category="{{ $category->slug }}"></aside-category-list>
+			<div class="side-menu-wiki-list">
+				<ul class="list-unstyled" id="categories-list">
+					<li class="nav-header">Categories</li>
+					@if($categories->count() > 0)
+						@foreach($categories as $item)
+							<li class="item {{ $category->id === $item->id ? 'active' : '' }}" id="categories-list-item" data-name="{{ $item->name }}">
+				                <a href="{{ route('categories.wikis', [$team->slug, $item->slug, ]) }}">
+				                    <div class="cateogry-icon" style="margin-right: 13px; position: relative; top: 1px;"></div>
+									<span class="item-name">{{ $item->name }}</span>
+									@if($item->wikis->count())
+										<span style="color: #c1c1c1; margin-left: auto; margin-right: 2px;">{{ $item->wikis->count() }}</span>
+									@endif
+				                </a>
+				            </li>
+			           @endforeach
+			        @else
+			           <li class="text-center text-muted" style="margin-top: 15px; font-size: 13px;">Nothing found...</li>
+			        @endif
 				</ul>
 			</div>
 		</div>
@@ -24,12 +38,12 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="wikis-list-inner">
 					<div class="pull-left">
-						<h1 class="wikis-list-header">{{ $category->name }} wikis</h1>
+						<h1 class="wikis-list-header">All Wikis</h1>
 					</div>
 					<div class="pull-right">
 						<form action="" method="POST" role="form" class="form-inline">
 							<div class="form-group with-icon">
-								<input type="text" class="form-control" id="" style="width: 250px;">
+								<input type="text" class="form-control" placeholder="Filter by name" id="" style="width: 250px;">
 								<i class="fa fa-search icon"></i>
 							</div>
 						</form>	
@@ -37,7 +51,42 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="wikis-list">
-					<wikis-list team="{{ $team->slug }}" category="{{ $category->slug }}"></wikis-list>
+					@if($wikis->count() > 0)
+						<div class="list-group">
+				            @foreach($wikis as $wiki)
+					            <a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}" class="list-group-item wikis-list-item" data-name="{{ $wiki->name }}">
+					                <div class="media">
+					                    <div class="pull-left">
+					                        <img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="19" height="19">
+					                    </div>
+					                    <div class="media-body">
+					                        <div class="wiki-top">
+					                            <h4 class="media-heading">{{ $wiki->name}}</h4>
+					                        </div>
+					                        <p class="wiki-item-description">{{ $wiki->outline }}</p>
+					                        <div class="wiki-bottom">
+					                        	<ul class="list-unstyled list-inline dot-divider" style="margin-bottom: 0;">
+					                        		<li>
+							                        	<div class="item-category-label">{{ $wiki->category->name }}</div>
+					                        		</li>
+					                        		@if($wiki->likes->count())
+						                        		<li style="color: #c1c1c1;">
+						                        			<i class="fa fa-heart fa-fw"></i> {{ $wiki->likes->count() }}
+						                        		</li>
+						                        	@endif
+					                        	</ul>
+					                        </div>
+					                    </div>
+					                </div>  
+					            </a>
+					        @endforeach
+				        </div>
+				        <div class="text-center">
+				        	{{ $wikis->links() }}
+				        </div>
+				    @else 
+						<h1 class="nothing-found">Nothing found</h1>
+				    @endif
 				</div>
 			</div>
 		</div>
