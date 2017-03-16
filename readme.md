@@ -38,6 +38,10 @@ There are spaces for every team, department or major project. Then employees can
   git clone https://github.com/zeeshanu/opus.git
   ```
 - Create `.env` using `.env.example` and populate the relevant information
+- Install the dependencies
+  ```bash
+  composer install
+  ```
 - Open the project directory and run the below
   ```bash
   php artisan migrate
@@ -45,10 +49,6 @@ There are spaces for every team, department or major project. Then employees can
 - If you would want dummy data for testing purposes, run the seeder as follows
   ```
   php artisan db:seed
-  ```
-- Install the dependencies
-  ```bash
-  composer install
   ```
 
 ## Todo
