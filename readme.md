@@ -1,5 +1,4 @@
 # Opus
-<p align="center">![Imgur](http://i.imgur.com/wukY9xm.png)</p>
 > Opus is a place for your team to document who you are, what you do and how to achieve results. Opus helps you to create your team wikis. 
 
 ## Features
