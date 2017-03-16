@@ -43,4 +43,11 @@ class Invite extends Model
 
         return $invitation;
     }
+
+    public function getTeamPendingInvitations($teamId)
+    {
+        $invitations = $this->where('team_id', $teamId)->whereNull('claimed_at')->latest()->get();
+
+        return $invitations;
+    }
 }

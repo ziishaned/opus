@@ -72,8 +72,13 @@ class InviteController extends Controller
         
     }
 
-    public function destroy($id)
+    public function destroy(Team $team, $invitationCode)
     {
-        
+        $this->invite->where('code', $invitationCode)->where('team_id', $team->id)->delete();
+    
+        return redirect()->back()->with([
+            'alert'      => 'Invitation successfully removed.',
+            'alert_type' => 'success',
+        ]);
     }
 }

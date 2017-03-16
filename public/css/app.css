@@ -1324,3 +1324,30 @@ ul.dot-divider li:before {
 	position: relative;
 	top: -5px;
 }
+
+.row.vdivide div[class*="col-"]:not(:last-child):after {
+  background: #e0e0e0;
+  width: 1px;
+  content: "";
+  display:block;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  right: 0;
+  min-height: 70px;
+}
+
+#remove-invitation {
+	padding: 5px;
+	border-radius: 3px;
+	color: #d43f3a;
+	border: 1px solid #fff;
+}
+
+.recent-wikis-list li:hover #remove-invitation {
+	border-color: rgba(245, 245, 245, 0.69);
+}
+
+#remove-invitation:hover {
+	border: 1px solid #d43f3a !important;
+}

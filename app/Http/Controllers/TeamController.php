@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Group;
+use App\Models\Invite;
 use App\Models\Category;
 use App\Models\Integration;
 use Illuminate\Http\Request;
@@ -220,7 +221,9 @@ class TeamController extends Controller
 
         $groups = $this->group->getTeamGroups($team->id);
 
-        return view('team.setting.members', compact('team', 'members', 'groups'));
+        $invitations = (new Invite)->getTeamPendingInvitations($team->id);
+
+        return view('team.setting.members', compact('team', 'members', 'groups', 'invitations'));
     }
 
     public function groupSettings(Team $team)
