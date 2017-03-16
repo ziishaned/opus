@@ -53,21 +53,6 @@ $ php artisan db:seed
 
 6. Hurray! you installed the application.
 
-## Running application
-
-There are two options to run this application on your machine first option is little difficult but not that difficult. It is recommended to run application by virtual host.
-
-* ### Virtual host:
-To run this application in your browser you have to create a virtual host in you machine. If you don't know how to create one just go through this link and you will figure out how to create a virtual host.
-> [How to configure virtual host on windows.](http://stackoverflow.com/a/2658510/4094987)
- 
-* ### Artisan Command
-You can also run this application in your browser by running following command in your terminal at the root of this application:
-```bash
-$ php artisan serve
-```
-Now you just need to open your browser and go to the following link `localhost:8000`.
-
 ## Contribution
 
 * Report issues
