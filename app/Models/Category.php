@@ -53,16 +53,18 @@ class Category extends Model
     {
         parent::boot();
 
-        static::created(function($category) {
-            (new Category)->notify(new CreateCategoryNotification($category));
+        $category = new Category();
+
+        static::created(function($category) use ($category) {
+            $category->notify(new CreateCategoryNotification($category));
         });
 
-        static::updated(function($category) {
-            (new Category)->notify(new UpdateCategoryNotification($category));
+        static::updated(function($category) use ($category) {
+            $category->notify(new UpdateCategoryNotification($category));
         });
 
-        static::deleting(function($category) {
-            (new Category)->notify(new DeleteCategoryNotification($category));
+        static::deleting(function($category) use ($category) {
+            $category->notify(new DeleteCategoryNotification($category));
         });
     }
 
@@ -89,6 +91,7 @@ class Category extends Model
 	    	'user_id' 	=> Auth::user()->id,
 	    	'team_id'   => $teamId,
     	]);
+
     	return true;
     }
 
