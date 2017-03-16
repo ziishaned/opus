@@ -1,4 +1,4 @@
-![](http://i.imgur.com/YLAqXWLg.png)
+![Opus](http://i.imgur.com/WZvXEXY.png)
 
 > Opensource knowledge base application for Teams
 
@@ -25,8 +25,6 @@ There are spaces for every team, department or major project. Then employees can
 * Create reusable page templates
 * Search across the knowledge base
 * ..and more
-
-![Opus](http://i.imgur.com/WZvXEXY.png)
 
 ## Requirements
 
