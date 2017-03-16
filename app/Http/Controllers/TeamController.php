@@ -50,9 +50,13 @@ class TeamController extends Controller
         return view('team.members', compact('team', 'teamMembers'));
     }
 
-    public function join()
+    public function join(Team $team, $hash)
     {
-        return view('team.join');
+        Auth::logout();
+
+        $invitation = (new Invite)->getInvitation($team->id, $hash);
+        
+        return view('team.join', compact('team', 'hash', 'invitation'));
     }
 
     public function isContentTypeJson()
@@ -98,24 +102,33 @@ class TeamController extends Controller
         ]);
     }
 
-    public function postJoin()
+    public function postJoin(Team $team, $hash)
     {
         $this->validate($this->request, Team::JOIN_TEAM_RULES, [
             'exists' => 'Specified team does\'t exists.',
             'team_has_email' => 'This team has alredy a user with this email address.',
         ]);
-
-        $team = $this->team->where('name', $this->request->get('team_name'))->first();
     
         $user  = $this->user->createUser($this->request->all());
 
         DB::table('user_teams')->insert([
-            'user_type'       => 'normal',
             'user_id'         => $user->id,
             'team_id'         => $team->id,
             'created_at'      => Carbon::now(),
             'updated_at'      => Carbon::now(),
         ]);
+
+        $invitation = (new Invite)->getInvitation($team->id, $hash);
+
+        DB::table('users_groups')->update([
+            'group_id' => $invitation->group_id,
+            'user_id' => $user->id,
+            'team_id' => $team->id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        (new Invite)->claimAccount($team->id, $hash);
 
         return redirect()->route('home')->with([
             'alert'      => 'Team successfully joined. You can login to this team now.',

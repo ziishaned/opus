@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <div class="team-members">
-                            <h2 style="border-bottom: 1px solid #eee; padding-bottom: 10px;">Pending Invitations <span class="label label-default" style="margin-left: 16px; padding: 3px 8px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $members->count() }}</span></h2>
+                            <h2 style="border-bottom: 1px solid #eee; padding-bottom: 10px;">Pending Invitations @if($invitations->count() > 0) <span class="label label-default" style="margin-left: 16px; padding: 3px 8px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $invitations->count() }}</span> @endif </h2>
                             @if($invitations->count() > 0)
                                 <ul class="list-unstyled recent-wikis-list">
                                     @foreach($invitations as $invitation)

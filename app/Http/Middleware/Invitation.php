@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
+use Request;
+use App\Models\Invite;
 
 class Invitation
 {
@@ -15,6 +18,12 @@ class Invitation
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        $invitation = Invite::where('code', $request->hash)->where('team_id', $request->team_slug->id)->whereNull('claimed_at')->first();
+        
+        if(!empty($invitation)) {
+            return $next($request);
+        }
+        
+        return abort(404);
     }
 }

@@ -8,7 +8,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('team/login', 'TeamController@postLogin')->name('team.postlogin');
     Route::get('team/create', 'TeamController@create')->name('team.create');
     Route::post('team/create', 'TeamController@store')->name('team.store');
-    Route::post('team/join', 'TeamController@postJoin')->name('team.postjoin');
 });
 
 Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');
@@ -26,6 +25,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
 });
 
 Route::get('team/{team_slug}/invite/{hash}', 'TeamController@join')->name('team.join')->middleware('invitation');
+Route::post('team/{team_slug}/invite/{hash}/join', 'TeamController@postJoin')->name('team.postjoin');
 
 Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => '{team_slug}/users/{user_slug}/settings'], function () {

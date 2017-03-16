@@ -5,14 +5,15 @@
 		@include('partials.home-nav')
         <div class="login-page">
             <div class="login-form-con">
-                <h1 class="header">Join a Team</h1>
-                <form action="{{ route('team.postjoin') }}" method="POST" role="form">
-                    <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                <h1 class="header">Join Team</h1>
+                <form action="{{ route('team.postjoin', [$team->slug, $hash]) }}" method="POST" role="form">
+                    <div class="form-group">
+                        <label for="team-name" class="control-label">Team Name</label>
+                        <input type="text" value="{{ $team->name }}" name="team_name" class="form-control" id="team-name" autocomplete="off" required readonly>
+                    </div>
+                    <div class="form-group">
                         <label for="email" class="control-label">Email</label>
-                        <input name="email" id="email" value="{{ old('email') }}" type="email" class="form-control" placeholder="john@example.com" required>
-                        @if($errors->has('email'))
-                            <p class="help-block has-error">{{ $errors->first('email') }}</p>
-                        @endif
+                        <input name="email" id="email" type="email" class="form-control" value="{{ $invitation->email }}" required readonly>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -54,17 +55,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('team_name') ? 'has-error' : '' }}">
-                        <label for="team-name" class="control-label">Team Name</label>
-                        <input type="text" name="team_name" class="form-control" id="team-name" autocomplete="off" required>
-                        @if($errors->has('team_name'))
-                            <p class="help-block has-error">{{ $errors->first('team_name') }}</p>
-                        @else
-                            <p class="help-block">Enter your team name here. e.g. Google</p>
-                        @endif
-                    </div>
                     <div style="margin-top: 15px;">
-                        <input type="submit" class="btn btn-success" value="Submit"> <span class="text-muted" style="margin-left: 15px;">Already joined a team?</span> <a href="#"> Login now</a>
+                        <input type="submit" class="btn btn-success" value="Join"> <span class="text-muted" style="margin-left: 15px;">Already joined a team?</span> <a href="#"> Login now</a>
                     </div>
                 </form>
             </div>

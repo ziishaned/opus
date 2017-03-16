@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Request;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Invite extends Model
@@ -44,10 +45,26 @@ class Invite extends Model
         return $invitation;
     }
 
+    public function getInvitation($teamId, $hash)
+    {
+        $invitation = $this->where('team_id', $teamId)->where('code', $hash)->first();
+
+        return $invitation;
+    }
+
     public function getTeamPendingInvitations($teamId)
     {
         $invitations = $this->where('team_id', $teamId)->whereNull('claimed_at')->latest()->get();
 
         return $invitations;
+    }
+
+    public function claimAccount($teamId, $hash)
+    {
+        $this->where('team_id', $teamId)->where('code', $hash)->update([
+            'claimed_at' => Carbon::now(),
+        ]);
+
+        return true;
     }
 }
