@@ -1,7 +1,8 @@
-## Opus
+![](http://i.imgur.com/YLAqXWLg.png)
+
 > Opensource knowledge base application for Teams
 
-Opus is a place for your team to document who you are, what you do and how you do it. It helps you create and maintain a knowledge base for your teams. 
+Opus is a place for your team to document who you are, what you do and how you do it. It helps you create and maintain a knowledge base for your teams. [Demo here](https://github.com/zeeshanu/opus/blob/master/demo.md) 
 
 
 ## Motivation
@@ -93,6 +94,7 @@ There are spaces for every team, department or major project. Then employees can
   - [ ] Populate Wiki by Template (Dropdown on Create Wiki Page)
 - [ ] Global Search
 - [ ] Responsive
+- [ ] Upload demo somewhere
 
 ## Contribution
 
