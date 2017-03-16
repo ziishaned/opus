@@ -53,17 +53,15 @@ class Category extends Model
     {
         parent::boot();
 
-        $category = new Category();
-
-        static::created(function($category) use ($category) {
+        static::created(function($category) {
             $category->notify(new CreateCategoryNotification($category));
         });
 
-        static::updated(function($category) use ($category) {
+        static::updated(function($category) {
             $category->notify(new UpdateCategoryNotification($category));
         });
 
-        static::deleting(function($category) use ($category) {
+        static::deleting(function($category) {
             $category->notify(new DeleteCategoryNotification($category));
         });
     }
