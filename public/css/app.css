@@ -1347,3 +1347,13 @@ ul.dot-divider li:before {
 #remove-invitation:hover {
 	border: 1px solid #d43f3a !important;
 }
+
+#cke_wiki-description .cke_top {
+    border-bottom: 1px solid #ccc !important;
+    background: #fbfbfb !important;
+}
+
+#cke_wiki-description {
+    border: 1px solid #ccc !important;
+    border-radius: 3px 3px 3px 3px !important;
+}
