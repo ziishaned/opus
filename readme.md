@@ -14,7 +14,7 @@ There are spaces for every team, department or major project. Then employees can
 
 * Create manage Wikis (group of knowledge pages)
 * Create nested pages inside wikis
-* Manage wikis and pages by categories and tags
+* Manage wikis and pages by spaces and tags
 * Invite employees by email
 * Powerful ACL to assign different roles and permissions to employees.
 * Slack notifications for the wiki updates
