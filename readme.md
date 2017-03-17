@@ -49,10 +49,6 @@ There are spaces for every team, department or major project. Then employees can
 - Generate an application key
   ```bash
   php artisan key:generate
-  ``` 
-- If you would want dummy data for testing purposes, run the seeder as follows
-  ```
-  php artisan db:seed
   ```
 
 ## Todo

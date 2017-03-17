@@ -14,8 +14,8 @@
                         @endif
 					</div>
 					<div class="user-detail">
-						<h1 class="header">John Doe</h1>
-						<p class="text-muted"><i class="fa fa-envelope-o fa-fw icon"></i> john_doe@gmail.com</p>
+						<h1 class="header">{{ $user->first_name . ' ' . $user->last_name }}</h1>
+						<p class="text-muted"><i class="fa fa-envelope-o fa-fw icon"></i> {{  $user->email }}</p>
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
