@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "cviebrock/eloquent-sluggable": "^4.1",
         "baum/baum": "^1.1",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4"
