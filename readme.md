@@ -1,4 +1,5 @@
 ![Opus](http://i.imgur.com/WZvXEXY.png)
+
 [![Build Status](https://travis-ci.org/zeeshanu/opus.svg?branch=master)](https://travis-ci.org/zeeshanu/opus)
 > Opensource knowledge base application for Teams
 
