@@ -4,43 +4,43 @@
 			<li class="nav-header">Quick Links</li>
 			<li class="item {{ (Route::currentRouteName() == 'dashboard' ? 'active' : '') }}">
 				<a href="dashboard.html">
-					<img src="/img/icons/basic_rss.svg" width="20" height="20" class="icon">
+					<i class="fa fa-history fa-fw fa-lg icon"></i>
 					<span class="item-name">Activities</span>
 				</a>
 			</li>
 			<li class="item">
 				<a href="{{ route('teams.wikis', [$team->slug]) }}">
-					<img src="/img/icons/basic_book.svg" width="20" height="20" class="icon">
+					<i class="fa fa-book fa-fw fa-lg icon"></i>
 					<span class="item-name">Wikis</span>
 				</a>
 			</li>
 			<li class="item">
 				<a href="{{ route('wikis.create', [ $team->slug ]) }}">
-					<img src="/img/icons/basic_book_pencil.svg" width="20" height="20" class="icon">
+					<i class="fa fa-plus fa-fw fa-lg icon"></i>
 					<span class="item-name">Create Wiki</span>
 				</a>
 			</li>
-			{{-- <li class="item">
+			<li class="item">
 				<a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}">
-					<img src="/img/icons/basic_todo_txt.svg" width="20" height="20" class="icon">
+					<i class="fa fa-tasks fa-fw fa-lg icon"></i>
 					<span class="item-name">Read List</span>
 				</a>
-			</li> --}}
+			</li>
 			<li class="item">
 				<a href="{{ route('teams.settings.members', [$team->slug,]) }}">
-					<img src="/img/icons/basic_mail.svg" width="20" height="20" class="icon">
+					<i class="fa fa-user-plus fa-fw fa-lg icon"></i>
 					<span class="item-name">Invite User</span>
 				</a>
 			</li>
 		</ul>
-		<div class="side-menu-wiki-list">
+		<div class="side-menu-wiki-list side-menu-top">
 			<ul class="list-unstyled">
 				<li class="nav-header">Favourite Wikis</li>
 				@if($likeWikis->count() > 0) 
 					@foreach($likeWikis as $wiki)
 						<li class="item">
 							<a href="{{ route('wikis.show', [$team->slug, $wiki->subject->space->slug, $wiki->subject->slug]) }}">
-								<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">{{ $wiki->subject->name }}</span>
+								<i class="fa fa-book fa-fw fa-lg icon"></i> {{ $wiki->subject->name }}
 							</a>
 						</li>
 					@endforeach

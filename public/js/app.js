@@ -258,10 +258,10 @@ var App = {
                 $(element).closest('li').find('#spinner').hide();
                 $(element).show();
                 if(data.like === true) {
-                    $(element).text('Unlike');
+                    $(element).html('<i class="fa fa-thumbs-up fa-fw"></i> Unlike');
                     $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())+1);
                 }  else {
-                    $(element).text('Like');
+                    $(element).html('<i class="fa fa-thumbs-up fa-fw"></i> Like');
                     $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())-1);
                 }
             }
@@ -518,7 +518,6 @@ $(function() {
         }).on("select_node.jstree", function (e, data) {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
-            $('#wiki-page-tree').css('margin-left', '-7px');
             if(data.instance._cnt == 0) {
                 var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto; font-size: 13px;">No pages yet.</p>`;
                 $('#wiki-page-tree').replaceWith(html);

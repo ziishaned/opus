@@ -15,13 +15,13 @@
                 <li class="nav-header" style="margin-bottom: 5px;">Quick Links</li>
                 <li class="item {{ (Route::currentRouteName() == 'wikis.activity' ? 'active' : '') }}">
                     <a href="{{ route('wikis.activity', [$team->slug, $space->slug, $wiki->slug]) }}">
-                        <img src="/img/icons/basic_clockwise.svg" width="24" height="24" class="icon">
+                        <i class="fa fa-history fa-fw fa-lg icon"></i>
                         <span class="item-name">Activity</span>
                     </a>
                 </li>
                 <li class="item">
                     <a href="{{ route('pages.create', [ $team->slug, $space->slug, $wiki->slug]) }}">
-                        <img src="/img/icons/basic_elaboration_document_plus.svg" width="24" height="24" class="icon">
+                        <i class="fa fa-file-text-o fa-fw fa-lg icon"></i>
                         <span class="item-name">Create a Page</span>
                     </a>
                 </li>
@@ -42,7 +42,7 @@
         </div>
         <div class="wiki-setting-bottom">
             <a href="{{ route('wikis.overview', [$team->slug, $space->slug, $wiki->slug, ]) }}" class="btn wiki-setting-button btn-block">
-                <img src="/img/icons/basic_gear.svg" width="20" height="20"> Wiki Settings
+                <i class="fa fa-gear fa-fw fa-lg"></i> Wiki Settings
             </a>
         </div>
     </div>

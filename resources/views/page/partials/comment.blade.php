@@ -1,5 +1,5 @@
-<div class="panel panel-default" style="margin-bottom: 0px;">
-    <div class="panel-heading">
+<div class="panel panel-default" style="margin-bottom: 20px; border: 1px solid #eee;">
+    <div class="panel-heading" style="background-color: #fbfbfb; border-bottom: 1px solid #eee;">
         <div class="pull-left">
             Comments
         </div>
@@ -7,26 +7,26 @@
             <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                 <li class="page-like-con">
                     <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
-                    <a href="#" id="like-page" data-page="{{ $page->slug }}"><img src="/img/icons/basic_heart.svg" data-toggle="tooltip" data-placement="top" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" width="20" height="20" style="margin-right: 3px;"></a> <span class="label label-default" id="likes-counter">{{ $page->likes->count() }}</span>
+                    <a href="#" id="like-page" data-page="{{ $page->slug }}"><i class="fa fa-star-o fa-fw" style="font-size: 16px;" data-toggle="tooltip" data-placement="top" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" style="margin-right: 2px;"></i></a> <span class="label label-default" id="likes-counter" style="padding: 3px 8px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $page->likes->count() }}</span>
                 </li>
                 <li>
-                    <img src="/img/icons/basic_message_multiple.svg" width="20" height="20" style="margin-right: 3px;"> <span class="label label-default">{{ $page->comments->count() }}</span>
+                    <i class="fa fa-comments-o fa-fw" style="margin-right: 2px; font-size: 16px;"></i> <span class="label label-default" style="padding: 3px 8px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $page->comments->count() }}</span>
                 </li>
             </ul>
         </div>
         <div class="clearfix"></div>
     </div>
     <div class="panel-body wiki-comments-con">
-        <div class="comments" style="height: 350px;">
+        <div class="comments">
             @if($page->comments->count() > 0)
                 @foreach($page->comments as $comment)
                     <div class="comment" data-comment-id="{{ $comment->id }}">
                         <div class="media">
                             <div class="pull-left profile-image-con">
                                 @if(!empty($comment->user->profile_image)) 
-                                    <img class="media-object img-rounded profile-image" src="/img/avatars/{{ $comment->user->profile_image }}" alt="Image" width="44" height="44">
+                                    <img class="media-object profile-image" src="/img/avatars/{{ $comment->user->profile_image }}" alt="Image" width="44" height="44">
                                 @else
-                                    <img class="media-object img-rounded profile-image" src="/img/no-image.png" alt="Image" width="44" height="44">
+                                    <img class="media-object profile-image" src="/img/no-image.png" alt="Image" width="44" height="44">
                                 @endif
                             </div>
                             <div class="media-body">
@@ -45,14 +45,15 @@
                                                             <?php $userLikeComment = true; ?>
                                                         @endif
                                                     @endforeach
-                                                    <span class="label label-default" style="display: inline-block;" id="comment-like-counter">{{ $comment->likes->count() }}</span> <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i> <a href="#" id="like-comment" data-comment-id="{{ $comment->id }}">{{ $userLikeComment ? 'Unlike' : 'Like' }}</a>
+                                                    <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i> <a href="#" id="like-comment" data-comment-id="{{ $comment->id }}"><i class="fa fa-thumbs-up fa-fw"></i> {{ $userLikeComment ? 'Unlike' : 'Like' }}</a>
+                                                    <span class="label label-default" style="display: inline-block; padding: 3px 5px;" id="comment-like-counter">{{ $comment->likes->count() }}</span>
                                                 </li>
                                                 @if($comment->user_id === Auth::user()->id)
                                                     <li>
-                                                        <a href="#" id="edit-comment">Edit</a>
+                                                        <a href="#" id="edit-comment"><i class="fa fa-pencil fa-fw"></i> Edit</a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" id="delete-comment" data-comment-id="{{ $comment->id }}">Delete</a>
+                                                        <a href="#" id="delete-comment" data-comment-id="{{ $comment->id }}"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
                                                     </li>
                                                 @endif
                                             </ul>
@@ -69,17 +70,28 @@
                 </h1>
             @endif
         </div>
-        <div class="wiki-comment-form">
-            <form action="{{ route('pages.comments.store', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" method="POST">    
+    </div>
+</div>
+<div class="wiki-comment-form">
+    <form action="{{ route('pages.comments.store', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" method="POST">    
+        <div class="media">
+            <div class="pull-left" style="padding-right: 15px;">
+                @if(!empty(Auth::user()->profile_image)) 
+                    <img class="media-object" src="/img/avatars/{{ Auth::user()->profile_image }}" alt="Image" width="44" height="44" style="border-radius: 3px;">
+                @else
+                    <img class="media-object" src="/img/no-image.png" alt="Image" width="44" height="44" style="border-radius: 3px;">
+                @endif
+            </div>
+            <div class="media-body">
                 <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}" style="margin-bottom: 13px;">
                     <textarea name="comment" class="form-control" id="comment-input-textarea" placeholder="Write a comment"></textarea>
                     @if($errors->has('comment'))
                         <p class="help-block has-error" style="width: 230px; margin-bottom: 0; position: absolute;">{{ $errors->first('comment') }}</p>
                     @endif
                 </div>
-                <input type="submit" class="btn btn-success pull-right" value="Submit">
-                <div class="clearfix"></div>
-            </form>
+            </div>
         </div>
-    </div>
+        <input type="submit" class="btn btn-success pull-right" value="Submit">
+        <div class="clearfix"></div>
+    </form>
 </div>

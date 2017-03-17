@@ -3,61 +3,61 @@
 		@foreach($activities as $activity)
 			<div class="media event">
 				<a class="pull-left event-user-image" href="{{ route('users.show', [$team->slug, $activity->user->slug]) }}">
-					@if(!$activity->user->profile_image)
-                        <img class="media-object" style="border-radius: 3px;" src="/img/no-image.png" width="42" height="42" alt="Image">
+					@if(!empty($activity->user->profile_image))
+                        <img class="media-object" style="border-radius: 3px;" src="/img/avatars/{{ $activity->user->profile_image }}" width="44" height="44" alt="Image">
                     @else
-                        <img class="media-object" style="border-radius: 3px;" src="/img/avatars/{{ $activity->user->profile_image }}" width="42" height="42" alt="Image">
+                        <img class="media-object" style="border-radius: 3px;" src="/img/no-image.png" width="44" height="44" alt="Image">
                     @endif
                 </a>
 				<div class="media-body">
 					<div class="event-top">
 						<div class="pull-left event-icon">
 							@if($activity->name == 'created_space')
-                                <img src="/img/icons/ecommerce_sales.svg" width="16" height="16" alt="Image">
+                                <i class="fa fa-tag fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'deleted_space')
-								<img src="/img/icons/basic_trashcan.svg" width="16" height="16" alt="Image">
+								<i class="fa fa-trash-o fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'updated_space')
-								<img src="/img/icons/basic_floppydisk.svg" width="16" height="16" alt="Image">												
+                                <i class="fa fa-save fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'created_wiki')
-								<img src="/img/icons/basic_book.svg" width="16" height="16" alt="Image">                                                
+								<i class="fa fa-book fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'deleted_wiki')
-								<img src="/img/icons/basic_trashcan.svg" width="16" height="16" alt="Image">                                                
+								<i class="fa fa-trash-o fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'updated_wiki')
-								<img src="/img/icons/basic_floppydisk.svg" width="16" height="16" alt="Image">                                                
+								<i class="fa fa-save fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'created_page')
-								<img src="/img/icons/basic_webpage_txt.svg" width="16" height="16" alt="Image">                                                
+                                <i class="fa fa-file-text-o fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'deleted_page')
-								<img src="/img/icons/basic_trashcan.svg" width="16" height="16" alt="Image">				                                
+								<i class="fa fa-trash-o fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'updated_page')
-								<img src="/img/icons/basic_floppydisk.svg" width="16" height="16" alt="Image">				                                
+								<i class="fa fa-save fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'created_comment')
-								<img src="/img/icons/basic_message.svg" width="16" height="16" alt="Image">
+								<i class="fa fa-comment-o fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'deleted_comment')
-								<img src="/img/icons/basic_trashcan.svg" width="16" height="16" alt="Image">                                                
+								<i class="fa fa-trash-o fa-fw fa-lg icon"></i>
                             @endif
 
                             @if($activity->name == 'updated_comment')
-								<img src="/img/icons/basic_floppydisk.svg" width="16" height="16" alt="Image">                                                
+								<i class="fa fa-save fa-fw fa-lg icon"></i>
                             @endif
 						</div>
 						<div class="pull-left" style="position: relative; top: 2px;">
