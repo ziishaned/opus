@@ -3,13 +3,8 @@
 namespace App\Providers;
 
 use Auth;
-use App\Models\User;
-use App\Models\Wiki;
-use App\Models\Team;
-use App\Models\Page;
-use App\Models\Category;
-use App\Models\Group;
 use Illuminate\Support\Facades\Route;
+use App\Models\{User, Space, Wiki, Team, Page, Group};
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -36,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
             'page_slug'         =>  '(\w+-*\d*)+',
             'id'                =>  '[0-9]+',
             'wiki_slug'         =>  '(\w+-*\d*)+',
-            'category_slug'     =>  '(\w+-*\d*)+',
+            'space_slug'     =>  '(\w+-*\d*)+',
             'text'              =>  '[a-zA-Z0-9]+',
             'team_slug'         =>  '(\w+-*\d*)+',
             'group_slug'        =>  '(\w+-*\d*)+',
@@ -61,7 +56,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('wiki_id', function($id) {
-            return Wiki::where('id', '=', $id)->with(['category'])->first();
+            return Wiki::where('id', '=', $id)->with(['space'])->first();
         });
 
         Route::bind('wiki_slug', function($slug) {
@@ -69,7 +64,7 @@ class RouteServiceProvider extends ServiceProvider
             
             return Wiki::where('slug', '=', $slug)
                                     ->where('team_id', '=', $teamId)
-                                    ->with(['category', 'comments', 'likes'])
+                                    ->with(['space', 'comments', 'likes'])
                                     ->first();
         });
 
@@ -85,8 +80,8 @@ class RouteServiceProvider extends ServiceProvider
             return Group::where('slug', '=', $slug)->with(['members', 'permissions'])->first();
         });
 
-        Route::bind('category_slug', function($slug) {
-            return Category::where('slug', '=', $slug)->first();
+        Route::bind('space_slug', function($slug) {
+            return Space::where('slug', '=', $slug)->first();
         });
     }
 
