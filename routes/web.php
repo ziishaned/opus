@@ -15,7 +15,7 @@ Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');
 Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/team/members', 'UserController@getTeamMembers')->name('api.teams.members');
     Route::get('/teams/{team_slug}/wikis', 'WikiController@getTeamWikis')->name('api.teams.wikis');
-    Route::get('/teams/{team_slug}/categories', 'CategoryConroller@getTeamCategories')->name('api.teams.categories');
+    Route::get('/teams/{team_slug}/spaces', 'SpaceConroller@getTeamSpaces')->name('api.teams.spaces');
     Route::post('/like', 'LikeController@storeLike')->name('like');
     Route::delete('/comment', 'CommentController@destroy')->name('comments.destroy');
     Route::patch('/comment', 'CommentController@update')->name('comments.update');
@@ -63,12 +63,12 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::post('avatar/crop', 'UserController@cropAvatar');
     });
 
-    Route::group(['prefix' => '{team_slug}/categories'], function () {
-        Route::get('', 'CategoryConroller@create')->name('categories.create');
-        Route::post('', 'CategoryConroller@store')->name('categories.store');
-        Route::delete('{category_slug}', 'CategoryConroller@destroy')->name('teams.categories.destroy');
-        Route::patch('{category_slug}', 'CategoryConroller@update')->name('teams.categories.update');
-        Route::get('{category_slug}/wikis', 'CategoryConroller@getCategoryWikis')->name('categories.wikis');
+    Route::group(['prefix' => '{team_slug}/spaces'], function () {
+        Route::get('', 'SpaceConroller@create')->name('spaces.create');
+        Route::post('', 'SpaceConroller@store')->name('spaces.store');
+        Route::delete('{space_slug}', 'SpaceConroller@destroy')->name('teams.spaces.destroy');
+        Route::patch('{space_slug}', 'SpaceConroller@update')->name('teams.spaces.update');
+        Route::get('{space_slug}/wikis', 'SpaceConroller@getSpaceWikis')->name('spaces.wikis');
     });
 
     Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');
@@ -93,7 +93,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('', 'WikiController@getWikis')->name('teams.wikis');
     });
 
-    Route::group(['prefix' => '{team_slug}/categories/{category_slug}/wikis'], function () {
+    Route::group(['prefix' => '{team_slug}/spaces/{space_slug}/wikis'], function () {
         Route::patch('{wiki_slug}', 'WikiController@update')->name('wikis.update');
         Route::get('{wiki_slug}', 'WikiController@show')->name('wikis.show');
         Route::get('{wiki_slug}/activity', 'WikiController@getWikiActivity')->name('wikis.activity');
