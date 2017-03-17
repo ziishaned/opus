@@ -24,9 +24,9 @@
                         <div class="media">
                             <div class="pull-left profile-image-con">
                                 @if(!empty($comment->user->profile_image)) 
-                                    <img class="media-object img-rounded profile-image" src="/img/avatars/{{ $comment->user->profile_image }}" alt="Image" width="44" height="44">
+                                    <img class="media-object profile-image" src="/img/avatars/{{ $comment->user->profile_image }}" alt="Image" width="44" height="44">
                                 @else
-                                    <img class="media-object img-rounded profile-image" src="/img/no-image.png" alt="Image" width="44" height="44">
+                                    <img class="media-object profile-image" src="/img/no-image.png" alt="Image" width="44" height="44">
                                 @endif
                             </div>
                             <div class="media-body">
@@ -76,7 +76,11 @@
     <form action="{{ route('pages.comments.store', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" method="POST">    
         <div class="media">
             <div class="pull-left" style="padding-right: 15px;">
-                <img class="media-object profile-image" src="/img/no-image.png" alt="Image" width="44" height="44" style="border-radius: 3px;">
+                @if(!empty(Auth::user()->profile_image)) 
+                    <img class="media-object" src="/img/avatars/{{ Auth::user()->profile_image }}" alt="Image" width="44" height="44" style="border-radius: 3px;">
+                @else
+                    <img class="media-object" src="/img/no-image.png" alt="Image" width="44" height="44" style="border-radius: 3px;">
+                @endif
             </div>
             <div class="media-body">
                 <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}" style="margin-bottom: 13px;">

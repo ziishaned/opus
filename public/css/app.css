@@ -1032,11 +1032,18 @@ border-radius: 3px;
 	border-radius: 2px;
 }
 
+.wiki-nav>nav>ul>li>a .icon {
+	margin-right: 3px;
+	position: relative;
+	top: -1px;
+}
+
 .wiki-nav>nav>ul>li>a:hover, .wiki-nav>nav>ul>li>a:focus, .wiki-nav>nav>ul>li>a:active, .wiki-nav>nav>ul>li>a:visited {
 	background-color: #eee;
 	text-decoration: none;
 	border: 1px solid #ddd;
 	margin: -1px;
+	color: #333;
 }
 
 /**************************** jsTree ************************************/

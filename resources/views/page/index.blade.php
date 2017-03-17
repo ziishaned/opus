@@ -10,15 +10,15 @@
                         <nav>
                             <ul class="list-unstyled list-inline pull-left">
                                 <li>
-                                    <a href="#"><img src="/img/icons/basic_todo_txt.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Add to Read list</a>
+                                    <a href="#"><i class="fa fa-tasks fa-lg icon"></i> Add to Read list</a>
                                 </li>
                             </ul>
                             <ul class="list-unstyled list-inline pull-right">
                                 <li>
-                                    <a href="{{ route('pages.edit', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}"><img src="/img/icons/software_pencil.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Edit</a>
+                                    <a href="{{ route('pages.edit', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}"><i class="fa fa-pencil fa-lg icon"></i> Edit</a>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/icons/basic_gear.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Settings</a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear fa-lg icon"></i> Settings</a>
                                     <ul class="dropdown-menu dropdown-menu-right" style="margin-top: 8px;">
                                         <li><a href="#"><i class="fa fa-info-circle fa-fw"></i> Page Overview</a></li>
                                         <li><a href="#"><i class="fa fa-history fa-fw"></i> Page History</a></li>
