@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
-use App\Models\Wiki;
-use App\Models\Page;
-use App\Models\Team;
-use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\{Wiki, Page, Team, Space};
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -27,29 +24,29 @@ class WikiController extends Controller
 
     protected $request;
 
-    protected $category;
+    protected $space;
 
-    public function __construct(Request $request, Wiki $wiki, Team $team, Page $page, Category $category)
+    public function __construct(Request $request, Wiki $wiki, Team $team, Page $page, Space $space)
     {
         $this->wiki     = $wiki;
         $this->page     = $page;
         $this->team     = $team;
         $this->request  = $request;
-        $this->category = $category;
+        $this->space    = $space;
     }
 
     public function create(Team $team)
     {
-        $categories = $this->category->getTeamCategories($team->id);
+        $spaces = $this->space->getTeamSpaces($team->id);
 
-        if ($categories->count() == 0) {
-            return redirect()->route('categories.create', [$team->slug,])->with([
-                'alert'      => 'You need to create category before creating wiki!',
+        if ($spaces->count() == 0) {
+            return redirect()->route('spaces.create', [$team->slug,])->with([
+                'alert'      => 'You need to create space before creating wiki!',
                 'alert_type' => 'info',
             ]);
         }
 
-        return view('wiki.create', compact('team', 'categories'));
+        return view('wiki.create', compact('team', 'spaces'));
     }
 
     public function store(Team $team)
@@ -58,13 +55,13 @@ class WikiController extends Controller
 
         $wiki = $this->wiki->saveWiki($this->request->all(), $team->id);
 
-        return redirect()->route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug])->with([
+        return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
             'alert'      => 'Wiki successfully created.',
             'alert_type' => 'success',
         ]);
     }
 
-    public function show(Team $team, Category $category, Wiki $wiki)
+    public function show(Team $team, Space $space, Wiki $wiki)
     {
         $pages = $this->page->getPages($wiki->id);
         
@@ -75,29 +72,29 @@ class WikiController extends Controller
             }
         }
 
-        return view('wiki.index', compact('pages', 'wiki', 'team', 'category', 'isUserLikeWiki'));
+        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki'));
     }
 
-    public function edit(Team $team, Category $category, Wiki $wiki)
+    public function edit(Team $team, Space $space, Wiki $wiki)
     {
-        $categories = $this->category->getTeamCategories($team->id);
+        $spaces = $this->space->getTeamSpaces($team->id);
 
         $editWiki = true; 
 
-        return view('wiki.edit', compact('wiki', 'team', 'categories', 'category', 'editWiki'));
+        return view('wiki.edit', compact('wiki', 'team', 'spaces', 'space', 'editWiki'));
     }
 
-    public function update(Team $team, Category $category, Wiki $wiki)
+    public function update(Team $team, Space $space, Wiki $wiki)
     {
         $this->wiki->updateWiki($wiki->id, $this->request->all());
 
-        return redirect()->route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug])->with([
+        return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
             'alert'      => 'Wiki successfully updated.',
             'alert_type' => 'success',
         ]);
     }
 
-    public function destroy(Team $team, Category $category, Wiki $wiki)
+    public function destroy(Team $team, Space $space, Wiki $wiki)
     {
         $this->wiki->deleteWiki($wiki->id);
 
@@ -116,41 +113,41 @@ class WikiController extends Controller
     {
         $wikis = $this->wiki->getTeamWikis($team->id);
 
-        $categories = $this->category->getTeamCategories($team->id);
+        $spaces = $this->space->getTeamSpaces($team->id);
 
-        return view('wiki.list', compact('team', 'wikis', 'categories'));
+        return view('wiki.list', compact('team', 'wikis', 'spaces'));
     }
 
     public function getTeamWikis(Team $team)
     {
-        if ($this->request->get('category_slug')) {
-            $category = $this->category->where('slug', $this->request->get('category_slug'))->first();
+        if ($this->request->get('space_slug')) {
+            $space = $this->space->where('slug', $this->request->get('space_slug'))->first();
 
-            return $this->wiki->where('team_id', $team->id)->where('category_id', $category->id)->with(['user', 'category', 'team'])->latest()->paginate(10);
+            return $this->wiki->where('team_id', $team->id)->where('space_id', $space->id)->with(['user', 'space', 'team'])->latest()->paginate(10);
         }
 
-        return $this->wiki->where('team_id', $team->id)->with(['user', 'category', 'team'])->latest()->paginate(10);
+        return $this->wiki->where('team_id', $team->id)->with(['user', 'space', 'team'])->latest()->paginate(10);
     }
 
-    public function getWikiActivity(Team $team, Category $category, Wiki $wiki)
+    public function getWikiActivity(Team $team, Space $space, Wiki $wiki)
     {
         $activities = $this->wiki->getActivty($wiki->id)->activity;
 
-        return view('wiki.activity', compact('team', 'category', 'wiki', 'activities'));
+        return view('wiki.activity', compact('team', 'space', 'wiki', 'activities'));
     }
 
-    public function overview(Team $team, Category $category, Wiki $wiki)
+    public function overview(Team $team, Space $space, Wiki $wiki)
     {
         $isUserLikeWiki = $this->isUserLikeWiki($wiki); 
 
-        return view('wiki.setting.overview', compact('team', 'category', 'wiki', 'isUserLikeWiki'));
+        return view('wiki.setting.overview', compact('team', 'space', 'wiki', 'isUserLikeWiki'));
     }
 
-    public function permission(Team $team, Category $category, Wiki $wiki)
+    public function permission(Team $team, Space $space, Wiki $wiki)
     {
         $isUserLikeWiki = $this->isUserLikeWiki($wiki); 
 
-        return view('wiki.setting.permission', compact('team', 'category', 'wiki', 'isUserLikeWiki'));
+        return view('wiki.setting.permission', compact('team', 'space', 'wiki', 'isUserLikeWiki'));
     }
 
     public function isUserLikeWiki($wiki)

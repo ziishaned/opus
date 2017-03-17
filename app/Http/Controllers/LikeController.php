@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Models\Page;
-use App\Models\Wiki;
-use App\Models\Like;
-use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Models\{Page, Wiki, Like, Comment};
 
 class LikeController extends Controller
 {

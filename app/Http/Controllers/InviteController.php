@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Mail;
-use App\Models\Team;
-use App\Models\Invite;
 use Illuminate\Http\Request;
+use App\Models\{Team, Invite};
 
 class InviteController extends Controller
 {

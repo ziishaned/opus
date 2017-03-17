@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Team;
-use App\Models\Group;
+use App\Models\{Team, Group};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
