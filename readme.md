@@ -1,5 +1,5 @@
 ![Opus](http://i.imgur.com/WZvXEXY.png)
-
+[![Build Status](https://travis-ci.org/zeeshanu/opus.svg?branch=master)](https://travis-ci.org/zeeshanu/opus)
 > Opensource knowledge base application for Teams
 
 Opus is a place for your team to document who you are, what you do and how you do it. It helps you create and maintain a knowledge base for your teams. [Demo here](https://github.com/zeeshanu/opus/blob/master/demo.md) 
