@@ -68,9 +68,9 @@ class Team extends Model
         });
     }
 
-    public function categories()
+    public function spaces()
     {
-        return $this->hasMany(Category::class, 'team_id', 'id');
+        return $this->hasMany(Space::class, 'team_id', 'id');
     }
 
     public function activity()
@@ -147,39 +147,7 @@ class Team extends Model
             
         return true;
     }
-
-    public function inviteUser($data)
-    {
-        dd('ok');
-        // $userHaveTeam = DB::table('user_teams')
-        //                           ->whereIn('user_id', [$data['userId']])
-        //                           ->whereIn('team_id', [$data['teamId']])
-        //                           ->first();
-        // if (!$userHaveTeam) {
-        //     DB::table('user_teams')->insert([
-        //         'user_type'       => 'normal',
-        //         'user_id'         => $data['userId'],
-        //         'team_id' => $data['teamId'],
-        //         'created_at'      => Carbon::now(),
-        //         'updated_at'      => Carbon::now(),
-        //     ]);
-
-        //     return true;
-        // }
-
-        // return true;
-    }
-
-    public function removeInvite($data)
-    {
-        DB::table('user_teams')
-          ->where('user_id', '=', $data['userId'])
-          ->where('team_id', '=', $data['teamId'])
-          ->delete();
-
-        return true;
-    }
-
+    
     public function getMembers($team)
     {
         $members = $this->find($team->id)->members()->paginate(30);

@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Notifications\Category\CreateCategoryNotification;
-use App\Notifications\Category\DeleteCategoryNotification;
-use App\Notifications\Category\UpdateCategoryNotification;
+use App\Notifications\Space\CreateSpaceNotification;
+use App\Notifications\Space\DeleteSpaceNotification;
+use App\Notifications\Space\UpdateSpaceNotification;
 
-class Category extends Model
+class Space extends Model
 {
     use Sluggable, RecordsActivity, SoftDeletes, Notifiable;
 
@@ -26,11 +26,11 @@ class Category extends Model
 
     protected static $recordEvents = ['created', 'updated', 'deleted'];
 
-    const CATEGORY_RULES = [
-        'name' => 'required|unique:category,name|max:25',
+    const SPACE_RULES = [
+        'name' => 'required|unique:space,name|max:25',
     ];
 
-    protected $table = 'category';
+    protected $table = 'space';
 
     protected $fillable = [
         'name',
@@ -53,18 +53,18 @@ class Category extends Model
     {
         parent::boot();
 
-        $category = new Category();
+        $spaceObject = new Space();
 
-        static::created(function($category) use ($category) {
-            $category->notify(new CreateCategoryNotification($category));
+        static::created(function($space) use ($spaceObject) {
+            $spaceObject->notify(new CreateSpaceNotification($space));
         });
 
-        static::updated(function($category) use ($category) {
-            $category->notify(new UpdateCategoryNotification($category));
+        static::updated(function($space) use ($spaceObject) {
+            $spaceObject->notify(new UpdateSpaceNotification($space));
         });
 
-        static::deleting(function($category) use ($category) {
-            $category->notify(new DeleteCategoryNotification($category));
+        static::deleting(function($space) use ($spaceObject) {
+            $spaceObject->notify(new DeleteSpaceNotification($space));
         });
     }
 
@@ -80,10 +80,10 @@ class Category extends Model
 
     public function wikis()
     {
-        return $this->hasMany(Wiki::class, 'category_id', 'id');
+        return $this->hasMany(Wiki::class, 'space_id', 'id');
     }
 
-    public function createCategory($data, $teamId)
+    public function createSpace($data, $teamId)
     {
     	$this->create([
     		'name' 		=> $data['name'],
@@ -95,29 +95,29 @@ class Category extends Model
     	return true;
     }
 
-    public function getTeamCategories($teamId)
+    public function getTeamSpaces($teamId)
     {
         return $this->where('team_id', $teamId)->get();
     }
 
-    public function deleteCategory($categoryId)
+    public function deleteSpace($spaceId)
     {
-        $this->find($categoryId)->delete();
+        $this->find($spaceId)->delete();
         return true;
     }
 
-    public function updateCategory($data, $categoryId, $teamId)
+    public function updateSpace($data, $spaceId, $teamId)
     {
-        $this->find($categoryId)->update([
-                                    'name' => $data['category_name'],
+        $this->find($spaceId)->update([
+                                    'name' => $data['space_name'],
                                     'outline' => $data['description'],
                                 ]);
         return true;
     }
 
-    public function getCategory($categorySlug, $teamId)
+    public function getSpace($spaceSlug, $teamId)
     {
-        return $this->where('slug', '=', $categorySlug)
+        return $this->where('slug', '=', $spaceSlug)
                     ->where('team_id', '=', $teamId)
                     ->with(['wikis'])
                     ->first();   

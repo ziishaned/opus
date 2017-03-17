@@ -61,9 +61,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function category()
+    public function space()
     {
-        return $this->hasMany(Category::class, 'user_id', 'id');
+        return $this->hasMany(Space::class, 'user_id', 'id');
     }
 
     public function team()

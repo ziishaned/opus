@@ -20,7 +20,7 @@ class Invite extends Model
     	'updated_at',
     ];
 
-    const INVITERULES = [
+    const INVITE_RULES = [
         'email' => 'required|is_already_invited|is_already_member'
     ];
 
