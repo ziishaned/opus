@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIntegrationActionsTabel extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateIntegrationActionsTabel extends Migration
      */
     public function up()
     {
-        Schema::create('integration_actions', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('slug', 65535);
+            $table->integer('user_id')->unsigned();
+            $table->integer('team_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateIntegrationActionsTabel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('integration_actions');
+        Schema::dropIfExists('groups');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupPermissionsTabel extends Migration
+class CreateIntegrationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateGroupPermissionsTabel extends Migration
      */
     public function up()
     {
-        Schema::create('group_permissions', function (Blueprint $table) {
+        Schema::create('integration', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('group_id');
-            $table->integer('permission_id');
+            $table->string('title');
+            $table->string('slug', 65535);
+            $table->longText('url');
+            $table->integer('team_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateGroupPermissionsTabel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_permissions');
+        Schema::dropIfExists('integration');
     }
 }
