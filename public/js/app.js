@@ -408,8 +408,6 @@ var App = {
             that.likeSubject(page, 'page', '.page-like-con');
         });
 
-        $(".comments").scrollTop($('.comments').height()+120000000);
-
         if(document.getElementById('timezone')) {
             if($('#timezone').data('selected').length) {
                 $('#timezone').val($('#timezone').data('selected'));

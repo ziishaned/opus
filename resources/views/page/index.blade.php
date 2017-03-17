@@ -36,7 +36,11 @@
                         </nav>
                     </div>
                     <div class="markdown-body" style="padding: 0px 25px;">
-                        {!! $page->description !!}
+                        @if($page->description)
+                            {!! $page->description !!}
+                        @else 
+                            <span style="font-size: 22px; font-weight: 700; line-height: 26px;">...</span>
+                        @endif
                     </div>
                 </div>
             </div>
