@@ -249,7 +249,10 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .page-header .icon {
-	margin-right: 10px;
+    margin-right: 4px;
+    font-size: 20px;
+    position: relative;
+    top: -2px;
 }
 
 .page-header, .wikis-list-header {
