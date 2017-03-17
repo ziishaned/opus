@@ -38,13 +38,17 @@ There are spaces for every team, department or major project. Then employees can
   git clone https://github.com/zeeshanu/opus.git
   ```
 - Create `.env` using `.env.example` and populate the relevant information
-- Open the project directory and run the below
-  ```bash
-  php artisan migrate
-  ```
 - Install the dependencies
   ```bash
   composer install
+  ```
+- Open the project directory and run the below
+  ```bash
+  php artisan migrate
+  ``` 
+- Generate an application key
+  ```bash
+  php artisan key:generate
   ```
 
 ## Todo
