@@ -14,7 +14,7 @@
                         </ul>
                         <ul class="list-unstyled list-inline pull-right">
                             <li>
-                                <a href="{{ route('pages.edit', [$team->slug, $category->slug, $wiki->slug, $page->slug]) }}"><img src="/img/icons/software_pencil.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Edit</a>
+                                <a href="{{ route('pages.edit', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}"><img src="/img/icons/software_pencil.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Edit</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/img/icons/basic_gear.svg" width="20" height="20" style="position: relative; top: -2px; margin-right: 3px;"> Settings</a>
@@ -26,7 +26,7 @@
                                     <li><a href="#"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a></li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="{{ route('pages.destroy', [$team->slug, $category->slug, $wiki->slug, $page->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+                                        <a href="{{ route('pages.destroy', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
                                     </li>
                                 </ul>
                             </li>

@@ -13,11 +13,11 @@
 			</ul>
 			<div class="side-menu-wiki-list">
 				<ul class="list-unstyled" id="categories-list">
-					<li class="nav-header">Categories</li>
-					@if($categories->count() > 0)
-						@foreach($categories as $item)
-							<li class="item {{ $category->id === $item->id ? 'active' : '' }}" id="categories-list-item" data-name="{{ $item->name }}">
-				                <a href="{{ route('categories.wikis', [$team->slug, $item->slug, ]) }}">
+					<li class="nav-header">Spaces</li>
+					@if($spaces->count() > 0)
+						@foreach($spaces as $item)
+							<li class="item {{ $space->id === $item->id ? 'active' : '' }}" id="categories-list-item" data-name="{{ $item->name }}">
+				                <a href="{{ route('spaces.wikis', [$team->slug, $item->slug, ]) }}">
 				                    <div class="cateogry-icon" style="margin-right: 13px; position: relative; top: 1px;"></div>
 									<span class="item-name">{{ $item->name }}</span>
 									@if($item->wikis->count())
@@ -54,7 +54,7 @@
 					@if($wikis->count() > 0)
 						<div class="list-group">
 				            @foreach($wikis as $wiki)
-					            <a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}" class="list-group-item wikis-list-item" data-name="{{ $wiki->name }}">
+					            <a href="{{ route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" class="list-group-item wikis-list-item" data-name="{{ $wiki->name }}">
 					                <div class="media">
 					                    <div class="pull-left">
 					                        <img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="19" height="19">
@@ -67,7 +67,7 @@
 					                        <div class="wiki-bottom">
 					                        	<ul class="list-unstyled list-inline dot-divider" style="margin-bottom: 0;">
 					                        		<li>
-							                        	<div class="item-category-label">{{ $wiki->category->name }}</div>
+							                        	<div class="item-category-label">{{ $wiki->space->name }}</div>
 					                        		</li>
 					                        		@if($wiki->likes->count())
 						                        		<li style="color: #c1c1c1;">

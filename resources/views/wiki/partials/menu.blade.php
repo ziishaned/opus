@@ -3,7 +3,7 @@
         <div class="side-menu-inner">
             <div class="wiki-intro">
                 <div class="pull-left">
-                    <h1 class="header" style="position: relative; top: 4px;"><a href="{{ route('wikis.show', [$team->slug, $category->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
+                    <h1 class="header" style="position: relative; top: 4px;"><a href="{{ route('wikis.show', [$team->slug, $space->slug, $wiki->slug, ]) }}">{{ $wiki->name }}</a></h1>
                 </div>
                 <div class="pull-right wiki-like-con">
                     <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
@@ -14,13 +14,13 @@
             <ul class="list-unstyled side-menu-top">
                 <li class="nav-header" style="margin-bottom: 5px;">Quick Links</li>
                 <li class="item {{ (Route::currentRouteName() == 'wikis.activity' ? 'active' : '') }}">
-                    <a href="{{ route('wikis.activity', [$team->slug, $category->slug, $wiki->slug]) }}">
+                    <a href="{{ route('wikis.activity', [$team->slug, $space->slug, $wiki->slug]) }}">
                         <img src="/img/icons/basic_clockwise.svg" width="24" height="24" class="icon">
                         <span class="item-name">Activity</span>
                     </a>
                 </li>
                 <li class="item">
-                    <a href="{{ route('pages.create', [ $team->slug, $category->slug, $wiki->slug]) }}">
+                    <a href="{{ route('pages.create', [ $team->slug, $space->slug, $wiki->slug]) }}">
                         <img src="/img/icons/basic_elaboration_document_plus.svg" width="24" height="24" class="icon">
                         <span class="item-name">Create a Page</span>
                     </a>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="wiki-setting-bottom">
-            <a href="{{ route('wikis.overview', [$team->slug, $category->slug, $wiki->slug, ]) }}" class="btn wiki-setting-button btn-block">
+            <a href="{{ route('wikis.overview', [$team->slug, $space->slug, $wiki->slug, ]) }}" class="btn wiki-setting-button btn-block">
                 <img src="/img/icons/basic_gear.svg" width="20" height="20"> Wiki Settings
             </a>
         </div>

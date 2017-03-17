@@ -36,7 +36,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 9px; padding-left: 9px;"><i class="fa fa-plus fa-fw"></i></a>
 					<ul class="dropdown-menu dropdown-menu-right" style="margin-top: -3px; margin-right: -6px; margin-top: -3px; padding: 4px 5px;">
                         <li><a href="{{ route('wikis.create', [ $team->slug ]) }}" style="padding: 5px 6px;">Create wiki</a></li>
-                        <li><a href="{{ route('categories.create', [ $team->slug ]) }}" style="padding: 5px 6px;">Craete category</a></li>
+                        <li><a href="{{ route('spaces.create', [ $team->slug ]) }}" style="padding: 5px 6px;">Craete space</a></li>
                     </ul>
               	</li>
               	{{-- <li class="dropdown">
