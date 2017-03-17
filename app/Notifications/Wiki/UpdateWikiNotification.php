@@ -22,7 +22,7 @@ class UpdateWikiNotification extends BaseNotification
             ->from($this->from)
             ->attachment(function ($attachment) {
                 $attachment
-                    ->content(':floppy_disk: <' . route('users.show', [$this->wiki->team->slug, $this->wiki->user->slug,]) . '|' . $this->wiki->user->first_name . ' ' . $this->wiki->user->last_name . '> updated a wiki <' . route('wikis.show', [$this->wiki->team->slug, $this->wiki->category->slug, $this->wiki->slug,]) . '|' . $this->wiki->category->name . '/' . $this->wiki->name . '>');
+                    ->content(':floppy_disk: <' . route('users.show', [$this->wiki->team->slug, $this->wiki->user->slug,]) . '|' . $this->wiki->user->first_name . ' ' . $this->wiki->user->last_name . '> updated a wiki <' . route('wikis.show', [$this->wiki->team->slug, $this->wiki->space->slug, $this->wiki->slug,]) . '|' . $this->wiki->space->name . '/' . $this->wiki->name . '>');
             });
     }
 }

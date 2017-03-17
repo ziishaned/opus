@@ -23,7 +23,7 @@ class CreatePageNotification extends BaseNotification
             ->content(':memo: <' . route('users.show', [$this->page->wiki->team->slug, $this->page->user->slug,]) . '|' . $this->page->user->first_name . ' ' . $this->page->user->last_name . '> created a page.')
             ->attachment(function ($attachment) {
                 $attachment
-                    ->title($this->page->wiki->name . '/' . $this->page->name, route('pages.show', [$this->page->wiki->team->slug, $this->page->wiki->category->slug, $this->page->wiki->slug, $this->page->slug]))
+                    ->title($this->page->wiki->name . '/' . $this->page->name, route('pages.show', [$this->page->wiki->team->slug, $this->page->wiki->space->slug, $this->page->wiki->slug, $this->page->slug]))
                     ->content('*Description:* ' . $this->page->outline)
                     ->markdown(['title', 'text']);
             });
