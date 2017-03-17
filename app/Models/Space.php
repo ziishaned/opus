@@ -46,7 +46,9 @@ class Space extends Model
 
     public function routeNotificationForSlack()
     {
-        return Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration->url;
+        $integration = Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration;
+
+        return $integration ? $integration->url : null;
     }
 
     public static function boot()

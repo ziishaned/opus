@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="create-category-form-con">
-        <h1 class="header">Create a space</h1>
+        <h1 class="header">Create space</h1>
         <form action="{{ route('spaces.store', [ $team->slug ]) }}" method="POST" role="form">
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label for="name" class="control-label">Space Name</label>
