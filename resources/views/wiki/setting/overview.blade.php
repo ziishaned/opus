@@ -26,7 +26,7 @@
 					                    		</div>
 					                    		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 													<div class="form-group">
-														<label for="">Category</label>
+														<label for="">Space</label>
 														<select name="" id="input" class="form-control" required="required">
 															<option value="">Marketing</option>
 															<option value="">Sale</option>

@@ -56,24 +56,28 @@ class Page extends Node
 
     public function routeNotificationForSlack()
     {
-        return Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration->url;
+        $integration = Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration;
+
+        return $integration ? $integration->url : null;
     }
 
     public static function boot()
     {
         parent::boot();
 
-        // static::created(function($page) {
-        //     (new Page)->notify(new CreatePageNotification($page));
-        // });
+        $pageObject = new Page();
 
-        // static::updated(function($page) {
-        //     (new Page)->notify(new UpdatePageNotification($page));
-        // });
+        static::created(function($page) use ($pageObject) {
+            $pageObject->notify(new CreatePageNotification($page));
+        });
 
-        // static::deleting(function($page) {
-        //     (new Page)->notify(new DeletePageNotification($page));
-        // });
+        static::updated(function($page) use ($pageObject) {
+            $pageObject->notify(new UpdatePageNotification($page));
+        });
+
+        static::deleting(function($page) use ($pageObject) {
+            $pageObject->notify(new DeletePageNotification($page));
+        });
     }
 
     public function comments()

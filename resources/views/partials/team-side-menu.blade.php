@@ -39,7 +39,7 @@
 				@if($likeWikis->count() > 0) 
 					@foreach($likeWikis as $wiki)
 						<li class="item">
-							<a href="{{ route('wikis.show', [$team->slug, $wiki->subject->category->slug, $wiki->subject->slug]) }}">
+							<a href="{{ route('wikis.show', [$team->slug, $wiki->subject->space->slug, $wiki->subject->slug]) }}">
 								<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">{{ $wiki->subject->name }}</span>
 							</a>
 						</li>

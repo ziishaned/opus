@@ -8,15 +8,15 @@
                 <div class="media-body">
                     <div class="event-top">
                         <div class="pull-left event-icon">
-                            @if($activity->name == 'created_category')
+                            @if($activity->name == 'created_space')
                                 <img src="/img/icons/ecommerce_sales.svg" width="22" height="22" alt="Image">
                             @endif
 
-                            @if($activity->name == 'deleted_category')
+                            @if($activity->name == 'deleted_space')
                                 <img src="/img/icons/basic_trashcan.svg" width="22" height="22" alt="Image">
                             @endif
 
-                            @if($activity->name == 'updated_category')
+                            @if($activity->name == 'updated_space')
                                 <img src="/img/icons/basic_floppydisk.svg" width="22" height="22" alt="Image">
                             @endif
 

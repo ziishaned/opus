@@ -70,7 +70,7 @@
             @endif
         </div>
         <div class="wiki-comment-form">
-            <form action="{{ route('pages.comments.store', [$team->slug, $category->slug, $wiki->slug, $page->slug]) }}" method="POST">    
+            <form action="{{ route('pages.comments.store', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" method="POST">    
                 <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}" style="margin-bottom: 13px;">
                     <textarea name="comment" class="form-control" id="comment-input-textarea" placeholder="Write a comment"></textarea>
                     @if($errors->has('comment'))

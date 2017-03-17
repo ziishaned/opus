@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Emoji;
-use App\Models\Team;
-use App\Models\Category;
-use App\Models\Wiki;
-use App\Models\Comment;
-use App\Models\Page;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\{Team, Space, Wiki, Comment, Page};
 
 class CommentController extends Controller
 {
@@ -26,7 +22,7 @@ class CommentController extends Controller
         $this->page     =  $page;
     }
 
-    public function storeWikiComment(Team $team, Category $category, Wiki $wiki)
+    public function storeWikiComment(Team $team, Space $space, Wiki $wiki)
     {
         $this->validate($this->request, Comment::COMMENT_RULES);
 
@@ -34,13 +30,13 @@ class CommentController extends Controller
 
         $this->comment->storeWikiComment($wiki->id, $this->request->all());
 
-        return redirect()->route('wikis.show', [$team->slug, $category->slug, $wiki->slug])->with([
+        return redirect()->route('wikis.show', [$team->slug, $space->slug, $wiki->slug])->with([
             'alert'      => 'Comment successfully posted.',
             'alert_type' => 'success'
         ]);
     }
 
-    public function storePageComment(Team $team, Category $category, Wiki $wiki, Page $page)
+    public function storePageComment(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
         
@@ -48,7 +44,7 @@ class CommentController extends Controller
         
         $this->comment->storePageComment($page->id, $this->request->all());
 
-        return redirect()->route('pages.show', [$team->slug, $category->slug, $wiki->slug, $page->slug])->with([
+        return redirect()->route('pages.show', [$team->slug, $space->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Comment successfully posted.',
             'alert_type' => 'success'
         ]);

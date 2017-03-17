@@ -7,7 +7,7 @@
                 <div class="page-header">
                     <img src="/img/icons/basic_sheet_pencil.svg" width="28" height="28" class="icon"> Create Page
                 </div>
-                <form action="{{ route('pages.store', [$team->slug, $category->slug, $wiki->slug ]) }}" method="POST" role="form" class="create-wiki-form">
+                <form action="{{ route('pages.store', [$team->slug, $space->slug, $wiki->slug ]) }}" method="POST" role="form" class="create-wiki-form">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <h4>Basic information</h4>

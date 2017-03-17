@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use Carbon\Carbon;
-use App\Models\Team;
-use App\Models\Integration;
 use Illuminate\Http\Request;
+use App\Models\{Team, Integration};
 
 class IntegrationController extends Controller
 {

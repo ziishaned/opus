@@ -29,7 +29,7 @@ class Wiki extends Model
     protected $fillable = [
         'name',
         'slug',
-        'category_id',
+        'space_id',
         'outline',
         'description',
         'user_id',
@@ -42,12 +42,14 @@ class Wiki extends Model
 
     const WIKI_RULES = [
         'name'     => 'required|max:45|min:3',
-        'category' => 'required',
+        'space' => 'required',
     ];
 
     public function routeNotificationForSlack()
     {
-        return Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration->url;
+        $integration = Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration;
+
+        return $integration ? $integration->url : null;
     }
 
     public static function boot()
@@ -67,9 +69,9 @@ class Wiki extends Model
         });
     }
 
-    public function category()
+    public function space()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsTo(Space::class, 'space_id', 'id');
     }
 
     public function user() {
@@ -109,7 +111,7 @@ class Wiki extends Model
     public function getTeamWikis($teamId, $total = null)
     {
         if($total !==  null) {
-            $wikis = $this->where('team_id', $teamId)->with(['category', 'likes'])->latest()->take(5)->get();
+            $wikis = $this->where('team_id', $teamId)->with(['space', 'likes'])->latest()->take(5)->get();
 
             return $wikis;
         }
@@ -121,7 +123,7 @@ class Wiki extends Model
 
     public function getWiki($wikiSlug, $teamId)
     {
-        $wiki = $this->where('slug', '=', $wikiSlug)->where('team_id', '=', $teamId)->with(['user', 'category'])->first();
+        $wiki = $this->where('slug', '=', $wikiSlug)->where('team_id', '=', $teamId)->with(['user', 'space'])->first();
         if($wiki === null) {
             return false;
         }
@@ -132,7 +134,7 @@ class Wiki extends Model
     {
         $wiki = $this->create([
             'name'            =>  $data['name'],
-            'category_id'     =>  $data['category'],
+            'space_id'     =>  $data['space'],
             'outline'         =>  $data['outline'],
             'description'     =>  $data['description'],
             'user_id'         =>  Auth::user()->id,

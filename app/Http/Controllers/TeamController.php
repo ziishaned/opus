@@ -2,21 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use DB;
 use Mail;
 use Image;
 use Redirect;
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Team;
-use App\Models\Group;
-use App\Models\Invite;
-use App\Models\Category;
-use App\Models\Integration;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\{Auth, Session};
+use App\Models\{User, Team, Group, Invite, Space, Integration};
 
 class TeamController extends Controller
 {
@@ -28,19 +22,19 @@ class TeamController extends Controller
 
     private $group;
 
-    private $category;
+    private $space;
 
     public function __construct(Request $request,
                                 Team $team,
                                 Group $group,
                                 User $user,
-                                Category $category)
+                                Space $space)
     {
-        $this->user         = $user;
-        $this->request      = $request;
-        $this->category     = $category;
-        $this->team         = $team;
-        $this->group       = $group;
+        $this->user         =   $user;
+        $this->request      =   $request;
+        $this->space        =   $space;
+        $this->team         =   $team;
+        $this->group        =   $group;
     }
 
     public function getMembers(Team $team)

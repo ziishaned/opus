@@ -19,7 +19,7 @@
 							<ul class="list-unstyled recent-wikis-list">
 								@foreach($wikis as $wiki)
 									<li class="item">
-										<a href="{{ route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug]) }}" style="position: relative;">
+										<a href="{{ route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" style="position: relative;">
 											<img src="/img/icons/basic_book.svg" width="20" height="20" alt="Image" style="margin-right: 12px;"> <span style="position: relative; top: -2px;">{{ $wiki->name }}</span>
 											@if($wiki->likes->count()) 
 												<div style="position: absolute; right: 10px; top: 5px; color: #c1c1c1;">

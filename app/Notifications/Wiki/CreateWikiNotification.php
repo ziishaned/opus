@@ -26,7 +26,7 @@ class CreateWikiNotification extends BaseNotification
             ->content(':book: <' . route('users.show', [$this->wiki->team->slug, $this->wiki->user->slug,]) . '|' . $this->wiki->user->first_name . ' ' . $this->wiki->user->last_name . '> created a new wiki.')
             ->attachment(function ($attachment) {
                 $attachment
-                    ->title($this->wiki->category->name . '/' . $this->wiki->name, route('wikis.show', [$this->wiki->team->slug, $this->wiki->category->slug, $this->wiki->slug,]))
+                    ->title($this->wiki->space->name . '/' . $this->wiki->name, route('wikis.show', [$this->wiki->team->slug, $this->wiki->space->slug, $this->wiki->slug,]))
                     ->content('*Description:* ' . $this->wiki->outline)
                     ->markdown(['title', 'text']);
             });

@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Image;
 use Session;
-use App\Models\User;
-use App\Models\Wiki;
-use App\Models\Team;
 use Illuminate\Http\Request;
+use App\Models\{User, Wiki, Team};
 use Illuminate\Support\Facades\Auth;
 
 /**

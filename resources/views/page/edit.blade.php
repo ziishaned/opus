@@ -7,7 +7,7 @@
                 <div class="page-header">
                     <img src="/img/icons/basic_sheet_pencil.svg" width="28" height="28" class="icon"> Update Page
                 </div>
-                <form action="{{ route('pages.update', [$team->slug, $wiki->category->slug, $wiki->slug, $page->slug ]) }}" method="POST" role="form">
+                <form action="{{ route('pages.update', [$team->slug, $wiki->space->slug, $wiki->slug, $page->slug ]) }}" method="POST" role="form">
                     {{ method_field('patch') }}
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">

@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
-use App\Models\Wiki;
-use App\Models\Team;
-use App\Models\Page;
-use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\{Wiki, Team, Page, Space};
 
 class PageController extends Controller
 {
@@ -20,18 +17,18 @@ class PageController extends Controller
 
     protected $request;
 
-    protected $category;
+    protected $space;
 
     public function __construct(Request $request,
                                 Wiki $wiki,
                                 Team $team,
                                 Page $page,
-                                Category $category)
+                                Space $space)
     {
         $this->wiki     = $wiki;
         $this->request  = $request;
         $this->page     = $page;
-        $this->category = $category;
+        $this->space    = $space;
         $this->team     = $team;
     }
 
@@ -40,7 +37,7 @@ class PageController extends Controller
         if($this->request->get('explore')) {
             $currentPage = $this->page->where('slug', $this->request->get('page'))->first();
 
-            $wiki =  $this->wiki->where('slug', $this->request->get('wiki'))->with(['category'])->first();
+            $wiki =  $this->wiki->where('slug', $this->request->get('wiki'))->with(['space'])->first();
             
             $pages = $this->page->getTreeTo($currentPage);
 
@@ -65,7 +62,7 @@ class PageController extends Controller
     {
         $html = '<ul>'; 
         foreach ($pages as $page) {
-            $html .= '<li id="' . $page->id . '" data-slug="' . $page->slug . '" data-position="'. $page->position .'" data-created_at="' . $page->created_at . '" class="' . ($page->isLeaf() == false ? 'jstree-closed' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $page->wiki->category->slug, $page->wiki->slug, $page->slug]) . '">' . $page->name . '</a>';
+            $html .= '<li id="' . $page->id . '" data-slug="' . $page->slug . '" data-position="'. $page->position .'" data-created_at="' . $page->created_at . '" class="' . ($page->isLeaf() == false ? 'jstree-closed' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $page->wiki->space->slug, $page->wiki->slug, $page->slug]) . '">' . $page->name . '</a>';
         }
         $html .= '</ul>'; 
 
@@ -77,10 +74,10 @@ class PageController extends Controller
         foreach ($pages as $page => $value) {
             foreach ($value->getSiblings() as $siblings) {
                 if ($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="'. $siblings->position .'" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->category->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
+                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="'. $siblings->position .'" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="'. $value->position .'" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->category->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
+            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="'. $value->position .'" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
             if (!empty($value['children'])) {
                 $html .= '<ul>';
                 self::makePageTree($wiki, $value['children'], $currentPageId, $html);
@@ -126,24 +123,24 @@ class PageController extends Controller
         ];   
     }
 
-    public function destroy(Team $team, Category $category, Wiki $wiki, Page $page)
+    public function destroy(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $this->page->deletePage($page->id);
 
-        return redirect()->route('wikis.show', [$team->slug, $wiki->category->slug, $wiki->slug])->with([
+        return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
             'alert'      => 'Page successfully deleted.',
             'alert_type' => 'success',
         ]);
     }
 
-    public function edit(Team $team, Category $category, Wiki $wiki, Page $page)
+    public function edit(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $pages = $this->page->getPages($wiki->id);
 
-        return view('page.edit', compact('page', 'wiki', 'pages', 'team', 'category'));
+        return view('page.edit', compact('page', 'wiki', 'pages', 'team', 'space'));
     }
 
-    public function store(Team $team, Category $category, Wiki $wiki)
+    public function store(Team $team, Space $space, Wiki $wiki)
     {
         $this->validate($this->request, Page::PAGE_RULES);
 
@@ -151,7 +148,7 @@ class PageController extends Controller
 
         $page = $this->page->saveWikiPage($wiki, $this->request->all());
 
-        return redirect()->route('pages.show', [$team->slug, $category->slug, $wiki->slug, $page->slug])->with([
+        return redirect()->route('pages.show', [$team->slug, $space->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success',
         ]);
@@ -189,14 +186,14 @@ class PageController extends Controller
         }
     }
 
-    public function create(Team $team, Category $category, Wiki $wiki)
+    public function create(Team $team, Space $space, Wiki $wiki)
     {
         $pages = $this->page->getPages($wiki->id);
 
-        return view('page.create', compact('team', 'wiki', 'pages', 'category'));
+        return view('page.create', compact('team', 'wiki', 'pages', 'space'));
     }
 
-    public function show(Team $team, Category $category, Wiki $wiki, Page $page)
+    public function show(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $isUserLikeWiki = false;
         foreach ($wiki->likes as $like) {
@@ -212,15 +209,15 @@ class PageController extends Controller
             }
         }
 
-        return view('page.index', compact('team', 'page', 'wiki', 'category', 'isUserLikeWiki', 'isUserLikePage'));
+        return view('page.index', compact('team', 'page', 'wiki', 'space', 'isUserLikeWiki', 'isUserLikePage'));
     }
 
-    public function update(Team $team, Category $category, Wiki $wiki, Page $page)
+    public function update(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $this->page->updatePage($page->id, $this->request->all());
         $page = $this->page->find($page->id);
 
-        return redirect()->route('pages.show', [$team->slug, $category->slug, $wiki->slug, $page->slug])->with([
+        return redirect()->route('pages.show', [$team->slug, $space->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully updated.',
             'alert_type' => 'success',
         ]);

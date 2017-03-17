@@ -25,16 +25,16 @@
 									</div>
 								</div>
 								<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-									<div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
-										<label for="category" class="control-label">Category</label>
-										<select name="category" id="category" class="form-control" required>
-											<option value="">Select a category</option>
-											@foreach($categories as $category)
-												<option value="{{ $category->id }}">{{ $category->name }}</option>
+									<div class="form-group {{ $errors->has('space') ? 'has-error' : '' }}">
+										<label for="space" class="control-label">Space</label>
+										<select name="space" id="space" class="form-control" required>
+											<option value="">Select a space</option>
+											@foreach($spaces as $space)
+												<option value="{{ $space->id }}">{{ $space->name }}</option>
 											@endforeach
 										</select>
-										@if($errors->has('category'))
-										    <p class="help-block has-error">{{ $errors->first('category') }}</p>
+										@if($errors->has('space'))
+										    <p class="help-block has-error">{{ $errors->first('space') }}</p>
 										@endif
 									</div>
 								</div>
