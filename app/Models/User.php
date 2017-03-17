@@ -231,7 +231,7 @@ class User extends Authenticatable
     {
         $routePermissions = explode('|', $routePermissions);
         
-        $groups = $this->find(Auth::user()->id)->with('groups')->first()->groups;
+        $groups = $this->with('groups')->findOrFail(Auth::user()->id)->groups;
 
         foreach ($groups as $group) {
             foreach ($group->permissions as $permission) {
