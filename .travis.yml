@@ -1,6 +1,6 @@
 language: php
 php:
-  - '7.0'
-  - '7.1'
-  - hhvm
-  - nightly
+  - 7.0
+  - 7.1
+matrix:
+  fast_finish: true
