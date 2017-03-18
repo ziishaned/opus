@@ -38,7 +38,7 @@ There are spaces for every team, department or major project. Then employees can
   ```bash
   git clone https://github.com/zeeshanu/opus.git
   ```
-- Create `.env` using `.env.example` and populate the relevant information
+- Create `.env` using `.env.dist` and populate the relevant information
 - Install the dependencies
   ```bash
   composer install
