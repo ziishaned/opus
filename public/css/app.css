@@ -278,6 +278,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .events-list .event .event-icon {
 	margin-right: 6px;
+	color: #666;
 }
 
 .events-list .event .event-top {

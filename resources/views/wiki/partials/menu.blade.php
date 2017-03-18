@@ -25,6 +25,12 @@
                         <span class="item-name">Create a Page</span>
                     </a>
                 </li>
+                <li class="item {{ (Route::currentRouteName() == 'wikis.overview' ? 'active' : '') }}">
+                    <a href="{{ route('wikis.overview', [$team->slug, $space->slug, $wiki->slug, ]) }}">
+                        <i class="fa fa-gear fa-fw fa-lg icon"></i> 
+                        <span class="item-name">Wiki Settings</span>
+                    </a>
+                </li>
             </ul>
             <div class="side-menu-page-shortcuts-list">
                 <ul class="list-unstyled">
@@ -40,10 +46,8 @@
                 <div id="wiki-page-tree" data-wiki="{{ $wiki->slug }}" @if(isset($page)) data-page="{{ $page->id }}" @endif></div>
             </div>
         </div>
-        <div class="wiki-setting-bottom">
-            <a href="{{ route('wikis.overview', [$team->slug, $space->slug, $wiki->slug, ]) }}" class="btn wiki-setting-button btn-block">
-                <i class="fa fa-gear fa-fw fa-lg"></i> Wiki Settings
-            </a>
-        </div>
+        {{-- <div class="wiki-setting-bottom">
+            
+        </div> --}}
     </div>
 </div>
