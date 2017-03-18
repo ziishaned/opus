@@ -48,6 +48,7 @@
 		</div>
 
 		<script type="text/javascript" src="/js/jquery.js"></script>
+		<script type="text/javascript" src="/js/list.min.js"></script>
 		<script type="text/javascript" src="/js/laroute.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/plugins/jcrop/Jcrop.min.js"></script>

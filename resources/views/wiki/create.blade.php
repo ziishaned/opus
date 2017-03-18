@@ -5,7 +5,7 @@
 		<div class="row no-container">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="page-header">
-					<img src="/img/icons/basic_notebook_pen.svg" width="28" height="28" class="icon"> Create Wiki
+					<i class="fa fa-book fa-fw fa-lg icon"></i> Create wiki
 				</div>
 				<form action="{{ route('wikis.store', [$team->slug, ]) }}" method="POST" role="form" class="create-wiki-form">
 					<div class="row">

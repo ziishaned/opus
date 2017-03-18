@@ -64,7 +64,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => '{team_slug}/spaces'], function () {
-        Route::get('', 'SpaceConroller@create')->name('spaces.create');
+        Route::get('create', 'SpaceConroller@create')->name('spaces.create');
         Route::post('', 'SpaceConroller@store')->name('spaces.store');
         Route::delete('{space_slug}', 'SpaceConroller@destroy')->name('teams.spaces.destroy');
         Route::patch('{space_slug}', 'SpaceConroller@update')->name('teams.spaces.update');

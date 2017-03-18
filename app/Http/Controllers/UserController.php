@@ -140,13 +140,15 @@ class UserController extends Controller
 
     public function dashboard(Team $team)
     {
+        $spaces = (new \App\Models\Space)->getTeamSpaces($team->id);
+
         $likeWikis = (new \App\Models\Like)->getUserLikeWikis(Auth::user()->id);
         
         $activities = $this->team->getActivty($team->id);
      
         $wikis      = $this->wiki->getTeamWikis($team->id, 5);
         
-        return view('team.dashboard', compact('team', 'activities', 'wikis', 'likeWikis'));
+        return view('team.dashboard', compact('team', 'activities', 'wikis', 'likeWikis', 'spaces'));
     }
 
     public function getTeamMembers()

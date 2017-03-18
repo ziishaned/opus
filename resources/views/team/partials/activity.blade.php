@@ -124,7 +124,7 @@
 						<div class="clearfix"></div>
 					</div>
                     @if($activity->name == 'created_comment' || $activity->name == 'deleted_comment' || $activity->name == 'updated_comment')
-                        <p style="border: 1px solid #ddd; padding: 6px 11px; border-radius: 3px; margin-bottom: 5px; background-color: #fbfbfb; margin-top: 10px;">{!! (new Emoji)->render($activity->subject->content) !!}</p>
+                        <p style="border: 1px solid #eee; padding: 6px 11px; border-radius: 3px; margin-bottom: 5px; background-color: #fbfbfb; margin-top: 10px;">{!! (new Emoji)->render($activity->subject->content) !!}</p>
                     @endif
 					<p class="text-muted" style="font-size: 13px; color: #b7b7b7;"><span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $activity->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}">{{ $activity->created_at->timezone(Session::get('user_timezone'))->diffForHumans() }}</span></p>
 				</div>

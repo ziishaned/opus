@@ -68,13 +68,29 @@ var App = {
         $(window).resize(fixAffixWidth);
     },
     setCategoryItemBgColor() {
-        $('#categories-list #categories-list-item, .wikis-list-item').each(function(index, el) {
+        $('#categories-list #categories-list-item').each(function(index, el) {
             let categoryName = $(el).data('name');
             let colorHash = new ColorHash();
-            $(el).find('.cateogry-icon, .item-category-label').css({
-                'background-color': colorHash.hex(categoryName),
+            let categoryBgColor = colorHash.hex(categoryName);
+
+            // Set the space icon unique background color. 
+            $(el).find('.cateogry-icon').css({
+                'background-color': categoryBgColor,
                 'color': '#ffffff',
             });
+            
+            // Get the current opened space.
+            let currentSpace = $('.wikis-list').data('space');
+            
+            // Match the current space with opened space and set background color wikis space icons.
+            if($(el).data('name') === currentSpace) {
+                $('.wikis-list .wikis-list-item').each(function(index, el) {
+                    $(el).find('.item-category-label').css({
+                        'background-color': categoryBgColor,
+                        'color': '#ffffff',
+                    });
+                });
+            }
         });
     },
     initCKEditor() {
@@ -323,6 +339,12 @@ var App = {
     bindUI: function () {
         var that = this;
 
+        if($('#categories-list').length) {
+            new List('categories-list', { 
+                valueNames: ['item-name']
+            });
+        }
+
         $("#team_logo, #profile_image").change(function(){
             that.readURL(this);
         });
@@ -407,8 +429,6 @@ var App = {
             $(this).closest('.page-like-con').find('#spinner').css('display', 'inline-block');
             that.likeSubject(page, 'page', '.page-like-con');
         });
-
-        $(".comments").scrollTop($('.comments').height()+120000000);
 
         if(document.getElementById('timezone')) {
             if($('#timezone').data('selected').length) {

@@ -33,7 +33,7 @@ class Like extends Model
 
     public function getUserLikeWikis($id)
     {
-        $likes = $this->where('user_id', $id)->where('subject_type', 'App\Models\Wiki')->with(['subject'])->limit(15)->latest()->get();
+        $likes = $this->where('user_id', $id)->where('subject_type', 'App\Models\Wiki')->with(['subject'])->limit(7)->latest()->get();
 
         return $likes;
     }

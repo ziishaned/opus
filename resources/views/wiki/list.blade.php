@@ -6,7 +6,7 @@
 			<ul class="list-unstyled side-menu-top">
 				<li class="item {{ (Route::currentRouteName() == 'teams.wikis' ? 'active' : '') }}">
 					<a href="{{ route('teams.wikis', [$team->slug]) }}">
-						<img src="/img/icons/basic_notebook.svg" width="24" height="24" class="icon">
+						<i class="fa fa-book fa-fw fa-lg icon"></i>
 						<span class="item-name">All wikis</span>
 					</a>
 				</li>
@@ -57,7 +57,7 @@
 					            <a href="{{ route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" class="list-group-item wikis-list-item" data-name="{{ $wiki->name }}">
 					                <div class="media">
 					                    <div class="pull-left">
-					                        <img class="media-object" src="/img/icons/basic_notebook.svg" alt="Image" width="19" height="19">
+					                        <i class="fa fa-book fa-fw fa-lg icon"></i>
 					                    </div>
 					                    <div class="media-body">
 					                        <div class="wiki-top">
