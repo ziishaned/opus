@@ -43,22 +43,24 @@
 				</li>
 				<li>
 					<div class="form-group with-icon" style="margin-bottom: 5px;">
-						<input type="text" class="form-control overall-search-input" placeholder="Filter...">
+						<input type="text" class="form-control fuzzy-search overall-search-input" placeholder="Filter...">
 						<i class="fa fa-filter icon"></i>
 					</div>
 				</li>
 				@if($spaces->count() > 0)
-					@foreach($spaces as $space)
-						<li class="item" id="categories-list-item" data-name="{{ $space->name }}">
-			                <a href="{{ route('spaces.wikis', [$team->slug, $space->slug, ]) }}">
-			                    <div class="cateogry-icon" style="margin-right: 13px; position: relative; top: 1px;"></div>
-								<span class="item-name">{{ $space->name }}</span>
-								@if($space->wikis->count())
-									<span style="color: #c1c1c1; margin-left: auto; margin-right: 2px;">{{ $space->wikis->count() }}</span>
-								@endif
-			                </a>
-			            </li>
-		           @endforeach
+					<div class="list">
+						@foreach($spaces as $space)
+							<li class="item" id="categories-list-item" data-name="{{ $space->name }}">
+				                <a href="{{ route('spaces.wikis', [$team->slug, $space->slug, ]) }}">
+				                    <div class="cateogry-icon" style="margin-right: 13px; position: relative; top: 1px;"></div>
+									<span class="item-name">{{ $space->name }}</span>
+									@if($space->wikis->count())
+										<span style="color: #c1c1c1; margin-left: auto; margin-right: 2px;">{{ $space->wikis->count() }}</span>
+									@endif
+				                </a>
+				            </li>
+			           @endforeach
+					</div>
 		        @else
 		           <li class="text-center text-muted" style="margin-top: 15px; font-size: 13px;">Nothing found...</li>
 		        @endif

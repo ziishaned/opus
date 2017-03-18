@@ -323,6 +323,12 @@ var App = {
     bindUI: function () {
         var that = this;
 
+        if($('#categories-list').length) {
+            new List('categories-list', { 
+                valueNames: ['item-name']
+            });
+        }
+
         $("#team_logo, #profile_image").change(function(){
             that.readURL(this);
         });
