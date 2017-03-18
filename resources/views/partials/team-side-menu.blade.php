@@ -15,7 +15,7 @@
 				</a>
 			</li>
 			<li class="item">
-				<a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}">
+				<a href="{{ route('roles.index', [$team->slug]) }}">
 					<i class="fa fa-shield fa-fw fa-lg icon"></i>
 					<span class="item-name">Roles</span>
 				</a>
@@ -41,13 +41,13 @@
 						<i class="fa fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="Create space"></i>
 					</a>
 				</li>
-				<li>
-					<div class="form-group with-icon" style="margin-bottom: 5px;">
-						<input type="text" class="form-control fuzzy-search overall-search-input" placeholder="Filter...">
-						<i class="fa fa-filter icon"></i>
-					</div>
-				</li>
 				@if($spaces->count() > 0)
+					<li>
+						<div class="form-group with-icon" style="margin-bottom: 5px;">
+							<input type="text" class="form-control fuzzy-search overall-search-input" placeholder="Filter...">
+							<i class="fa fa-filter icon"></i>
+						</div>
+					</li>
 					<div class="list">
 						@foreach($spaces as $space)
 							<li class="item" id="categories-list-item" data-name="{{ $space->name }}">
@@ -62,7 +62,9 @@
 			           @endforeach
 					</div>
 		        @else
-		           <li class="text-center text-muted" style="margin-top: 15px; font-size: 13px;">Nothing found...</li>
+		           	<li class="text-center text-muted">
+		           		<h1 class="nothing-found side" style="margin-top: 20px; "><i class="fa fa-exclamation-triangle fa-fw icon"></i> Nothing found</h1>
+		           	</li>
 		        @endif
 			</ul>
 		</div>

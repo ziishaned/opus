@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Group extends Model
+class Role extends Model
 {
 	use SoftDeletes, Sluggable;
 
-    protected $table = 'groups';
+    protected $table = 'roles';
 
     protected $fillable = [
     	'name',
@@ -23,8 +23,8 @@ class Group extends Model
 
     protected $dates = ['deleted_at'];
 
-    const GROUP_RULES = [
-        'group_name' => 'required|unique:groups,name'
+    const ROLE_RULES = [
+        'role_name' => 'required|unique:roles,name'
     ];
 
     public function sluggable()
@@ -43,40 +43,40 @@ class Group extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'users_groups', 'group_id', 'user_id');
+        return $this->belongsToMany(User::class, 'users_roles', 'role_id', 'user_id');
     }
 
     public function permissions()
     {
-    	return $this->belongsToMany(Permission::class, 'group_permissions', 'group_id', 'permission_id');
+    	return $this->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');
     }
 
-    public function createGroup($data)
+    public function createRole($data)
     {
-        $group = $this->create([
-            'name' => $data['group_name'],
+        $role = $this->create([
+            'name' => $data['role_name'],
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->getTeam()->id,
         ]);
 
-        return $group;
+        return $role;
     }
 
-    public function updateGroup($id, $data)
+    public function updateRole($id, $data)
     {
-        $group = $this->find($id)->update([
-            'name' => $data['group_name'],
+        $role = $this->find($id)->update([
+            'name' => $data['role_name'],
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->getTeam()->id,
         ]);
 
-        return $group;
+        return $role;
     }
 
-    public function getTeamGroups($teamId)
+    public function getTeamRoles($teamId)
     {
-        $groups = $this->where('team_id', $teamId)->latest()->with(['members', 'permissions'])->get();
+        $roles = $this->where('team_id', $teamId)->latest()->with(['members', 'permissions'])->get();
 
-        return $groups;
+        return $roles;
     }
 }
