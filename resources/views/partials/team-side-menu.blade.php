@@ -37,7 +37,7 @@
 			<ul class="list-unstyled" id="categories-list">
 				<li class="nav-header" style="position: relative; margin-bottom: 12px;">
 					Spaces <span style="font-weight: 900; font-size: 15px;">-</span> {{ $spaces->count() }} 
-					<a href="#" style="position: absolute; right: 10px; top: 5px; color: #9c9c9c;">
+					<a href="{{ route('spaces.create', [ $team->slug ]) }}" style="position: absolute; right: 10px; top: 5px; color: #9c9c9c;">
 						<i class="fa fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="Create space"></i>
 					</a>
 				</li>

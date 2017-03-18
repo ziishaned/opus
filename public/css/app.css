@@ -255,14 +255,9 @@ h1, h2, h3, h4, h5, h6, p {
     top: -2px;
 }
 
-.page-header, .wikis-list-header {
+.page-header {
     font-size: 19px;
     font-weight: 500;
-}
-
-.wikis-list-inner {
-	border-bottom: 1px solid #eee;
-	padding-bottom: 9px;
 }
 
 .events-list .event {
@@ -412,8 +407,9 @@ label {
 .wikis-list .wikis-list-item {
 	border-left: none;
 	border-right: none;
-	padding: 13px 6px;
+	padding: 12px 8px;
 	border-color: #eee;
+	border-radius: 0px;
 }
 
 .wikis-list .wikis-list-item .media-heading {
@@ -441,10 +437,10 @@ label {
 }
 
 .item-category-label {
-	border-radius: 3px;
-    padding: 3px 10px;
-    color: #9b9999;
-    font-size: 12px;
+	border-radius: 2px;
+    padding: 2px 10px;
+    color: #333;
+    font-size: 11px;
     background: #e8e8e8;
     text-transform: uppercase;
 }
@@ -1333,12 +1329,12 @@ ul.dot-divider li:first-child:before {
 }
 
 ul.dot-divider li:before {
-	color: #000;
-	content: '.';
-	font-weight: 700;
-	margin-right: 12px;
-	position: relative;
-	top: -5px;
+    color: #000;
+    content: '.';
+    font-weight: 700;
+    margin-right: 5px;
+    position: relative;
+    top: -3px;
 }
 
 .row.vdivide div[class*="col-"]:not(:last-child):after {

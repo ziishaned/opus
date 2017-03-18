@@ -24,7 +24,7 @@
 												<i class="fa fa-book fa-fw fa-lg icon"></i> {{ $wiki->name }}
 												@if($wiki->likes->count()) 
 													<div style="position: absolute; right: 10px; top: 5px; color: #c1c1c1;">
-														<i class="fa fa-heart fa-fw"></i> {{ $wiki->likes->count() }}
+														<i class="fa fa-star fa-fw"></i> {{ $wiki->likes->count() }}
 													</div>
 												@endif
 											</a>
@@ -52,7 +52,7 @@
 												<i class="fa fa-book fa-fw fa-lg icon"></i> {{ $like->subject->name }}
 												@if($like->subject->likes->count()) 
 													<div style="position: absolute; right: 10px; top: 5px; color: #c1c1c1;">
-														<i class="fa fa-heart fa-fw"></i> {{ $like->subject->likes->count() }}
+														<i class="fa fa-star fa-fw"></i> {{ $like->subject->likes->count() }}
 													</div>
 												@endif
 											</a>
