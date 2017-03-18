@@ -3,7 +3,7 @@
 		<ul class="list-unstyled side-menu-top">
 			<li class="nav-header">Quick Links</li>
 			<li class="item {{ (Route::currentRouteName() == 'dashboard' ? 'active' : '') }}">
-				<a href="dashboard.html">
+				<a href="{{ route('dashboard', [$team->slug]) }}">
 					<i class="fa fa-history fa-fw fa-lg icon"></i>
 					<span class="item-name">Activities</span>
 				</a>
@@ -49,13 +49,13 @@
 						</div>
 					</li>
 					<div class="list">
-						@foreach($spaces as $space)
-							<li class="item" id="categories-list-item" data-name="{{ $space->name }}">
-				                <a href="{{ route('spaces.wikis', [$team->slug, $space->slug, ]) }}">
+						@foreach($spaces as $item)
+							<li class="item {{ isset($space) && ($space->slug === $item->slug) ? 'active' : '' }}" id="categories-list-item" data-name="{{ $item->name }}">
+				                <a href="{{ route('spaces.wikis', [$team->slug, $item->slug, ]) }}">
 				                    <div class="cateogry-icon" style="margin-right: 13px; position: relative; top: 1px;"></div>
-									<span class="item-name">{{ $space->name }}</span>
-									@if($space->wikis->count())
-										<span style="color: #c1c1c1; margin-left: auto; margin-right: 2px;">{{ $space->wikis->count() }}</span>
+									<span class="item-name">{{ $item->name }}</span>
+									@if($item->wikis->count())
+										<span style="color: #c1c1c1; margin-left: auto; margin-right: 2px;">{{ $item->wikis->count() }}</span>
 									@endif
 				                </a>
 				            </li>

@@ -21,9 +21,11 @@ class RoleController extends Controller
 
     public function index(Team $team)
     {
+        $spaces = (new \App\Models\Space)->getTeamSpaces($team->id);
+
         $roles = $this->role->where('team_id', $team->id)->latest()->with(['members', 'permissions'])->get();
 
-        return view('role.index', compact('team', 'roles'));
+        return view('role.index', compact('team', 'roles', 'spaces'));
     }
 
     public function create()
