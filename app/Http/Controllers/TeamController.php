@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use DB;
-use Mail;
-use Image;
-use Redirect;
+use DB, Mail, Image, Redirect;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\{Auth, Session};
 use App\Models\{User, Team, Role, Invite, Space, Integration};

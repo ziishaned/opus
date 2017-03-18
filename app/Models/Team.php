@@ -95,9 +95,9 @@ class Team extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function groups()
+    public function roles()
     {
-        return $this->hasMany(Group::class, 'team_id', 'id');
+        return $this->hasMany(Role::class, 'team_id', 'id');
     }
 
     public function members()

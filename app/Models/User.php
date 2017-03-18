@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Auth;
+use Hash;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -76,9 +76,9 @@ class User extends Authenticatable
         return $this->team->first();
     }
 
-    public function groups()
+    public function roles()
     {
-        return $this->hasMany(Group::class, 'user_id', 'id')->with('permissions');
+        return $this->hasMany(Role::class, 'user_id', 'id')->with('permissions');
     }
 
     /**
@@ -231,10 +231,10 @@ class User extends Authenticatable
     {
         $routePermissions = explode('|', $routePermissions);
         
-        $groups = $this->with('groups')->findOrFail(Auth::user()->id)->groups;
+        $roles = $this->with('roles')->findOrFail(Auth::user()->id)->roles;
 
-        foreach ($groups as $group) {
-            foreach ($group->permissions as $permission) {
+        foreach ($roles as $role) {
+            foreach ($role->permissions as $permission) {
                 foreach ($routePermissions as $routePer) {
                     if($permission->name === $routePer) {
                         return true;

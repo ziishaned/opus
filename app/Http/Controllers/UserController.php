@@ -36,11 +36,13 @@ class UserController extends Controller
 
     public function show(Team $team, User $user)
     {   
+        $spaces = (new \App\Models\Space)->getTeamSpaces($team->id);
+
         $activities = $this->user->getActivty($user->id);
 
         $likeWikis = (new \App\Models\Like)->getUserLikeWikis(Auth::user()->id);
 
-        return view('user.profile', compact('user', 'team', 'activities', 'likeWikis'));
+        return view('user.profile', compact('user', 'team', 'activities', 'likeWikis', 'spaces'));
     }
 
     public function storeAvatar() {
