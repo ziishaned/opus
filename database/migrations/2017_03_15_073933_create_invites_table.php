@@ -18,7 +18,7 @@ class CreateInvitesTable extends Migration
             $table->string('code');
             $table->string('email');
             $table->integer('team_id');
-            $table->integer('group_id');
+            $table->integer('role_id');
             $table->timestamp('claimed_at')->nullable();
             $table->timestamps();
         });

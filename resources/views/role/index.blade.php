@@ -12,7 +12,7 @@
                     <div class="s-group-header">
                         <div class="header">
                             <div class="pull-left">
-                                <h2 style="margin-bottom: 10px;">Groups</h2>
+                                <h2 style="margin-bottom: 10px;">Roles</h2>
                                 <p class="text-muted">You can edit the groups and set there permissions.</p>
                             </div>
                             <div class="pull-right">
@@ -22,21 +22,21 @@
                         </div>
                     </div>
                     <div class="s-groups-body">
-                        @foreach($groups as $group)
+                        @foreach($roles as $role)
                             <div class="panel panel-default s-group-item">
                                 <div class="panel-body">
                                     <div class="group-item-header">
                                         <div class="pull-left">
-                                            <p class="group-name"><span class="name-inner">{{ $group->name }}</span> <span class="label label-default">{{ $group->members->count() }}</span></p> 
+                                            <p class="group-name"><span class="name-inner">{{ $role->name }}</span> <span class="label label-default">{{ $role->members->count() }}</span></p> 
                                         </div>
                                         <div class="pull-right">
                                             <ul class="list-unstyled list-inline">
                                                 <li>
-                                                    <a href="{{ route('roles.edit', [$team->slug, $group->slug]) }}"><i class="fa fa-pencil fa-fw" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
+                                                    <a href="{{ route('roles.edit', [$team->slug, $role->slug]) }}"><i class="fa fa-pencil fa-fw" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
                                                 </li>
-                                                @if($group->slug !== 'admins') 
+                                                @if($role->slug !== 'admins') 
                                                     <li>
-                                                        <a href="{{ route('roles.delete', [$team->slug, $group->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+                                                        <a href="{{ route('roles.delete', [$team->slug, $role->slug]) }}" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
                                                     </li>
                                                 @endif
                                             </ul>
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="group-members-con">
                                         <div class="row">
-                                            @foreach($group->members as $member)
+                                            @foreach($role->members as $member)
                                                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 group-member-item">
                                                     <div class="media">
                                                         <a class="pull-left group-member-img" href="#">

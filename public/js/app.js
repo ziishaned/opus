@@ -339,7 +339,7 @@ var App = {
     bindUI: function () {
         var that = this;
 
-        if($('#categories-list').length) {
+        if($('#categories-list #categories-list-item').length) {
             new List('categories-list', { 
                 valueNames: ['item-name']
             });

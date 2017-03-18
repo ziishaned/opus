@@ -33,22 +33,21 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('account', 'UserController@accountSettings')->name('settings.account');
     });
 
-    Route::group(['prefix' => '{team_slug}/groups'], function () {
-        Route::delete('/{group_slug}', 'GroupController@destroy')->name('groups.delete');
-        Route::patch('/{group_slug}', 'GroupController@update')->name('groups.update');
-        Route::post('', 'GroupController@store')->name('groups.post');
-        Route::get('/{group_slug}/edit', 'GroupController@edit')->name('groups.edit');
-        Route::get('account', 'UserController@accountSettings')->name('settings.account');
+    Route::group(['prefix' => '{team_slug}/settings/roles'], function () {
+        Route::get('', 'RoleController@index')->name('roles.index');
+        Route::delete('{role_slug}', 'RoleController@destroy')->name('roles.delete');
+        Route::patch('{role_slug}', 'RoleController@update')->name('roles.update');
+        Route::post('', 'RoleController@store')->name('roles.post');
+        Route::get('{role_slug}/edit', 'RoleController@edit')->name('roles.edit');
+        Route::get('create', 'RoleController@create')->name('roles.create');
     });    
 
     Route::group([ 'prefix' => '{team_slug}/settings'], function() {
         Route::get('general', 'TeamController@generalSettings')->name('teams.settings.general');
         Route::get('members', 'TeamController@membersSettings')->name('teams.settings.members');
-        Route::get('groups', 'TeamController@groupSettings')->name('teams.settings.groups');
         Route::get('integration', 'TeamController@integration')->name('teams.integration');
         Route::get('integration/slack', 'TeamController@slackIntegration')->name('integration.slack');
         Route::post('integration/slack', 'IntegrationController@storeSlackIntegration')->name('integration.slack.store');
-        Route::get('groups/create', 'TeamController@createGroup')->name('groups.create');
     });
 
     Route::group(['prefix' => '{team_slug}/users'], function () {
@@ -59,6 +58,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('{user_slug}/readlist', 'UserController@getReadList')->name('users.readlist');
         Route::get('{user_slug}', 'UserController@show')->name('users.show');
         Route::patch('{user_slug}', 'UserController@update')->name('users.update');
+        Route::get('{user_slug}/settings/account', 'UserController@accountSettings')->name('settings.account');
         Route::post('avatar/store', 'UserController@storeAvatar');
         Route::post('avatar/crop', 'UserController@cropAvatar');
     });
@@ -75,7 +75,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
 
     Route::delete('{team_slug}/invite/{hash}', 'InviteController@destroy')->name('invite.destroy');
     Route::get('{team_slug}/invite', 'TeamController@inviteUsers')->name('invite.users');
-    Route::get('{team_slug}', 'UserController@dashboard')->name('dashboard')->middleware('dashboard');
+    Route::get('{team_slug}', 'UserController@dashboard')->name('dashboard');
     Route::post('{team_slug}/invite', 'InviteController@store')->name('invites.create');
     Route::delete('{id}', 'TeamController@destroy')->name('teams.destroy');
     Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');

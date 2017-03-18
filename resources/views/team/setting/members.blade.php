@@ -20,8 +20,8 @@
                             @endif
                         </div>
                         <select name="group" id="input" class="form-control" required>
-                            @foreach($groups as $group)
-                                <option value="{{ $group->slug }}">{{ $group->name }}</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->slug }}">{{ $role->name }}</option>
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-success pull-right">Invite</button>

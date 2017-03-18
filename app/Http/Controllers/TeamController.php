@@ -10,7 +10,7 @@ use Image;
 use Redirect;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\{Auth, Session};
-use App\Models\{User, Team, Group, Invite, Space, Integration};
+use App\Models\{User, Team, Role, Invite, Space, Integration};
 
 class TeamController extends Controller
 {
@@ -20,13 +20,13 @@ class TeamController extends Controller
 
     private $user;
 
-    private $group;
+    private $role;
 
     private $space;
 
     public function __construct(Request $request,
                                 Team $team,
-                                Group $group,
+                                Role $role,
                                 User $user,
                                 Space $space)
     {
@@ -34,7 +34,7 @@ class TeamController extends Controller
         $this->request      =   $request;
         $this->space        =   $space;
         $this->team         =   $team;
-        $this->group        =   $group;
+        $this->role        =   $role;
     }
 
     public function getMembers(Team $team)
@@ -114,8 +114,8 @@ class TeamController extends Controller
 
         $invitation = (new Invite)->getInvitation($team->id, $hash);
 
-        DB::table('users_groups')->update([
-            'group_id' => $invitation->group_id,
+        DB::table('users_roles')->update([
+            'role_id' => $invitation->role_id,
             'user_id' => $user->id,
             'team_id' => $team->id,
             'created_at' => Carbon::now(),
@@ -174,7 +174,7 @@ class TeamController extends Controller
         $teamRequestData = collect($this->request->all())->put('user_id', $user->id);
         $team = $this->team->postTeam($teamRequestData);
 
-        $this->createAdminsGroup($team);
+        $this->createAdminsRole($team);
 
         return redirect()->route('home')->with([
             'alert'      => 'Team successfully created. Now login to your team!',
@@ -182,10 +182,10 @@ class TeamController extends Controller
         ]);
     }
 
-    public function createAdminsGroup($team)
+    public function createAdminsRole($team)
     {
-        // Create group
-        $groupId = DB::table('groups')->insertGetId([
+        // Create role
+        $roleId = DB::table('roles')->insertGetId([
             'name'       => 'Admins',
             'slug'       => str_slug('Admins', '-'),
             'user_id'    => $team->user_id,
@@ -194,20 +194,20 @@ class TeamController extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
-        // Implementing permissions on group
+        // Implementing permissions on role
         $permissions = DB::table('permissions')->get();
         foreach ($permissions as $permission) {
-            DB::table('group_permissions')->insert([
-                'group_id' => $groupId,
+            DB::table('role_permissions')->insert([
+                'role_id' => $roleId,
                 'permission_id' => $permission->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
         }
 
-        // Inserting user into group.
-        DB::table('users_groups')->insertGetId([
-            'group_id'   => $groupId,
+        // Inserting user into role.
+        DB::table('users_roles')->insertGetId([
+            'role_id'   => $roleId,
             'user_id'    => $team->user_id,
             'team_id'    => $team->id,
             'created_at' => Carbon::now(),
@@ -226,23 +226,11 @@ class TeamController extends Controller
     {
         $members = $this->team->getMembers($team);
 
-        $groups = $this->group->getTeamGroups($team->id);
+        $roles = $this->role->getTeamRoles($team->id);
 
         $invitations = (new Invite)->getTeamPendingInvitations($team->id);
 
-        return view('team.setting.members', compact('team', 'members', 'groups', 'invitations'));
-    }
-
-    public function groupSettings(Team $team)
-    {
-        $groups = $this->group->where('team_id', $team->id)->latest()->with(['members', 'permissions'])->get();
-
-        return view('team.setting.group', compact('team', 'groups'));
-    }
-
-    public function createGroup(Team $team)
-    {
-        return view('team.setting.create-group', compact('team'));
+        return view('team.setting.members', compact('team', 'members', 'roles', 'invitations'));
     }
 
     public function uploadLogo(Team $team)
