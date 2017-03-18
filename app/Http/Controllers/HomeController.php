@@ -26,8 +26,6 @@ class HomeController extends Controller
     public function __construct(Wiki $wiki)
     {
         $this->wiki = $wiki;
-        // $this->middleware(['dashboard', 'auth']);
-        $this->middleware(['dashboard']);
     }
 
     public function home() 

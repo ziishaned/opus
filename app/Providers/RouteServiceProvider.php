@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\{User, Space, Wiki, Team, Page, Group};
+use App\Models\{User, Space, Wiki, Team, Page, Role};
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
             'space_slug'     =>  '(\w+-*\d*)+',
             'text'              =>  '[a-zA-Z0-9]+',
             'team_slug'         =>  '(\w+-*\d*)+',
-            'group_slug'        =>  '(\w+-*\d*)+',
+            'role_slug'        =>  '(\w+-*\d*)+',
             'team_id'           =>  '[0-9]+',
             'page_id'           =>  '[0-9]+',
             'wiki_id'           =>  '[0-9]+',
@@ -76,8 +76,8 @@ class RouteServiceProvider extends ServiceProvider
             return Team::where('slug', '=', $slug)->first();
         });
 
-        Route::bind('group_slug', function($slug) {
-            return Group::where('slug', '=', $slug)->with(['members', 'permissions'])->first();
+        Route::bind('role_slug', function($slug) {
+            return Role::where('slug', '=', $slug)->with(['members', 'permissions'])->first();
         });
 
         Route::bind('space_slug', function($slug) {

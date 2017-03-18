@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use App\Notifications\Wiki\DeleteWikiNotification;
-use App\Notifications\Wiki\UpdateWikiNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\Wiki\CreateWikiNotification;
+use App\Notifications\Wiki\{DeleteWikiNotification, UpdateWikiNotification};
 
 class Wiki extends Model
 {
