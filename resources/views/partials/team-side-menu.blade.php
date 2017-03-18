@@ -21,7 +21,7 @@
 				</a>
 			</li>
 			<li class="item">
-				<a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}">
+				<a href="{{ route('teams.settings.members', [$team->slug,]) }}">
 					<i class="fa fa-group fa-fw fa-lg icon"></i>
 					<span class="item-name">Members</span>
 				</a>

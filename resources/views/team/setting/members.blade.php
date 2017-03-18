@@ -74,7 +74,7 @@
                                     @endforeach
                                 </ul>
                             @else
-                                <h1 class="nothing-found side">Nothing found</h1>
+                                <h1 class="nothing-found side"><i class="fa fa-exclamation-triangle fa-fw icon"></i> Nothing found</h1>
                             @endif
                         </div>    
                     </div>

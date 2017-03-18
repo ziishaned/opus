@@ -192,7 +192,7 @@ input, select, textarea {
     margin: 0px;
 }
 
-.main-menu .dropdown-menu>li>a:hover {
+.dropdown-menu>li>a:hover {
     background-color: #777 !important;
     text-decoration: none;
     color: #fff;
@@ -714,7 +714,14 @@ label {
 }
 
 .comments .comment .user-name {
-	font-size: 16px;
+	font-size: 1em;
+    color: rgba(0,0,0,.87);
+    font-weight: 500;
+    -webkit-text-stroke: 0.02px;
+}
+
+.comments .comment .user-name a:hover {
+    color: rgba(0,0,0,.87);
 }
 
 .comments .comment .profile-image {
@@ -726,10 +733,11 @@ border-radius: 3px;
 }
 
 .comments .comment .comment-body .comment-content {
-	font-size: 14px;
-	line-height: 18.2px;
-	margin-bottom: 4px;
-	margin-top: 3.5px;
+    margin: .25em 0 0em;
+    font-size: 1em;
+    word-wrap: break-word;
+    color: rgba(0,0,0,.87);
+    line-height: 1.3;
 }
 
 .comments .comment {
@@ -1043,9 +1051,10 @@ border-radius: 3px;
 }
 
 .wiki-nav>nav>ul>li>a .icon {
-	margin-right: 3px;
-	position: relative;
-	top: -1px;
+	margin-right: 4px;
+    line-height: 9px;
+    font-size: 14px;
+    color: #586069;
 }
 
 .wiki-nav>nav>ul>li>a:hover, .wiki-nav>nav>ul>li>a:focus, .wiki-nav>nav>ul>li>a:active, .wiki-nav>nav>ul>li>a:visited {
@@ -1125,10 +1134,11 @@ border-radius: 3px;
 
 .wiki-comment-form #comment-input-textarea {
     resize: none;
-    min-height: 65px;
+    min-height: 84px;
     max-height: 115px;
-    font-size: 13px !important;
-    padding: 5px 10px;
+    font-size: 14px !important;
+    padding: 8px 10px;
+    color: #000;
 }
 
 .atwho-view {
@@ -1178,13 +1188,27 @@ border-radius: 3px;
 }
 
 .comment-actions ul li a {
-	color: #777;
-	font-size: 12px;
+	display: inline-block;
+    margin: 0 .75em 0 0;
+    color: rgba(0,0,0,.4);
+    font-size: 12px;
 }
 
 .comment-actions ul li a:hover {
 	text-decoration: none;
 	color: #000;
+}
+
+.comment-actions>ul>li:after {
+	color: rgba(0,0,0,.4);
+	content: '.';
+    font-weight: 500;
+    position: relative;
+    top: -3px;
+}
+
+.comment-actions>ul>li:last-child:after {
+	content: '';
 }
 
 /******************** Wiki Description Styles *********************/
