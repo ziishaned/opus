@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
 use Illuminate\Http\Request;
-use App\Models\{Wiki, Page, Team, Space};
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\{Page, Space, Team, Wiki, Tag};
 
 /**
  * Class WikiController
@@ -28,11 +26,11 @@ class WikiController extends Controller
 
     public function __construct(Request $request, Wiki $wiki, Team $team, Page $page, Space $space)
     {
-        $this->wiki     = $wiki;
-        $this->page     = $page;
-        $this->team     = $team;
-        $this->request  = $request;
-        $this->space    = $space;
+        $this->wiki    = $wiki;
+        $this->page    = $page;
+        $this->team    = $team;
+        $this->request = $request;
+        $this->space   = $space;
     }
 
     public function create(Team $team)
@@ -40,7 +38,7 @@ class WikiController extends Controller
         $spaces = $this->space->getTeamSpaces($team->id);
 
         if ($spaces->count() == 0) {
-            return redirect()->route('spaces.create', [$team->slug,])->with([
+            return redirect()->route('spaces.create', [$team->slug])->with([
                 'alert'      => 'You need to create space before creating wiki!',
                 'alert_type' => 'info',
             ]);
@@ -55,6 +53,8 @@ class WikiController extends Controller
 
         $wiki = $this->wiki->saveWiki($this->request->all(), $team->id);
 
+        (new Tag)->createTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
             'alert'      => 'Wiki successfully created.',
             'alert_type' => 'success',
@@ -63,23 +63,23 @@ class WikiController extends Controller
 
     public function show(Team $team, Space $space, Wiki $wiki)
     {
-        $pages = $this->page->getPages($wiki->id);
+        $wikiTags = $this->wiki->find($wiki->id)->tags()->get();
         
         $isUserLikeWiki = false;
         foreach ($wiki->likes as $like) {
-            if($like->user_id === Auth::user()->id) {
+            if ($like->user_id === Auth::user()->id) {
                 $isUserLikeWiki = true;
             }
         }
 
-        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki'));
+        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags'));
     }
 
     public function edit(Team $team, Space $space, Wiki $wiki)
     {
         $spaces = $this->space->getTeamSpaces($team->id);
 
-        $editWiki = true; 
+        $editWiki = true;
 
         return view('wiki.edit', compact('wiki', 'team', 'spaces', 'space', 'editWiki'));
     }
@@ -132,21 +132,21 @@ class WikiController extends Controller
     public function getWikiActivity(Team $team, Space $space, Wiki $wiki)
     {
         $isUserLikeWiki = $this->isUserLikeWiki($wiki);
-        $activities = $this->wiki->getActivty($wiki->id)->activity;
+        $activities     = $this->wiki->getActivty($wiki->id)->activity;
 
         return view('wiki.activity', compact('team', 'space', 'wiki', 'activities', 'isUserLikeWiki'));
     }
 
     public function overview(Team $team, Space $space, Wiki $wiki)
     {
-        $isUserLikeWiki = $this->isUserLikeWiki($wiki); 
+        $isUserLikeWiki = $this->isUserLikeWiki($wiki);
 
         return view('wiki.setting.overview', compact('team', 'space', 'wiki', 'isUserLikeWiki'));
     }
 
     public function permission(Team $team, Space $space, Wiki $wiki)
     {
-        $isUserLikeWiki = $this->isUserLikeWiki($wiki); 
+        $isUserLikeWiki = $this->isUserLikeWiki($wiki);
 
         return view('wiki.setting.permission', compact('team', 'space', 'wiki', 'isUserLikeWiki'));
     }
@@ -155,7 +155,7 @@ class WikiController extends Controller
     {
         $isLiked = false;
         foreach ($wiki->likes as $like) {
-            if($like->user_id === Auth::user()->id) {
+            if ($like->user_id === Auth::user()->id) {
                 $isLiked = true;
             }
         }

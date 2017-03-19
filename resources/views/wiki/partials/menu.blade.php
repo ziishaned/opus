@@ -32,10 +32,10 @@
                     </a>
                 </li>
             </ul>
-            <div class="side-menu-page-shortcuts-list">
+            <div class="side-menu-page-shortcuts-list" style="margin-bottom: 25px;">
                 <ul class="list-unstyled">
                     <li class="nav-header">Shortcuts</li>
-                    <li class="text-center text-muted" style="margin-top: 5px; font-size: 13px;">Nothing found...</li>
+                    <li class="nothing-found" style="margin-top: 14px; font-size: 12px;"><i class="fa fa-exclamation-triangle fa-fw icon"></i> Nothing found</li>
                 </ul>
             </div>
             <div class="side-menu-page-tree-list" style="margin-bottom: 15px;">
@@ -46,8 +46,5 @@
                 <div id="wiki-page-tree" data-wiki="{{ $wiki->slug }}" @if(isset($page)) data-page="{{ $page->id }}" @endif></div>
             </div>
         </div>
-        {{-- <div class="wiki-setting-bottom">
-            
-        </div> --}}
     </div>
 </div>

@@ -52,9 +52,29 @@
                             <span style="font-size: 22px; font-weight: 700; line-height: 26px;">...</span>
                         @endif
                     </div>
+                </div>     
+            </div>
+        </div>
+        <div class="row no-container">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div style="border: 1px solid #eee; border-radius: 3px; margin-bottom: 20px; box-shadow: 0 1px 1px rgba(0,0,0,.05); padding: 12px 15px;">
+                    <div class="media">
+                        <div class="pull-left" style="padding-right: 12px;">
+                            <p class="media-object"><i class="fa fa-tag fa-fw"></i> Tags:</p>
+                        </div>
+                        <div class="media-body" style="line-height: 26px;">
+                            <ul class="list-unstyled list-inline page-tags pull-left">                                
+                                @foreach($wikiTags as $tag)
+                                    <li>
+                                        <a href="#">{{ $tag->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>  
+                        </div>
+                    </div>
                 </div>
-			</div>
-		</div>
+            </div>
+        </div>
 		<div class="row no-container">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 @include('wiki.partials.comment')
