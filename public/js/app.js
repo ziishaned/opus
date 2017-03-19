@@ -11,7 +11,9 @@ var App = {
 
         $('#permissions-select').val($('#permissions-select').data('val'));
         $('#permissions-select').select2();
-        $('#tags').select2();
+        $('#tags').select2({
+            tags: true
+        });
 
         $("#group-member-select").select2({
             ajax: {
