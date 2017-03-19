@@ -98,7 +98,7 @@ There are spaces for every team, department or major project. Then employees can
 ## Contribution
 
 * Report issues
-* Open pull request with improvements
+* Open pull request to **DEV BRANCH** with improvements
 * Spread the word
 * Reach out to me directly at ziishaned@gmail.com or on twitter [@ziishaned](https://twitter.com/ziishaned)
 
