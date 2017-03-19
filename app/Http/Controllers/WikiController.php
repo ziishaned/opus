@@ -77,16 +77,20 @@ class WikiController extends Controller
 
     public function edit(Team $team, Space $space, Wiki $wiki)
     {
+        $wikiTags = $this->wiki->find($wiki->id)->tags()->get();
+
         $spaces = $this->space->getTeamSpaces($team->id);
 
         $editWiki = true;
 
-        return view('wiki.edit', compact('wiki', 'team', 'spaces', 'space', 'editWiki'));
+        return view('wiki.edit', compact('wiki', 'team', 'spaces', 'space', 'editWiki', 'wikiTags'));
     }
 
     public function update(Team $team, Space $space, Wiki $wiki)
-    {
+    { 
         $this->wiki->updateWiki($wiki->id, $this->request->all());
+
+        (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
 
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
             'alert'      => 'Wiki successfully updated.',

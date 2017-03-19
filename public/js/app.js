@@ -12,7 +12,8 @@ var App = {
         $('#permissions-select').val($('#permissions-select').data('val'));
         $('#permissions-select').select2();
         $('#tags').select2({
-            tags: true
+            tags: true,
+            maximumSelectionLength: 6,
         });
 
         $("#group-member-select").select2({

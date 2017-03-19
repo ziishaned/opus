@@ -1434,3 +1434,7 @@ ul.dot-divider li:before {
 	text-decoration: none;
 	color: #333;
 }
+
+.edit-wiki-tags .select2-selection {
+	height: 45px !important;
+}
