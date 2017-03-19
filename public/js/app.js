@@ -274,10 +274,10 @@ var App = {
                 $(element).closest('li').find('#spinner').hide();
                 $(element).show();
                 if(data.like === true) {
-                    $(element).html('<i class="fa fa-thumbs-up fa-fw"></i> Unlike');
+                    $(element).html('<i class="fa fa-thumbs-o-up fa-fw" style="font-size: 14px;"></i> Unlike');
                     $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())+1);
                 }  else {
-                    $(element).html('<i class="fa fa-thumbs-up fa-fw"></i> Like');
+                    $(element).html('<i class="fa fa-thumbs-o-up fa-fw" style="font-size: 14px;"></i> Like');
                     $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())-1);
                 }
             }

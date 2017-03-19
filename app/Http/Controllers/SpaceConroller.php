@@ -31,7 +31,7 @@ class SpaceConroller extends Controller
         
         $this->space->createSpace($this->request->all(), $team->id);
 
-        return redirect()->back()->with([
+        return redirect()->route('dashboard', ['team_slug' => $team->slug])->with([
             'alert' => 'Space successfully created.',
             'alert_type' => 'success'
         ]);
