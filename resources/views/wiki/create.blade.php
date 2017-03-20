@@ -37,7 +37,7 @@
 							</div>
 							<div class="form-group">
 								<label class="control-label" for="tags">Tags</label>
-								<input type="text" name="tags" id="tags" class="form-control">
+								<select class="form-control" name="tags[]" id="tags" multiple="multiple"></select>
 							</div>
 						</div>
 					</div>

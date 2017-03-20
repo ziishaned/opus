@@ -105,13 +105,7 @@ class Page extends Node
 
     public function getPages($wikiId)
     {
-        $query = $this;
-        $query = $query->where('wiki_id', '=', $wikiId);
-        $query = $query->with(['wiki'])->get();
-        if(!$query) {
-            return false;
-        }
-        return $query;
+        return $this->where('wiki_id', '=', $wikiId)->with(['wiki'])->get();
     }
 
     public function getRootPages($wiki)

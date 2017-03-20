@@ -11,7 +11,10 @@ var App = {
 
         $('#permissions-select').val($('#permissions-select').data('val'));
         $('#permissions-select').select2();
-        $('#tags').select2();
+        $('#tags').select2({
+            tags: true,
+            maximumSelectionLength: 6,
+        });
 
         $("#group-member-select").select2({
             ajax: {
@@ -540,7 +543,7 @@ $(function() {
             document.location = data.node.a_attr.href;
         }).on("ready.jstree", function(e, data) {
             if(data.instance._cnt == 0) {
-                var html = `<p class="text-center text-muted" style="position: relative; top: -3px; max-width: 175px; margin: auto; font-size: 13px;">No pages yet.</p>`;
+                var html = `<p class="nothing-found" style="margin-top: 10px; font-size: 12px;"><i class="fa fa-exclamation-triangle fa-fw icon"></i> No pages yet</p>`;
                 $('#wiki-page-tree').replaceWith(html);
             };
 

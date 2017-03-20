@@ -1398,3 +1398,43 @@ ul.dot-divider li:before {
     border: 1px solid #ccc !important;
     border-radius: 3px 3px 3px 3px !important;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: rgba(224, 224, 224, 0.24) !important;
+    border: 1px solid rgba(152, 152, 152, 0.29) !important;
+    border-radius: 3px !important;
+    padding: 5px 8px !important;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+    margin: 0px !important;
+    position: relative !important;
+    top: 11px !important;
+}
+
+.page-tags {
+	padding: 0;
+	margin: 0;
+}
+
+.page-tags li {
+	padding-left: 0;
+	padding-right: 2px;
+}
+
+.page-tags li a {
+	font-size: 13px;
+    border-radius: 2px;
+    background-color: #f7f7f9;
+    border: 1px solid #eee;
+    padding: 3.5px 6px;
+}
+
+.page-tags li a:hover {
+	text-decoration: none;
+	color: #333;
+}
+
+.edit-wiki-tags .select2-selection {
+	height: 45px !important;
+}

@@ -89,13 +89,18 @@ class Wiki extends Model
         return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Wiki::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'page_tags', 'subject_id', 'tag_id')->where('page_tags.subject_type', 'App\Models\Wiki');
+    }
+
     public function subject()
     {
         return $this->morphTo();
     }
 
     public function pages() {
-        return $this->hasMany(WikiPage::class, 'wiki_id', 'id');
+        return $this->hasMany(Page::class, 'wiki_id', 'id');
     }
 
     public function team() {
@@ -160,8 +165,6 @@ class Wiki extends Model
 
     public function getActivty($id)
     {
-        $team = $this->where('id', $id)->with(['activity'])->first();
-
-        return $team;
+        return $this->find($id)->activity()->paginate(30);
     }
 }
