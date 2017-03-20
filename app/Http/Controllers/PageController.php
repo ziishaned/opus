@@ -135,9 +135,11 @@ class PageController extends Controller
 
     public function edit(Team $team, Space $space, Wiki $wiki, Page $page)
     {
+        $pageTags = $this->page->find($page->id)->tags()->get();
+     
         $pages = $this->page->getPages($wiki->id);
 
-        return view('page.edit', compact('page', 'wiki', 'pages', 'team', 'space'));
+        return view('page.edit', compact('page', 'pageTags', 'wiki', 'pages', 'team', 'space'));
     }
 
     public function store(Team $team, Space $space, Wiki $wiki)
@@ -220,6 +222,8 @@ class PageController extends Controller
     {
         $this->page->updatePage($page->id, $this->request->all());
         $page = $this->page->find($page->id);
+
+        (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Page', $page->id);
 
         return redirect()->route('pages.show', [$team->slug, $space->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully updated.',
