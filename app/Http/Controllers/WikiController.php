@@ -136,7 +136,8 @@ class WikiController extends Controller
     public function getWikiActivity(Team $team, Space $space, Wiki $wiki)
     {
         $isUserLikeWiki = $this->isUserLikeWiki($wiki);
-        $activities     = $this->wiki->getActivty($wiki->id)->activity;
+        
+        $activities     = $this->wiki->getActivty($wiki->id);
 
         return view('wiki.activity', compact('team', 'space', 'wiki', 'activities', 'isUserLikeWiki'));
     }

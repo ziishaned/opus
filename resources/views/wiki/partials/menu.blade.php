@@ -13,12 +13,6 @@
             </div>
             <ul class="list-unstyled side-menu-top">
                 <li class="nav-header" style="margin-bottom: 5px;">Quick Links</li>
-                <li class="item {{ (Route::currentRouteName() == 'wikis.activity' ? 'active' : '') }}">
-                    <a href="{{ route('wikis.activity', [$team->slug, $space->slug, $wiki->slug]) }}">
-                        <i class="fa fa-history fa-fw fa-lg icon"></i>
-                        <span class="item-name">Activity</span>
-                    </a>
-                </li>
                 <li class="item">
                     <a href="{{ route('pages.create', [ $team->slug, $space->slug, $wiki->slug]) }}">
                         <i class="fa fa-file-text-o fa-fw fa-lg icon"></i>

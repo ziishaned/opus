@@ -103,6 +103,11 @@ class Page extends Node
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function getPages($wikiId)
+    {
+        return $this->where('wiki_id', '=', $wikiId)->with(['wiki'])->get();
+    }
+
     public function getRootPages($wiki)
     {
         $roots = $this->whereNull('parent_id')->where('wiki_id', '=', $wiki->id)->with(['wiki', 'childPages'])->get();

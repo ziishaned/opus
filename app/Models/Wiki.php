@@ -100,7 +100,7 @@ class Wiki extends Model
     }
 
     public function pages() {
-        return $this->hasMany(WikiPage::class, 'wiki_id', 'id');
+        return $this->hasMany(Page::class, 'wiki_id', 'id');
     }
 
     public function team() {
@@ -165,8 +165,6 @@ class Wiki extends Model
 
     public function getActivty($id)
     {
-        $team = $this->where('id', $id)->with(['activity'])->first();
-
-        return $team;
+        return $this->find($id)->activity()->paginate(30);
     }
 }
