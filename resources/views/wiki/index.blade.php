@@ -33,11 +33,7 @@
 				                        <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a></li>
 										<li class="divider" style="margin: 0;"></li>
 										<li>
-											<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}" style="padding: 5px 6px;"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-											<form id="delete-wiki" action="{{ route('wikis.destroy', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" method="POST" class="hide">
-												{!! method_field('delete') !!}
-												{!! csrf_field() !!}
-											</form>
+											<a href="{{ route('wikis.destroy', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" data-method="delete" data-confirm="Are you sure?" style="padding: 5px 6px;"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
 										</li>
                                     </ul>
                                 </li>
@@ -63,13 +59,17 @@
                             <p class="media-object"><i class="fa fa-tag fa-fw"></i> Tags:</p>
                         </div>
                         <div class="media-body" style="line-height: 26px;">
-                            <ul class="list-unstyled list-inline page-tags pull-left">                                
-                                @foreach($wikiTags as $tag)
-                                    <li>
-                                        <a href="#">{{ $tag->name }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>  
+                            @if($wikiTags->count() > 0)
+                                <ul class="list-unstyled list-inline page-tags pull-left">                                
+                                    @foreach($wikiTags as $tag)
+                                        <li>
+                                            <a href="#">{{ $tag->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <h1 class="nothing-found" style="margin: 0px; line-height: 20px;"><i class="fa fa-exclamation-triangle fa-fw icon"></i> Nothing found</h1>
+                            @endif
                         </div>
                     </div>
                 </div>

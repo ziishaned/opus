@@ -40,7 +40,7 @@ class Wiki extends Model
     protected $dates = ['deleted_at'];
 
     const WIKI_RULES = [
-        'name'     => 'required|max:45|min:3',
+        'name'  => 'required|max:45|min:3',
         'space' => 'required',
     ];
 
