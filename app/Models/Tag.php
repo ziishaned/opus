@@ -4,16 +4,29 @@ namespace App\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Tag extends Model
 {
+    use Sluggable;
+
     protected $table = 'tags';
 
     protected $fillable = [
         'name',
+        'slug',
         'created_at',
         'updated_at',
     ];
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 
     public function createTags($tags, $subjectType, $subjectId)
     {
