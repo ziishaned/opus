@@ -33,11 +33,7 @@
 				                        <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a></li>
 										<li class="divider" style="margin: 0;"></li>
 										<li>
-											<a href="#" onclick="if(confirm('Are you sure you want to delete wiki?')) {event.preventDefault(); document.getElementById('delete-wiki').submit();}" style="padding: 5px 6px;"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-											<form id="delete-wiki" action="{{ route('wikis.destroy', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" method="POST" class="hide">
-												{!! method_field('delete') !!}
-												{!! csrf_field() !!}
-											</form>
+											<a href="{{ route('wikis.destroy', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" data-method="delete" data-confirm="Are you sure?" style="padding: 5px 6px;"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
 										</li>
                                     </ul>
                                 </li>
@@ -52,9 +48,33 @@
                             <span style="font-size: 22px; font-weight: 700; line-height: 26px;">...</span>
                         @endif
                     </div>
+                </div>     
+            </div>
+        </div>
+        <div class="row no-container">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div style="border: 1px solid #eee; border-radius: 3px; margin-bottom: 20px; box-shadow: 0 1px 1px rgba(0,0,0,.05); padding: 12px 15px;">
+                    <div class="media">
+                        <div class="pull-left" style="padding-right: 12px;">
+                            <p class="media-object"><i class="fa fa-tag fa-fw"></i> Tags:</p>
+                        </div>
+                        <div class="media-body" style="line-height: 26px;">
+                            @if($wikiTags->count() > 0)
+                                <ul class="list-unstyled list-inline page-tags pull-left">                                
+                                    @foreach($wikiTags as $tag)
+                                        <li>
+                                            <a href="#">{{ $tag->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <h1 class="nothing-found" style="margin: 0px; line-height: 20px;"><i class="fa fa-exclamation-triangle fa-fw icon"></i> Nothing found</h1>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-			</div>
-		</div>
+            </div>
+        </div>
 		<div class="row no-container">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 @include('wiki.partials.comment')
