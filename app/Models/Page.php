@@ -85,6 +85,11 @@ class Page extends Node
         return $this->hasMany(Comment::class, 'subject_id', 'id')->where('comments.subject_type', Page::class)->with('user');
     }    
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'page_tags', 'subject_id', 'tag_id')->where('page_tags.subject_type', 'App\Models\Page');
+    }
+
     public function likes()
     {
         return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Page::class);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 use Illuminate\Http\Request;
-use App\Models\{Wiki, Team, Page, Space};
+use App\Models\{Wiki, Team, Page, Space, Tag};
 
 class PageController extends Controller
 {
@@ -148,6 +148,8 @@ class PageController extends Controller
 
         $page = $this->page->saveWikiPage($wiki, $this->request->all());
 
+        (new Tag)->createTags($this->request->get('tags'), 'App\Models\Page', $page->id);
+
         return redirect()->route('pages.show', [$team->slug, $space->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
             'alert_type' => 'success',
@@ -195,6 +197,8 @@ class PageController extends Controller
 
     public function show(Team $team, Space $space, Wiki $wiki, Page $page)
     {
+        $pageTags = $this->page->find($page->id)->tags()->get();
+
         $isUserLikeWiki = false;
         foreach ($wiki->likes as $like) {
             if($like->user_id === Auth::user()->id) {
@@ -209,7 +213,7 @@ class PageController extends Controller
             }
         }
 
-        return view('page.index', compact('team', 'page', 'wiki', 'space', 'isUserLikeWiki', 'isUserLikePage'));
+        return view('page.index', compact('team', 'pageTags', 'page', 'wiki', 'space', 'isUserLikeWiki', 'isUserLikePage'));
     }
 
     public function update(Team $team, Space $space, Wiki $wiki, Page $page)
