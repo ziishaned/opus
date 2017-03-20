@@ -83,7 +83,7 @@ php artisan db:seed
 - [x] ~~Team Dashboard (Monitor Team Activity)~~
 - [x] ~~User Dashboard (Monitor User Activity)~~
 - [ ] Export Documents
-    - [ ] Export Page as PDF
+    - [x] Export Page as PDF
     - [ ] Export Page as MS Word File
 - [ ] Notifications  
   - [x] ~~Add slack integration in team~~
