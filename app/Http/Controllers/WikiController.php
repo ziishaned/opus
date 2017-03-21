@@ -53,7 +53,9 @@ class WikiController extends Controller
 
         $wiki = $this->wiki->saveWiki($this->request->all(), $team->id);
 
-        (new Tag)->createTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+        if(!empty($this->request->get('tags'))) {
+            (new Tag)->createTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+        }
 
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
             'alert'      => 'Wiki successfully created.',
@@ -90,7 +92,9 @@ class WikiController extends Controller
     { 
         $this->wiki->updateWiki($wiki->id, $this->request->all());
 
-        (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+        if(!empty($this->request->get('tags'))) {
+            (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+        }
 
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
             'alert'      => 'Wiki successfully updated.',
