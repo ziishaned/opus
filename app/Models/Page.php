@@ -27,8 +27,6 @@ class Page extends Node
         ];
     }
 
-    protected $wiki;
-
     protected $table = 'page';
 
     protected $orderColumn = 'position';

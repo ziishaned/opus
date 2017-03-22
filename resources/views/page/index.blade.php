@@ -26,7 +26,7 @@
                                         <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-info-circle fa-fw"></i> Page Overview</a></li>
                                         <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-history fa-fw"></i> Page History</a></li>
                                         <li class="divider" style="margin: 0;"></li>
-                                        <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a></li>
+                                        <li><a href="{{ route('pages.pdf', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a></li>
                                         <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a></li>
                                         <li class="divider" style="margin: 0;"></li>
                                         <li>

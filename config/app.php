@@ -182,7 +182,9 @@ return [
         
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+
+        Barryvdh\Snappy\ServiceProvider::class,
     ],
 
     /*
@@ -233,6 +235,8 @@ return [
         'ViewHelper' => App\Helpers\ViewHelper::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Emoji' => App\Helpers\EmojiHelper::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 
 ];
