@@ -29,13 +29,13 @@ pre {
     border-radius: 2px;
     margin-bottom: 0;
 }
-pre, pre code {
+/*pre, pre code {
     background-color: #fbfbfb !important;
-}
+}*/
 
-pre code {
+/*pre code {
     padding: 0 !important;
-}
+}*/
 
 input, select, textarea {
 	box-shadow: none !important;
@@ -1266,14 +1266,20 @@ blockquote {
 	font-weight: 500;
 }
 
-.markdown-body .highlight pre, .markdown-body pre {
+.markdown-body pre {
+	margin-top: 10px;
     padding: 16px;
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;
+    background-color: #f6f8fa;
     border-radius: 3px;
-    margin-top: 10px;
-    border: 1px solid #eee;
+    margin-bottom: 16px;
+    border: none;
+}
+
+.markdown-body pre code {
+	background-color: #f6f8fa !important;	
 }
 
 .markdown-body pre, .markdown-body code {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Pdf;
 use DB;
 use Auth;
 use Illuminate\Http\Request;
@@ -274,6 +275,6 @@ class PageController extends Controller
             </html>
         ';
 
-        return \PDF::loadView('pdf.page', compact('page'))->setOption('header-html',$header)->inline($page->name . '.pdf');
+        return Pdf::loadView('pdf.page', compact('page'))->setOption('header-html',$header)->inline($page->name . '.pdf');
     }
 }
