@@ -14,6 +14,29 @@ var App = {
         $('#tags').select2({
             tags: true,
             maximumSelectionLength: 6,
+            ajax: {
+                url: "/api/tags",
+                type: 'POST',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term,
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1
         });
 
         $("#group-member-select").select2({

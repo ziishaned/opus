@@ -117,6 +117,15 @@ class WikiController extends Controller
         return array_combine(array_keys($data), array_reverse(array_values($data)));
     }
 
+    public function getTagWikis(Team $team, Tag $tag)
+    {
+        $spaces = $this->space->getTeamSpaces($team->id);
+        
+        $wikis = (new Tag)->getTeamTagWikis($team->id, $tag->id);
+
+        return view('tag.wikis', compact('team', 'wikis', 'tag', 'spaces'));
+    }
+
     public function getWikis(Team $team)
     {
         $wikis = $this->wiki->getTeamWikis($team->id);
