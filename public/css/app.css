@@ -880,14 +880,6 @@ border-radius: 3px;
 	margin-bottom: 45px;
 }
 
-.brand-buttons a {
-	margin-right: 15px;
-	padding: 9px 25px;
-	border: 1px solid #eee;
-	background-color: #fff;
-	color: #323b44;
-}
-
 .features { background: #ffffff; padding: 60px 0px 50px 0px; color: #7E96B3; }
 
 .Carousel { height: 140px; position: relative; white-space: nowrap; overflow: hidden; max-width: 1200px; margin: 0 auto 30px; }
