@@ -113,6 +113,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('{wiki_slug}/pages/{page_slug}/edit', 'PageController@edit')->name('pages.edit');
         Route::post('{wiki_slug}/pages', 'PageController@store')->name('pages.store');
         Route::get('{wiki_slug}/edit', 'WikiController@edit')->name('wikis.edit');
+        Route::get('{wiki_slug}/exportToPdf', 'WikiController@exportToPdf')->name('wikis.exportToPdf');
         Route::patch('{wiki_slug}/pages/{page_slug}', 'PageController@update')->name('pages.update');
 
         Route::post('{wiki_slug}/comments', 'CommentController@storeWikiComment')->name('wikis.comments.store');

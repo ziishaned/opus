@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\{Page, Space, Team, Wiki, Tag};
+use Dompdf\Dompdf;
 
 /**
  * Class WikiController
@@ -100,6 +101,17 @@ class WikiController extends Controller
             'alert'      => 'Wiki successfully updated.',
             'alert_type' => 'success',
         ]);
+    }
+
+    public function exportToPdf(Team $team, Space $space, Wiki $wiki)
+    {
+        $spaces = $this->space->getTeamSpaces($team->id);
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($wiki['attributes']['description']);
+        $dompdf->render();
+
+        return response()->make($dompdf->output())->header("Content-type","application/pdf")->header("Content-disposition","attachment; filename=\"".$wiki['attributes']['name'].".pdf"."\"");
     }
 
     public function destroy(Team $team, Space $space, Wiki $wiki)
