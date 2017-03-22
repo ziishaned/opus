@@ -11,8 +11,8 @@
 				<h1 class="brand-name">opus</h1>
 				<p class="minor-text">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
 				<div class="text-center brand-buttons">
-					<a href="{{ route('team.create') }}" class="btn btn-success">Create Team</a>
-					<a class="btn btn-default" href="{{ route('team.login') }}">Login</a>
+					<a href="{{ route('team.create') }}" class="btn btn-success" style="font-family: 'Open Sans'; height: 45px; line-height: 45px; text-decoration: none; color: white; font-size: 18px; border-radius: 4px; width: 200px; text-align: center; font-weight: 400; box-shadow: 0px 5px 0px #09693e; background-color: #22b573; margin-right: 20px; border: none; padding: 0;">Create Team</a>
+					<span style="position: relative; top: 3px;">Already joined a Opus team? <a href="{{ route('team.login') }}" style="font-weight: 500; text-decoration: underline; font-family: 'Open Sans';">Sign in</a></span>
 				</div>
 			</div>
 			<div class="brand-img">
