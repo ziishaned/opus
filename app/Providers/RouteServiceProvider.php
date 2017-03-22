@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\{User, Space, Wiki, Team, Page, Role};
+use App\Models\{User, Space, Wiki, Team, Page, Role, Tag};
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -28,17 +28,18 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::patterns([
-            'page_slug'         =>  '(\w+-*\d*)+',
-            'id'                =>  '[0-9]+',
-            'wiki_slug'         =>  '(\w+-*\d*)+',
-            'space_slug'     =>  '(\w+-*\d*)+',
-            'text'              =>  '[a-zA-Z0-9]+',
-            'team_slug'         =>  '(\w+-*\d*)+',
-            'role_slug'        =>  '(\w+-*\d*)+',
-            'team_id'           =>  '[0-9]+',
-            'page_id'           =>  '[0-9]+',
-            'wiki_id'           =>  '[0-9]+',
-            'user_slug'         =>  '(\w+-*\d*)+',
+            'id'         => '[0-9]+',
+            'team_id'    => '[0-9]+',
+            'page_id'    => '[0-9]+',
+            'wiki_id'    => '[0-9]+',
+            'text'       => '[a-zA-Z0-9]+',
+            'wiki_slug'  => '(\w+-*\d*)+',
+            'space_slug' => '(\w+-*\d*)+',
+            'team_slug'  => '(\w+-*\d*)+',
+            'role_slug'  => '(\w+-*\d*)+',
+            'tag_slug'   => '(\w+-*\d*)+',
+            'page_slug'  => '(\w+-*\d*)+',
+            'user_slug'  => '(\w+-*\d*)+',
         ]);
 
         Route::bind('user_slug', function($slug) {
@@ -53,6 +54,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('page_id', function($id) {
             return Page::where('id', '=', $id)->first();
+        });
+
+        Route::bind('tag_slug', function($slug) {
+            return Tag::where('slug', '=', $slug)->first();
         });
 
         Route::bind('wiki_id', function($id) {

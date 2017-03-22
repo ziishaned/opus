@@ -5,12 +5,14 @@
 		@include('partials.home-nav')
 		<div class="home-page brand-page-con">
 			<div class="brand-intro">
+				<div style="text-align: center; margin-bottom: 15px;">
+					<img src="/img/logo.png"> 
+				</div>
 				<h1 class="brand-name">opus</h1>
 				<p class="minor-text">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
 				<div class="text-center brand-buttons">
 					<a href="{{ route('team.create') }}" class="btn btn-success">Create Team</a>
 					<a class="btn btn-default" href="{{ route('team.login') }}">Login</a>
-					{{-- <a href="{{ route('team.join') }}" class="btn btn-default">Join Team</a> --}}
 				</div>
 			</div>
 			<div class="brand-img">

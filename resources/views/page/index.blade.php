@@ -60,7 +60,7 @@
                                 <ul class="list-unstyled list-inline page-tags pull-left">                                
                                     @foreach($pageTags as $tag)
                                         <li>
-                                            <a href="#">{{ $tag->name }}</a>
+                                            <a href="{{ route('tags.wikis', [$team->slug, $tag->slug ]) }}">{{ $tag->name }}</a>
                                         </li>
                                     @endforeach
                                 </ul>

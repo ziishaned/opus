@@ -230,4 +230,13 @@ class PageController extends Controller
             'alert_type' => 'success',
         ]);
     }
+
+    public function getTagPages(Team $team, Tag $tag)
+    {
+        $spaces = $this->space->getTeamSpaces($team->id);
+        
+        $pages = (new Tag)->getTeamTagPages($team->id, $tag->id);
+
+        return view('tag.pages', compact('team', 'pages', 'tag', 'spaces'));
+    }
 }

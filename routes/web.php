@@ -22,6 +22,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::post('/wikis/pages', 'PageController@getWikiPages');
     Route::post('/pages/reorder', 'PageController@reorder');
     Route::post('/team/members/filter', 'TeamController@filterMembers');
+    Route::post('tags', 'tagController@index');
 });
 
 Route::get('team/{team_slug}/invite/{hash}', 'TeamController@join')->name('team.join')->middleware('invitation');
@@ -31,6 +32,11 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => '{team_slug}/users/{user_slug}/settings'], function () {
         Route::get('profile', 'UserController@profileSettings')->name('settings.profile');
         Route::get('account', 'UserController@accountSettings')->name('settings.account');
+    });
+
+    Route::group(['prefix' => '/{team_slug}/tags/{tag_slug}'], function() {
+        Route::get('wikis', 'WikiController@getTagWikis')->name('tags.wikis');
+        Route::get('pages', 'PageController@getTagPages')->name('tags.pages');
     });
 
     Route::group(['prefix' => '{team_slug}/settings/roles'], function () {
