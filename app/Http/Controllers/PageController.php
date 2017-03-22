@@ -239,4 +239,9 @@ class PageController extends Controller
 
         return view('tag.pages', compact('team', 'pages', 'tag', 'spaces'));
     }
+
+    public function generatePdf(Team $team, Space $space, Wiki $wiki, Page $page)
+    {
+        return \PDF::loadView('pdf.page', compact('page'))->inline($page->name . '.pdf');
+    }
 }

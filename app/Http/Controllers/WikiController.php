@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Pdf;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\{Page, Space, Team, Wiki, Tag};
@@ -178,5 +179,10 @@ class WikiController extends Controller
             }
         }
         return $isLiked;
+    }
+
+    public function generatePdf(Team $team, Space $space, Wiki $wiki)
+    {
+        return \PDF::loadView('pdf.page', compact('wiki'))->inline($wiki->name . '.pdf');
     }
 }
