@@ -8,11 +8,13 @@
 				<div style="text-align: center; margin-bottom: 15px;">
 					<img src="/img/logo.png"> 
 				</div>
-				<h1 class="brand-name">opus</h1>
-				<p class="minor-text">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
+				<h1 class="brand-name" style="margin-bottom: 10px;">opus</h1>
+				<p class="minor-text" style="margin-bottom: 30px;">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
 				<div class="text-center brand-buttons">
-					<a href="{{ route('team.create') }}" class="btn btn-success" style="font-family: 'Open Sans'; height: 45px; line-height: 45px; text-decoration: none; color: white; font-size: 18px; border-radius: 4px; width: 200px; text-align: center; font-weight: 400; box-shadow: 0px 5px 0px #09693e; background-color: #22b573; margin-right: 20px; border: none; padding: 0;">Create Team</a>
-					<span style="position: relative; top: 3px;">Already joined a Opus team? <a href="{{ route('team.login') }}" style="font-weight: 500; text-decoration: underline; font-family: 'Open Sans';">Sign in</a></span>
+					<a href="{{ route('team.create') }}" class="btn btn-success" style="font-family: 'Open Sans'; height: 45px; line-height: 45px; text-decoration: none; color: white; font-size: 18px; border-radius: 4px; width: 200px; text-align: center; font-weight: 400; box-shadow: 0px 5px 0px #09693e; background-color: #22b573; border: none; padding: 0;">Create Team</a>
+					<span style="position: relative; top: 4px; margin-left: 15px;">
+						Already joined a team? <a href="{{ route('team.login') }}" style="font-weight: 500; text-decoration: underline; font-family: 'Open Sans';">Sign in</a>
+					</span>
 				</div>
 			</div>
 			<div class="brand-img">
@@ -65,10 +67,24 @@
 		            <div class="CarouselItem-label">Powerful Formatting</div>
 		        </div>
 		    </div>
-		    <p class="features-text">
+		    <p class="features-text" style="font-size: 17px; width: 560px; margin: auto; margin-bottom: 30px;">
 		        Opus looks stunning on desktop, tablet or phone. Our fully responsive design adjusts perfectly to fit all your devices
 		    </p>
-	        <a href="#" class="btn more-feature-button">See more features</a>
+	        <a href="#" class="btn more-feature-button" style="font-family: 'Open Sans';
+    height: 45px;
+    line-height: 45px;
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    border-radius: 4px;
+    width: 200px;
+    text-align: center;
+    font-weight: 400;
+    box-shadow: 0px 5px 0px #43637d;
+    background-color: #608abb;
+    margin-bottom: 15px;
+    border: none;
+    padding: 0;">See more features</a>
 		</div>
 	</div>
 @endsection

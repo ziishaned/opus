@@ -847,13 +847,13 @@ border-radius: 3px;
 }
 
 .home-page {
-	padding-top: 40px;
 	background-color: #EFF2F6;
 }
 
 .home-page .brand-intro {
-	max-width: 500px;
-	margin: auto;
+    max-width: 500px;
+    margin: auto;
+    padding: 31px 0px;
 }
 
 .home-page .brand-intro .brand-name {
@@ -876,8 +876,8 @@ border-radius: 3px;
 }
 
 .brand-buttons {
-	margin-top: 30px;
-	margin-bottom: 45px;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .features { background: #ffffff; padding: 60px 0px 50px 0px; color: #7E96B3; }
@@ -984,7 +984,7 @@ border-radius: 3px;
 }
 
 .brand-page-con {
-	height: 570px;
+    height: 582px;
 	overflow: hidden;
 	border-bottom: 1px solid #eee;
 }
