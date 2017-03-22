@@ -78,12 +78,12 @@ php artisan db:seed
     - [x] ~~Add Emojis~~
   - [ ] Watch Wikis to get notified for updates
   - [ ] Save pages in Read List (Like Watch Later in Youtube)
-  - [x] Add Tags to Pages
-  - [x] List all Pages available in a tag
+  - [x] ~~Add Tags to Pages~~
+  - [x] ~~List all Pages available in a tag~~
 - [x] ~~Team Dashboard (Monitor Team Activity)~~
 - [x] ~~User Dashboard (Monitor User Activity)~~
 - [ ] Export Documents
-    - [x] Export Page as PDF
+    - [x] ~~Export Page as PDF~~
     - [ ] Export Page as MS Word File
 - [ ] Notifications  
   - [x] ~~Add slack integration in team~~
