@@ -79,7 +79,7 @@ php artisan db:seed
   - [ ] Watch Wikis to get notified for updates
   - [ ] Save pages in Read List (Like Watch Later in Youtube)
   - [x] Add Tags to Pages
-  - [ ] List all Pages available in a tag
+  - [x] List all Pages available in a tag
 - [x] ~~Team Dashboard (Monitor Team Activity)~~
 - [x] ~~User Dashboard (Monitor User Activity)~~
 - [ ] Export Documents
