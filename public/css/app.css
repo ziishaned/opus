@@ -783,7 +783,7 @@ border-radius: 3px;
 
 .wiki-side-menu .side-menu-inner {
 	overflow: auto;
-	height: calc(100% - 51px);
+    height: calc(100% - -2px);
 }
 
 .wiki-setting-bottom .wiki-setting-button {

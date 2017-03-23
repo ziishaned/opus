@@ -223,6 +223,6 @@ class WikiController extends Controller
     {
         $htmltodoc = new HtmlToDocHelper();
 
-        return $htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true);
+        return response()->json($htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true), 200);
     }
 }
