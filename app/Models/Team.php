@@ -110,6 +110,11 @@ class Team extends Model
         return $this->hasMany(Wiki::class, 'team_id', 'id')->latest();
     }
 
+    public function pages()
+    {
+        return $this->hasMany(Page::class, 'team_id', 'id')->latest();
+    }
+
     public function getTeam($teamSlug)
     {
         $team = $this->where('slug', '=', $teamSlug)

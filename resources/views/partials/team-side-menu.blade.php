@@ -44,7 +44,7 @@
 				@if($spaces->count() > 0)
 					<li>
 						<div class="form-group with-icon" style="margin-bottom: 5px;">
-							<input type="text" class="form-control fuzzy-search overall-search-input" placeholder="Filter...">
+							<input type="text" class="form-control fuzzy-search" placeholder="Filter...">
 							<i class="fa fa-filter icon"></i>
 						</div>
 					</li>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DB, Mail, Image, Redirect;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\{Auth, Session};
-use App\Models\{User, Team, Role, Invite, Space, Integration};
+use App\Models\{User, Team, Role, Invite, Space, Integration, Wiki, Page};
 
 class TeamController extends Controller
 {
@@ -267,5 +267,80 @@ class TeamController extends Controller
     public function slackIntegration(Team $team)
     {
         return view('team.setting.slack', compact('team'));
+    }
+
+    public function search()
+    {
+        $data = [];
+        $query   = $this->request->get('q');
+        $team  = Auth::user()->getTeam();
+
+        $wikis   = Team::find($team->id)->wikis()->where('name', 'like', '%'.$query.'%')->take(5)->get();
+        $spaces  = Team::find($team->id)->spaces()->where('name', 'like', '%'.$query.'%')->take(5)->get();
+        $pages   = Team::find($team->id)->pages()->where('name', 'like', '%'.$query.'%')->take(5)->get();
+        $members = Team::find($team->id)->members()->where('slug', 'like', '%'.$query.'%')->take(5)->get();
+
+        $data['wikis']   = $this->formatWikis($wikis, $team);
+        $data['spaces']  = $this->formatSpaces($spaces, $team);
+        $data['pages']   = $this->formatPages($pages, $team);
+        $data['members'] = $this->formatMembers($members, $team);
+        
+        return response()->json($data, 200);
+    }
+
+    public function formatMembers($members, $team)
+    {
+        $data = [];
+
+        foreach ($members as $member) {
+            $data[] = [
+                'text' => $member->first_name . ' ' . $member->last_name,
+                'link' => route('users.show', [$team->slug, $member->slug]),
+            ];
+        } 
+
+        return $data;
+    }
+
+    public function formatPages($pages, $team)
+    {
+        $data = [];
+
+        foreach ($pages as $page) {
+            $data[] = [
+                'text' => $page->name,
+                'link' => route('pages.show', [$team->slug, $page->wiki->space->slug, $page->wiki->slug, $page->slug]),
+            ];
+        }
+
+        return $data;
+    }
+
+    public function formatWikis($wikis, $team)
+    {
+        $data = [];
+
+        foreach ($wikis as $wiki) {
+            $data[] = [
+                'text' => $wiki->name,
+                'link' => route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug]),
+            ];
+        }
+
+        return $data;
+    }
+
+    public function formatSpaces($spaces, $team)
+    {
+        $data = [];
+
+        foreach ($spaces as $space) {
+            $data[] = [
+                'text' => $space->name,
+                'link' => route('spaces.wikis', [$team->slug, $space->slug]),
+            ];
+        }
+
+        return $data;
     }
 }
