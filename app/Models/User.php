@@ -62,6 +62,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function watchWikis()
+    {
+        return $this->hasMany(WatchWiki::class, 'user_id', 'id');
+    }
+
     public function space()
     {
         return $this->hasMany(Space::class, 'user_id', 'id');

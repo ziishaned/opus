@@ -10,7 +10,11 @@
                         <nav>
                             <ul class="list-unstyled list-inline pull-left">
                                 <li>
-                                	<a href="#" style="padding: 5px 6px;"><i class="fa fa-eye icon"></i> Watch</a>
+                                    @if(empty($isUserWatchWiki))
+                                        <a href="{{ route('wikis.watch', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-eye icon"></i> Watch</a>
+                                    @else
+                                    	<a href="{{ route('wikis.unwatch', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-eye icon"></i> Watching</a>
+                                    @endif 
                                 </li>
                                 <li>
 									<a href="#" style="padding: 5px 6px;"><i class="fa fa-tasks icon"></i> Make Shortcut</a>

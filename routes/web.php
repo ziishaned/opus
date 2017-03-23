@@ -101,6 +101,8 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => '{team_slug}/spaces/{space_slug}/wikis'], function () {
+        Route::get('{wiki_slug}/watch', 'WikiController@watch')->name('wikis.watch');
+        Route::get('{wiki_slug}/unwatch', 'WikiController@stopWatch')->name('wikis.unwatch');
         Route::get('{wiki_slug}/pdf', 'WikiController@generatePdf')->name('wikis.pdf');
         Route::get('{wiki_slug}/word', 'WikiController@generateWord')->name('wikis.word');
         Route::patch('{wiki_slug}', 'WikiController@update')->name('wikis.update');
