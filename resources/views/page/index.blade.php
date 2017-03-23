@@ -18,6 +18,9 @@
                             </ul>
                             <ul class="list-unstyled list-inline pull-right">
                                 <li>
+                                    <a href="{{ route('pages.word', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('pages.pdf', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a>
                                 </li>
                                 <li>

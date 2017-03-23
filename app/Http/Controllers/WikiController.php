@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Pdf;
 use Auth;
-use App\Helpers\HtmlToDocHelper;
 use Illuminate\Http\Request;
+use App\Helpers\HtmlToDocHelper;
 use App\Models\{Page, Space, Team, Wiki, Tag};
 
 /**
