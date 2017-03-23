@@ -6,7 +6,7 @@ use Pdf;
 use Auth;
 use Illuminate\Http\Request;
 use App\Helpers\HtmlToDocHelper;
-use App\Models\{Page, Space, Team, Wiki, Tag};
+use App\Models\{Page, Space, Team, Wiki, Tag, WatchWiki};
 
 /**
  * Class WikiController
@@ -67,6 +67,8 @@ class WikiController extends Controller
 
     public function show(Team $team, Space $space, Wiki $wiki)
     {
+        $isUserWatchWiki = WatchWiki::where('user_id', Auth::user()->id)->where('wiki_id', $wiki->id)->first();
+
         $wikiTags = $this->wiki->find($wiki->id)->tags()->get();
         
         $isUserLikeWiki = false;
@@ -76,7 +78,7 @@ class WikiController extends Controller
             }
         }
 
-        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags'));
+        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags', 'isUserWatchWiki'));
     }
 
     public function edit(Team $team, Space $space, Wiki $wiki)
@@ -224,5 +226,28 @@ class WikiController extends Controller
         $htmltodoc = new HtmlToDocHelper();
 
         return response()->json($htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true), 200);
+    }
+
+    public function watch(Team $team, Space $space, Wiki $wiki)
+    {
+        WatchWiki::create([
+            'wiki_id' => $wiki->id,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->back()->with([
+            'alert'      => 'You are now watching this wiki.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function stopWatch(Team $team, Space $space, Wiki $wiki)
+    {
+        WatchWiki::where('user_id', Auth::user()->id)->where('wiki_id', $wiki->id)->delete();
+
+        return redirect()->back()->with([
+            'alert'      => 'You are now ignoring this wiki.',
+            'alert_type' => 'success',
+        ]);
     }
 }
