@@ -61,7 +61,7 @@ class SpaceConroller extends Controller
 
     public function getSpaceWikis(Team $team, Space $space)
     {
-        $wikis = (new Wiki)->where('team_id', $team->id)->where('Space_id', $space->id)->latest()->paginate(30);
+        $wikis = (new Wiki)->where('team_id', $team->id)->where('space_id', $space->id)->latest()->paginate(30);
 
         $spaces = $this->space->getTeamSpaces($team->id);
 
