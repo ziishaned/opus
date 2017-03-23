@@ -368,7 +368,6 @@ var App = {
 
         $('.overall-search-input').on('keydown', function() {
             let input = this;
-            $('.overall-search-input').closest('.form-group').find('i').replaceWith('<img src="/img/throbber.gif" class="icon" style="width: 16px; height: 16px; top: 14px; right: 9px; opacity: 1;">');
             setTimeout(function() {
                 let q = $(input).val();
 
@@ -420,7 +419,6 @@ var App = {
                         });
                         
                         $('#overall-search-output').empty().append(html);
-                        $('.overall-search-input').closest('.form-group').find('img').replaceWith('<i class="fa fa-search icon"></i>');
                     },
                     error(error) {
                         console.log(error);
