@@ -10,29 +10,21 @@
                         <nav>
                             <ul class="list-unstyled list-inline pull-left">
                                 <li>
-                                    <a href="#"><i class="fa fa-tasks fa-lg icon"></i> Add to Read list</a>
+                                    <a href="#" style="padding: 5px 6px;"><i class="fa fa-tasks fa-lg icon"></i> Make Shortcut</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-check-square-o icon"></i> Insert into Shortcut</a>
+                                    <a href="#" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i> Read Later</a>
                                 </li>
                             </ul>
                             <ul class="list-unstyled list-inline pull-right">
                                 <li>
-                                    <a href="{{ route('pages.edit', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}"><i class="fa fa-pencil fa-lg icon"></i> Edit</a>
+                                    <a href="{{ route('pages.pdf', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear fa-lg icon"></i> Settings</a>
-                                    <ul class="dropdown-menu dropdown-menu-right" style="margin-top: 8px; padding: 4px 5px;">
-                                        <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-info-circle fa-fw"></i> Page Overview</a></li>
-                                        <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-history fa-fw"></i> Page History</a></li>
-                                        <li class="divider" style="margin: 0;"></li>
-                                        <li><a href="{{ route('pages.pdf', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a></li>
-                                        <li><a href="#" style="padding: 5px 6px;"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a></li>
-                                        <li class="divider" style="margin: 0;"></li>
-                                        <li>
-                                            <a href="{{ route('pages.destroy', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-                                        </li>
-                                    </ul>
+                                <li>
+                                    <a href="{{ route('pages.edit', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-pencil fa-lg icon"></i> Edit</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('pages.destroy', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>

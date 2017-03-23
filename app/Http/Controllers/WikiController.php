@@ -215,6 +215,6 @@ class WikiController extends Controller
             </html>
         ';
 
-        return \PDF::loadView('pdf.page', compact('wiki'))->setOption('header-html',$header)->inline($wiki->name . '.pdf');
+        return Pdf::loadView('pdf.page', compact('wiki'))->setOption('header-html',$header)->inline($wiki->name . '.pdf');
     }
 }
