@@ -10,10 +10,10 @@ namespace App\Helpers;
  */
 class HtmlToDocHelper
 {
-	public $docFile  = "";
-	public $title    = "";
-	public $htmlHead = "";
-	public $htmlBody = "";
+	private $docFile  = "";
+	private $title    = "";
+	private $htmlHead = "";
+	private $htmlBody = "";
 	
 	
 	/**
@@ -21,7 +21,7 @@ class HtmlToDocHelper
 	 *
 	 * @return void
 	 */
-	public function HTML_TO_DOC()
+	public function __construct()
 	{
 		$this->title    = "Untitled Document";
 		$this->htmlHead = "";
@@ -102,7 +102,7 @@ class HtmlToDocHelper
 			$html=@file_get_contents($html);
         }
 		
-		$this->_parseHtml($html);
+		$this->parseHtml($html);
 		$this->setDocFileName($file);
 		
         $doc  = $this->getHeader();
@@ -117,7 +117,7 @@ class HtmlToDocHelper
 			echo $doc;
 			return true;
 		} else {
-			return $this->write_file($this->docFile,$doc);
+			return $this->writeFile($this->docFile,$doc);
 		}
 	}
 	
@@ -127,7 +127,7 @@ class HtmlToDocHelper
 	 * @param String $html
 	 * @return void
 	 */
-	public function _parseHtml($html)
+	public function parseHtml($html)
 	{
 		$this->htmlBody = $html;
 		return $html;
@@ -141,7 +141,7 @@ class HtmlToDocHelper
 	 * @param [optional] String $mode Write Mode
      * @return void
 	 */
-	function write_file($file, $content, $mode = "w")
+	private function writeFile($file, $content, $mode = "w")
 	{
 		$fp = @fopen($file,$mode);
         if(!is_resource($fp)) {
