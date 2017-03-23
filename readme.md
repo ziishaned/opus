@@ -52,9 +52,9 @@ There are spaces for every team, department or major project. Then employees can
   php artisan key:generate
   ```
 - Run the database seeder
-```bash
-php artisan db:seed
-```
+  ```bash
+  php artisan db:seed
+  ```
 
 ## Todo
 
