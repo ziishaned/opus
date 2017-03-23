@@ -43,50 +43,110 @@ class RouteServiceProvider extends ServiceProvider
         ]);
 
         Route::bind('user_slug', function($slug) {
-            return User::where('slug', '=', $slug)->first();
+            $user = User::where('slug', $slug)->first();
+
+            if(empty($user)) {
+                abort(404);
+            }
+
+            return $user;
+
         });
 
         Route::bind('page_slug', function($slug) {
-            return Page::where('slug', '=', $slug)
+            $page = Page::where('slug', $slug)
                                     ->with(['likes', 'comments'])
                                     ->first();
+
+            if(empty($page)) {
+                abort(404);
+            }
+
+            return $page;
         });
 
         Route::bind('page_id', function($id) {
-            return Page::where('id', '=', $id)->first();
+            $page = Page::where('id', $id)->first();
+
+            if(empty($page)) {
+                abort(404);
+            }
+
+            return $page;
         });
 
         Route::bind('tag_slug', function($slug) {
-            return Tag::where('slug', '=', $slug)->first();
+            $tag = Tag::where('slug', '=', $slug)->first();
+
+            if(empty($tag)) {
+                abort(404);
+            }
+
+            return $tag;
         });
 
         Route::bind('wiki_id', function($id) {
-            return Wiki::where('id', '=', $id)->with(['space'])->first();
+            $wiki = Wiki::where('id', '=', $id)->with(['space'])->first();
+
+            if(empty($wiki)) {
+                abort(404);
+            }
+
+            return $wiki;
         });
 
         Route::bind('wiki_slug', function($slug) {
             $teamId = Auth::user()->getTeam()->id;
             
-            return Wiki::where('slug', '=', $slug)
+            $wiki = Wiki::where('slug', '=', $slug)
                                     ->where('team_id', '=', $teamId)
                                     ->with(['space', 'comments', 'likes'])
                                     ->first();
+            if(empty($wiki)) {
+                abort(404);
+            }
+
+            return $wiki;
         });
 
         Route::bind('team_id', function($id) {
-            return Team::where('id', '=', $id)->first();
+            $team = Team::where('id', $id)->first();
+
+            if(empty($team)) {
+                abort(404);
+            }
+
+            return $team;
         });
 
         Route::bind('team_slug', function($slug) {
-            return Team::where('slug', '=', $slug)->first();
+            $team = Team::where('slug', $slug)->first();
+
+            if(empty($team)) {
+                abort(404);
+            }
+
+            return $team;
         });
 
         Route::bind('role_slug', function($slug) {
-            return Role::where('slug', '=', $slug)->with(['members', 'permissions'])->first();
+            $role = Role::where('slug', $slug)->with(['members', 'permissions'])->first();
+
+            if(empty($role)) {
+                abort(404);
+            }
+
+            return $role;
         });
 
         Route::bind('space_slug', function($slug) {
-            return Space::where('slug', '=', $slug)->first();
+            $space = Space::where('slug', $slug)->first();
+
+            if(empty($space)) {
+                abort(404);
+            }
+
+            return $space;
         });
     }
 

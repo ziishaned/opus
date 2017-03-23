@@ -22,10 +22,10 @@
 		    </div>
 	    </div>
 	    <div class="error-actions">
-			<a href="{{ route('home') }}" class="btn btn-primary">
+			<a href="{{ route('home') }}" class="btn btn-primary" style="font-family: 'Open Sans'; height: 45px; line-height: 45px; text-decoration: none; color: white; font-size: 18px; border-radius: 4px; width: 200px; text-align: center; font-weight: 400; box-shadow: 0px 5px 0px #235986; border: none; padding: 0;">
 			    <i class="fa fa-home fa-fw"></i> Take Me Home 
 			</a>
-			<a href="mailto:me@null-byte.info" class="btn btn-default">
+			<a href="mailto:opus@info.com" class="btn btn-default" style="font-family: 'Open Sans'; height: 45px; line-height: 45px; text-decoration: none; font-size: 18px; border-radius: 4px; width: 200px; text-align: center; font-weight: 400; padding: 0; box-shadow: 0px 5px 0px #d0d0d0; background-color: #f1f1f1; border: none;">
 			    <i class="fa fa-envelope-o fa-fw"></i> Contact Support 
 			</a>
 	    </div>

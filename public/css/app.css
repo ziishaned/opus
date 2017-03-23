@@ -1280,6 +1280,7 @@ blockquote {
 
 .markdown-body pre code {
 	background-color: #f6f8fa !important;	
+	background: #f6f8fa !important;	
 }
 
 .markdown-body pre, .markdown-body code {
