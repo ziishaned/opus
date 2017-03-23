@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Pdf;
 use Auth;
+use App\Helpers\HtmlToDocHelper;
 use Illuminate\Http\Request;
 use App\Models\{Page, Space, Team, Wiki, Tag};
 
@@ -216,5 +217,12 @@ class WikiController extends Controller
         ';
 
         return Pdf::loadView('pdf.page', compact('wiki'))->setOption('header-html',$header)->inline($wiki->name . '.pdf');
+    }
+
+    public function generateWord(Team $team, Space $space, Wiki $wiki)
+    {
+        $htmltodoc = new HtmlToDocHelper();
+
+        return $htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true);
     }
 }
