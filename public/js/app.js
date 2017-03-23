@@ -366,6 +366,69 @@ var App = {
     bindUI: function () {
         var that = this;
 
+        $('.overall-search-input').on('keydown', function() {
+            let input = this;
+            $('.overall-search-input').closest('.form-group').find('i').replaceWith('<img src="/img/throbber.gif" class="icon" style="width: 16px; height: 16px; top: 14px; right: 9px; opacity: 1;">');
+            setTimeout(function() {
+                let q = $(input).val();
+
+                $.ajax({
+                    url: '/api/search',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        q
+                    },
+                    success(data) {
+                        let html = '';
+                        
+                        $.each(data, function(index, val) {
+                            if (index === 'wikis' && data.wikis.length > 0) {
+                                html += `
+                                    <li class="navbar-header" style="color: #cacaca; font-size: 11px; text-transform: uppercase; font-weight: 500; margin-bottom: -10px; padding: 0 6px;">
+                                        Wikis
+                                    </li>
+                                `;
+                            } else if (index === 'pages' && data.pages.length > 0) {
+                                html += `
+                                    <li class="navbar-header" style="color: #cacaca; font-size: 11px; text-transform: uppercase; font-weight: 500; margin-bottom: -10px; padding: 0 6px;">
+                                        Pages
+                                    </li>
+                                `;
+                            } else if (index === 'spaces' && data.spaces.length > 0) {
+                                html += `
+                                    <li class="navbar-header" style="color: #cacaca; font-size: 11px; text-transform: uppercase; font-weight: 500; margin-bottom: -10px; padding: 0 6px;">
+                                        Spaces
+                                    </li>
+                                `;
+                            } else if (index === 'members' && data.members.length > 0) {
+                                html += `
+                                    <li class="navbar-header" style="color: #cacaca; font-size: 11px; text-transform: uppercase; font-weight: 500; margin-bottom: -10px; padding: 0 6px;">
+                                        Members
+                                    </li>
+                                `;
+                            }
+                            
+                            $.each(val, function(index, item) {
+                                html += `
+                                    <li>
+                                        <a href="`+item.link+`" style="padding: 5px 6px;">`+item.text+`</a>
+                                    </li>
+                                `;
+                            });
+
+                        });
+                        
+                        $('#overall-search-output').empty().append(html);
+                        $('.overall-search-input').closest('.form-group').find('img').replaceWith('<i class="fa fa-search icon"></i>');
+                    },
+                    error(error) {
+                        console.log(error);
+                    },
+                });
+            }, 500);
+        });
+
         if($('#categories-list #categories-list-item').length) {
             new List('categories-list', { 
                 valueNames: ['item-name']

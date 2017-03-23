@@ -23,11 +23,14 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<form class="navbar-form navbar-left" role="search">
-					<div class="form-group with-icon">
+				<form class="navbar-form navbar-left dropdown" role="search">
+					<div class="form-group with-icon dropdown-toggle" data-toggle="dropdown" >
 						<input type="text" class="form-control overall-search-input" placeholder="Search...">
 						<i class="fa fa-search icon"></i>
 					</div>
+					<ul class="dropdown-menu dropdown-menu-right" id="overall-search-output" onClick="event.stopPropagation();" style="margin-top: 4px; margin-right: 15px; width: 250px; padding: 4px 5px; max-height: 250px; overflow: auto;">
+                   		<li style="font-style: italic; text-align: center; font-size: 13px;">Type something.</li>
+                    </ul>
 				</form>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 9px; padding-left: 9px;"><i class="fa fa-plus fa-fw"></i></a>

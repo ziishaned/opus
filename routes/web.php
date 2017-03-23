@@ -22,7 +22,8 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::post('/wikis/pages', 'PageController@getWikiPages');
     Route::post('/pages/reorder', 'PageController@reorder');
     Route::post('/team/members/filter', 'TeamController@filterMembers');
-    Route::post('tags', 'tagController@index');
+    Route::post('tags', 'TagController@index');
+    Route::post('search', 'TeamController@search');
 });
 
 Route::get('team/{team_slug}/invite/{hash}', 'TeamController@join')->name('team.join')->middleware('invitation');

@@ -26,6 +26,7 @@ class CreatePageTable extends Migration
             $table->longText('description')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('wiki_id')->unsigned();
+            $table->integer('team_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -39,6 +39,7 @@ class Page extends Node
         'parent_id',
         'user_id',
         'wiki_id',
+        'team_id',
         'created_at',
         'updated_at',
         'lft',
@@ -143,6 +144,7 @@ class Page extends Node
             'position'     =>  $data['position'],
             'user_id'      =>  Auth::user()->id,
             'wiki_id'      =>  $wiki->id,
+            'team_id'      =>  Auth::user()->getTeam()->id,
         ]);
 
         return $page;

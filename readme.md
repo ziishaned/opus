@@ -95,7 +95,7 @@ php artisan db:seed
 - [ ] Templates
   - [ ] Create Templates
   - [ ] Populate Wiki by Template (Dropdown on Create Wiki Page)
-- [ ] Global Search
+- [x] ~~Global Search~~
 - [ ] Responsive
 - [ ] Upload demo somewhere
 
