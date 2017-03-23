@@ -65,7 +65,7 @@ class SpaceConroller extends Controller
 
         $spaces = $this->space->getTeamSpaces($team->id);
 
-        return view('Space.index', compact('team', 'space', 'spaces', 'wikis'));
+        return view('space.index', compact('team', 'space', 'spaces', 'wikis'));
     }
 
     public function getTeamSpaces(Team $team)
