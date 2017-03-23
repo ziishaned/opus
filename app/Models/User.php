@@ -44,6 +44,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'name',
         'first_name',
         'last_name',
         'profile_image',
@@ -173,10 +174,11 @@ class User extends Authenticatable
     public function updateUser($slug, $data)
     {
         $this->where('slug', '=', $slug)->update([
-            'first_name'    => $data['first_name'],
-            'last_name'     => $data['last_name'],
-            'timezone'      => !empty($data['timezone']) ? $data['timezone'] : null,
-            'email'         => $data['email'],
+            'name'       => $data['first_name'] . ' ' . $data['last_name'],
+            'first_name' => $data['first_name'],
+            'last_name'  => $data['last_name'],
+            'timezone'   => !empty($data['timezone']) ? $data['timezone'] : null,
+            'email'      => $data['email'],
         ]);
 
         return true;
@@ -194,6 +196,7 @@ class User extends Authenticatable
     public function createUser($data)
     {
         $user = $this->create([
+            'name'       => $data['first_name'] . ' ' . $data['last_name'],
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
             'password'   => Hash::make($data['password']),

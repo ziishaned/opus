@@ -152,7 +152,9 @@ class PageController extends Controller
 
         $page = $this->page->saveWikiPage($wiki, $this->request->all());
 
-        (new Tag)->createTags($this->request->get('tags'), 'App\Models\Page', $page->id);
+        if(!empty($this->request->get('tags'))) {
+            (new Tag)->createTags($this->request->get('tags'), 'App\Models\Page', $page->id);
+        }
 
         return redirect()->route('pages.show', [$team->slug, $space->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully created.',
@@ -283,6 +285,6 @@ class PageController extends Controller
     {
         $htmltodoc = new HtmlToDocHelper();
 
-        return $htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true);
+        return response()->json($htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true), 200);
     }
 }

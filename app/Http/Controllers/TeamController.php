@@ -278,7 +278,7 @@ class TeamController extends Controller
         $wikis   = Team::find($team->id)->wikis()->where('name', 'like', '%'.$query.'%')->take(5)->get();
         $spaces  = Team::find($team->id)->spaces()->where('name', 'like', '%'.$query.'%')->take(5)->get();
         $pages   = Team::find($team->id)->pages()->where('name', 'like', '%'.$query.'%')->take(5)->get();
-        $members = Team::find($team->id)->members()->where('slug', 'like', '%'.$query.'%')->take(5)->get();
+        $members = Team::find($team->id)->members()->where('name', 'like', '%'.$query.'%')->take(5)->get();
 
         $data['wikis']   = $this->formatWikis($wikis, $team);
         $data['spaces']  = $this->formatSpaces($spaces, $team);
