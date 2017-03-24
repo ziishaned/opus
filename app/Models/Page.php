@@ -74,7 +74,7 @@ class Page extends Node
 
             if(!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
-                    $url = route('pages.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
+                    $url = route('pages.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
                     Notifynder::category('page.created')
                                ->from(Auth::user()->id)
                                ->to($watch->user_id)
@@ -92,7 +92,7 @@ class Page extends Node
 
             if(!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
-                    $url = route('pages.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
+                    $url = route('pages.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
                     Notifynder::category('page.updated')
                                ->from(Auth::user()->id)
                                ->to($watch->user_id)
@@ -110,7 +110,7 @@ class Page extends Node
 
             if(!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
-                    $url = route('pages.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
+                    $url = route('pages.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
                     Notifynder::category('page.deleted')
                                ->from(Auth::user()->id)
                                ->to($watch->user_id)

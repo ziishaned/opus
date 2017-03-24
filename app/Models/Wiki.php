@@ -67,7 +67,7 @@ class Wiki extends Model
 
             if(!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
-                    $url = route('wikis.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug]);
+                    $url = route('wikis.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug]);
                     Notifynder::category('wiki.updated')
                                ->from(Auth::user()->id)
                                ->to($watch->user_id)
@@ -85,7 +85,7 @@ class Wiki extends Model
 
             if(!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
-                    $url = route('wikis.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug]);
+                    $url = route('wikis.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug]);
                     Notifynder::category('wiki.deleted')
                                ->from(Auth::user()->id)
                                ->to($watch->user_id)
