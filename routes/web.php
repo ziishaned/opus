@@ -101,6 +101,8 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => '{team_slug}/spaces/{space_slug}/wikis'], function () {
+        Route::get('{wiki_slug}/read-later', 'WikiController@addToReadList')->name('wikis.readlater.create');
+        Route::delete('{wiki_slug}/read-later', 'WikiController@removeFromReadList')->name('wikis.readlater.destroy');
         Route::get('{wiki_slug}/watch', 'WikiController@watch')->name('wikis.watch');
         Route::get('{wiki_slug}/unwatch', 'WikiController@stopWatch')->name('wikis.unwatch');
         Route::get('{wiki_slug}/pdf', 'WikiController@generatePdf')->name('wikis.pdf');
@@ -112,6 +114,8 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('{wiki_slug}/setting/overview', 'WikiController@overview')->name('wikis.overview');
         Route::get('{wiki_slug}/setting/permission', 'WikiController@permission')->name('wikis.permission');
 
+        Route::get('{wiki_slug}/pages/{page_slug}/read-later', 'PageController@addToReadList')->name('pages.readlater.create');
+        Route::delete('{wiki_slug}/pages/{page_slug}/read-later', 'PageController@removeFromReadList')->name('pages.readlater.destroy');
         Route::get('{wiki_slug}/pages/{page_slug}/pdf', 'PageController@generatePdf')->name('pages.pdf');
         Route::get('{wiki_slug}/pages/{page_slug}/word', 'PageController@generateWord')->name('pages.word');
         Route::get('{wiki_slug}/pages/create', 'PageController@create')->name('pages.create');

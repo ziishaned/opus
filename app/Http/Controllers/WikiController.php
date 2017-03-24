@@ -6,7 +6,7 @@ use Pdf;
 use Auth;
 use Illuminate\Http\Request;
 use App\Helpers\HtmlToDocHelper;
-use App\Models\{Page, Space, Team, Wiki, Tag, WatchWiki};
+use App\Models\{Page, Space, Team, Wiki, Tag, WatchWiki, ReadList};
 
 /**
  * Class WikiController
@@ -67,6 +67,8 @@ class WikiController extends Controller
 
     public function show(Team $team, Space $space, Wiki $wiki)
     {
+        $isWikiInReadList = ReadList::where('user_id', Auth::user()->id)->where('subject_id', $wiki->id)->where('subject_type', Wiki::class)->first();
+
         $isUserWatchWiki = WatchWiki::where('user_id', Auth::user()->id)->where('wiki_id', $wiki->id)->first();
 
         $wikiTags = $this->wiki->find($wiki->id)->tags()->get();
@@ -78,7 +80,7 @@ class WikiController extends Controller
             }
         }
 
-        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags', 'isUserWatchWiki'));
+        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags', 'isUserWatchWiki', 'isWikiInReadList'));
     }
 
     public function edit(Team $team, Space $space, Wiki $wiki)
@@ -247,6 +249,30 @@ class WikiController extends Controller
 
         return redirect()->back()->with([
             'alert'      => 'You are now ignoring this wiki.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function addToReadList(Team $team, Space $space, Wiki $wiki)
+    {
+        ReadList::create([
+            'subject_id' => $wiki->id,
+            'subject_type' => Wiki::class,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->back()->with([
+            'alert'      => 'Wiki successfully added to read list.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function removeFromReadList(Team $team, Space $space, Wiki $wiki)
+    {
+        ReadList::where('user_id', Auth::user()->id)->where('subject_id', $wiki->id)->where('subject_type', Wiki::class)->delete();
+
+        return redirect()->back()->with([
+            'alert'      => 'Wiki successfully removed from read list.',
             'alert_type' => 'success',
         ]);
     }

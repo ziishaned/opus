@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReadlistTabel extends Migration
+class CreateReadListTabel extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateReadlistTabel extends Migration
      */
     public function up()
     {
-        Schema::create('readlist', function (Blueprint $table) {
+        Schema::create('read_list', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subject_type');
             $table->integer('subject_id')->unsigned();
@@ -29,6 +29,6 @@ class CreateReadlistTabel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('readlist');
+        Schema::dropIfExists('read_list');
     }
 }

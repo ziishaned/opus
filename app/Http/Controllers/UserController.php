@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Image;
 use Session;
 use Illuminate\Http\Request;
-use App\Models\{User, Wiki, Team};
+use App\Models\{User, Wiki, Team, ReadList};
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -137,7 +137,11 @@ class UserController extends Controller
 
     public function getReadList(Team $team, User $user)
     {
-        return view('user.read-list', compact('team'));
+        $readList = ReadList::where('user_id', $user->id)->with(['subject'])->latest()->paginate(30);
+
+        $spaces = (new \App\Models\Space)->getTeamSpaces($team->id);
+
+        return view('user.read-list', compact('team', 'readList', 'spaces'));
     }
 
     public function dashboard(Team $team)

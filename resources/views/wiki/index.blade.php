@@ -20,7 +20,11 @@
 									<a href="#" style="padding: 5px 6px;"><i class="fa fa-tasks icon"></i> Make Shortcut</a>
 								</li>
                                 <li>
-                                    <a href="#" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i>Read Later</a>
+                                    @if(empty($isWikiInReadList)) 
+                                        <a href="{{ route('wikis.readlater.create', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i> Read Later</a>
+                                    @else
+                                        <a href="{{ route('wikis.readlater.destroy', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" data-method="delete" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i> Added in Read Later</a>
+                                    @endif
                                 </li>
                             </ul>
                             <ul class="list-unstyled list-inline pull-right">
