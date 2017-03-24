@@ -15,6 +15,9 @@ class CreateReadlistTabel extends Migration
     {
         Schema::create('readlist', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('subject_type');
+            $table->integer('subject_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }
