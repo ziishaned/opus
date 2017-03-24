@@ -185,6 +185,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
         Barryvdh\Snappy\ServiceProvider::class,
+        Fenos\Notifynder\NotifynderServiceProvider::class,
     ],
 
     /*
@@ -236,7 +237,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Emoji' => App\Helpers\EmojiHelper::class,
         'Pdf' => Barryvdh\Snappy\Facades\SnappyPdf::class,
-        'Word' => PhpOffice\PhpWord\PhpWord::class,
+        'Notifynder' => Fenos\Notifynder\Facades\Notifynder::class,
     ],
 
 ];

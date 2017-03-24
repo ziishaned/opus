@@ -18,16 +18,16 @@
                             </ul>
                             <ul class="list-unstyled list-inline pull-right">
                                 <li>
-                                    <a href="{{ route('pages.word', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-word-o fa-fw"></i> Export to Word</a>
+                                    <a href="{{ route('pages.word', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-word-o icon"></i> Export to Word</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('pages.pdf', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-pdf-o fa-fw"></i> Export to PDF</a>
+                                    <a href="{{ route('pages.pdf', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-file-pdf-o icon"></i> Export to PDF</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('pages.edit', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-pencil fa-lg icon"></i> Edit</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('pages.destroy', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+                                    <a href="{{ route('pages.destroy', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;" data-method="delete" data-confirm="Are you sure?"><i class="fa fa-trash-o icon"></i> Delete</a>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>

@@ -42,10 +42,15 @@
                     </ul>
               	</li>
               	<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 9px; padding-left: 9px; position: relative;"><i class="fa fa-bell fa-fw"></i><span class="unread-notification" style="background-color: #03A9F4; height: 11px; width: 11px; display: inline-block; border-radius: 50%; position: absolute; top: 13px; right: 8px; border: 2px solid #fbfbfb;"></span></a>
-					<div class="dropdown-menu dropdown-menu-right" style="margin-top: -3px; margin-right: -6px; width: 400px; padding: 12px 18px;">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 9px; padding-left: 9px; position: relative;">
+						<i class="fa fa-bell fa-fw"></i>
+						@if($notifications->count() > 0)
+							<span class="unread-notification" style="background-color: #03A9F4; height: 11px; width: 11px; display: inline-block; border-radius: 50%; position: absolute; top: 13px; right: 8px; border: 2px solid #fbfbfb;"></span>
+						@endif
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" onClick="event.stopPropagation();" style="margin-top: -3px; margin-right: -6px; width: 400px; padding: 0;">
                         <div class="menu-notifications">
-                        	<div class="notification-head" style="margin-bottom: 10px;">
+                        	<div class="notification-head" style="padding: 12px 15px;">
                         		<div class="pull-left" style="height: 18px; display: flex; align-items: center;">
                         			<h2 style="font-size: 12px; color: #777;">Notifications</h2>
                         		</div>
@@ -55,9 +60,30 @@
                         		<div class="clearfix"></div>
                         	</div>
                         	<div class="notification-body">
-                        		<p style="font-size: 12px; text-align: center; padding: 5px 10px; color: #777;">
-                        			Notifications will be displayed here whenever something happens in one of your contributed projects.
-                        		</p>
+                        		@if($notifications->count() > 0)
+                        			<ul class="list-unstyled notifications-list" style="margin-bottom: 0;">
+	                        			@foreach($notifications as $notification)
+	                        				<li>
+	                        					<a href="{{ $notification->url }}">
+			                        				<div class="media">
+			                        				    <div class="pull-left event-user-image" href="http://opus.dev/teams/google/users/zeeshan_ahmed">
+				                        				    <img class="media-object" style="border-radius: 3px;" src="/img/avatars/{{ \App\Models\User::find($notification->from_id)->profile_image }}" width="44" height="44" alt="Image">
+			                        				    </div>
+			                        				    <div class="media-body">
+		                    				                {!! $notification->text !!}
+			                        				        <p class="text-muted" style="font-size: 13px; color: #b7b7b7;">{{ $notification->created_at->diffForHumans() }}</p>
+			                        				    </div>
+			                        				</div>
+	                        					</a>
+	                        				</li>
+	                        			@endforeach
+                        			</ul>
+                        		@else 
+	                        		<div style="font-size: 12px; text-align: center; padding: 2px 15px 20px; color: #777;">
+	                        			<i class="fa fa-bell-o" style="transform: rotate(24deg); font-size: 14px; margin-right: 4px; position: relative; top: -2px;"></i>
+	                        			No unread notification.
+	                        		</div>
+                        		@endif
                         	</div>
                         </div>
                     </div>

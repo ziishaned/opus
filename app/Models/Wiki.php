@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Notifynder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -61,10 +62,38 @@ class Wiki extends Model
 
         static::updated(function($wiki) {
             (new Wiki)->notify(new UpdateWikiNotification($wiki));
+
+            $watchingList = (new WatchWiki)->getWikiWatchers($wiki->id);
+
+            if(!empty($watchingList)) {
+                foreach ($watchingList as $watch) {
+                    $url = route('wikis.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug]);
+                    Notifynder::category('wiki.updated')
+                               ->from(Auth::user()->id)
+                               ->to($watch->user_id)
+                               ->url($url)
+                               ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name])
+                               ->send();
+                }
+            }
         });
 
         static::deleting(function($wiki) {
             (new Wiki)->notify(new DeleteWikiNotification($wiki));
+
+            $watchingList = (new WatchWiki)->getWikiWatchers($wiki->id);
+
+            if(!empty($watchingList)) {
+                foreach ($watchingList as $watch) {
+                    $url = route('wikis.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug]);
+                    Notifynder::category('wiki.deleted')
+                               ->from(Auth::user()->id)
+                               ->to($watch->user_id)
+                               ->url($url)
+                               ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name])
+                               ->send();
+                }
+            }
         });
     }
 

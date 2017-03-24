@@ -18,7 +18,7 @@
                         <form action="{{ route('groups.post', [ $team->slug ]) }}" method="POST" role="form">
                             <div class="form-group with-icon">
                                 <label for="group-name">Group Name</label> 
-                                <input type="text" name="group_name" class="form-control" id="group-name" required>
+                                <input type="text" name="role_name" class="form-control" id="group-name" required>
                                 <i class="fa fa-users icon" style="line-height: 2.8;"></i>
                             </div> 
                             <div class="form-group">
@@ -34,7 +34,7 @@
                             </div> 
                             <div class="form-group">
                                 <label for="group-member-select">Select Members</label> 
-                                <select multiple="" name="group_members[]" class="form-control" id="group-member-select" required></select>
+                                <select multiple="" name="role_members[]" class="form-control" id="group-member-select" required></select>
                             </div> 
                             <ul class="list-unstyled list-inline pull-right">
                                 <li>

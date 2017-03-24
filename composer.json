@@ -11,7 +11,9 @@
         "baum/baum": "^1.1",
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "intervention/image": "^2.3",
-        "barryvdh/laravel-snappy": "^0.3.3"
+        "barryvdh/laravel-snappy": "^0.3.3",
+        "fenos/notifynder": "4.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4"

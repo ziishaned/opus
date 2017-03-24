@@ -34,7 +34,7 @@ class Invite extends Model
         $team = Team::where('slug', Request::get('team_slug'))->first();
 
         $role = Role::where('team_id', $team->id)->where('slug', Request::get('role'))->first();
-
+        
         $invitation = $this->create([
             'code' => str_rot13(base64_encode(str_rot13($data['team_slug'].$data['email']))),
             'email' => $data['email'],
