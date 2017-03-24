@@ -59,7 +59,7 @@
                         		</div>
                         		<div class="clearfix"></div>
                         	</div>
-                        	<div class="notification-body">
+                        	<div class="notification-body" style="max-height: 260px; overflow: auto; margin-bottom: 15px;">
                         		@if($notifications->count() > 0)
                         			<ul class="list-unstyled notifications-list" style="margin-bottom: 0;">
 	                        			@foreach($notifications as $notification)
