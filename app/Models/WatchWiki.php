@@ -24,4 +24,9 @@ class WatchWiki extends Model
 	{
 		return $this->belongsTo(Wiki::class, 'wiki_id', 'id');
 	}
+
+	public function getWikiWatchers($wikiId)
+	{
+		return $this->where('wiki_id', $wikiId)->get();
+	}
 }

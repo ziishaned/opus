@@ -1439,3 +1439,16 @@ ul.dot-divider li:before {
 .edit-wiki-tags .select2-selection {
 	height: 45px !important;
 }
+
+.notifications-list li {
+	padding: 12px 15px;
+}
+
+.notifications-list li:hover {
+    background-color: #F9F9F9;
+}
+
+.notifications-list li:hover a {
+    color: #333333;
+	text-decoration: none;
+}

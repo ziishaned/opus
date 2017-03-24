@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Http\ViewComposers\MenuComposer;
 use Illuminate\Support\ServiceProvider;
+use App\Http\ViewComposers\MenuComposer;
+use App\Http\ViewComposers\NotificationComposer;
 
 class ComposerServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,10 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    
+        view()->composer(
+            '*',
+            NotificationComposer::class
+        );
     }
 
     /**

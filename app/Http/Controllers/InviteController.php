@@ -30,7 +30,7 @@ class InviteController extends Controller
 
     public function store(Team $team)
     {
-        $this->validate($this->request, Invite::INVITERULES, [
+        $this->validate($this->request, Invite::INVITE_RULES, [
             'is_already_invited' => 'A user with this email already invited.',
             'is_already_member'  => 'A user with this email already exists.'
         ]);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Baum\Node;
+use Notifynder;
 use Carbon\Carbon;
 use App\Models\Wiki;
 use Illuminate\Support\Facades\DB;
@@ -68,14 +69,56 @@ class Page extends Node
 
         static::created(function($page) use ($pageObject) {
             $pageObject->notify(new CreatePageNotification($page));
+        
+            $watchingList = (new WatchWiki)->getWikiWatchers($page->wiki_id);
+
+            if(!empty($watchingList)) {
+                foreach ($watchingList as $watch) {
+                    $url = route('pages.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
+                    Notifynder::category('page.created')
+                               ->from(Auth::user()->id)
+                               ->to($watch->user_id)
+                               ->url($url)
+                               ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name, 'page_name' => $page->name])
+                               ->send();
+                }
+            }
         });
 
         static::updated(function($page) use ($pageObject) {
             $pageObject->notify(new UpdatePageNotification($page));
+
+            $watchingList = (new WatchWiki)->getWikiWatchers($page->wiki_id);
+
+            if(!empty($watchingList)) {
+                foreach ($watchingList as $watch) {
+                    $url = route('pages.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
+                    Notifynder::category('page.updated')
+                               ->from(Auth::user()->id)
+                               ->to($watch->user_id)
+                               ->url($url)
+                               ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name, 'page_name' => $page->name])
+                               ->send();
+                }
+            }
         });
 
         static::deleting(function($page) use ($pageObject) {
             $pageObject->notify(new DeletePageNotification($page));
+
+            $watchingList = (new WatchWiki)->getWikiWatchers($page->wiki_id);
+
+            if(!empty($watchingList)) {
+                foreach ($watchingList as $watch) {
+                    $url = route('pages.show', [Auth::user()->getTeam()->id, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
+                    Notifynder::category('page.deleted')
+                               ->from(Auth::user()->id)
+                               ->to($watch->user_id)
+                               ->url($url)
+                               ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name, 'page_name' => $page->name])
+                               ->send();
+                }
+            }
         });
     }
 

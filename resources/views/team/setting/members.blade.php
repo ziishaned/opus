@@ -19,7 +19,7 @@
                                 <p class="help-block has-error" style="position: absolute;">{{ $errors->first('email') }}</p>
                             @endif
                         </div>
-                        <select name="group" id="input" class="form-control" required>
+                        <select name="role" id="input" class="form-control" required>
                             @foreach($roles as $role)
                                 <option value="{{ $role->slug }}">{{ $role->name }}</option>
                             @endforeach

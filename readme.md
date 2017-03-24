@@ -89,7 +89,7 @@ There are spaces for every team, department or major project. Then employees can
   - [x] ~~Add slack integration in team~~
   - [x] ~~Notify on slack~~
   - [ ] Set Notification Preferences in Profile
-  - [ ] In-app Notification balloon
+  - [x] ~~In-app Notification balloon~~
   - [ ] Notifications by email
   - [ ] Mentioned in comment notifications
 - [ ] Templates
