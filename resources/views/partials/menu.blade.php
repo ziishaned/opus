@@ -48,7 +48,7 @@
 							<span class="unread-notification" style="background-color: #03A9F4; height: 11px; width: 11px; display: inline-block; border-radius: 50%; position: absolute; top: 13px; right: 8px; border: 2px solid #fbfbfb;"></span>
 						@endif
 					</a>
-					<div class="dropdown-menu dropdown-menu-right" onClick="event.stopPropagation();" style="margin-top: -3px; margin-right: -6px; width: 400px; padding: 0;">
+					<div class="dropdown-menu dropdown-menu-right" onClick="event.stopPropagation();" style="margin-top: -3px; margin-right: -6px; width: 420px; padding: 0;">
                         <div class="menu-notifications">
                         	<div class="notification-head" style="padding: 12px 15px;">
                         		<div class="pull-left" style="height: 18px; display: flex; align-items: center;">
@@ -70,7 +70,20 @@
 				                        				    <img class="media-object" style="border-radius: 3px;" src="/img/avatars/{{ \App\Models\User::find($notification->from_id)->profile_image }}" width="44" height="44" alt="Image">
 			                        				    </div>
 			                        				    <div class="media-body">
-		                    				                {!! $notification->text !!}
+		                    				                <div class="pull-left event-icon" style="margin-right: 7px;">
+											                    <?php $notificationCategory = $notification->category->name; ?>
+											                    @if($notificationCategory === 'wiki.updated' || $notificationCategory === 'page.updated') 
+																	<i class="fa fa-save fa-fw fa-lg icon"></i>
+											                    @elseif($notificationCategory === 'wiki.deleted' || $notificationCategory === 'page.deleted')
+												                    <i class="fa fa-trash-o fa-fw fa-lg icon"></i>
+												                @elseif($notificationCategory === 'page.created')
+																	<i class="fa fa-file-text-o fa-fw fa-lg icon"></i>
+												                @endif
+											                </div>
+											                <div class="pull-left" style="position: relative; top: -3px; width: 89%;">
+											                    {{ $notification->text }}
+											                </div>
+											                <div class="clearfix"></div>
 			                        				        <p class="text-muted" style="font-size: 13px; color: #b7b7b7;">{{ $notification->created_at->diffForHumans() }}</p>
 			                        				    </div>
 			                        				</div>
