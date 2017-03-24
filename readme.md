@@ -89,7 +89,7 @@ php artisan db:seed
   - [x] ~~Add slack integration in team~~
   - [x] ~~Notify on slack~~
   - [ ] Set Notification Preferences in Profile
-  - [ ] In-app Notification balloon
+  - [x] ~~In-app Notification balloon~~
   - [ ] Notifications by email
   - [ ] Mentioned in comment notifications
 - [ ] Templates
