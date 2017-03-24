@@ -76,7 +76,7 @@ php artisan db:seed
   - [x] ~~Leave Comments~~
     - [x] ~~Mention Team Members~~
     - [x] ~~Add Emojis~~
-  - [ ] Watch Wikis to get notified for updates
+  - [x] ~~Watch Wikis to get notified for updates~~
   - [ ] Save pages in Read List (Like Watch Later in Youtube)
   - [x] ~~Add Tags to Pages~~
   - [x] ~~List all Pages available in a tag~~
