@@ -85,16 +85,11 @@ There are spaces for every team, department or major project. Then employees can
 - [x] ~~Export Documents~~
     - [x] ~~Export Page as PDF~~
     - [x] ~~Export Page as MS Word File~~
-- [ ] Notifications  
+- [x] ~~Notifications~~
   - [x] ~~Add slack integration in team~~
   - [x] ~~Notify on slack~~
-  - [ ] Set Notification Preferences in Profile
   - [x] ~~In-app Notification balloon~~
-  - [ ] Notifications by email
-  - [ ] Mentioned in comment notifications
-- [ ] Templates
-  - [ ] Create Templates
-  - [ ] Populate Wiki by Template (Dropdown on Create Wiki Page)
+  - [x] ~~Mentioned in comment notifications~~
 - [x] ~~Global Search~~
 - [ ] Responsive
 - [ ] Upload demo somewhere
