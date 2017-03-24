@@ -57,6 +57,9 @@
 					            </a>
 					        @endforeach
 				        </div>
+				        <div class="text-center">
+				        	{{ $readList->links() }}
+				        </div>
 					@else
 						<h1 class="nothing-found side"><i class="fa fa-exclamation-triangle fa-fw icon"></i> Nothing found</h1>
 					@endif
