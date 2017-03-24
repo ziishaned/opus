@@ -77,7 +77,7 @@ There are spaces for every team, department or major project. Then employees can
     - [x] ~~Mention Team Members~~
     - [x] ~~Add Emojis~~
   - [x] ~~Watch Wikis to get notified for updates~~
-  - [ ] Save pages in Read List (Like Watch Later in Youtube)
+  - [x] ~~Save pages in Read List (Like Watch Later in Youtube)~~
   - [x] ~~Add Tags to Pages~~
   - [x] ~~List all Pages available in a tag~~
 - [x] ~~Team Dashboard (Monitor Team Activity)~~

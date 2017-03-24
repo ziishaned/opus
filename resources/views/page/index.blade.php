@@ -13,7 +13,11 @@
                                     <a href="#" style="padding: 5px 6px;"><i class="fa fa-tasks fa-lg icon"></i> Make Shortcut</a>
                                 </li>
                                 <li>
-                                    <a href="#" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i> Read Later</a>
+                                    @if(empty($isPageInReadList)) 
+                                        <a href="{{ route('pages.readlater.create', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i> Read Later</a>
+                                    @else
+                                        <a href="{{ route('pages.readlater.destroy', [$team->slug, $space->slug, $wiki->slug, $page->slug]) }}" data-method="delete" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i> Added in Read Later</a>
+                                    @endif
                                 </li>
                             </ul>
                             <ul class="list-unstyled list-inline pull-right">

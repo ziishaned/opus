@@ -11,7 +11,9 @@ class NotificationComposer
 
     public function __construct()
     {
-    	$this->notifications = Auth::user()->getNotifications();
+    	if(Auth::user()) {
+	    	$this->notifications = Auth::user()->getNotifications();
+    	}
     }
 
     public function compose(View $view)

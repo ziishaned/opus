@@ -7,7 +7,7 @@ use DB;
 use Auth;
 use Illuminate\Http\Request;
 use App\Helpers\HtmlToDocHelper;
-use App\Models\{Wiki, Team, Page, Space, Tag};
+use App\Models\{Wiki, Team, Page, Space, Tag, ReadList};
 
 class PageController extends Controller
 {
@@ -203,6 +203,8 @@ class PageController extends Controller
 
     public function show(Team $team, Space $space, Wiki $wiki, Page $page)
     {
+        $isPageInReadList = ReadList::where('user_id', Auth::user()->id)->where('subject_id', $page->id)->where('subject_type', Page::class)->first();
+
         $pageTags = $this->page->find($page->id)->tags()->get();
 
         $isUserLikeWiki = false;
@@ -219,7 +221,7 @@ class PageController extends Controller
             }
         }
 
-        return view('page.index', compact('team', 'pageTags', 'page', 'wiki', 'space', 'isUserLikeWiki', 'isUserLikePage'));
+        return view('page.index', compact('team', 'pageTags', 'page', 'wiki', 'space', 'isUserLikeWiki', 'isUserLikePage', 'isPageInReadList'));
     }
 
     public function update(Team $team, Space $space, Wiki $wiki, Page $page)
@@ -281,10 +283,34 @@ class PageController extends Controller
         return Pdf::loadView('pdf.page', compact('page'))->setOption('header-html',$header)->inline($page->name . '.pdf');
     }
 
-    public function generateWord(Team $team, Space $space, Wiki $wiki)
+    public function generateWord(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $htmltodoc = new HtmlToDocHelper();
 
-        return response()->json($htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true), 200);
+        return response()->json($htmltodoc->createDoc($page->description, $page->name.".doc", true), 200);
+    }
+
+    public function addToReadList(Team $team, Space $space, Wiki $wiki, Page $page)
+    {
+        ReadList::create([
+            'subject_id' => $page->id,
+            'subject_type' => Page::class,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->back()->with([
+            'alert'      => 'Page successfully added to read list.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function removeFromReadList(Team $team, Space $space, Wiki $wiki, Page $page)
+    {
+        ReadList::where('user_id', Auth::user()->id)->where('subject_id', $page->id)->where('subject_type', Page::class)->delete();
+
+        return redirect()->back()->with([
+            'alert'      => 'Page successfully removed from read list.',
+            'alert_type' => 'success',
+        ]);
     }
 }

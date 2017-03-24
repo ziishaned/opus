@@ -8,7 +8,7 @@
 					<span class="item-name">Activities</span>
 				</a>
 			</li>
-			<li class="item">
+			<li class="item {{ (Route::currentRouteName() == 'users.readlist' ? 'active' : '') }}">
 				<a href="{{ route('users.readlist', [$team->slug, Auth::user()->slug]) }}">
 					<i class="fa fa-tasks fa-fw fa-lg icon"></i>
 					<span class="item-name">Read List</span>
