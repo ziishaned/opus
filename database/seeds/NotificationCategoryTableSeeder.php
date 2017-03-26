@@ -36,5 +36,15 @@ class NotificationCategoryTableSeeder extends Seeder
             'name' => 'page.deleted',
             'text' => '{extra.username} deleted page {extra.page_name} at wiki {extra.wiki_name}.',
         ]);
+
+        NotificationCategory::create([
+            'name' => 'wiki.user.mentioned',
+            'text' => '{extra.username} mentioned you in a comment at wiki {extra.wiki_name}.',
+        ]);
+
+        NotificationCategory::create([
+            'name' => 'page.user.mentioned',
+            'text' => '{extra.username} mentioned you in a comment in page {extra.page_name} at wiki {extra.wiki_name}.',
+        ]);
     }
 }
