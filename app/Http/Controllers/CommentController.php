@@ -17,14 +17,19 @@ class CommentController extends Controller
     protected $page;
 
     public function __construct(Request $request, Page $page, Comment $comment) {
-    	$this->request      =  $request;
-        $this->comment      =  $comment;
-        $this->page     =  $page;
+    	$this->request = $request;
+        $this->comment = $comment;
+        $this->page    = $page;
     }
 
     public function storeWikiComment(Team $team, Space $space, Wiki $wiki)
-    {
+    {     
         $this->validate($this->request, Comment::COMMENT_RULES);
+
+        preg_match_all('/(?<= |^)@[^@ ]+/', $this->request->get('comment'), $matches);
+        if(count($matches) === 1 && !empty($matches[0])) {
+            $this->notifyMentionedUsers($matches, $wiki);
+        }
 
         $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
 
@@ -36,11 +41,47 @@ class CommentController extends Controller
         ]);
     }
 
+    public function notifyMentionedUsers($mentions, $wiki, $page = null)
+    {
+        foreach($mentions as $mention) {
+            $mention = str_replace('@', '', $mention);
+
+            $user = \App\Models\User::where('slug', $mention)->first();
+
+            if(is_null($page)) {
+                $url = route('wikis.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug]);
+                \Notifynder::category('wiki.user.mentioned')
+                       ->from(Auth::user()->id)
+                       ->to($user->id)
+                       ->url($url)
+                       ->extra(['wiki_name' => $wiki->name, 'username' => Auth::user()->name])
+                       ->send();
+            } else {
+                $url = route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $page->slug]);
+                \Notifynder::category('page.user.mentioned')
+                       ->from(Auth::user()->id)
+                       ->to($user->id)
+                       ->url($url)
+                       ->extra(['wiki_name' => $wiki->name, 'username' => Auth::user()->name, 'page_name' => $page->name])
+                       ->send();
+            }
+            
+        }
+
+        return true;
+    }
+
     public function storePageComment(Team $team, Space $space, Wiki $wiki, Page $page)
     {
-        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
         
         $this->validate($this->request, Comment::COMMENT_RULES);
+        
+        preg_match_all('/(?<= |^)@[^@ ]+/', $this->request->get('comment'), $matches);
+        if(count($matches) === 1 && !empty($matches[0])) {
+            $this->notifyMentionedUsers($matches, $wiki, $page);
+        }   
+
+        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
         
         $this->comment->storePageComment($page->id, $this->request->all());
 
