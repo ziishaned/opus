@@ -125,7 +125,7 @@ input, select, textarea {
 }
 
 .tooltip {
-	z-index: 1000 !important;
+    z-index: 10000 !important;
 }
 
 .tooltip.bottom {
@@ -1451,4 +1451,9 @@ ul.dot-divider li:before {
 .notifications-list li:hover a {
     color: #333333;
 	text-decoration: none;
+}
+
+i.icon {
+	color: #a5a5a5;
+	font-weight: lighter !important;
 }

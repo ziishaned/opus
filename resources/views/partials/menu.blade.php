@@ -55,7 +55,7 @@
                         			<h2 style="font-size: 12px; color: #777;">Notifications</h2>
                         		</div>
                         		<div class="pull-right" style="height: 18px; display: flex; align-items: center;">
-                        			<a href="#"><i class="fa fa-times fa-fw" style="font-size: 12px; color: #777;"></i></a>
+                        			<a href="#"><i class="fa fa-eye fa-fw icon" data-toggle="tooltip" data-position="top" title="Mark all as read"></i></a>
                         		</div>
                         		<div class="clearfix"></div>
                         	</div>
@@ -66,8 +66,13 @@
 	                        				<li>
 	                        					<a href="{{ $notification->url }}">
 			                        				<div class="media">
-			                        				    <div class="pull-left event-user-image" href="http://opus.dev/teams/google/users/zeeshan_ahmed">
-				                        				    <img class="media-object" style="border-radius: 3px;" src="/img/avatars/{{ \App\Models\User::find($notification->from_id)->profile_image }}" width="44" height="44" alt="Image">
+			                        				    <div class="pull-left event-user-image" href="">
+				                        				    <?php $user_image = \App\Models\User::find($notification->from_id)->profile_image; ?>
+				                        				    @if($user_image)
+										                        <img class="media-object" style="border-radius: 3px;" src="/img/avatars/{{ $user_image }}" width="42" height="42" alt="Image">
+										                    @else
+										                        <img class="media-object" style="border-radius: 3px;" src="/img/no-image.png" width="44" height="44" alt="Image">
+										                    @endif
 			                        				    </div>
 			                        				    <div class="media-body">
 		                    				                <div class="pull-left event-icon" style="margin-right: 7px;">
