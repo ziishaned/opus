@@ -55,7 +55,9 @@
                         			<h2 style="font-size: 12px; color: #777;">Notifications</h2>
                         		</div>
                         		<div class="pull-right" style="height: 18px; display: flex; align-items: center;">
-                        			<a href="{{ route('notifications.readall', [$team->slug, Auth::user()->slug]) }}"><i class="fa fa-eye fa-fw icon" data-toggle="tooltip" data-position="top" title="Mark all as read"></i></a>
+                        			@if($notifications->count() > 0)
+	                        			<a href="{{ route('notifications.readall', [$team->slug, Auth::user()->slug]) }}"><i class="fa fa-eye fa-fw icon" data-toggle="tooltip" data-position="top" title="Mark all as read"></i></a>
+	                        		@endif
                         		</div>
                         		<div class="clearfix"></div>
                         	</div>
