@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use Auth;
+use App\Http\Controllers\NotificationController;
 use Illuminate\View\View;
 
 class NotificationComposer
@@ -12,7 +13,7 @@ class NotificationComposer
     public function __construct()
     {
     	if(Auth::user()) {
-	    	$this->notifications = Auth::user()->getNotifications();
+	    	$this->notifications = (new NotificationController())->getNotificationsNotRead();
     	}
     }
 

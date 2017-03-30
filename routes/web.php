@@ -47,6 +47,10 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::post('', 'RoleController@store')->name('roles.post');
         Route::get('{role_slug}/edit', 'RoleController@edit')->name('roles.edit');
         Route::get('create', 'RoleController@create')->name('roles.create');
+    });
+
+    Route::group([ 'prefix' => '{team_slug}/users/{user_slug}/notifications'], function() {
+        Route::get('read-all', 'NotificationController@readAll')->name('notifications.readall');
     });    
 
     Route::group([ 'prefix' => '{team_slug}/settings'], function() {
