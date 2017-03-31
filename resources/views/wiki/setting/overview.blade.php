@@ -11,30 +11,45 @@
 							<div class="wiki-info" style="border-bottom: 0px;">
 			                    <h2>Wiki Overview</h2>
 			                    <hr>
-			                    <form action="" method="POST" role="form">
+			                    <form action="{{ route('wikis.overview.update', [$team->slug, $space->slug, $wiki->slug]) }}" method="POST" role="form">
+			                    	{{ method_field('patch') }}
 			                    	<div class="row">
 			                    		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					                    	<div class="form-group">
-					                    		<label for="">Name</label>
-					                    		<input type="text" class="form-control" id="" value="Demonstration Space">
+					                    	<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+					                    		<label for="name" class="control-label">Name</label>
+					                    		<input type="text" name="name" class="form-control" id="name" value="{{ $wiki->name }}" required>
+					                    		@if($errors->has('name'))
+					                    		    <p class="help-block has-error">{{ $errors->first('name') }}</p>
+					                    		@endif
 					                    	</div>
 			                    		</div>
 			                    		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-											<div class="form-group">
-												<label for="">Space</label>
-												<select name="" id="input" class="form-control" required="required">
-													<option value="">Marketing</option>
-													<option value="">Sale</option>
-													<option value="">Human Resource</option>
+											<div class="form-group {{ $errors->has('space') ? 'has-error' : '' }}">
+												<label for="space" class="control-label">Space</label>
+												<select name="space" id="space" class="form-control" required="required">
+													@foreach($spaces as $space)
+														<option value="{{ $space->id }}" @if($wiki->space_id === $space->id) selected @endif>{{ $space->name }}</option>
+													@endforeach
 												</select>
+												@if($errors->has('space'))
+												    <p class="help-block has-error">{{ $errors->first('space') }}</p>
+												@endif
 											</div>
 			                    		</div>
 			                    	</div>
 			                    	<div class="form-group">
 			                    		<label for="">Description</label>
-			                    		<input type="text" class="form-control" id="" value="Lorem ipsum dolor sit, tempor incididunt ut labore et dolore magna aliqua.">
+			                    		<input type="text" name="outline" class="form-control" id="" value="{{ $wiki->outline }}">
 			                    	</div>
-			                    	<button type="submit" class="btn btn-success">Update</button>
+			                    	<div class="form-group">
+			                    		<label class="control-label" for="tags">Tags</label>
+			                    		<select class="form-control" name="tags[]" id="tags" multiple="multiple">
+			                    			@foreach($wikiTags as $tag)
+			                    			    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+			                    			@endforeach
+			                    		</select>
+			                    	</div>
+			                    	<button type="submit" class="btn btn-success"><i class="fa fa-save fa-fw" style="font-size: 14px;"></i> Update</button>
 			                    </form>
 			                </div>
 						</div>
@@ -44,20 +59,20 @@
 									<div class="wiki-overview">
 										<div style="margin-bottom: 4px;">
 											<label style="margin-bottom: 0;">Created by</label>
-											<p><a href="#">Zeeshan Ahmed</a></p>
+											<p><a href="#">{{ $wiki->user->name }}</a></p>
 										</div>
 										<div style="margin-bottom: 4px;">
 											<label style="margin-bottom: 0;">Created at</label>
-											<p>Feb 25, 2016 at 2:27pm</p>
+											<p>{{ $wiki->created_at->toDayDateTimeString() }}</p>
 										</div>
 										<div>
 											<label style="margin-bottom: 0;">Last updated</label>
-											<p>Feb 25, 2016 at 2:27pm</p>
+											<p>{{ $wikiLastUpdated }}</p>
 										</div>
 										<hr>
 										<div>
 											<label class="pull-left" style="margin-bottom: 0;">Total Pages</label>
-											<div class="pull-right label label-default" style="position: relative; top: 4px;">4</div>
+											<div class="pull-right label label-default" style="position: relative; top: 4px;">{{ $wiki->pages->count() }}</div>
 											<div class="clearfix"></div>
 										</div>
 									</div>
@@ -73,9 +88,7 @@
 	                            <p class="text-muted action-info">
 	                                This wiki will be permanently deleted from this team and you can't restore it.
 	                            </p>
-	                            <form action="" method="POST" role="form">
-	                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Yes I understand, delete this wiki</button>
-	                            </form>
+	                            <a href="{{ route('wikis.destroy', [$team->slug, $space->slug, $wiki->slug]) }}" class="btn btn-danger" data-method="delete" data-confirm="Are you sure?" style="padding: 5px 6px;"><i class="fa fa-trash fa-fw"></i> Yes I understand, delete this wiki</a>
 	                        </div>
 						</div>
 					</div>

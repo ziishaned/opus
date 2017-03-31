@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Pdf;
 use Auth;
+use App\Models\Tag;
+use App\Models\Page;
+use App\Models\Team;
+use App\Models\Wiki;
+use App\Models\Activity;
+use App\Models\Space;
+use App\Models\WatchWiki;
+use App\Models\ReadList;
 use Illuminate\Http\Request;
 use App\Helpers\HtmlToDocHelper;
-use App\Models\{Page, Space, Team, Wiki, Tag, WatchWiki, ReadList};
 
 /**
  * Class WikiController
@@ -108,6 +115,26 @@ class WikiController extends Controller
         ]);
     }
 
+    public function overviewUpdate(Team $team, Space $space, Wiki $wiki)
+    {
+        $this->validate($this->request, Wiki::WIKI_RULES);
+
+        $this->wiki->where('id', $wiki->id)->update([
+            'name'     => $this->request->get('name'),
+            'space_id' => (int)$this->request->get('space'),
+            'outline'  => $this->request->get('outline'),
+        ]);
+
+        if(!empty($this->request->get('tags'))) {
+            (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+        }
+
+        return redirect()->back()->with([
+            'alert'      => 'Wiki successfully updated.',
+            'alert_type' => 'success',
+        ]);   
+    }
+
     public function destroy(Team $team, Space $space, Wiki $wiki)
     {
         $this->wiki->deleteWiki($wiki->id);
@@ -165,14 +192,13 @@ class WikiController extends Controller
     {
         $isUserLikeWiki = $this->isUserLikeWiki($wiki);
 
-        return view('wiki.setting.overview', compact('team', 'space', 'wiki', 'isUserLikeWiki'));
-    }
+        $wikiLastUpdated = Activity::where('subject_type', Wiki::class)->where('subject_id', $wiki->id)->orderBy('created_at', 'desc')->first()->updated_at->timezone(Auth::user()->timezone)->toDayDateTimeString();
 
-    public function permission(Team $team, Space $space, Wiki $wiki)
-    {
-        $isUserLikeWiki = $this->isUserLikeWiki($wiki);
+        $spaces = $this->space->getTeamSpaces($team->id);
 
-        return view('wiki.setting.permission', compact('team', 'space', 'wiki', 'isUserLikeWiki'));
+        $wikiTags = $this->wiki->find($wiki->id)->tags()->get();
+
+        return view('wiki.setting.overview', compact('team', 'space', 'wiki', 'isUserLikeWiki', 'wikiLastUpdated', 'spaces', 'wikiTags'));
     }
 
     public function isUserLikeWiki($wiki)

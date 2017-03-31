@@ -112,11 +112,11 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('{wiki_slug}/pdf', 'WikiController@generatePdf')->name('wikis.pdf');
         Route::get('{wiki_slug}/word', 'WikiController@generateWord')->name('wikis.word');
         Route::patch('{wiki_slug}', 'WikiController@update')->name('wikis.update');
+        Route::patch('{wiki_slug}/setting/overview', 'WikiController@overviewUpdate')->name('wikis.overview.update');
         Route::get('{wiki_slug}', 'WikiController@show')->name('wikis.show');
         Route::get('{wiki_slug}/activity', 'WikiController@getWikiActivity')->name('wikis.activity');
         Route::delete('{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
         Route::get('{wiki_slug}/setting/overview', 'WikiController@overview')->name('wikis.overview');
-        Route::get('{wiki_slug}/setting/permission', 'WikiController@permission')->name('wikis.permission');
 
         Route::get('{wiki_slug}/pages/{page_slug}/read-later', 'PageController@addToReadList')->name('pages.readlater.create');
         Route::delete('{wiki_slug}/pages/{page_slug}/read-later', 'PageController@removeFromReadList')->name('pages.readlater.destroy');
