@@ -112,11 +112,11 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('{wiki_slug}/pdf', 'WikiController@generatePdf')->name('wikis.pdf');
         Route::get('{wiki_slug}/word', 'WikiController@generateWord')->name('wikis.word');
         Route::patch('{wiki_slug}', 'WikiController@update')->name('wikis.update');
-        Route::patch('{wiki_slug}/setting/overview', 'WikiController@overviewUpdate')->name('wikis.overview.update');
+        Route::patch('{wiki_slug}/settings/overview', 'WikiController@overviewUpdate')->name('wikis.overview.update');
         Route::get('{wiki_slug}', 'WikiController@show')->name('wikis.show');
         Route::get('{wiki_slug}/activity', 'WikiController@getWikiActivity')->name('wikis.activity');
         Route::delete('{wiki_slug}', 'WikiController@destroy')->name('wikis.destroy');
-        Route::get('{wiki_slug}/setting/overview', 'WikiController@overview')->name('wikis.overview');
+        Route::get('{wiki_slug}/settings', 'WikiController@setting')->name('wikis.settings');
 
         Route::get('{wiki_slug}/pages/{page_slug}/read-later', 'PageController@addToReadList')->name('pages.readlater.create');
         Route::delete('{wiki_slug}/pages/{page_slug}/read-later', 'PageController@removeFromReadList')->name('pages.readlater.destroy');
@@ -129,6 +129,8 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::post('{wiki_slug}/pages', 'PageController@store')->name('pages.store');
         Route::get('{wiki_slug}/edit', 'WikiController@edit')->name('wikis.edit');
         Route::patch('{wiki_slug}/pages/{page_slug}', 'PageController@update')->name('pages.update');
+        Route::get('{wiki_slug}/pages/{page_slug}/settings', 'PageController@setting')->name('pages.settings');
+        Route::patch('{wiki_slug}/pages/{page_slug}/settings/overview', 'PageController@overviewUpdate')->name('pages.overview.update');
 
         Route::post('{wiki_slug}/comments', 'CommentController@storeWikiComment')->name('wikis.comments.store');
         Route::post('{wiki_slug}/pages/{page_slug}/comments', 'CommentController@storePageComment')->name('pages.comments.store');

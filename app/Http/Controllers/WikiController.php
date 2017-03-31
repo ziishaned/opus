@@ -188,9 +188,9 @@ class WikiController extends Controller
         return view('wiki.activity', compact('team', 'space', 'wiki', 'activities', 'isUserLikeWiki'));
     }
 
-    public function overview(Team $team, Space $space, Wiki $wiki)
+    public function setting(Team $team, Space $space, Wiki $wiki)
     {
-        $isUserLikeWiki = $this->isUserLikeWiki($wiki);
+        $isUserLikeWiki = self::isUserLikeWiki($wiki);
 
         $wikiLastUpdated = Activity::where('subject_type', Wiki::class)->where('subject_id', $wiki->id)->orderBy('created_at', 'desc')->first()->updated_at->timezone(Auth::user()->timezone)->toDayDateTimeString();
 
@@ -201,7 +201,7 @@ class WikiController extends Controller
         return view('wiki.setting.overview', compact('team', 'space', 'wiki', 'isUserLikeWiki', 'wikiLastUpdated', 'spaces', 'wikiTags'));
     }
 
-    public function isUserLikeWiki($wiki)
+    public static function isUserLikeWiki($wiki)
     {
         $isLiked = false;
         foreach ($wiki->likes as $like) {

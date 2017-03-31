@@ -48,7 +48,7 @@
                         @if($wiki->description)
                             {!! $wiki->description !!}
                         @else 
-                            <span style="font-size: 22px; font-weight: 700; line-height: 26px;">...</span>
+                            <span style="font-size: 22px; font-weight: 700; line-height: 0px;">...</span>
                         @endif
                     </div>
                 </div>     

@@ -19,8 +19,8 @@
                         <span class="item-name">Create a Page</span>
                     </a>
                 </li>
-                <li class="item {{ (Route::currentRouteName() == 'wikis.overview' ? 'active' : '') }}">
-                    <a href="{{ route('wikis.overview', [$team->slug, $space->slug, $wiki->slug, ]) }}">
+                <li class="item {{ (Route::currentRouteName() == 'wikis.settings' ? 'active' : '') }}">
+                    <a href="{{ route('wikis.settings', [$team->slug, $space->slug, $wiki->slug, ]) }}">
                         <i class="fa fa-gear fa-fw fa-lg icon"></i> 
                         <span class="item-name">Wiki Settings</span>
                     </a>

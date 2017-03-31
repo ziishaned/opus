@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Pdf;
 use DB;
+use Pdf;
 use Auth;
+use App\Models\Tag;
+use App\Models\Wiki;
+use App\Models\Team;
+use App\Models\Page;
+use App\Models\Space;
+use App\Models\ReadList;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Helpers\HtmlToDocHelper;
-use App\Models\{Wiki, Team, Page, Space, Tag, ReadList};
 
 class PageController extends Controller
 {
@@ -310,6 +316,39 @@ class PageController extends Controller
 
         return redirect()->back()->with([
             'alert'      => 'Page successfully removed from read list.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function setting(Team $team, Space $space, Wiki $wiki, Page $page)
+    {
+        $isUserLikeWiki = WikiController::isUserLikeWiki($wiki);
+
+        $pageLastUpdated = Activity::where('subject_type', Page::class)->where('subject_id', $page->id)->orderBy('created_at', 'desc')->first()->updated_at->timezone(Auth::user()->timezone)->toDayDateTimeString();
+
+        $pageTags = $this->page->find($page->id)->tags()->get();
+
+        $pages = $this->page->getPages($wiki->id);
+
+        return view('page.setting', compact('team', 'space', 'wiki', 'isUserLikeWiki', 'pageLastUpdated', 'pageTags', 'page', 'pages'));
+    }
+
+    public function overviewUpdate(Team $team, Space $space, Wiki $wiki, Page $page)
+    {
+        $this->validate($this->request, Page::PAGE_RULES);
+
+        $this->page->find($page->id)->update([
+            'name' => $this->request->get('name'),
+            'outline' => $this->request->get('outline'),
+            'parent_id'    =>  !empty($this->request->get('page_parent')) ? $this->request->get('page_parent') : null,
+        ]);
+
+        if(!empty($this->request->get('tags'))) {
+            (new Tag)->updateTags($this->request->get('tags'), Page::class, $page->id);
+        }
+
+        return redirect()->back()->with([
+            'alert'      => 'Page successfully updated.',
             'alert_type' => 'success',
         ]);
     }
