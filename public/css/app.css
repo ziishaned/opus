@@ -1239,7 +1239,7 @@ border-radius: 3px;
 
 .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
     margin-top: 24px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     font-weight: 600;
     line-height: 1.25;
 }
@@ -1299,6 +1299,31 @@ blockquote {
     display: table;
     clear: both;
     content: "";
+}
+
+.markdown-body table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+}
+
+.markdown-body table, .markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markdown-body table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table th, .markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+}
+
+.markdown-body table th {
+    font-weight: 600;
 }
 
 /******************** Markdown *********************/

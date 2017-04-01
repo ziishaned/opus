@@ -1,0 +1,32 @@
+[
+  {
+    "name": "wiki_created"
+  },
+  {
+    "name": "wiki_updated"
+  },
+  {
+    "name": "wiki_deleted"
+  },
+  {
+    "name": "page_created"
+  },
+  {
+    "name": "page_updated"
+  },
+  {
+    "name": "page_deleted"
+  },
+  {
+    "name": "comment_created"
+  },
+  {
+    "name": "comment_updated"
+  },
+  {
+    "name": "comment_deleted"
+  },
+  {
+    "name": "join_team"
+  }
+]

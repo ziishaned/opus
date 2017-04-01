@@ -235,7 +235,9 @@ class PageController extends Controller
         $this->page->updatePage($page->id, $this->request->all());
         $page = $this->page->find($page->id);
 
-        (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Page', $page->id);
+        if(!empty($this->request->get('tags'))) {
+            (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Page', $page->id);
+        }
 
         return redirect()->route('pages.show', [$team->slug, $space->slug, $wiki->slug, $page->slug])->with([
             'alert'      => 'Page successfully updated.',

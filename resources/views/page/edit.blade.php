@@ -29,8 +29,8 @@
                                 <select name="page_parent" id="page-parent" class="form-control">
                                     <option value="">Select a option</option>
                                     <?php $currentPage = $page->parent_id; ?>
-                                    @foreach($pages as $page)
-                                        <option value="{{ $page->id }}" {{ $currentPage === $page->id ? 'selected' : '' }}>{{ $page->name }}</option>
+                                    @foreach($pages as $item)
+                                        <option value="{{ $item->id }}" {{ $currentPage === $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('page_parent'))
@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="wiki-description">Description</label>
-                        <textarea name="description" class="form-control" data-height="380" id="wiki-description"></textarea>
+                        <textarea name="description" class="form-control" data-height="380" id="wiki-description">{{ $page->description }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Save</button>
                     <div class="clearfix"></div>

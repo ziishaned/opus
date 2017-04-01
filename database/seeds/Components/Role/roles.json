@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Admins",
+    "user_id": 1,
+    "team_id": 1
+  },
+  {
+    "name": "Editor",
+    "user_id": 1,
+    "team_id": 1
+  },
+  {
+    "name": "Writer",
+    "user_id": 1,
+    "team_id": 1
+  }
+]

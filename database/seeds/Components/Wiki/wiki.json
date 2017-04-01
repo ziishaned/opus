@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Laravel",
+    "outline": "Iusto omnis sed magni porro Nam earum",
+    "description": "<h1>Love beautiful code? We do too.</h1>\r\n\r\n<hr />\r\n<p>The PHP Framework For Web Artisans</p>\r\n\r\n<pre>\r\n<code class=\"language-php\">class Idea extends Eloquent\r\n{\r\n\r\n\t/**\r\n\t * Dreaming of something more?\r\n\t *\r\n\t * @with  Laravel\r\n\t */\r\n\t public function create()\r\n\t {\r\n\t \t// Have a fresh start...\r\n\t }\r\n\r\n}</code></pre>\r\n\r\n<h2>Expressive, beautiful syntax</h2>\r\n\r\n<hr />\r\n<p>Value elegance, simplicity, and readability? You&rsquo;ll fit right in. Laravel is designed for people just like you. If you need help getting started, check out <a href=\"https://laracasts.com\">Laracasts</a> and our <a href=\"/docs\">great documentation</a>.</p>\r\n\r\n<pre>\r\n<code class=\"language-php\">class Purchase implements ShouldQueue\r\n{\r\n\r\n\t/**\r\n\t * Purchase a new podcast.\r\n\t */\r\n\t public function handle(Repository $repo)\r\n\t {</code></pre>\r\n\r\n<h2>Tailored for your team:</h2>\r\n\r\n<hr />\r\n<p>Whether you&#39;re a solo developer or a 20 person team, Laravel is a breath of fresh air. Keep everyone in sync using Laravel&#39;s database agnostic <a href=\"/docs/migrations\">migrations</a> and <a href=\"/docs/migrations\">schema builder</a>.</p>\r\n\r\n<pre>\r\n<code class=\"language-bash\">~/Apps $ php artisan make:migration create_users_table\r\nMigration created successfully!\r\n\r\n~/Apps $ php artisan migrate --seed\r\nMigrated: 2015_01_12_000000_create_users_table\r\nMigrated: 2015_01_12_100000_create_password_resets_table\r\nMigrated: 2015_01_13_162500_create_projects_table\r\nMigrated: 2015_01_13_162508_create_servers_table</code></pre>\r\n\r\n<p>&nbsp;</p>\r\n",
+    "user_id": 1,
+    "space_id": 1,
+    "team_id": 1
+  }
+]
