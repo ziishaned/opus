@@ -1,10 +1,12 @@
 <?php
 
 use App\Models\Page;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 use App\Models\IntegrationAction;
 use Fenos\Notifynder\Models\NotificationCategory;
 use Database\Seeds\Components\Page\PagesTableSeeder;
+use Database\Seeds\Components\Permission\PermissionsTableSeeder;
 use Database\Seeds\Components\Integration\IntegrationActionsTableSeeder;
 use Database\Seeds\Components\Notification\NotificationCategoryTableSeeder;
 
@@ -12,6 +14,7 @@ class DatabaseSeeder extends Seeder
 {
     private $seeders = [
         PagesTableSeeder::class,
+        PermissionsTableSeeder::class,
         IntegrationActionsTableSeeder::class,
         NotificationCategoryTableSeeder::class,
     ];
@@ -40,6 +43,7 @@ class DatabaseSeeder extends Seeder
     private function emptyModels()
     {
         Page::getQuery()->delete();
+        Permission::getQuery()->delete();
         IntegrationAction::getQuery()->delete();
         NotificationCategory::getQuery()->delete();
     }

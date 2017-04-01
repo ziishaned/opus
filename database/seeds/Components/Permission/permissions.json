@@ -1,0 +1,20 @@
+[
+  {
+    "name": "admin"
+  },
+  {
+    "name": "view_page"
+  },
+  {
+    "name": "add_page"
+  },
+  {
+    "name": "delete_page"
+  },
+  {
+    "name": "add_comment"
+  },
+  {
+    "name": "delete_comment"
+  }
+]
