@@ -7,6 +7,7 @@ use App\Models\IntegrationAction;
 use Fenos\Notifynder\Models\NotificationCategory;
 use Database\Seeds\Components\Page\PagesTableSeeder;
 use Database\Seeds\Components\Permission\PermissionsTableSeeder;
+use Database\Seeds\Components\Permission\RolePermissionsTableSeeder;
 use Database\Seeds\Components\Integration\IntegrationActionsTableSeeder;
 use Database\Seeds\Components\Notification\NotificationCategoryTableSeeder;
 
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder
     private $seeders = [
         PagesTableSeeder::class,
         PermissionsTableSeeder::class,
+        RolePermissionsTableSeeder::class,
         IntegrationActionsTableSeeder::class,
         NotificationCategoryTableSeeder::class,
     ];
@@ -46,5 +48,6 @@ class DatabaseSeeder extends Seeder
         Permission::getQuery()->delete();
         IntegrationAction::getQuery()->delete();
         NotificationCategory::getQuery()->delete();
+        DB::table('role_permissions')->delete();
     }
 }

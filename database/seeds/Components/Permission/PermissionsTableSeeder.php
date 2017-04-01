@@ -4,6 +4,7 @@ namespace Database\Seeds\Components\Permission;
 
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
+
 /**
  * @author Zeeshan Ahmed <ziishaned@gmail.com>
  */
