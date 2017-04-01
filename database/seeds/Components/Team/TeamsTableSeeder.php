@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeds\Components\Team;
+
 use Illuminate\Database\Seeder;
 
 class TeamsTableSeeder extends Seeder

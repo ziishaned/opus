@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Database\Seeds\Components\Integration\IntegrationActionsTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,8 +12,6 @@ class DatabaseSeeder extends Seeder
     */
     public function run()
     {
-        $this->call(PermissionTableSeeder::class);
         $this->call(IntegrationActionsTableSeeder::class);
-        $this->call(NotificationCategoryTableSeeder::class);
     }
 }

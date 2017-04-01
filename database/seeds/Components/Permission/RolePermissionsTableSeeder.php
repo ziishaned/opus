@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeds\Components\Permission;
+
 use Illuminate\Database\Seeder;
 
 class RolePermissionsTableSeeder extends Seeder

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeds\Components\Wiki;
+
 use Illuminate\Database\Seeder;
 
 class WikisTableSeeder extends Seeder

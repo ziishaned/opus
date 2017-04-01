@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeds\Components\Page;
+
 use Illuminate\Database\Seeder;
 
 class PagesTableSeeder extends Seeder

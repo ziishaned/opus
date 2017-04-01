@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeds\Components\Space;
+
 use Illuminate\Database\Seeder;
 
 class SpacesTableSeeder extends Seeder
