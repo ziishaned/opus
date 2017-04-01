@@ -16,7 +16,7 @@ class IntegrationActionsTableSeeder extends Seeder
      * 
      * @var string
      */
-    protected $integrationActionsFilePath = 'database\seeds\Components\Integration\integration_actions.json';
+    private $integrationActionsFilePath = 'database\seeds\Components\Integration\integration_actions.json';
 
     /**		
      * Run the database seeds.		
@@ -39,7 +39,7 @@ class IntegrationActionsTableSeeder extends Seeder
      * 
      * @return array $integrationActions
      */
-    public function getIntegrationActions()
+    private function getIntegrationActions()
     {
         $integrationActions = file_get_contents(base_path($this->integrationActionsFilePath));
 

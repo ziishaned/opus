@@ -2,9 +2,15 @@
 
 use Illuminate\Database\Seeder;
 use Database\Seeds\Components\Integration\IntegrationActionsTableSeeder;
+use Database\Seeds\Components\Notification\NotificationCategoryTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
+    protected $seeders = [
+        IntegrationActionsTableSeeder::class,
+        NotificationCategoryTableSeeder::class
+    ];
+
     /**
     * Run the database seeds.
     *
@@ -12,6 +18,8 @@ class DatabaseSeeder extends Seeder
     */
     public function run()
     {
-        $this->call(IntegrationActionsTableSeeder::class);
+        foreach ($this->seeders as $seeder) {
+            $this->call($seeder);
+        }
     }
 }
