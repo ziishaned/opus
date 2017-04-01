@@ -30,7 +30,8 @@ class PagesTableSeeder extends Seeder
         foreach ($pages as $page) {
 		    Page::insert([
                 'name'        => $page['name'],
-    		    'outline'     => $page['outline'],
+    		    'slug'        => str_slug($page['name'], '_'),
+                'outline'     => $page['outline'],
     		    'description' => $page['description'],
     		    'position'    => $page['position'],
                 'parent_id'   => $page['parent_id'],
