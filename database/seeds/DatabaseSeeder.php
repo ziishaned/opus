@@ -1,11 +1,13 @@
 <?php
 
 use App\Models\Page;
+use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
 use App\Models\IntegrationAction;
 use Fenos\Notifynder\Models\NotificationCategory;
 use Database\Seeds\Components\Page\PagesTableSeeder;
+use Database\Seeds\Components\Role\RolesTableSeeder;
 use Database\Seeds\Components\Permission\PermissionsTableSeeder;
 use Database\Seeds\Components\Permission\RolePermissionsTableSeeder;
 use Database\Seeds\Components\Integration\IntegrationActionsTableSeeder;
@@ -14,6 +16,7 @@ use Database\Seeds\Components\Notification\NotificationCategoryTableSeeder;
 class DatabaseSeeder extends Seeder
 {
     private $seeders = [
+        RolesTableSeeder::class,
         PagesTableSeeder::class,
         PermissionsTableSeeder::class,
         RolePermissionsTableSeeder::class,
@@ -45,6 +48,7 @@ class DatabaseSeeder extends Seeder
     private function emptyModels()
     {
         Page::getQuery()->delete();
+        Role::getQuery()->delete();
         Permission::getQuery()->delete();
         IntegrationAction::getQuery()->delete();
         NotificationCategory::getQuery()->delete();
