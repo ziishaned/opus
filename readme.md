@@ -1,8 +1,3 @@
-<div style="display: flex; align-items: center;padding-bottom: 20px;">
-    <div style="float: left;">![Opus](http://i.imgur.com/5bFJcSz.png)</div>
-    <div>Opus</div>
-</div>
-
 ![Opus](http://i.imgur.com/WZvXEXY.png)
 
 [![Build Status](https://travis-ci.org/zeeshanu/opus.svg?branch=master)](https://travis-ci.org/zeeshanu/opus)
