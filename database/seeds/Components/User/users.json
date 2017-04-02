@@ -6,8 +6,7 @@
     "email": "elliot@gmail.com",
     "password": "$2y$10$Ima71Zf7AeNR7VqqVQtYCuPQBC5fSV22ASneSOx/ZEzo0hY.c7rAG",
     "profile_image": "elliot.jpg",
-    "timezone": "Asia/Karachi",
-    "remember_token": null
+    "timezone": "Asia/Karachi"
   },
   {
     "name": "Tom Matt",
@@ -16,7 +15,6 @@
     "email": "tom_matt@yahoo.com",
     "password": "$2y$10$Ima71Zf7AeNR7VqqVQtYCuPQBC5fSV22ASneSOx/ZEzo0hY.c7rAG",
     "profile_image": "tom.jpg",
-    "timezone": "Asia/Karachi",
-    "remember_token": null
+    "timezone": "Asia/Karachi"
   }
 ]
