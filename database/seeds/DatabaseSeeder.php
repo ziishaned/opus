@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Wiki;
 use App\Models\Page;
 use App\Models\User;
 use App\Models\Role;
@@ -14,6 +15,7 @@ use Database\Seeds\Components\Page\PagesTableSeeder;
 use Database\Seeds\Components\Role\RolesTableSeeder;
 use Database\Seeds\Components\Team\TeamsTableSeeder;
 use Database\Seeds\Components\User\UsersTableSeeder;
+use Database\Seeds\Components\Wiki\WikisTableSeeder;
 use Database\Seeds\Components\Team\InvitesTableSeeder;
 use Database\Seeds\Components\Space\SpacesTableSeeder;
 use Database\Seeds\Components\User\UsersRolesTableSeeder;
@@ -30,6 +32,7 @@ class DatabaseSeeder extends Seeder
         PagesTableSeeder::class,
         TeamsTableSeeder::class,
         UsersTableSeeder::class,
+        WikisTableSeeder::class,
         SpacesTableSeeder::class,
         InvitesTableSeeder::class,
         UsersTeamsTableSeeder::class,
@@ -37,7 +40,7 @@ class DatabaseSeeder extends Seeder
         PermissionsTableSeeder::class,
         RolePermissionsTableSeeder::class,
         IntegrationActionsTableSeeder::class,
-        NotificationCategoryTableSeeder::class,
+        NotificationCategoryTableSeeder::class
     ];
 
 
@@ -65,6 +68,7 @@ class DatabaseSeeder extends Seeder
     {
         Page::getQuery()->delete();
         Role::getQuery()->delete();
+        Wiki::getQuery()->delete();
         Team::getQuery()->delete();
         User::getQuery()->delete();
         Space::getQuery()->delete();
