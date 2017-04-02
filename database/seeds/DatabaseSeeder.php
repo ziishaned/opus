@@ -2,6 +2,7 @@
 
 use App\Models\Page;
 use App\Models\Role;
+use App\Models\Team;
 use App\Models\Space;
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
@@ -9,6 +10,7 @@ use App\Models\IntegrationAction;
 use Fenos\Notifynder\Models\NotificationCategory;
 use Database\Seeds\Components\Page\PagesTableSeeder;
 use Database\Seeds\Components\Role\RolesTableSeeder;
+use Database\Seeds\Components\Team\TeamsTableSeeder;
 use Database\Seeds\Components\Space\SpacesTableSeeder;
 use Database\Seeds\Components\Permission\PermissionsTableSeeder;
 use Database\Seeds\Components\Permission\RolePermissionsTableSeeder;
@@ -20,6 +22,7 @@ class DatabaseSeeder extends Seeder
     private $seeders = [
         RolesTableSeeder::class,
         PagesTableSeeder::class,
+        TeamsTableSeeder::class,
         SpacesTableSeeder::class,
         PermissionsTableSeeder::class,
         RolePermissionsTableSeeder::class,
@@ -52,6 +55,7 @@ class DatabaseSeeder extends Seeder
     {
         Page::getQuery()->delete();
         Role::getQuery()->delete();
+        Team::getQuery()->delete();
         Space::getQuery()->delete();
         Permission::getQuery()->delete();
         IntegrationAction::getQuery()->delete();

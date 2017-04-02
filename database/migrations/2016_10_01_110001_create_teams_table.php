@@ -18,10 +18,6 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->string('team_logo')->nullable();
             $table->string('slug', 65535);
-            $table->enum('visibilty', [
-                'private',
-                'public'
-            ]);
             $table->integer('user_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
