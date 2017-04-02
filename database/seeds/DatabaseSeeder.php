@@ -17,6 +17,7 @@ use Database\Seeds\Components\User\UsersTableSeeder;
 use Database\Seeds\Components\Team\InvitesTableSeeder;
 use Database\Seeds\Components\Space\SpacesTableSeeder;
 use Database\Seeds\Components\User\UsersRolesTableSeeder;
+use Database\Seeds\Components\User\UsersTeamsTableSeeder;
 use Database\Seeds\Components\Permission\PermissionsTableSeeder;
 use Database\Seeds\Components\Permission\RolePermissionsTableSeeder;
 use Database\Seeds\Components\Integration\IntegrationActionsTableSeeder;
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
         UsersTableSeeder::class,
         SpacesTableSeeder::class,
         InvitesTableSeeder::class,
+        UsersTeamsTableSeeder::class,
         UsersRolesTableSeeder::class,
         PermissionsTableSeeder::class,
         RolePermissionsTableSeeder::class,
@@ -68,6 +70,7 @@ class DatabaseSeeder extends Seeder
         Space::getQuery()->delete();
         Invite::getQuery()->delete();
         Permission::getQuery()->delete();
+        DB::table('user_teams')->delete();
         DB::table('users_roles')->delete();
         DB::table('role_permissions')->delete();
         IntegrationAction::getQuery()->delete();
