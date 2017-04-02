@@ -16,7 +16,7 @@ class PagesTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $pagesFilePath = 'database\seeds\Components\Page\pages.json';
+    private $pagesFilePath = 'database/seeds/Components/Page/pages.json';
     
     /**
      * Run the database seeds.

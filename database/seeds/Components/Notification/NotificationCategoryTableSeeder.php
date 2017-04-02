@@ -15,7 +15,7 @@ class NotificationCategoryTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $notificationCategoriesFilePath = 'database\seeds\Components\Notification\notification_categories.json';
+    private $notificationCategoriesFilePath = 'database/seeds/Components/Notification/notification_categories.json';
 
     /**
      * Run the database seeds.
