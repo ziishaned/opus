@@ -11,9 +11,9 @@ use Illuminate\Database\Seeder;
  */
 class UsersRolesTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to users_roles.json file.
-     * 
+     *
      * @var string
      */
     private $usersRolesFilePath = 'database/seeds/Components/User/users_roles.json';
@@ -26,21 +26,21 @@ class UsersRolesTableSeeder extends Seeder
     public function run()
     {
         $usersRoles = $this->getUsersRoles();
-        
+
         foreach ($usersRoles as $userRoles) {
-		    DB::table('users_roles')->insert([
-     			'role_id' 	 => $userRoles['role_id'],
-			    'user_id' 	 => $userRoles['user_id'],
-			    'team_id' 	 => $userRoles['team_id'],
-                'created_at' => Carbon::now(), 
+            DB::table('users_roles')->insert([
+                'role_id'    => $userRoles['role_id'],
+                'user_id'    => $userRoles['user_id'],
+                'team_id'    => $userRoles['team_id'],
+                'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ]); 
+            ]);
         }
     }
 
     /**
-     * Get the users roles from json file. 
-     * 
+     * Get the users roles from json file.
+     *
      * @return array $usersRoles
      */
     private function getUsersRoles()

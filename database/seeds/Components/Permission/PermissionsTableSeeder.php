@@ -10,9 +10,9 @@ use Illuminate\Database\Seeder;
  */
 class PermissionsTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to permissions.json file.
-     * 
+     *
      * @var string
      */
     private $permissionsFilePath = 'database/seeds/Components/Permission/permissions.json';
@@ -25,17 +25,17 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $permissions = $this->getPermissions();
-        
+
         foreach ($permissions as $permission) {
-		    Permission::create([
+            Permission::create([
                 'name' => $permission['name']
-            ]); 
+            ]);
         }
     }
 
     /**
-     * Get the permissions from json file. 
-     * 
+     * Get the permissions from json file.
+     *
      * @return array $permissions
      */
     private function getPermissions()

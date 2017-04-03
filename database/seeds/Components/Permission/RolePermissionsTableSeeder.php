@@ -11,9 +11,9 @@ use Illuminate\Database\Seeder;
  */
 class RolePermissionsTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to role_permissions.json file.
-     * 
+     *
      * @var string
      */
     private $rolePermissionsFilePath = 'database/seeds/Components/Permission/role_permissions.json';
@@ -26,20 +26,20 @@ class RolePermissionsTableSeeder extends Seeder
     public function run()
     {
         $rolePermissions = $this->getPermissions();
-        
+
         foreach ($rolePermissions as $rolePermission) {
-		    DB::table('role_permissions')->insert([
+            DB::table('role_permissions')->insert([
                 "role_id"       => $rolePermission['role_id'],
                 "permission_id" => $rolePermission['permission_id'],
                 "created_at"    => Carbon::now(),
                 "updated_at"    => Carbon::now(),
-            ]); 
+            ]);
         }
     }
 
     /**
-     * Get the role permissions from json file. 
-     * 
+     * Get the role permissions from json file.
+     *
      * @return array $rolePermissions
      */
     private function getPermissions()

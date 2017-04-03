@@ -11,9 +11,9 @@ use Illuminate\Database\Seeder;
  */
 class TeamsTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to teams.json file.
-     * 
+     *
      * @var string
      */
     private $teamsFilePath = 'database/seeds/Components/Team/teams.json';
@@ -26,22 +26,22 @@ class TeamsTableSeeder extends Seeder
     public function run()
     {
         $teams = $this->getTeams();
-        
+
         foreach ($teams as $team) {
-		    Team::insert([
-                'name'       => $team['name'], 
-                'slug'       => str_slug($team['name'], '_'), 
-			    'team_logo'  => $team['team_logo'],
-			    'user_id' 	 => $team['user_id'], 
-                'created_at' => Carbon::now(), 
-			    'updated_at' => Carbon::now()
-            ]); 
+            Team::insert([
+                'name'       => $team['name'],
+                'slug'       => str_slug($team['name'], '_'),
+                'team_logo'  => $team['team_logo'],
+                'user_id'    => $team['user_id'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
         }
     }
 
     /**
-     * Get the teams from json file. 
-     * 
+     * Get the teams from json file.
+     *
      * @return array $teams
      */
     private function getTeams()
