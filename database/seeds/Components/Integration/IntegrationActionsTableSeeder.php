@@ -16,7 +16,7 @@ class IntegrationActionsTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $integrationActionsFilePath = 'database\seeds\Components\Integration\integration_actions.json';
+    private $integrationActionsFilePath = 'database/seeds/Components/Integration/integration_actions.json';
 
     /**		
      * Run the database seeds.		

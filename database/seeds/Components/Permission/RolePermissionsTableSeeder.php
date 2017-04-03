@@ -16,7 +16,7 @@ class RolePermissionsTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $rolePermissionsFilePath = 'database\seeds\Components\Permission\role_permissions.json';
+    private $rolePermissionsFilePath = 'database/seeds/Components/Permission/role_permissions.json';
 
     /**
      * Run the database seeds.

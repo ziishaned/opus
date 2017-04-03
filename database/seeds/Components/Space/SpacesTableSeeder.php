@@ -16,7 +16,7 @@ class SpacesTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $spacesFilePath = 'database\seeds\Components\Space\spaces.json';
+    private $spacesFilePath = 'database/seeds/Components/Space/spaces.json';
 
     /**
      * Run the database seeds.

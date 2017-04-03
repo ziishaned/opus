@@ -16,7 +16,7 @@ class UsersRolesTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $usersRolesFilePath = 'database\seeds\Components\User\users_roles.json';
+    private $usersRolesFilePath = 'database/seeds/Components/User/users_roles.json';
 
     /**
      * Run the database seeds.

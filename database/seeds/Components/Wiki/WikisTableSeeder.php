@@ -16,7 +16,7 @@ class WikisTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $wikisFilePath = 'database\seeds\Components\Wiki\wikis.json';
+    private $wikisFilePath = 'database/seeds/Components/Wiki/wikis.json';
 
     /**
      * Run the database seeds.

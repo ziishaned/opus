@@ -16,7 +16,7 @@ class InvitesTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $invitationsFilePath = 'database\seeds\Components\Team\invitations.json';
+    private $invitationsFilePath = 'database/seeds/Components/Team/invitations.json';
 
     /**
      * Run the database seeds.

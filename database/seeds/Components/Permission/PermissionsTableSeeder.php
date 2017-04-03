@@ -15,7 +15,7 @@ class PermissionsTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $permissionsFilePath = 'database\seeds\Components\Permission\permissions.json';
+    private $permissionsFilePath = 'database/seeds/Components/Permission/permissions.json';
 
     /**
      * Run the database seeds.

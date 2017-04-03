@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
      * 
      * @var string
      */
-    private $usersFilePath = 'database\seeds\Components\User\users.json';
+    private $usersFilePath = 'database/seeds/Components/User/users.json';
 
     /**
      * Run the database seeds.
