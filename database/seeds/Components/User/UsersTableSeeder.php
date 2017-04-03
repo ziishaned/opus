@@ -11,9 +11,9 @@ use Illuminate\Database\Seeder;
  */
 class UsersTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to users.json file.
-     * 
+     *
      * @var string
      */
     private $usersFilePath = 'database/seeds/Components/User/users.json';
@@ -26,26 +26,26 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $users = $this->getUsers();
-        
+
         foreach ($users as $user) {
-		    User::insert([
-     			'name'		 	=> $user['name'],
-			    'first_name' 	=> $user['first_name'],
-			    'last_name'  	=> $user['last_name'],
-			    'slug'  	 	=> str_slug($user['name'], '_'),
-			    'email' 	 	=> $user['email'],
-			    'password' 	 	=> $user['password'],
-			    'profile_image' => $user['profile_image'],
-			    'timezone' 		=> $user['timezone'],
-                'created_at'    => Carbon::now(), 
+            User::insert([
+                'name'          => $user['name'],
+                'first_name'    => $user['first_name'],
+                'last_name'     => $user['last_name'],
+                'slug'          => str_slug($user['name'], '_'),
+                'email'         => $user['email'],
+                'password'      => $user['password'],
+                'profile_image' => $user['profile_image'],
+                'timezone'      => $user['timezone'],
+                'created_at'    => Carbon::now(),
                 'updated_at'    => Carbon::now()
-            ]); 
+            ]);
         }
     }
 
     /**
-     * Get the users from json file. 
-     * 
+     * Get the users from json file.
+     *
      * @return array $users
      */
     private function getUsers()

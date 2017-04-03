@@ -10,9 +10,9 @@ use Fenos\Notifynder\Models\NotificationCategory;
  */
 class NotificationCategoryTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to notification_categories.json file.
-     * 
+     *
      * @var string
      */
     private $notificationCategoriesFilePath = 'database/seeds/Components/Notification/notification_categories.json';
@@ -24,19 +24,19 @@ class NotificationCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-   		$notificationCategories = $this->getNotificationCategories();
-        
+        $notificationCategories = $this->getNotificationCategories();
+
         foreach ($notificationCategories as $category) {
             NotificationCategory::create([
                 'name' => $category['name'],
                 'text' => $category['text']
             ]);
-        } 	
+        }
     }
 
     /**
-     * Get the notification categories from json file. 
-     * 
+     * Get the notification categories from json file.
+     *
      * @return array $notificationCategories
      */
     private function getNotificationCategories()

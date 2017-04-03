@@ -11,9 +11,9 @@ use Illuminate\Database\Seeder;
  */
 class RolesTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to roles.json file.
-     * 
+     *
      * @var string
      */
     private $rolesFilePath = 'database/seeds/Components/Role/roles.json';
@@ -25,23 +25,23 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-   		$roles = $this->getRoles();
-        
+        $roles = $this->getRoles();
+
         foreach ($roles as $role) {
-		    Role::insert([
+            Role::insert([
                 'name'       => $role['name'],
                 'user_id'    => $role['user_id'],
                 'team_id'    => $role['team_id'],
                 'slug'       => str_slug($role['name'], '_'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ]); 
+            ]);
         }
     }
 
     /**
-     * Get the roles from json file. 
-     * 
+     * Get the roles from json file.
+     *
      * @return array $roles
      */
     private function getRoles()
