@@ -5,6 +5,12 @@ namespace App\Models;
 use ReflectionClass;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Trait RecordsActivity
+ *
+ * @package App\Models
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 trait RecordsActivity
 {
     protected static function bootRecordsActivity()
@@ -19,11 +25,11 @@ trait RecordsActivity
     public function recordActivity($event)
     {
         Activity::create([
-            'subject_id'    => $this->id,
-            'subject_type'  => get_class($this),
-            'name'          => $this->getActivityName($this, $event),
-            'user_id'       => isset(Auth::user()->id) ? Auth::user()->id : $this->user_id,
-            'team_id'       => Auth::user()->getTeam()->id
+            'subject_id'   => $this->id,
+            'subject_type' => get_class($this),
+            'name'         => $this->getActivityName($this, $event),
+            'user_id'      => isset(Auth::user()->id) ? Auth::user()->id : $this->user_id,
+            'team_id'      => Auth::user()->getTeam()->id,
         ]);
     }
 
@@ -36,7 +42,7 @@ trait RecordsActivity
 
     protected static function getModelEvents()
     {
-        if (isset(static::$recordEvents)) {
+        if(isset(static::$recordEvents)) {
             return static::$recordEvents;
         }
 

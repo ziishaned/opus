@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Invite
+ * Class Like
  *
  * @package App\Models
  * @author  Zeeshan Ahmed <ziishaned@gmail.com>

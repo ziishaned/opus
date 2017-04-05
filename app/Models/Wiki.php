@@ -9,33 +9,47 @@ use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\Wiki\CreateWikiNotification;
-use App\Notifications\Wiki\{DeleteWikiNotification, UpdateWikiNotification};
+use App\Notifications\Wiki\DeleteWikiNotification;
+use App\Notifications\Wiki\UpdateWikiNotification;
 
+/**
+ * Class Wiki
+ *
+ * @package App\Models
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 class Wiki extends Model
 {
     use Sluggable, RecordsActivity, SoftDeletes, Notifiable;
 
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
     public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'wiki';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'name',
-        'slug',
-        'space_id',
-        'outline',
-        'description',
-        'user_id',
-        'team_id',
-        'updated_at',
-        'created_at',
+        'name', 'slug', 'space_id', 'outline', 'description', 'user_id', 'team_id', 'updated_at', 'created_at',
     ];
 
     protected $dates = ['deleted_at'];
@@ -56,12 +70,12 @@ class Wiki extends Model
     {
         parent::boot();
 
-        static::created(function($wiki) {
-            (new Wiki)->notify(new CreateWikiNotification($wiki));
+        static::created(function ($wiki) {
+            $wiki->notify(new CreateWikiNotification($wiki));
         });
 
-        static::updated(function($wiki) {
-            (new Wiki)->notify(new UpdateWikiNotification($wiki));
+        static::updated(function ($wiki) {
+            $wiki->notify(new UpdateWikiNotification($wiki));
 
             $watchingList = (new WatchWiki)->getWikiWatchers($wiki->id);
 
@@ -69,17 +83,17 @@ class Wiki extends Model
                 foreach ($watchingList as $watch) {
                     $url = route('wikis.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug]);
                     Notifynder::category('wiki.updated')
-                               ->from(Auth::user()->id)
-                               ->to($watch->user_id)
-                               ->url($url)
-                               ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name])
-                               ->send();
+                        ->from(Auth::user()->id)
+                        ->to($watch->user_id)
+                        ->url($url)
+                        ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name])
+                        ->send();
                 }
             }
         });
 
-        static::deleting(function($wiki) {
-            (new Wiki)->notify(new DeleteWikiNotification($wiki));
+        static::deleting(function ($wiki) {
+            $wiki->notify(new DeleteWikiNotification($wiki));
 
             $watchingList = (new WatchWiki)->getWikiWatchers($wiki->id);
 
@@ -87,40 +101,54 @@ class Wiki extends Model
                 foreach ($watchingList as $watch) {
                     $url = route('wikis.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug]);
                     Notifynder::category('wiki.deleted')
-                               ->from(Auth::user()->id)
-                               ->to($watch->user_id)
-                               ->url($url)
-                               ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name])
-                               ->send();
+                        ->from(Auth::user()->id)
+                        ->to($watch->user_id)
+                        ->url($url)
+                        ->extra(['wiki_name' => $watch->wiki->name, 'username' => Auth::user()->name])
+                        ->send();
                 }
             }
         });
     }
 
+    /**
+     * Get the space that owns the wiki.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function space()
     {
         return $this->belongsTo(Space::class, 'space_id', 'id');
     }
 
-    public function user() {
+    /**
+     * Get the user that owns the wiki.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function activity()
-    {
-        return $this->hasMany(Activity::class, 'subject_id', 'id')->where('activities.subject_type', Wiki::class)->with(['user', 'subject' => function($query) {
-            $query->withTrashed();
-        }])->latest();
-    }
-
+    /**
+     * Get the likes that owns the wiki.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function likes()
     {
         return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Wiki::class);
     }
 
+    /**
+     * Get the tags that owns the wiki.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'page_tags', 'subject_id', 'tag_id')->where('page_tags.subject_type', 'App\Models\Wiki');
+        return $this->belongsToMany(Tag::class, 'page_tags', 'subject_id', 'tag_id')->where('page_tags.subject_type', Wiki::class);
     }
 
     public function subject()
@@ -128,72 +156,111 @@ class Wiki extends Model
         return $this->morphTo();
     }
 
-    public function pages() {
+    /**
+     * Get the pages that owns the wiki.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pages()
+    {
         return $this->hasMany(Page::class, 'wiki_id', 'id');
     }
 
-    public function team() {
+    /**
+     * Get the team that owns the wiki.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team()
+    {
         return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
+    /**
+     * Get the comments that owns the wiki.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'subject_id', 'id')->where('comments.subject_type', Wiki::class)->with(['user', 'likes']);
     }
 
+    /**
+     * Get the wikis of a team.
+     *
+     * @param int      $teamId
+     * @param null|int $total
+     * @return mixed
+     */
     public function getTeamWikis($teamId, $total = null)
     {
-        if($total !==  null) {
-            $wikis = $this->where('team_id', $teamId)->with(['space', 'likes'])->latest()->take(5)->get();
-
-            return $wikis;
+        if($total !== null) {
+            return $this->where('team_id', $teamId)->with(['space', 'likes'])->latest()->take(5)->get();
         }
-        
-        $wikis = $this->where('team_id', $teamId)->latest()->paginate(10);
 
-        return $wikis;
+        return $this->where('team_id', $teamId)->latest()->paginate(10);
+
     }
 
+    /**
+     * Get a wiki.
+     *
+     * @param string $wikiSlug
+     * @param int    $teamId
+     * @return bool
+     */
     public function getWiki($wikiSlug, $teamId)
     {
         $wiki = $this->where('slug', '=', $wikiSlug)->where('team_id', '=', $teamId)->with(['user', 'space'])->first();
         if($wiki === null) {
             return false;
         }
+
         return $wiki;
     }
 
+    /**
+     * Create a new wiki.
+     *
+     * @param array $data
+     * @param int   $teamId
+     * @return static
+     */
     public function saveWiki($data, $teamId)
     {
-        $wiki = $this->create([
-            'name'            =>  $data['name'],
-            'space_id'     =>  $data['space'],
-            'outline'         =>  $data['outline'],
-            'description'     =>  $data['description'],
-            'user_id'         =>  Auth::user()->id,
-            'team_id'         =>  $teamId,
+        return $this->create([
+            'name'        => $data['name'],
+            'space_id'    => $data['space'],
+            'outline'     => $data['outline'],
+            'description' => $data['description'],
+            'user_id'     => Auth::user()->id,
+            'team_id'     => $teamId,
         ]);
-
-        return $wiki;
     }
 
+    /**
+     * Delete a wiki.
+     *
+     * @param int $id
+     * @return mixed
+     */
     public function deleteWiki($id)
     {
-        $this->find($id)->delete();
-        return true;
+        return $this->find($id)->delete();
     }
 
+    /**
+     * Update a wiki.
+     *
+     * @param int   $id
+     * @param array $data
+     * @return mixed
+     */
     public function updateWiki($id, $data)
     {
-        $this->find($id)->update([
-            'description' =>  $data['description'],
+        return $this->find($id)->update([
+            'description' => $data['description'],
         ]);
-
-        return true;
-    }
-
-    public function getActivty($id)
-    {
-        return $this->find($id)->activity()->paginate(30);
     }
 }

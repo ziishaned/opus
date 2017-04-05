@@ -6,7 +6,6 @@ use Auth;
 use Hash;
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Fenos\Notifynder\Traits\NotifableLaravel53 as NotifableTrait;
 
@@ -36,70 +35,98 @@ class User extends Authenticatable
     }
 
     const LOGIN_RULES = [
-        'email'    => 'required|email',
-        'password' => 'required',
+        'email'     => 'required|email',
+        'password'  => 'required',
         'team_name' => 'required|exists:teams,name',
     ];
 
     /**
+     * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
-        'name',
-        'first_name',
-        'last_name',
-        'profile_image',
-        'timezone',
-        'email',
-        'password',
+        'name', 'first_name', 'last_name', 'profile_image', 'timezone', 'email', 'password',
     ];
 
     protected $dates = ['deleted_at'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
      * @var array
      */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
+    /**
+     * Get the wikis that are watched by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function watchWikis()
     {
         return $this->hasMany(WatchWiki::class, 'user_id', 'id');
     }
 
-    public function space()
-    {
-        return $this->hasMany(Space::class, 'user_id', 'id');
-    }
-
-    public function team()
-    {
-        return $this->belongsToMany(Team::class, 'user_teams', 'user_id', 'team_id');
-    }
-
-    public function getTeam()
-    {
-        return $this->team->first();
-    }
-
+    /**
+     * Get the roles that owns the user.
+     *
+     * @return mixed
+     */
     public function roles()
     {
         return $this->hasMany(Role::class, 'user_id', 'id')->with('permissions');
     }
 
     /**
-     * DESC
+     * Get the space that owns the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function space()
+    {
+        return $this->hasMany(Space::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get the team that owns the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function team()
+    {
+        return $this->belongsToMany(Team::class, 'user_teams', 'user_id', 'team_id');
+    }
+
+    /**
+     * Get the team of authenticated user.
+     *
+     * @return mixed
+     */
+    public function getTeam()
+    {
+        return $this->team->first();
+    }
+
+    /**
+     * Get the activities that owns the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activity()
     {
-        return $this->hasMany(Activity::class, 'user_id', 'id')->with(['subject' => function($query) {
+        return $this->hasMany(Activity::class, 'user_id', 'id')->with(['subject' => function ($query) {
             $query->withTrashed();
         }, 'user'])->latest();
     }
 
+    /**
+     * Get the likes that owns the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function likes()
     {
         return $this->hasMany(Like::class, 'user_id', 'id');
@@ -116,7 +143,7 @@ class User extends Authenticatable
     }
 
     /**
-     * DESC
+     * Get the comments that owns the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -126,7 +153,7 @@ class User extends Authenticatable
     }
 
     /**
-     * A user can has many wikis.
+     * Get the wikis that owns the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -136,27 +163,26 @@ class User extends Authenticatable
     }
 
     /**
-     * A user can create many pages in a wiki.
+     * Get the pages that owns the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function pages()
     {
-        return $this->hasMany(WikiPage::class, 'user_id', 'id');
+        return $this->hasMany(Page::class, 'user_id', 'id');
     }
 
     /**
-     * Get all resources.
+     * Get a user.
      *
-     * @param $userSlug
-     *
+     * @param $userSlug string
      * @return bool
      */
     public function getUser($userSlug)
     {
         $user = $this->where('slug', '=', $userSlug)->first();
 
-        if ($user) {
+        if($user) {
             return $user;
         }
 
@@ -166,60 +192,81 @@ class User extends Authenticatable
     /**
      * Get all the wikis of a user.
      *
-     * @param $user
-     *
+     * @param $user object
      * @return \App\Models\User
      */
     public function getWikis($user)
     {
-        $userWikis = $this->find($user->id)->wikis()->paginate(10);
-
-        return $userWikis;
+        return $this->find($user->id)->wikis()->paginate(10);
     }
 
+    /**
+     * Update a user.
+     *
+     * @param $slug string
+     * @param $data array
+     * @return mixed
+     */
     public function updateUser($slug, $data)
     {
-        $this->where('slug', '=', $slug)->update([
+        return $this->where('slug', '=', $slug)->update([
             'name'       => $data['first_name'] . ' ' . $data['last_name'],
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
             'timezone'   => !empty($data['timezone']) ? $data['timezone'] : null,
             'email'      => $data['email'],
         ]);
-
-        return true;
     }
 
+    /**
+     * Update user credentials.
+     *
+     * @param $slug string
+     * @param $data array
+     * @return mixed
+     */
     public function updatePassword($slug, $data)
     {
-        $this->where('slug', $slug)->update([
+        return $this->where('slug', $slug)->update([
             'password' => Hash::make($data['new_password']),
         ]);
-
-        return true;
     }
 
+    /**
+     * Create a new user.
+     *
+     * @param $data array
+     * @return static
+     */
     public function createUser($data)
     {
-        $user = $this->create([
+        return $this->create([
             'name'       => $data['first_name'] . ' ' . $data['last_name'],
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
             'password'   => Hash::make($data['password']),
             'email'      => $data['email'],
         ]);
-
-        return $user;
     }
 
+    /**
+     * Get the activities of a user.
+     *
+     * @param $id integer
+     * @return mixed
+     */
     public function getActivty($id)
     {
-        $activity = $this->find($id)->activity()->paginate(30);
-
-        return $activity;
+        return $this->find($id)->activity()->paginate(30);
     }
 
-    public function validate($data) 
+    /**
+     * Validate a user credentials.
+     *
+     * @param $data array
+     * @return bool
+     */
+    public function validate($data)
     {
         $user = $this
             ->join('user_teams', 'users.id', '=', 'user_teams.user_id')
@@ -229,17 +276,23 @@ class User extends Authenticatable
             ->select('users.*', 'teams.slug as team_slug')
             ->first();
 
-        if ($user && Hash::check($data['password'], $user->password)) {
+        if($user && Hash::check($data['password'], $user->password)) {
             return $user;
         }
 
         return false;
     }
 
+    /**
+     * Validate if a user has permission to visit a page,
+     *
+     * @param $routePermissions string
+     * @return bool
+     */
     public function hasPermission($routePermissions)
     {
         $routePermissions = explode('|', $routePermissions);
-        
+
         $roles = $this->with('roles')->findOrFail(Auth::user()->id)->roles;
 
         foreach ($roles as $role) {
@@ -255,12 +308,17 @@ class User extends Authenticatable
         return false;
     }
 
+    /**
+     * Update the avatar of a user.
+     *
+     * @param $id    integer
+     * @param $image string
+     * @return mixed
+     */
     public function updateAvatar($id, $image)
     {
-        $this->find($id)->update([
+        return $this->find($id)->update([
             'profile_image' => $image,
         ]);
-
-        return true;
     }
 }

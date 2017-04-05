@@ -13,7 +13,7 @@ use App\Notifications\Page\DeletePageNotification;
 use App\Notifications\Page\UpdatePageNotification;
 
 /**
- * Class Activity
+ * Class Page
  *
  * @package App\Models
  * @author  Zeeshan Ahmed <ziishaned@gmail.com>
