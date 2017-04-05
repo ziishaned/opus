@@ -77,7 +77,7 @@ class User extends Authenticatable
      */
     public function roles()
     {
-        return $this->hasMany(Role::class, 'user_id', 'id')->with('permissions');
+        return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id')->with('permissions');
     }
 
     /**
@@ -293,7 +293,7 @@ class User extends Authenticatable
     {
         $routePermissions = explode('|', $routePermissions);
 
-        $roles = $this->with('roles')->findOrFail(Auth::user()->id)->roles;
+        $roles = Auth::user()->roles;
 
         foreach ($roles as $role) {
             foreach ($role->permissions as $permission) {

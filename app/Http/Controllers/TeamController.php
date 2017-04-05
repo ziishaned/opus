@@ -55,11 +55,6 @@ class TeamController extends Controller
         return $this->request->header('content-type') == 'application/json';
     }
 
-    public function edit($id)
-    {
-
-    }
-
     public function update(Team $team)
     {
         if($team->name === $this->request->get('team_name')) {
@@ -111,7 +106,7 @@ class TeamController extends Controller
 
         $invitation = (new Invite)->getInvitation($team->id, $hash);
 
-        DB::table('users_roles')->update([
+        DB::table('users_roles')->insert([
             'role_id'    => $invitation->role_id,
             'user_id'    => $user->id,
             'team_id'    => $team->id,

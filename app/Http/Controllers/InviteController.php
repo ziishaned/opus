@@ -19,16 +19,6 @@ class InviteController extends Controller
         $this->invite  = $invite;
     }
 
-    public function index()
-    {
-
-    }
-
-    public function create()
-    {
-
-    }
-
     public function store(Team $team)
     {
         $this->validate($this->request, Invite::INVITE_RULES, [
@@ -55,21 +45,6 @@ class InviteController extends Controller
         });
 
         return true;
-    }
-
-    public function show($id)
-    {
-
-    }
-
-    public function edit($id)
-    {
-
-    }
-
-    public function update(Request $request, $id)
-    {
-
     }
 
     public function destroy(Team $team, $invitationCode)

@@ -1,5 +1,5 @@
 var App = {
-    init: function(params = null) {
+    init: function (params = null) {
         this.params = params;
         this.bindUI();
         this.initJcrop();
@@ -57,7 +57,9 @@ var App = {
                 },
                 cache: true
             },
-            escapeMarkup: function (markup) { return markup; },
+            escapeMarkup: function (markup) {
+                return markup;
+            },
             minimumInputLength: 1,
             templateResult: formatMember,
             templateSelection: formatMemberSelection,
@@ -65,19 +67,19 @@ var App = {
         function formatMember(member) {
             if (member.loading) return member.text;
 
-            let profile_image =  '/img/no-image.png';
+            let profile_image = '/img/no-image.png';
 
-            if(member.profile_image.length) {
-                profile_image = '/img/avatars/'+member.profile_image;
+            if (member.profile_image !== null) {
+                profile_image = '/img/avatars/' + member.profile_image;
             }
 
             return `
                 <div class="media">
                     <div class="pull-left">
-                        <img class="media-object" src="`+profile_image+`" alt="Image" width="44" height="44" style="border-radius: 3px;">
+                        <img class="media-object" src="` + profile_image + `" alt="Image" width="44" height="44" style="border-radius: 3px;">
                     </div>
                     <div class="media-body">
-                        <p style="line-height: 40px; font-size: 16px;"><span style="margin-right: 5px; font-weight: 600;">`+member.slug+`</span> `+member.name +`</p>
+                        <p style="line-height: 40px; margin-left: 8px; font-size: 15px;"><span style="margin-right: 4px; font-weight: 600;">` + member.slug + `</span> ` + member.name + `</p>
                     </div>
                 </div>
             `;
@@ -87,19 +89,19 @@ var App = {
             if (member.selected === true) {
                 return member.text;
             }
-            return member.name;
+            return member.first_name + ' ' + member.last_name;
         }
 
-        var fixAffixWidth = function() {
-            $('[data-spy="affix"]').each(function() {
-                $(this).width( $(this).parent().width() );
+        var fixAffixWidth = function () {
+            $('[data-spy="affix"]').each(function () {
+                $(this).width($(this).parent().width());
             });
         }
         fixAffixWidth();
         $(window).resize(fixAffixWidth);
     },
     setCategoryItemBgColor() {
-        $('#categories-list #categories-list-item').each(function(index, el) {
+        $('#categories-list #categories-list-item').each(function (index, el) {
             let categoryName = $(el).data('name');
             let colorHash = new ColorHash();
             let categoryBgColor = colorHash.hex(categoryName);
@@ -114,8 +116,8 @@ var App = {
             let currentSpace = $('.wikis-list').data('space');
 
             // Match the current space with opened space and set background color wikis space icons.
-            if($(el).data('name') === currentSpace) {
-                $('.wikis-list .wikis-list-item').each(function(index, el) {
+            if ($(el).data('name') === currentSpace) {
+                $('.wikis-list .wikis-list-item').each(function (index, el) {
                     $(el).find('.item-category-label').css({
                         'background-color': categoryBgColor,
                         'color': '#ffffff',
@@ -125,11 +127,11 @@ var App = {
         });
     },
     initCKEditor() {
-        if($('#wiki-description').length) {
+        if ($('#wiki-description').length) {
 
             CKEDITOR.replace('wiki-description', {
                 width: "100%",
-                contentsCss: "/css/ckeditor-custom.css" ,
+                contentsCss: "/css/ckeditor-custom.css",
                 height: $('#wiki-description').data('height'),
                 enableTabKeyTools: true,
                 removePlugins: 'elementspath',
@@ -138,14 +140,20 @@ var App = {
                 resize_enabled: false,
                 uiColor: '#eeeeee',
                 toolbar: [
-                    { name: 'justify3', items: ['Format'] },
-                    { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Bold', 'Italic', 'Underline', 'Strike'] },
-                    { name: 'colors', items: ['TextColor', 'BGColor', 'RemoveFormat', 'SelectAll', '-', 'NumberedList', 'BulletedList'] },
-                    { name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-                    { name: 'insert', items: ['Table', 'HorizontalRule', 'PageBreak', '-', 'Link', 'Iframe'] },
-                    { name: 'editing', items: ['SpellCheck', '-', 'Find', 'Replace', ] },
-                    { name: 'paragraph', items: ['-', 'Outdent', 'Indent'] },
-                    { name: 'justify2', items: ['CodeSnippet', 'Source', 'Maximize', '-', 'Undo', 'Redo'] },
+                    {name: 'justify3', items: ['Format']},
+                    {
+                        name: 'clipboard',
+                        items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Bold', 'Italic', 'Underline', 'Strike']
+                    },
+                    {
+                        name: 'colors',
+                        items: ['TextColor', 'BGColor', 'RemoveFormat', 'SelectAll', '-', 'NumberedList', 'BulletedList']
+                    },
+                    {name: 'justify', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+                    {name: 'insert', items: ['Table', 'HorizontalRule', 'PageBreak', '-', 'Link', 'Iframe']},
+                    {name: 'editing', items: ['SpellCheck', '-', 'Find', 'Replace',]},
+                    {name: 'paragraph', items: ['-', 'Outdent', 'Indent']},
+                    {name: 'justify2', items: ['CodeSnippet', 'Source', 'Maximize', '-', 'Undo', 'Redo']},
                 ]
             });
         }
@@ -157,14 +165,14 @@ var App = {
     },
     getTeamMembers() {
         let that = this;
-        $.getJSON("/api/team/members", function(data) {
+        $.getJSON("/api/team/members", function (data) {
             var members = [];
-            $.each(data, function(index, val) {
-                 members.push({
-                    'id'            :  val.id,
-                    'name'          :  val.slug,
-                    'full_name'     :  val.name,
-                    'profile_image' :  val.profile_image === null ? '/img/no-image.png' : '/img/avatars/' + val.profile_image,
+            $.each(data, function (index, val) {
+                members.push({
+                    'id': val.id,
+                    'name': val.slug,
+                    'full_name': val.first_name + ' ' + val.last_name,
+                    'profile_image': val.profile_image === null ? '/img/no-image.png' : '/img/avatars/' + val.profile_image,
                 })
             });
             that.members = members;
@@ -194,7 +202,9 @@ var App = {
             "womans_hat", "womens", "x", "yellow_heart", "zap", "zzz",
         ];
 
-        var emojis = $.map(emojis, function(value, i) {return {key: value, name:value}});
+        var emojis = $.map(emojis, function (value, i) {
+            return {key: value, name: value}
+        });
 
         $('#comment-input-textarea').atwho({
             at: "@",
@@ -217,16 +227,16 @@ var App = {
             var $group = $('.CarouselGroup');
             var $group2 = $group.clone().appendTo($carousel);
 
-            var animate = function() {
-              $group.css({marginLeft: 0}).animate({marginLeft: -$group.width()}, 70000, 'linear').promise().done(function() {
-                animate();
-              });
+            var animate = function () {
+                $group.css({marginLeft: 0}).animate({marginLeft: -$group.width()}, 70000, 'linear').promise().done(function () {
+                    animate();
+                });
             };
 
             animate();
         }
     },
-    initJcrop: function() {
+    initJcrop: function () {
         var that = this;
         $('#cropimage').Jcrop({
             onSelect: that.updateCropCoords,
@@ -238,7 +248,7 @@ var App = {
             setSelect: [160, 160, 160, 160],
         });
     },
-    updateCropCoords: function(c) {
+    updateCropCoords: function (c) {
         $('#x').val(c.x);
         $('#y').val(c.y);
         $('#w').val(c.w);
@@ -257,12 +267,12 @@ var App = {
             success(data) {
                 $(element).find('#spinner').hide();
                 $(element).find('#like-page, #like-wiki').show();
-                if(data.like === true) {
+                if (data.like === true) {
                     $(element).find('img[data-toggle="tooltip"], i[data-toggle="tooltip"]').attr('title', 'Unlike').tooltip('fixTitle');
-                    $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())+1);
-                }  else {
+                    $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text()) + 1);
+                } else {
                     $(element).find('img[data-toggle="tooltip"], i[data-toggle="tooltip"]').attr('title', 'Like').tooltip('fixTitle');
-                    $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text())-1);
+                    $(element).find('#likes-counter').text(parseInt($(element).find('#likes-counter').text()) - 1);
                 }
             }
         });
@@ -276,17 +286,17 @@ var App = {
                 _method: 'delete',
                 commentId: commentId
             },
-            success: function(data) {
-                if(data.deleted === true) {
-                    $('#total-subject-comments').text(parseInt($('#total-subject-comments').text())-1);
+            success: function (data) {
+                if (data.deleted === true) {
+                    $('#total-subject-comments').text(parseInt($('#total-subject-comments').text()) - 1);
                     $(element).closest('.comment').animate({
-                        'opacity' : '0.5'
-                    }, 100).slideUp(100, function() {
+                        'opacity': '0.5'
+                    }, 100).slideUp(100, function () {
                         $(element).closest('.comment').remove();
                     });
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
@@ -298,18 +308,18 @@ var App = {
             type: 'POST',
             dataType: 'json',
             data: {
-                subject : comment,
-                subjectType : 'comment'
+                subject: comment,
+                subjectType: 'comment'
             },
             success(data) {
                 $(element).closest('li').find('#spinner').hide();
                 $(element).show();
-                if(data.like === true) {
+                if (data.like === true) {
                     $(element).html('<i class="fa fa-thumbs-o-up fa-fw" style="font-size: 14px;"></i> Unlike');
-                    $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())+1);
-                }  else {
+                    $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text()) + 1);
+                } else {
                     $(element).html('<i class="fa fa-thumbs-o-up fa-fw" style="font-size: 14px;"></i> Like');
-                    $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text())-1);
+                    $(element).closest('li').find('#comment-like-counter').text(parseInt($(element).closest('li').find('#comment-like-counter').text()) - 1);
                 }
             }
         });
@@ -333,7 +343,7 @@ var App = {
             },
             error(error) {
                 var errors = JSON.parse(error.responseText);
-                if(errors.comment) {
+                if (errors.comment) {
                     toastr.error(errors.comment[0]);
                 }
             }
@@ -370,9 +380,9 @@ var App = {
     bindUI: function () {
         var that = this;
 
-        $('.overall-search-input').on('keydown', function() {
+        $('.overall-search-input').on('keydown', function () {
             let input = this;
-            setTimeout(function() {
+            setTimeout(function () {
                 let q = $(input).val();
 
                 $.ajax({
@@ -385,7 +395,7 @@ var App = {
                     success(data) {
                         let html = '';
 
-                        $.each(data, function(index, val) {
+                        $.each(data, function (index, val) {
                             if (index === 'wikis' && data.wikis.length > 0) {
                                 html += `
                                     <li class="navbar-header" style="color: #cacaca; font-size: 11px; text-transform: uppercase; font-weight: 500; margin-bottom: -10px; padding: 0 6px;">
@@ -412,10 +422,10 @@ var App = {
                                 `;
                             }
 
-                            $.each(val, function(index, item) {
+                            $.each(val, function (index, item) {
                                 html += `
                                     <li>
-                                        <a href="`+item.link+`" style="padding: 5px 6px;">`+item.text+`</a>
+                                        <a href="` + item.link + `" style="padding: 5px 6px;">` + item.text + `</a>
                                     </li>
                                 `;
                             });
@@ -431,13 +441,13 @@ var App = {
             }, 500);
         });
 
-        if($('#categories-list #categories-list-item').length) {
+        if ($('#categories-list #categories-list-item').length) {
             new List('categories-list', {
                 valueNames: ['item-name']
             });
         }
 
-        $("#team_logo, #profile_image").change(function(){
+        $("#team_logo, #profile_image").change(function () {
             that.readURL(this);
         });
 
@@ -446,7 +456,7 @@ var App = {
             JcropAPI.destroy();
         });
 
-        $(document).on('click', '#like-comment', function(e) {
+        $(document).on('click', '#like-comment', function (e) {
             e.preventDefault();
             let comment = $(this).data('comment-id');
 
@@ -456,27 +466,27 @@ var App = {
             that.likeComment(comment, this);
         });
 
-        $(document).on('click', '#close-comment-update', function(e) {
+        $(document).on('click', '#close-comment-update', function (e) {
             e.preventDefault();
             $(this).closest('.comment').find('.comment-body-inner').show();
             $(this).closest('.comment').find('.comment-body-con').find('#update-comment-form').remove();
         });
 
-        $(document).on('click', '#update-comment-btn', function(e) {
+        $(document).on('click', '#update-comment-btn', function (e) {
             e.preventDefault();
 
             let commentId = $(this).closest('#update-comment-form').find('#comment-input-textarea').data('comment-id');
             let oldComment = $(this).closest('.comment').find('.comment-content').data('comment-content');
             let comment = $(this).closest('#update-comment-form').find('#comment-input-textarea').val();
 
-            if(oldComment == comment) {
+            if (oldComment == comment) {
                 return $(this).closest('.comment').find('#close-comment-update').trigger('click');
             }
 
             that.updateComment(commentId, comment, this);
         });
 
-        $(document).on('click', '#edit-comment', function(e) {
+        $(document).on('click', '#edit-comment', function (e) {
             e.preventDefault();
             let comment = $(this).closest('.comment').find('.comment-content').data('comment-content');
             let commentId = $(this).closest('.comment').data('comment-id');
@@ -484,7 +494,7 @@ var App = {
             var form = `
                 <form action="#" id="update-comment-form" style="margin-top: 10px;">    
                     <div class="form-group" style="margin-bottom: 10px;">
-                        <textarea name="comment" class="form-control" id="comment-input-textarea" data-comment-id="`+commentId+`" placeholder="Write a comment" style="height: 80px; resize: none;">`+comment+`</textarea>
+                        <textarea name="comment" class="form-control" id="comment-input-textarea" data-comment-id="` + commentId + `" placeholder="Write a comment" style="height: 80px; resize: none;">` + comment + `</textarea>
                     </div>
                     <a href="#" class="btn btn-default btn-sm" id="close-comment-update">Cancel</a>
                     <a href="#" class="btn btn-success btn-sm" id="update-comment-btn">Save Changes</a>
@@ -497,16 +507,16 @@ var App = {
             that.intiCommentMention();
         });
 
-        $(document).on('click', '#delete-comment', function(e) {
+        $(document).on('click', '#delete-comment', function (e) {
             e.preventDefault();
-            if(confirm('Are you sure?')) {
+            if (confirm('Are you sure?')) {
                 event.preventDefault();
                 var commentId = $(this).data('comment-id');
                 that.deleteComment(commentId, this);
             }
         });
 
-        $(document).on('click', '#like-wiki', function(e) {
+        $(document).on('click', '#like-wiki', function (e) {
             e.preventDefault();
             let wiki = $(this).data('wiki');
             $(this).hide();
@@ -514,7 +524,7 @@ var App = {
             that.likeSubject(wiki, 'wiki', '.wiki-like-con');
         });
 
-        $(document).on('click', '#like-page', function(e) {
+        $(document).on('click', '#like-page', function (e) {
             e.preventDefault();
             let page = $(this).data('page');
             $(this).hide();
@@ -522,53 +532,53 @@ var App = {
             that.likeSubject(page, 'page', '.page-like-con');
         });
 
-        if(document.getElementById('timezone')) {
-            if($('#timezone').data('selected').length) {
+        if (document.getElementById('timezone')) {
+            if ($('#timezone').data('selected').length) {
                 $('#timezone').val($('#timezone').data('selected'));
             } else {
                 $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
             }
         }
 
-        $('#update-image-size').on('click', function(event) {
+        $('#update-image-size').on('click', function (event) {
             event.preventDefault();
             $.ajax({
-                url: '/organizations/'+Cookies.get('organization_slug')+'/users/avatar/crop',
+                url: '/organizations/' + Cookies.get('organization_slug') + '/users/avatar/crop',
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    'image' : $('#crop-image-form').find('#profile-image-name').val(),
-                    'x'     : $('#crop-image-form').find('#x').val(),
-                    'y'     : $('#crop-image-form').find('#y').val(),
-                    'w'     : $('#crop-image-form').find('#w').val(),
-                    'h'     : $('#crop-image-form').find('#h').val(),
+                    'image': $('#crop-image-form').find('#profile-image-name').val(),
+                    'x': $('#crop-image-form').find('#x').val(),
+                    'y': $('#crop-image-form').find('#y').val(),
+                    'w': $('#crop-image-form').find('#w').val(),
+                    'h': $('#crop-image-form').find('#h').val(),
 
                 },
-                success: function(data) {
+                success: function (data) {
                     $("#profile-pic-cropper").modal('hide');
                     window.location.reload();
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             });
         });
-        $('#profile_image[type="file"]').on('change', function() {
+        $('#profile_image[type="file"]').on('change', function () {
             var formData = new FormData($("#avatar-upload-form")[0]);
             $.ajax({
-                url: '/organizations/'+Cookies.get('organization_slug')+'/users/avatar/store',
+                url: '/organizations/' + Cookies.get('organization_slug') + '/users/avatar/store',
                 type: 'POST',
-                cache:false,
+                cache: false,
                 processData: false,
                 contentType: false,
                 data: formData,
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                     $("#profile-pic-cropper #cropimage").attr('src', '/images/profile-pics/' + data.image);
                     $("#profile-pic-cropper").modal('show');
                     $("#profile-pic-cropper").find('#profile-image-name').val(data.image);
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             });
@@ -576,75 +586,76 @@ var App = {
     },
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     App.init();
 });
 
-$(function() {
-    if($('#wiki-page-tree').length > 0 ) {
+$(function () {
+    if ($('#wiki-page-tree').length > 0) {
         let wiki = $('#wiki-page-tree').data('wiki');
 
         $('#wiki-page-tree').jstree({
             core: {
-                "check_callback" : true,
+                "check_callback": true,
                 "check_while_dragging": true,
-                "animation" : 250,
-                "themes" : {
+                "animation": 250,
+                "themes": {
                     'icons': false,
-                    'dots' : false,
+                    'dots': false,
                     'responsive': true,
                     'variant': "large",
                 },
-                'data' : {
+                'data': {
                     url: function (node) {
                         return '/api/wikis/pages';
                     },
                     type: 'POST',
-                    data: function(node) {
+                    data: function (node) {
                         // Open Tree to a node
-                        if($('#page-open').length > 0) {
+                        if ($('#page-open').length > 0) {
                             var page = $('#page-open').data('page');
                             $('#page-open').remove();
                             return {
-                                'page' : page,
-                                'wiki' : wiki,
+                                'page': page,
+                                'wiki': wiki,
                                 'explore': true,
                             }
                         }
 
                         // Get root nodes
-                        if(node.id === '#') {
+                        if (node.id === '#') {
                             return {
-                                'wiki' : wiki,
+                                'wiki': wiki,
                             }
                         }
 
                         // Get the child nodes of a page
                         return {
-                            'page' : node.data.slug,
+                            'page': node.data.slug,
                         }
                     }
                 }
             },
-            plugins: [ "wholerow", "dnd" ]
+            plugins: ["wholerow", "dnd"]
         }).on("select_node.jstree", function (e, data) {
             document.location = data.node.a_attr.href;
-        }).on("ready.jstree", function(e, data) {
-            if(data.instance._cnt == 0) {
+        }).on("ready.jstree", function (e, data) {
+            if (data.instance._cnt == 0) {
                 var html = `<p class="nothing-found" style="margin-top: 10px; font-size: 12px;"><i class="fa fa-exclamation-triangle fa-fw icon"></i> No pages yet</p>`;
                 $('#wiki-page-tree').replaceWith(html);
-            };
+            }
+            ;
 
             data.instance._open_to($('#wiki-page-tree').data('page'));
 
             // Sorting Tree
-            $("#wiki-page-tree>ul").each(function(){
-                $(this).html($(this).children('li').sort(function(a, b){
+            $("#wiki-page-tree>ul").each(function () {
+                $(this).html($(this).children('li').sort(function (a, b) {
                     return ($(b).data('position')) < ($(a).data('position')) ? 1 : -1;
                 }));
             });
 
-        }).on('move_node.jstree', function(e, data) {
+        }).on('move_node.jstree', function (e, data) {
             $.ajax({
                 url: '/api/pages/reorder',
                 type: 'POST',
@@ -654,10 +665,10 @@ $(function() {
                     'parent': data.parent,
                     'position': data.position,
                 },
-                success: function() {
+                success: function () {
                     return true;
                 },
-                error: function(error) {
+                error: function (error) {
                     var response = JSON.parse(error.responseText);
                     console.log(response);
                 }

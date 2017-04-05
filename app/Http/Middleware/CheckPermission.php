@@ -22,8 +22,6 @@ class CheckPermission
             }
         }
         
-        return response()->json([
-            'Unauthorized.'
-        ], 401);
+        abort(403);
     }
 }
