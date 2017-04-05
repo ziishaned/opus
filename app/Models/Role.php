@@ -36,7 +36,7 @@ class Role extends Model
     protected $dates = ['deleted_at'];
 
     const ROLE_RULES = [
-        'role_name' => 'required|unique:roles,name',
+        'role_name' => 'required|team_has_role|max:45|min:2',
     ];
 
     /**

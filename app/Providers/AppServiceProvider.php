@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use Session;
+use Auth;
 use Request;
 use Validator;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\Invite;
 use App\Http\Validators\HashValidator;
@@ -22,17 +23,32 @@ class AppServiceProvider extends ServiceProvider
         Validator::resolver(function ($translator, $data, $rules, $messages) {
             return new HashValidator($translator, $data, $rules, $messages);
         });
-        
+
         Validator::extend('team_has_email', function ($attribute, $email, $id, $validator) {
             $team = Team::where('name', Request::get('team_name'))
-                                 ->with([
-                                     'members' => function ($query) use ($email) {
-                                         $query->where('email', $email);
-                                     },
-                                 ])->first();
+                ->with([
+                    'members' => function ($query) use ($email) {
+                        $query->where('email', $email);
+                    },
+                ])->first();
 
-            if (!$team || $team->members->count() > 0) {
+            if(!$team || $team->members->count() > 0) {
                 return false;
+            }
+
+            return true;
+        });
+
+        Validator::extend('team_has_role', function ($attribute, $role, $id, $validator) {
+            if(Request::isMethod('patch') === false) {
+                $team = Auth::user()->getTeam();
+                $role = Role::where('name', $role)->where('team_id', $team->id)->first();
+
+                if(!is_null($role)) {
+                    return false;
+                }
+
+                return true;
             }
 
             return true;
@@ -43,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
 
             $invited = Invite::where('email', Request::get('email'))->where('team_id', $team->id)->get();
 
-            if ($invited->count() > 0) {
+            if($invited->count() > 0) {
                 return false;
             }
 
@@ -52,14 +68,14 @@ class AppServiceProvider extends ServiceProvider
 
         Validator::extend('is_already_member', function () {
             $email = Request::get('email');
-            $team = Team::where('slug', Request::get('team_slug'))
-                                 ->with([
-                                     'members' => function ($query) use ($email) {
-                                         $query->where('email', $email);
-                                     },
-                                 ])->first();
+            $team  = Team::where('slug', Request::get('team_slug'))
+                ->with([
+                    'members' => function ($query) use ($email) {
+                        $query->where('email', $email);
+                    },
+                ])->first();
 
-            if (!$team || $team->members->count() > 0) {
+            if(!$team || $team->members->count() > 0) {
                 return false;
             }
 

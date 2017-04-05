@@ -65,25 +65,29 @@ var App = {
         function formatMember(member) {
             if (member.loading) return member.text;
 
-            var markup = `
+            let profile_image =  '/img/no-image.png';
+
+            if(member.profile_image.length) {
+                profile_image = '/img/avatars/'+member.profile_image;
+            }
+
+            return `
                 <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="/img/no-image.png" alt="Image" width="28" height="28" style="border-radius: 3px;">
-                    </a>
+                    <div class="pull-left">
+                        <img class="media-object" src="`+profile_image+`" alt="Image" width="44" height="44" style="border-radius: 3px;">
+                    </div>
                     <div class="media-body">
-                        <p style="font-family: 'lato';"><span style="margin-right: 4px; font-weight: 700;">`+member.slug+`</span> `+member.first_name + ' ' + member.last_name +`</p>
+                        <p style="line-height: 40px; font-size: 16px;"><span style="margin-right: 5px; font-weight: 600;">`+member.slug+`</span> `+member.name +`</p>
                     </div>
                 </div>
             `;
-
-            return markup;
         }
 
         function formatMemberSelection(member) {
             if (member.selected === true) {
                 return member.text;
             }
-            return member.first_name + ' ' + member.last_name;
+            return member.name;
         }
 
         var fixAffixWidth = function() {
@@ -105,10 +109,10 @@ var App = {
                 'background-color': categoryBgColor,
                 'color': '#ffffff',
             });
-            
+
             // Get the current opened space.
             let currentSpace = $('.wikis-list').data('space');
-            
+
             // Match the current space with opened space and set background color wikis space icons.
             if($(el).data('name') === currentSpace) {
                 $('.wikis-list .wikis-list-item').each(function(index, el) {
@@ -159,7 +163,7 @@ var App = {
                  members.push({
                     'id'            :  val.id,
                     'name'          :  val.slug,
-                    'full_name'     :  val.first_name + ' ' + val.last_name,
+                    'full_name'     :  val.name,
                     'profile_image' :  val.profile_image === null ? '/img/no-image.png' : '/img/avatars/' + val.profile_image,
                 })
             });
@@ -187,7 +191,7 @@ var App = {
             "up", "us", "v", "vhs", "vibration_mode", "virgo", "vs", "walking",
             "warning", "watermelon", "wave", "wc", "wedding", "whale", "wheelchair",
             "white_square", "wind_chime", "wink", "wink2", "wolf", "woman",
-            "womans_hat", "womens", "x", "yellow_heart", "zap", "zzz", 
+            "womans_hat", "womens", "x", "yellow_heart", "zap", "zzz",
         ];
 
         var emojis = $.map(emojis, function(value, i) {return {key: value, name:value}});
@@ -285,7 +289,7 @@ var App = {
             error: function(error) {
                 console.log(error);
             }
-        });      
+        });
     },
     likeComment(comment, element) {
         var that = this;
@@ -333,13 +337,13 @@ var App = {
                     toastr.error(errors.comment[0]);
                 }
             }
-        });  
+        });
     },
     readURL(input) {
         var that = this;
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            
+
             reader.onload = function (e) {
                 $('#team-logo-crop').attr('src', e.target.result);
                 $('#team-logo-modal').modal('show');
@@ -353,7 +357,7 @@ var App = {
                     setSelect: [160, 160, 160, 160],
                 });
             }
-            
+
             reader.readAsDataURL(input.files[0]);
         }
     },
@@ -380,7 +384,7 @@ var App = {
                     },
                     success(data) {
                         let html = '';
-                        
+
                         $.each(data, function(index, val) {
                             if (index === 'wikis' && data.wikis.length > 0) {
                                 html += `
@@ -407,7 +411,7 @@ var App = {
                                     </li>
                                 `;
                             }
-                            
+
                             $.each(val, function(index, item) {
                                 html += `
                                     <li>
@@ -417,7 +421,7 @@ var App = {
                             });
 
                         });
-                        
+
                         $('#overall-search-output').empty().append(html);
                     },
                     error(error) {
@@ -428,7 +432,7 @@ var App = {
         });
 
         if($('#categories-list #categories-list-item').length) {
-            new List('categories-list', { 
+            new List('categories-list', {
                 valueNames: ['item-name']
             });
         }
@@ -464,7 +468,7 @@ var App = {
             let commentId = $(this).closest('#update-comment-form').find('#comment-input-textarea').data('comment-id');
             let oldComment = $(this).closest('.comment').find('.comment-content').data('comment-content');
             let comment = $(this).closest('#update-comment-form').find('#comment-input-textarea').val();
-            
+
             if(oldComment == comment) {
                 return $(this).closest('.comment').find('#close-comment-update').trigger('click');
             }
@@ -500,7 +504,7 @@ var App = {
                 var commentId = $(this).data('comment-id');
                 that.deleteComment(commentId, this);
             }
-        });      
+        });
 
         $(document).on('click', '#like-wiki', function(e) {
             e.preventDefault();
@@ -604,10 +608,10 @@ $(function() {
                             return {
                                 'page' : page,
                                 'wiki' : wiki,
-                                'explore': true,   
+                                'explore': true,
                             }
                         }
-                        
+
                         // Get root nodes
                         if(node.id === '#') {
                             return {

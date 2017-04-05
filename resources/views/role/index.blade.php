@@ -27,10 +27,10 @@
                                 <div class="panel-body">
                                     <div class="group-item-header">
                                         <div class="pull-left">
-                                            <p class="group-name"><span class="name-inner">{{ $role->name }}</span> <span class="label label-default">{{ $role->members->count() }}</span></p> 
+                                            <p class="group-name"><span class="name-inner">{{ $role->name }}</span> @if($role->members->count() != 0) <span class="label" style="color: #9c9c9c; font-size: 12px; font-weight: 600; margin-left: 5px; top: 0px;">{{ $role->members->count() }}</span> @endif</p>
                                         </div>
                                         <div class="pull-right">
-                                            <ul class="list-unstyled list-inline">
+                                            <ul class="list-unstyled list-inline" style="margin-bottom: 0px;">
                                                 <li>
                                                     <a href="{{ route('roles.edit', [$team->slug, $role->slug]) }}"><i class="fa fa-pencil fa-fw" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
                                                 </li>
@@ -48,16 +48,16 @@
                                             @foreach($role->members as $member)
                                                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 group-member-item">
                                                     <div class="media">
-                                                        <a class="pull-left group-member-img" href="#">
+                                                        <div class="pull-left group-member-img">
                                                             @if($member->profile_image)
-                                                                <img class="media-object" src="/img/avatars/{{ $member->profile_image }}" width="50" height="50" alt="Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ $member->first_name . ' ' . $member->last_name }}">
+                                                                <img class="media-object" src="/img/avatars/{{ $member->profile_image }}" width="50" height="50" alt="Image">
                                                             @else
-                                                                <img class="media-object" src="/img/no-image.png" width="50" height="50" alt="Image" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ $member->first_name . ' ' . $member->last_name }}">
+                                                                <img class="media-object" src="/img/no-image.png" width="50" height="50" alt="Image">
                                                             @endif
-                                                        </a>
+                                                        </div>
                                                         <div class="media-body">
-                                                            <h4 class="media-heading group-member-name">{{ $member->first_name . ' ' . $member->last_name }}</h4>
-                                                            <p class="grou-member-email">{{ $member->email }}</p>
+                                                            <h4 class="media-heading group-member-name"><a href="{{ route('users.show', [$team->slug, $member->slug]) }}">{{ $member->name }}</a></h4>
+                                                            <p class="group-member-email">{{ $member->email }}</p>
                                                         </div>
                                                     </div>      
                                                 </div>
