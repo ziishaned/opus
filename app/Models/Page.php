@@ -251,9 +251,9 @@ class Page extends Node
     {
         return $this->create([
             'name'        => $data['name'],
-            'outline'     => !empty($data['outline']) ? $data['outline'] : null,
-            'description' => !empty($data['description']) ? $data['description'] : null,
-            'parent_id'   => !empty($data['page_parent']) ? $data['page_parent'] : null,
+            'outline'     => $data['outline'],
+            'description' => $data['description'],
+            'parent_id'   => !empty($data['page_parent']) ? (int) $data['page_parent'] : null,
             'position'    => $data['position'],
             'user_id'     => Auth::user()->id,
             'wiki_id'     => $wiki->id,
