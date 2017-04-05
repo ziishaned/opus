@@ -9,22 +9,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\Comment\CreateCommentNotification;
 
+/**
+ * Class Comment
+ *
+ * @package App\Models
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 class Comment extends Model
 {
     use RecordsActivity, SoftDeletes, Notifiable;
 
     /**
+     * The table associated with the model.
+     *
      * @var string
      */
     protected $table = 'comments';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'content',
-        'subject_type',
-        'subject_id',
-        'user_id',
-        'updated_at',
-        'created_at',
+        'content', 'subject_type', 'subject_id', 'user_id', 'updated_at', 'created_at',
     ];
 
     protected $dates = ['deleted_at'];
@@ -44,7 +52,7 @@ class Comment extends Model
     {
         parent::boot();
 
-        static::created(function($comment) {
+        static::created(function ($comment) {
             (new Comment)->notify(new CreateCommentNotification($comment));
         });
     }
@@ -53,7 +61,7 @@ class Comment extends Model
     {
         return $this->morphTo();
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
@@ -74,44 +82,47 @@ class Comment extends Model
         return $this->hasMany(Like::class, 'subject_id', 'id')->where('likes.subject_type', Comment::class);
     }
 
-    public function storeWikiComment($wikiId, $data)
+    /**
+     * Create a new comment against a provided subject (wiki, page).
+     *
+     * @param $subjectId   integer
+     * @param $subjectType string
+     * @param $data        array
+     * @return static
+     */
+    public function storeComment($subjectId, $subjectType, $data)
     {
-        $this->create([
-            'subject_id' => $wikiId,
-            'subject_type' => Wiki::class,
-            'content'    => $data['comment'],
-            'user_id'    => Auth::user()->id,
-            'updated_at' => Carbon::now(),
-            'created_at' => Carbon::now(),
+        return $this->create([
+            'subject_id'   => $subjectId,
+            'subject_type' => $subjectType,
+            'content'      => $data['comment'],
+            'user_id'      => Auth::user()->id,
+            'updated_at'   => Carbon::now(),
+            'created_at'   => Carbon::now(),
         ]);
-        return true;        
     }
 
-    public function storePageComment($pageId, $data)
+    /**
+     * Delete a comment
+     *
+     * @param $id integer
+     * @return mixed
+     */
+    public function deleteComment($id)
     {
-        $this->create([
-            'subject_id' => $pageId,
-            'subject_type' => Page::class,
-            'content'    => $data['comment'],
-            'user_id'    => Auth::user()->id,
-            'updated_at' => Carbon::now(),
-            'created_at' => Carbon::now(),
-        ]);
-
-        return true; 
+        return $this->find($id)->delete();
     }
 
-    public function deleteComment($id) {
-        $this->find($id)->delete();
-        
-        return true;
-    }
-
-    public function updateComment($data) {
-        $this->find($data['commentId'])->update([
+    /**
+     * Update a comment
+     *
+     * @param $data array
+     * @return mixed
+     */
+    public function updateComment($data)
+    {
+        return $this->find($data['commentId'])->update([
             'content' => $data['comment'],
         ]);
-
-        return true;
     }
 }

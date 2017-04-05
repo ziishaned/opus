@@ -5,25 +5,42 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Invite
+ *
+ * @package App\Models
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 class Like extends Model
 {
     use SoftDeletes;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'likes';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'subject_type',
-        'subject_id',
-        'user_id',
-    	'created_at',
-    	'updated_at',
+        'subject_type', 'subject_id', 'user_id', 'created_at', 'updated_at',
     ];
 
     protected $dates = ['deleted_at'];
 
+    /**
+     * Get the user that owns the like.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
-    	return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function subject()
@@ -31,10 +48,20 @@ class Like extends Model
         return $this->morphTo();
     }
 
-    public function getUserLikeWikis($id)
+    /**
+     * Get all the wikis that are liked by a user.
+     *
+     * @param $userId integer
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getUserLikeWikis($userId)
     {
-        $likes = $this->where('user_id', $id)->where('subject_type', 'App\Models\Wiki')->with(['subject'])->limit(7)->latest()->get();
-
-        return $likes;
+        return $this
+            ->where('user_id', $userId)
+            ->where('subject_type', Wiki::class)
+            ->with(['subject'])
+            ->limit(7)
+            ->latest()
+            ->get();
     }
 }
