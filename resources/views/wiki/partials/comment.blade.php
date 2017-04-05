@@ -7,11 +7,10 @@
             <div class="pull-right">
                 <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                     <li class="page-like-con">
-                        <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
-                        <a href="#" id="like-wiki" data-page="{{ $wiki->slug }}"><i class="fa fa-star-o fa-fw" style="font-size: 16px;" data-toggle="tooltip" data-placement="top" title="{{ $isUserLikeWiki ? 'Unlike' : 'Like' }}" style="margin-right: 2px;"></i></a> <span class="label label-default" id="likes-counter" style="padding: 3px 6px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $wiki->likes->count() }}</span>
+                        <i class="fa fa-star-o fa-fw" style="font-size: 16px;" style="margin-right: 2px;"></i> <span class="label" id="likes-counter" style="color: #9c9c9c; font-size: 12px; font-weight: 600; padding: 0px; margin-left: 2px;">{{ $wiki->likes->count() }}</span>
                     </li>
                     <li>
-                        <i class="fa fa-comments-o fa-fw" style="margin-right: 2px; font-size: 16px;"></i> <span class="label label-default" style="padding: 3px 6px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $wiki->comments->count() }}</span>
+                        <i class="fa fa-comments-o fa-fw" style="margin-right: 2px; font-size: 16px;"></i> <span class="label" style="color: #9c9c9c; font-size: 12px; font-weight: 600; padding: 0px; margin-left: 2px;">{{ $wiki->comments->count() }}</span>
                     </li>
                 </ul>
             </div>
@@ -33,7 +32,7 @@
                                 <div class="media-body">
                                     <h4 class="media-heading user-name">
                                         <a href="{{ route('users.show', [ $team->slug, $comment->user->slug ]) }}">
-                                            {{ $comment->user->first_name . ' ' . $comment->user->last_name }}
+                                            {{ $comment->user->name }}
                                         </a> 
                                         <small class="comment-time" style="font-size: 12px; margin-left: 15px; color: rgba(0,0,0,.4);">{{ $comment->updated_at->diffForHumans() }}</small>
                                         <small id="comment-like-counter" style="margin-left: 15px; font-size: 12px; color: rgba(0,0,0,.4);"><i class="fa fa-star fa-fw"></i> {{ $comment->likes->count() }}</small>
@@ -93,7 +92,7 @@
                     @if($errors->has('comment'))
                         <p class="help-block has-error" style="width: 230px; margin-bottom: 0; position: absolute;">{{ $errors->first('comment') }}</p>
                     @endif
-                    <button type="submit" class="btn btn-primary pull-right" style="border-radius: 3px;"><i class="fa fa-pencil-square-o fa-fw" style="margin-right: 5px;"></i> Add Reply</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="border-radius: 3px;">Submit</button>
                     <div class="clearfix"></div>
                 </div>
             </div>

@@ -8,10 +8,10 @@
                 <ul class="list-unstyled list-inline" style="margin-bottom: 0;">
                     <li class="page-like-con">
                         <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
-                        <a href="#" id="like-page" data-page="{{ $page->slug }}"><i class="fa fa-star-o fa-fw" style="font-size: 16px;" data-toggle="tooltip" data-placement="top" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" style="margin-right: 2px;"></i></a> <span class="label label-default" id="likes-counter" style="padding: 3px 8px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $page->likes->count() }}</span>
+                        <a href="#" id="like-page" data-page="{{ $page->slug }}"><i class="fa fa-star-o fa-fw" style="font-size: 16px;" data-toggle="tooltip" data-placement="top" title="{{ $isUserLikePage ? 'Unlike' : 'Like' }}" style="margin-right: 2px;"></i></a> <span class="label" id="likes-counter" style="color: #9c9c9c; font-size: 12px; font-weight: 600; padding: 0px; margin-left: 2px;">{{ $page->likes->count() }}</span>
                     </li>
                     <li>
-                        <i class="fa fa-comments-o fa-fw" style="margin-right: 2px; font-size: 16px;"></i> <span class="label label-default" style="padding: 3px 8px; font-weight: 400; display: inline-flex; align-items: center; font-size: 11px;">{{ $page->comments->count() }}</span>
+                        <i class="fa fa-comments-o fa-fw" style="margin-right: 2px; font-size: 16px;"></i> <span class="label" style="color: #9c9c9c; font-size: 12px; font-weight: 600; padding: 0px; margin-left: 2px;">{{ $page->comments->count() }}</span>
                     </li>
                 </ul>
             </div>
@@ -31,7 +31,13 @@
                                     @endif
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading user-name"><a href="{{ route('users.show', [ $team->slug, $comment->user->slug ]) }}">{{ $comment->user->first_name . ' ' . $comment->user->last_name }}</a> <small class="comment-time" data-toggle="tooltip" data-placement="bottom" title="{{ $comment->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $comment->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}">{{ $comment->updated_at->diffForHumans() }}</small></h4>
+                                    <h4 class="media-heading user-name">
+                                        <a href="{{ route('users.show', [ $team->slug, $comment->user->slug ]) }}">
+                                            {{ $comment->user->name }}
+                                        </a>
+                                        <small class="comment-time" style="font-size: 12px; margin-left: 15px; color: rgba(0,0,0,.4);">{{ $comment->updated_at->diffForHumans() }}</small>
+                                        <small id="comment-like-counter" style="margin-left: 15px; font-size: 12px; color: rgba(0,0,0,.4);"><i class="fa fa-star fa-fw"></i> {{ $comment->likes->count() }}</small>
+                                    </h4>
                                     <div class="comment-body-con">
                                         <div class="comment-body-inner">
                                             <div class="comment-body">
@@ -46,15 +52,15 @@
                                                                 <?php $userLikeComment = true; ?>
                                                             @endif
                                                         @endforeach
-                                                        <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i> <a href="#" id="like-comment" data-comment-id="{{ $comment->id }}"><i class="fa fa-thumbs-up fa-fw"></i> {{ $userLikeComment ? 'Unlike' : 'Like' }}</a>
-                                                        <span class="label label-default" style="display: inline-block; padding: 3px 5px;" id="comment-like-counter">{{ $comment->likes->count() }}</span>
+                                                        <i class="fa fa-spinner fa-spin fa-lg fa-fw" id="spinner"></i>
+                                                        <a href="#" id="like-comment" data-comment-id="{{ $comment->id }}"><i class="fa fa-thumbs-o-up fa-fw" style="font-size: 14px;"></i> {{ $userLikeComment ? 'Unlike' : 'Like' }}</a>
                                                     </li>
                                                     @if($comment->user_id === Auth::user()->id)
                                                         <li>
-                                                            <a href="#" id="edit-comment"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                                                            <a href="#" id="edit-comment"><i class="fa fa-pencil fa-fw" style="font-size: 14px;"></i> Edit</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" id="delete-comment" data-comment-id="{{ $comment->id }}"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+                                                            <a href="#" id="delete-comment" data-comment-id="{{ $comment->id }}"><i class="fa fa-trash-o fa-fw" style="font-size: 14px;"></i> Delete</a>
                                                         </li>
                                                     @endif
                                                 </ul>
@@ -91,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <input type="submit" class="btn btn-success pull-right" value="Submit">
+        <input type="submit" class="btn btn-primary pull-right" value="Submit">
         <div class="clearfix"></div>
     </form>
 </div>
