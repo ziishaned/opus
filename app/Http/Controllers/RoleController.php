@@ -30,7 +30,7 @@ class RoleController extends Controller
         return view('role.index', compact('team', 'roles', 'spaces'));
     }
 
-    public function create()
+    public function create(Team $team)
     {
         return view('role.create', compact('team'));
     }
