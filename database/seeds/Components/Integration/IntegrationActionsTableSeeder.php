@@ -1,8 +1,7 @@
 <?php		
 
 namespace Database\Seeds\Components\Integration;
-		
-use Storage;
+
 use Illuminate\Database\Seeder;		
 use App\Models\IntegrationAction;		
 		
