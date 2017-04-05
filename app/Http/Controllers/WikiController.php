@@ -8,10 +8,10 @@ use App\Models\Tag;
 use App\Models\Page;
 use App\Models\Team;
 use App\Models\Wiki;
-use App\Models\Activity;
 use App\Models\Space;
-use App\Models\WatchWiki;
 use App\Models\ReadList;
+use App\Models\Activity;
+use App\Models\WatchWiki;
 use Illuminate\Http\Request;
 use App\Helpers\HtmlToDocHelper;
 
@@ -46,7 +46,7 @@ class WikiController extends Controller
     {
         $spaces = $this->space->getTeamSpaces($team->id);
 
-        if ($spaces->count() == 0) {
+        if($spaces->count() == 0) {
             return redirect()->route('spaces.create', [$team->slug])->with([
                 'alert'      => 'You need to create space before creating wiki!',
                 'alert_type' => 'info',
@@ -79,10 +79,10 @@ class WikiController extends Controller
         $isUserWatchWiki = WatchWiki::where('user_id', Auth::user()->id)->where('wiki_id', $wiki->id)->first();
 
         $wikiTags = $this->wiki->find($wiki->id)->tags()->get();
-        
+
         $isUserLikeWiki = false;
         foreach ($wiki->likes as $like) {
-            if ($like->user_id === Auth::user()->id) {
+            if($like->user_id === Auth::user()->id) {
                 $isUserLikeWiki = true;
             }
         }
@@ -102,7 +102,7 @@ class WikiController extends Controller
     }
 
     public function update(Team $team, Space $space, Wiki $wiki)
-    { 
+    {
         $this->wiki->updateWiki($wiki->id, $this->request->all());
 
         if(!empty($this->request->get('tags'))) {
@@ -132,7 +132,7 @@ class WikiController extends Controller
         return redirect()->back()->with([
             'alert'      => 'Wiki successfully updated.',
             'alert_type' => 'success',
-        ]);   
+        ]);
     }
 
     public function destroy(Team $team, Space $space, Wiki $wiki)
@@ -153,7 +153,7 @@ class WikiController extends Controller
     public function getTagWikis(Team $team, Tag $tag)
     {
         $spaces = $this->space->getTeamSpaces($team->id);
-        
+
         $wikis = (new Tag)->getTeamTagWikis($team->id, $tag->id);
 
         return view('tag.wikis', compact('team', 'wikis', 'tag', 'spaces'));
@@ -170,7 +170,7 @@ class WikiController extends Controller
 
     public function getTeamWikis(Team $team)
     {
-        if ($this->request->get('space_slug')) {
+        if($this->request->get('space_slug')) {
             $space = $this->space->where('slug', $this->request->get('space_slug'))->first();
 
             return $this->wiki->where('team_id', $team->id)->where('space_id', $space->id)->with(['user', 'space', 'team'])->latest()->paginate(10);
@@ -182,8 +182,8 @@ class WikiController extends Controller
     public function getWikiActivity(Team $team, Space $space, Wiki $wiki)
     {
         $isUserLikeWiki = $this->isUserLikeWiki($wiki);
-        
-        $activities     = $this->wiki->getActivty($wiki->id);
+
+        $activities = $this->wiki->getActivty($wiki->id);
 
         return view('wiki.activity', compact('team', 'space', 'wiki', 'activities', 'isUserLikeWiki'));
     }
@@ -205,10 +205,11 @@ class WikiController extends Controller
     {
         $isLiked = false;
         foreach ($wiki->likes as $like) {
-            if ($like->user_id === Auth::user()->id) {
+            if($like->user_id === Auth::user()->id) {
                 $isLiked = true;
             }
         }
+
         return $isLiked;
     }
 
@@ -239,21 +240,21 @@ class WikiController extends Controller
             </head>
             <body>
                 <p>
-                    '.$wiki->name.'
+                    ' . $wiki->name . '
                 </p>
                 <h1></h1>
             </body>
             </html>
         ';
 
-        return Pdf::loadView('pdf.page', compact('wiki'))->setOption('header-html',$header)->inline($wiki->name . '.pdf');
+        return Pdf::loadView('pdf.page', compact('wiki'))->setOption('header-html', $header)->inline($wiki->name . '.pdf');
     }
 
     public function generateWord(Team $team, Space $space, Wiki $wiki)
     {
         $htmltodoc = new HtmlToDocHelper();
 
-        return response()->json($htmltodoc->createDoc($wiki->description, $wiki->name.".doc", true), 200);
+        return response()->json($htmltodoc->createDoc($wiki->description, $wiki->name . ".doc", true), 200);
     }
 
     public function watch(Team $team, Space $space, Wiki $wiki)
@@ -282,9 +283,9 @@ class WikiController extends Controller
     public function addToReadList(Team $team, Space $space, Wiki $wiki)
     {
         ReadList::create([
-            'subject_id' => $wiki->id,
+            'subject_id'   => $wiki->id,
             'subject_type' => Wiki::class,
-            'user_id' => Auth::user()->id,
+            'user_id'      => Auth::user()->id,
         ]);
 
         return redirect()->back()->with([

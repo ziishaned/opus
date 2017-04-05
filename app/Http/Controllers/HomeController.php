@@ -8,7 +8,7 @@ use App\Models\Wiki;
 /**
  * Class HomeController
  *
- * @author Zeeshan Ahmed <ziishaned@gmail.com>
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
  * @package App\Http\Controllers
  */
 class HomeController extends Controller
@@ -28,7 +28,7 @@ class HomeController extends Controller
         $this->wiki = $wiki;
     }
 
-    public function home() 
+    public function home()
     {
         return view('home');
     }

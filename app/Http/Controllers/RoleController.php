@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\{Team, Role};
+use App\Models\Team;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
     protected $request;
-    
+
     protected $role;
 
     public function __construct(Request $request, Role $role)
     {
-        $this->request  = $request;
+        $this->request = $request;
         $this->role    = $role;
     }
 
@@ -30,7 +31,7 @@ class RoleController extends Controller
 
     public function create()
     {
-        return view('role.create', compact('team'));   
+        return view('role.create', compact('team'));
     }
 
 
@@ -42,9 +43,9 @@ class RoleController extends Controller
 
         foreach ($this->request->get('role_members') as $member) {
             DB::table('users_roles')->insert([
-                'role_id' => $role->id,
-                'user_id' => $member,
-                'team_id' => $team->id,
+                'role_id'    => $role->id,
+                'user_id'    => $member,
+                'team_id'    => $team->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
@@ -52,22 +53,22 @@ class RoleController extends Controller
 
         foreach ($this->request->get('permissions') as $permission) {
             DB::table('role_permissions')->insert([
-                'role_id' => $role->id,
+                'role_id'       => $role->id,
                 'permission_id' => (int)$permission,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ]);
         }
 
         return redirect()->route('teams.settings.roles', [$team->slug])->with([
             'alert'      => 'Role successfully created.',
             'alert_type' => 'success',
-        ]);        
+        ]);
     }
 
     public function show($id)
     {
-        
+
     }
 
     public function edit(Team $team, Role $role)
@@ -88,9 +89,9 @@ class RoleController extends Controller
 
         foreach ($this->request->get('role_members') as $member) {
             DB::table('users_roles')->insert([
-                'role_id' => $role->id,
-                'user_id' => $member,
-                'team_id' => $team->id,
+                'role_id'    => $role->id,
+                'user_id'    => $member,
+                'team_id'    => $team->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
@@ -98,10 +99,10 @@ class RoleController extends Controller
 
         foreach ($this->request->get('permissions') as $permission) {
             DB::table('role_permissions')->insert([
-                'role_id' => $role->id,
+                'role_id'       => $role->id,
                 'permission_id' => (int)$permission,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ]);
         }
 
@@ -118,6 +119,6 @@ class RoleController extends Controller
         return redirect()->route('teams.settings.roles', [$team->slug])->with([
             'alert'      => 'Role successfully deleted.',
             'alert_type' => 'success',
-        ]); 
+        ]);
     }
 }

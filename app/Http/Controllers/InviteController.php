@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Mail;
 use Illuminate\Http\Request;
-use App\Models\{Team, Invite};
+use App\Models\Team;
+use App\Models\Invite;
 
 class InviteController extends Controller
 {
@@ -20,29 +21,29 @@ class InviteController extends Controller
 
     public function index()
     {
-        
+
     }
 
     public function create()
     {
-        
+
     }
 
     public function store(Team $team)
     {
         $this->validate($this->request, Invite::INVITE_RULES, [
             'is_already_invited' => 'A user with this email already invited.',
-            'is_already_member'  => 'A user with this email already exists.'
+            'is_already_member'  => 'A user with this email already exists.',
         ]);
 
         $invitation = $this->invite->inviteUser($this->request->all());
 
         $this->sendInvitationEmail($invitation, $team);
-    
+
         return redirect()->back()->with([
             'alert'      => 'Invitation is successfully sent to user.',
             'alert_type' => 'success',
-        ]);        
+        ]);
     }
 
     public function sendInvitationEmail($invitation, $team)
@@ -58,23 +59,23 @@ class InviteController extends Controller
 
     public function show($id)
     {
-        
+
     }
 
     public function edit($id)
     {
-        
+
     }
 
     public function update(Request $request, $id)
     {
-        
+
     }
 
     public function destroy(Team $team, $invitationCode)
     {
         $this->invite->where('code', $invitationCode)->where('team_id', $team->id)->delete();
-    
+
         return redirect()->back()->with([
             'alert'      => 'Invitation successfully removed.',
             'alert_type' => 'success',

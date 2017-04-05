@@ -33,11 +33,11 @@ class PageController extends Controller
                                 Page $page,
                                 Space $space)
     {
-        $this->wiki     = $wiki;
-        $this->request  = $request;
-        $this->page     = $page;
-        $this->space    = $space;
-        $this->team     = $team;
+        $this->wiki    = $wiki;
+        $this->request = $request;
+        $this->page    = $page;
+        $this->space   = $space;
+        $this->team    = $team;
     }
 
     public function getWikiPages()
@@ -45,8 +45,8 @@ class PageController extends Controller
         if($this->request->get('explore')) {
             $currentPage = $this->page->where('slug', $this->request->get('page'))->first();
 
-            $wiki =  $this->wiki->where('slug', $this->request->get('wiki'))->with(['space'])->first();
-            
+            $wiki = $this->wiki->where('slug', $this->request->get('wiki'))->with(['space'])->first();
+
             $pages = $this->page->getTreeTo($currentPage);
 
             $html = '';
@@ -59,20 +59,22 @@ class PageController extends Controller
             $wiki = $this->wiki->where('slug', $this->request->get('wiki'))->with(['team'])->first();
 
             $roots = $this->page->getRootPages($wiki);
+
             return $this->formatePagesData($roots);
         }
 
         $childs = $this->page->getPageChilds($this->request->get('page'));
+
         return $this->formatePagesData($childs);
     }
 
-    public function formatePagesData($pages) 
+    public function formatePagesData($pages)
     {
-        $html = '<ul>'; 
+        $html = '<ul>';
         foreach ($pages as $page) {
-            $html .= '<li id="' . $page->id . '" data-slug="' . $page->slug . '" data-position="'. $page->position .'" data-created_at="' . $page->created_at . '" class="' . ($page->isLeaf() == false ? 'jstree-closed' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $page->wiki->space->slug, $page->wiki->slug, $page->slug]) . '">' . $page->name . '</a>';
+            $html .= '<li id="' . $page->id . '" data-slug="' . $page->slug . '" data-position="' . $page->position . '" data-created_at="' . $page->created_at . '" class="' . ($page->isLeaf() == false ? 'jstree-closed' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $page->wiki->space->slug, $page->wiki->slug, $page->slug]) . '">' . $page->name . '</a>';
         }
-        $html .= '</ul>'; 
+        $html .= '</ul>';
 
         return $html;
     }
@@ -81,12 +83,12 @@ class PageController extends Controller
     {
         foreach ($pages as $page => $value) {
             foreach ($value->getSiblings() as $siblings) {
-                if ($value->wiki_id == $siblings->wiki_id) {
-                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="'. $siblings->position .'" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
+                if($value->wiki_id == $siblings->wiki_id) {
+                    $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="' . $siblings->position . '" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
                 }
             }
-            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="'. $value->position .'" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
-            if (!empty($value['children'])) {
+            $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="' . $value->position . '" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
+            if(!empty($value['children'])) {
                 $html .= '<ul>';
                 self::makePageTree($wiki, $value['children'], $currentPageId, $html);
                 $html .= '</ul></li>';
@@ -99,25 +101,25 @@ class PageController extends Controller
     public function changeSiblingsPositions($node, $nodePosition)
     {
         // Change the node position that is dragged by user
-        $node = $this->page->find($node->id);
+        $node           = $this->page->find($node->id);
         $node->position = $nodePosition;
         $node->save();
 
         // Change the siblings position +1 step
         foreach ($node->siblingsAndSelf()->where('position', '>=', $nodePosition)->get() as $key => $x) {
             if($x->position >= $nodePosition && $x->id !== $node->id) {
-                $page = $this->page->find($x->id);
-                $page->position = $x->position+1;
+                $page           = $this->page->find($x->id);
+                $page->position = $x->position + 1;
                 $page->save();
             }
         }
     }
 
     public function reorder()
-    {   
+    {
         $node = $this->page->find($this->request->get('nodeToChangeParent'));
 
-        if ($this->request->get('parent') === '#') {
+        if($this->request->get('parent') === '#') {
             $node->makeRoot();
             $this->changeSiblingsPositions($node, $this->request->get('position'));
         } else {
@@ -127,8 +129,8 @@ class PageController extends Controller
         }
 
         return [
-            'Position changed' => true
-        ];   
+            'Position changed' => true,
+        ];
     }
 
     public function destroy(Team $team, Space $space, Wiki $wiki, Page $page)
@@ -144,7 +146,7 @@ class PageController extends Controller
     public function edit(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $pageTags = $this->page->find($page->id)->tags()->get();
-     
+
         $pages = $this->page->getPages($wiki->id);
 
         return view('page.edit', compact('page', 'pageTags', 'wiki', 'pages', 'team', 'space'));
@@ -179,12 +181,13 @@ class PageController extends Controller
                         $position = $page->position;
                     }
                 }
-                return $position+1;
+
+                return $position + 1;
             } else {
                 return 0;
             }
         }
-        
+
 
         $childPages = $this->page->where('wiki_id', $wiki->id)->where('parent_id', $data['page_parent'])->get();
         if(!empty($childPages->toArray())) {
@@ -194,7 +197,8 @@ class PageController extends Controller
                     $position = $page->position;
                 }
             }
-            return $position+1;
+
+            return $position + 1;
         } else {
             return 0;
         }
@@ -248,7 +252,7 @@ class PageController extends Controller
     public function getTagPages(Team $team, Tag $tag)
     {
         $spaces = $this->space->getTeamSpaces($team->id);
-        
+
         $pages = (new Tag)->getTeamTagPages($team->id, $tag->id);
 
         return view('tag.pages', compact('team', 'pages', 'tag', 'spaces'));
@@ -281,29 +285,29 @@ class PageController extends Controller
             </head>
             <body>
                 <p>
-                    '.$page->name.'
+                    ' . $page->name . '
                 </p>
                 <h1></h1>
             </body>
             </html>
         ';
 
-        return Pdf::loadView('pdf.page', compact('page'))->setOption('header-html',$header)->inline($page->name . '.pdf');
+        return Pdf::loadView('pdf.page', compact('page'))->setOption('header-html', $header)->inline($page->name . '.pdf');
     }
 
     public function generateWord(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         $htmltodoc = new HtmlToDocHelper();
 
-        return response()->json($htmltodoc->createDoc($page->description, $page->name.".doc", true), 200);
+        return response()->json($htmltodoc->createDoc($page->description, $page->name . ".doc", true), 200);
     }
 
     public function addToReadList(Team $team, Space $space, Wiki $wiki, Page $page)
     {
         ReadList::create([
-            'subject_id' => $page->id,
+            'subject_id'   => $page->id,
             'subject_type' => Page::class,
-            'user_id' => Auth::user()->id,
+            'user_id'      => Auth::user()->id,
         ]);
 
         return redirect()->back()->with([
@@ -340,9 +344,9 @@ class PageController extends Controller
         $this->validate($this->request, Page::PAGE_RULES);
 
         $this->page->find($page->id)->update([
-            'name' => $this->request->get('name'),
-            'outline' => $this->request->get('outline'),
-            'parent_id'    =>  !empty($this->request->get('page_parent')) ? $this->request->get('page_parent') : null,
+            'name'      => $this->request->get('name'),
+            'outline'   => $this->request->get('outline'),
+            'parent_id' => !empty($this->request->get('page_parent')) ? $this->request->get('page_parent') : null,
         ]);
 
         if(!empty($this->request->get('tags'))) {

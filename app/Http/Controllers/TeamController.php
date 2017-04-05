@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Image;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Team;
+use App\Models\Role;
+use App\Models\Space;
+use App\Models\Invite;
+use App\Models\Integration;
 use Illuminate\Http\Request;
-use DB, Mail, Image, Redirect;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\{Auth, Session};
-use App\Models\{User, Team, Role, Invite, Space, Integration, Wiki, Page};
+use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
@@ -21,17 +26,12 @@ class TeamController extends Controller
 
     private $space;
 
-    public function __construct(Request $request,
-                                Team $team,
-                                Role $role,
-                                User $user,
-                                Space $space)
+    public function __construct(Request $request, Team $team, Role $role, User $user, Space $space)
     {
-        $this->user         =   $user;
-        $this->request      =   $request;
-        $this->space        =   $space;
-        $this->team         =   $team;
-        $this->role        =   $role;
+        $this->user    = $user;
+        $this->request = $request;
+        $this->team    = $team;
+        $this->role    = $role;
     }
 
     public function getMembers(Team $team)
@@ -46,7 +46,7 @@ class TeamController extends Controller
         Auth::logout();
 
         $invitation = (new Invite)->getInvitation($team->id, $hash);
-        
+
         return view('team.join', compact('team', 'hash', 'invitation'));
     }
 
@@ -68,11 +68,11 @@ class TeamController extends Controller
                 'alert_type' => 'success',
             ]);
         }
-        
+
         $this->validate($this->request, Team::TEAM_RULES);
 
         $this->team->updateTeam($team->id, $this->request->get('team_name'));
-        
+
         Auth::logout();
 
         return redirect()->route('team.login')->with([
@@ -84,7 +84,7 @@ class TeamController extends Controller
     public function destroy(Team $team)
     {
         $this->team->deleteTeam($team->id);
-        
+
         Auth::logout();
 
         return redirect()->route('team.login')->with([
@@ -96,25 +96,25 @@ class TeamController extends Controller
     public function postJoin(Team $team, $hash)
     {
         $this->validate($this->request, Team::JOIN_TEAM_RULES, [
-            'exists' => 'Specified team does\'t exists.',
+            'exists'         => 'Specified team does\'t exists.',
             'team_has_email' => 'This team has alredy a user with this email address.',
         ]);
-    
-        $user  = $this->user->createUser($this->request->all());
+
+        $user = $this->user->createUser($this->request->all());
 
         DB::table('user_teams')->insert([
-            'user_id'         => $user->id,
-            'team_id'         => $team->id,
-            'created_at'      => Carbon::now(),
-            'updated_at'      => Carbon::now(),
+            'user_id'    => $user->id,
+            'team_id'    => $team->id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $invitation = (new Invite)->getInvitation($team->id, $hash);
 
         DB::table('users_roles')->update([
-            'role_id' => $invitation->role_id,
-            'user_id' => $user->id,
-            'team_id' => $team->id,
+            'role_id'    => $invitation->role_id,
+            'user_id'    => $user->id,
+            'team_id'    => $team->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -140,16 +140,16 @@ class TeamController extends Controller
     public function postLogin()
     {
         $this->validate($this->request, User::LOGIN_RULES, [
-            'exists' => 'Specified team does\'t exists..' 
+            'exists' => 'Specified team does\'t exists..',
         ]);
 
         if($data = $this->user->validate($this->request->all())) {
             Auth::login($data, $this->request->get('remember'));
 
             return redirect()->route('dashboard', [
-                $data->team_slug, 
+                $data->team_slug,
             ]);
-        } 
+        }
 
         return redirect()->back()->with([
             'alert'      => 'Email or password is not valid.',
@@ -167,9 +167,9 @@ class TeamController extends Controller
         $this->validate($this->request, Team::CREATE_TEAM_RULES);
 
         $user = $this->user->createUser($this->request->all());
-        
+
         $teamRequestData = collect($this->request->all())->put('user_id', $user->id);
-        $team = $this->team->postTeam($teamRequestData);
+        $team            = $this->team->postTeam($teamRequestData);
 
         $this->createAdminsRole($team);
 
@@ -195,16 +195,16 @@ class TeamController extends Controller
         $permissions = DB::table('permissions')->get();
         foreach ($permissions as $permission) {
             DB::table('role_permissions')->insert([
-                'role_id' => $roleId,
+                'role_id'       => $roleId,
                 'permission_id' => $permission->id,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
             ]);
         }
 
         // Inserting user into role.
         DB::table('users_roles')->insertGetId([
-            'role_id'   => $roleId,
+            'role_id'    => $roleId,
             'user_id'    => $team->user_id,
             'team_id'    => $team->id,
             'created_at' => Carbon::now(),
@@ -233,13 +233,13 @@ class TeamController extends Controller
     public function uploadLogo(Team $team)
     {
         $image = $this->request->file('team_logo');
-        
-        $imageName = 'img_' . date('Y-m-d-H-s') .  '.' . $this->request->file('team_logo')->getClientOriginalExtension();
+
+        $imageName = 'img_' . date('Y-m-d-H-s') . '.' . $this->request->file('team_logo')->getClientOriginalExtension();
 
         $img = Image::make($image);
-        $img->crop((int) $this->request->get('w'), (int) $this->request->get('h'), (int) $this->request->get('x'), (int) $this->request->get('y'));
+        $img->crop((int)$this->request->get('w'), (int)$this->request->get('h'), (int)$this->request->get('x'), (int)$this->request->get('y'));
         $img->save('img/avatars/' . $imageName);
-        
+
         $this->team->updateImage($team->id, $imageName);
 
         return redirect()->back()->with([
@@ -250,10 +250,10 @@ class TeamController extends Controller
 
     public function filterMembers()
     {
-        $members = $this->team->find(Auth::user()->getTeam()->id)->with(['members' => function($query) {
-            $query->where('slug', 'like', '%'.$this->request->get('q').'%')->get();
+        $members = $this->team->find(Auth::user()->getTeam()->id)->with(['members' => function ($query) {
+            $query->where('slug', 'like', '%' . $this->request->get('q') . '%')->get();
         }])->first()->members;
-        
+
         return $members;
     }
 
@@ -271,20 +271,20 @@ class TeamController extends Controller
 
     public function search()
     {
-        $data = [];
-        $query   = $this->request->get('q');
+        $data  = [];
+        $query = $this->request->get('q');
         $team  = Auth::user()->getTeam();
 
-        $wikis   = Team::find($team->id)->wikis()->where('name', 'like', '%'.$query.'%')->take(5)->get();
-        $spaces  = Team::find($team->id)->spaces()->where('name', 'like', '%'.$query.'%')->take(5)->get();
-        $pages   = Team::find($team->id)->pages()->where('name', 'like', '%'.$query.'%')->take(5)->get();
-        $members = Team::find($team->id)->members()->where('name', 'like', '%'.$query.'%')->take(5)->get();
+        $wikis   = Team::find($team->id)->wikis()->where('name', 'like', '%' . $query . '%')->take(5)->get();
+        $spaces  = Team::find($team->id)->spaces()->where('name', 'like', '%' . $query . '%')->take(5)->get();
+        $pages   = Team::find($team->id)->pages()->where('name', 'like', '%' . $query . '%')->take(5)->get();
+        $members = Team::find($team->id)->members()->where('name', 'like', '%' . $query . '%')->take(5)->get();
 
         $data['wikis']   = $this->formatWikis($wikis, $team);
         $data['spaces']  = $this->formatSpaces($spaces, $team);
         $data['pages']   = $this->formatPages($pages, $team);
         $data['members'] = $this->formatMembers($members, $team);
-        
+
         return response()->json($data, 200);
     }
 
@@ -297,7 +297,7 @@ class TeamController extends Controller
                 'text' => $member->first_name . ' ' . $member->last_name,
                 'link' => route('users.show', [$team->slug, $member->slug]),
             ];
-        } 
+        }
 
         return $data;
     }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Team, Wiki, Space};
+use App\Models\Team;
+use App\Models\Wiki;
+use App\Models\Space;
 use Illuminate\Http\Request;
 
 class SpaceConroller extends Controller
 {
-	private $request;
+    private $request;
 
     private $team;
 
@@ -15,9 +17,9 @@ class SpaceConroller extends Controller
 
     public function __construct(Request $request, Team $team, Space $space)
     {
-    	$this->space   =  $space;
-        $this->request =  $request;
-        $this->team    =  $team;
+        $this->space   = $space;
+        $this->request = $request;
+        $this->team    = $team;
     }
 
     public function create(Team $team)
@@ -28,34 +30,34 @@ class SpaceConroller extends Controller
     public function store(Team $team)
     {
         $this->validate($this->request, Space::SPACE_RULES);
-        
+
         $this->space->createSpace($this->request->all(), $team->id);
 
         return redirect()->route('dashboard', ['team_slug' => $team->slug])->with([
-            'alert' => 'Space successfully created.',
-            'alert_type' => 'success'
+            'alert'      => 'Space successfully created.',
+            'alert_type' => 'success',
         ]);
     }
 
-    public function destroy(Team $team, Space $space) 
+    public function destroy(Team $team, Space $space)
     {
         $this->space->deleteSpace($space->id);
 
         return redirect()->back()->with([
-            'alert' => 'Space successfully deleted.',
-            'alert_type' => 'success'
+            'alert'      => 'Space successfully deleted.',
+            'alert_type' => 'success',
         ]);
     }
 
     public function update(Team $team, Space $space)
     {
         $this->validate($this->request, Space::SPACE_RULES);
-        
+
         $this->space->updateSpace($this->request->all(), $space->id, $team->id);
 
         return redirect()->back()->with([
-            'alert' => 'Space successfully updated.',
-            'alert_type' => 'success'
+            'alert'      => 'Space successfully updated.',
+            'alert_type' => 'success',
         ]);
     }
 
