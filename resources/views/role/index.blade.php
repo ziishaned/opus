@@ -13,7 +13,7 @@
                         <div class="header">
                             <div class="pull-left">
                                 <h2 style="margin-bottom: 10px;">Roles</h2>
-                                <p class="text-muted">You can edit the roles and set there permissions.</p>
+                                <p class="text-muted">You can edit the roles and set their permissions.</p>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ route('roles.create', [ $team->slug ]) }}" class="btn btn-link create-group-btn"><i class="fa fa-plus fa-fw"></i> Create Role</a>
