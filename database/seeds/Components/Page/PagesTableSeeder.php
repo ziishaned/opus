@@ -11,13 +11,13 @@ use Illuminate\Database\Seeder;
  */
 class PagesTableSeeder extends Seeder
 {
-	/**
+    /**
      * Path to page.json file.
-     * 
+     *
      * @var string
      */
     private $pagesFilePath = 'database/seeds/Components/Page/pages.json';
-    
+
     /**
      * Run the database seeds.
      *
@@ -26,27 +26,30 @@ class PagesTableSeeder extends Seeder
     public function run()
     {
         $pages = $this->getPages();
-        
+
         foreach ($pages as $page) {
-		    Page::insert([
+            Page::insert([
                 'name'        => $page['name'],
-    		    'slug'        => str_slug($page['name'], '_'),
+                "lft"         => $page['lft'],
+                "rgt"         => $page['rgt'],
+                "depth"       => $page['depth'],
+                'slug'        => str_slug($page['name'], '_'),
                 'outline'     => $page['outline'],
-    		    'description' => $page['description'],
-    		    'position'    => $page['position'],
+                'description' => $page['description'],
+                'position'    => $page['position'],
                 'parent_id'   => $page['parent_id'],
-    		    'user_id'     => $page['user_id'],
-    		    'wiki_id'     => $page['wiki_id'],
-    		    'team_id'     => $page['team_id'],
+                'user_id'     => $page['user_id'],
+                'wiki_id'     => $page['wiki_id'],
+                'team_id'     => $page['team_id'],
                 'created_at'  => Carbon::now(),
                 'updated_at'  => Carbon::now(),
-            ]); 
+            ]);
         }
     }
 
     /**
-     * Get the pages from json file. 
-     * 
+     * Get the pages from json file.
+     *
      * @return array $pages
      */
     private function getPages()

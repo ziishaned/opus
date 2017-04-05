@@ -66,18 +66,18 @@ class DatabaseSeeder extends Seeder
      */
     private function emptyModels()
     {
-        Page::getQuery()->delete();
-        Role::getQuery()->delete();
-        Wiki::getQuery()->delete();
-        Team::getQuery()->delete();
-        User::getQuery()->delete();
-        Space::getQuery()->delete();
-        Invite::getQuery()->delete();
-        Permission::getQuery()->delete();
-        DB::table('user_teams')->delete();
-        DB::table('users_roles')->delete();
-        DB::table('role_permissions')->delete();
-        IntegrationAction::getQuery()->delete();
+        Page::getQuery()->truncate();
+        Role::getQuery()->truncate();
+        Wiki::getQuery()->truncate();
+        Team::getQuery()->truncate();
+        User::getQuery()->truncate();
+        Space::getQuery()->truncate();
+        Invite::getQuery()->truncate();
+        Permission::getQuery()->truncate();
+        DB::table('user_teams')->truncate();
+        DB::table('users_roles')->truncate();
+        DB::table('role_permissions')->truncate();
+        IntegrationAction::getQuery()->truncate();
         NotificationCategory::getQuery()->delete();
     }
 }
