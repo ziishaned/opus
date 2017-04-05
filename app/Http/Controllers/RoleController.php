@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Team;
 use App\Models\Role;
+use App\Models\Space;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,7 @@ class RoleController extends Controller
 
     public function index(Team $team)
     {
-        $spaces = (new \App\Models\Space)->getTeamSpaces($team->id);
+        $spaces = (new Space)->getTeamSpaces($team->id);
 
         $roles = $this->role->where('team_id', $team->id)->latest()->with(['members', 'permissions'])->get();
 
@@ -68,11 +69,6 @@ class RoleController extends Controller
             'alert'      => 'Role successfully created.',
             'alert_type' => 'success',
         ]);
-    }
-
-    public function show($id)
-    {
-
     }
 
     public function edit(Team $team, Role $role)
@@ -122,7 +118,7 @@ class RoleController extends Controller
     {
         $this->role->find($role->id)->delete();
 
-        return redirect()->route('teams.settings.roles', [$team->slug])->with([
+        return redirect()->route('roles.index', [$team->slug])->with([
             'alert'      => 'Role successfully deleted.',
             'alert_type' => 'success',
         ]);
