@@ -12,8 +12,8 @@ the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
 
 > 1. Should the Software be used for non-commercial purposes (personal use, not-        profits, testing, education), no financial reward is expected and the above rights are given FREE OF CHARGE.
-2. Should the Software be used for commercial purposes (the user of this Software, its employer, employees or clients make money by using this Software), the user is required to purchase a "Single Domain License", for each domain name this software will be used on, before its usage in production. Failure to do so will constitute as illegal commercial use.
-3. This license does not include the rights to publish or sub license this Software, its 
+> 2. Should the Software be used for commercial purposes (the user of this Software, its employer, employees or clients make money by using this Software), the user is required to purchase a "Single Domain License", for each domain name this software will be used on, before its usage in production. Failure to do so will constitute as illegal commercial use.
+> 3. This license does not include the rights to publish or sub license this Software, its 
 copies or any derivations, with or without the purpose of commercial profit.
 
 The above copyright notice and this permission notice shall be included in all
