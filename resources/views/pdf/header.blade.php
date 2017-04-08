@@ -22,7 +22,11 @@
 </head>
 <body>
 <p>
-    {{ $wiki->name }}
+    @if(isset($wiki))
+        {{ $wiki->name }}
+    @else
+        {{ $page->name }}
+    @endif
 </p>
 <h1></h1>
 </body>

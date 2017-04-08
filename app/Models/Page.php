@@ -206,7 +206,7 @@ class Page extends Node
     /**
      * Get all the root|pages of a wiki.
      *
-     * @param $wiki object
+     * @param  $wiki
      * @return mixed
      */
     public function getRootPages($wiki)
@@ -253,7 +253,7 @@ class Page extends Node
             'name'        => $data['name'],
             'outline'     => $data['outline'],
             'description' => $data['description'],
-            'parent_id'   => !empty($data['page_parent']) ? (int) $data['page_parent'] : null,
+            'parent_id'   => !empty($data['page_parent']) ? (int)$data['page_parent'] : null,
             'position'    => $data['position'],
             'user_id'     => Auth::user()->id,
             'wiki_id'     => $wiki->id,

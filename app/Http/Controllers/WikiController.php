@@ -17,8 +17,8 @@ use App\Helpers\HtmlToDocHelper;
 /**
  * Class WikiController
  *
- * @author  Zeeshan Ahmed <ziishaned@gmail.com>
  * @package App\Http\Controllers
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
  */
 class WikiController extends Controller
 {

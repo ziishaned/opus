@@ -207,12 +207,12 @@ class Wiki extends Model
      * Get a wiki.
      *
      * @param string $wikiSlug
-     * @param int    $teamId
      * @return bool
      */
-    public function getWiki($wikiSlug, $teamId)
+    public function getWiki($wikiSlug)
     {
-        $wiki = $this->where('slug', '=', $wikiSlug)->where('team_id', '=', $teamId)->with(['user', 'space'])->first();
+        $wiki = $this->where('slug', '=', $wikiSlug)->with(['user', 'space'])->first();
+
         if($wiki === null) {
             return false;
         }
