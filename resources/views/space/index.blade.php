@@ -10,7 +10,7 @@
 						{{ $space->name }}
 					</div>
 					<div class="pull-right">
-						<a href="#" class="btn btn-link" style="color: #000;"><i class="fa fa-plus fa-fw"></i> Create Wiki</a>
+						<a href="{{ route('wikis.create', [$team->slug]) }}" class="btn btn-link" style="color: #000;"><i class="fa fa-plus fa-fw"></i> Create Wiki</a>
 					</div>
 					<div class="clearfix"></div>
 				</div>

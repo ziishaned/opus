@@ -126,7 +126,7 @@
                     @if($activity->name == 'created_comment' || $activity->name == 'deleted_comment' || $activity->name == 'updated_comment')
                         <p style="padding: 2px 11px; margin-bottom: 5px; margin-top: 10px; border-left: 2px solid #eee;">{!! (new Emoji)->render($activity->subject->content) !!}</p>
                     @endif
-					<p class="text-muted" style="font-size: 13px; color: #b7b7b7;"><span data-toggle="tooltip" data-placement="bottom" title="{{ $activity->created_at->timezone(Session::get('user_timezone'))->toFormattedDateString() . ' at ' . $activity->created_at->timezone(Session::get('user_timezone'))->format('h:i A')}}">{{ $activity->created_at->timezone(Session::get('user_timezone'))->diffForHumans() }}</span></p>
+					<p class="text-muted" style="font-size: 13px; color: #b7b7b7;">{{ $activity->created_at->timezone(Session::get('user_timezone'))->diffForHumans() }}</p>
 				</div>
 			</div>
 		@endforeach

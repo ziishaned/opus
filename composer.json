@@ -16,7 +16,8 @@
         "doctrine/dbal": "^2.5"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4"
+        "fzaninotto/faker": "~1.4",
+        "phpunit/phpunit": "^6.0"
     },
     "autoload": {
         "classmap": [

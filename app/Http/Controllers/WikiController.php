@@ -23,16 +23,40 @@ use App\Helpers\HtmlToDocHelper;
  */
 class WikiController extends Controller
 {
+    /**
+     * @var \App\Models\Wiki
+     */
     protected $wiki;
 
+    /**
+     * @var \App\Models\Page
+     */
     protected $page;
 
+    /**
+     * @var \App\Models\Team
+     */
     protected $team;
 
+    /**
+     * @var \Illuminate\Http\Request
+     */
     protected $request;
 
+    /**
+     * @var \App\Models\Space
+     */
     protected $space;
 
+    /**
+     * WikiController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Wiki         $wiki
+     * @param \App\Models\Team         $team
+     * @param \App\Models\Page         $page
+     * @param \App\Models\Space        $space
+     */
     public function __construct(Request $request, Wiki $wiki, Team $team, Page $page, Space $space)
     {
         $this->wiki    = $wiki;
@@ -42,6 +66,13 @@ class WikiController extends Controller
         $this->space   = $space;
     }
 
+    /**
+     * Show a view to create a new wiki. If there is no space exists in team then
+     * user will be redirected to create space view.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function create(Team $team)
     {
         $spaces = $this->space->getTeamSpaces($team->id);
@@ -56,6 +87,12 @@ class WikiController extends Controller
         return view('wiki.create', compact('team', 'spaces'));
     }
 
+    /**
+     * Create a new wiki.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Team $team)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
@@ -63,7 +100,7 @@ class WikiController extends Controller
         $wiki = $this->wiki->saveWiki($this->request->all(), $team->id);
 
         if(!empty($this->request->get('tags'))) {
-            (new Tag)->createTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+            (new Tag)->createTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
@@ -72,6 +109,14 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Show a wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Team $team, Space $space, Wiki $wiki)
     {
         $isWikiInReadList = ReadList::where('user_id', Auth::user()->id)->where('subject_id', $wiki->id)->where('subject_type', Wiki::class)->first();
@@ -90,6 +135,14 @@ class WikiController extends Controller
         return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags', 'isUserWatchWiki', 'isWikiInReadList'));
     }
 
+    /**
+     * Show a view to edit a wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(Team $team, Space $space, Wiki $wiki)
     {
         $wikiTags = $this->wiki->find($wiki->id)->tags()->get();
@@ -101,12 +154,20 @@ class WikiController extends Controller
         return view('wiki.edit', compact('wiki', 'team', 'spaces', 'space', 'editWiki', 'wikiTags'));
     }
 
+    /**
+     * Update an existing wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Team $team, Space $space, Wiki $wiki)
     {
         $this->wiki->updateWiki($wiki->id, $this->request->all());
 
         if(!empty($this->request->get('tags'))) {
-            (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+            (new Tag)->updateTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
@@ -115,6 +176,14 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Update the overview(name, space_id, outline) of a wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function overviewUpdate(Team $team, Space $space, Wiki $wiki)
     {
         $this->validate($this->request, Wiki::WIKI_RULES);
@@ -135,6 +204,14 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Delete a wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Team $team, Space $space, Wiki $wiki)
     {
         $this->wiki->deleteWiki($wiki->id);
