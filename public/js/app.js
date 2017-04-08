@@ -648,7 +648,7 @@ $(function () {
 
             data.instance._open_to($('#wiki-page-tree').data('page'));
 
-            // Sorting Tree
+            // getTeamWikisSorting Tree
             $("#wiki-page-tree ul").each(function () {
                 $(this).html($(this).children('li').sort(function (a, b) {
                     return $(b).data('position') < $(a).data('position') ? 1 : -1;

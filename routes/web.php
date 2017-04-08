@@ -14,8 +14,6 @@ Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');
 
 Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/team/members', 'UserController@getTeamMembers')->name('api.teams.members');
-    Route::get('/teams/{team_slug}/wikis', 'WikiController@getTeamWikis')->name('api.teams.wikis');
-    Route::get('/teams/{team_slug}/spaces', 'SpaceConroller@getTeamSpaces')->name('api.teams.spaces');
     Route::post('/like', 'LikeController@storeLike')->name('like');
     Route::delete('/comment', 'CommentController@destroy')->name('comments.destroy');
     Route::patch('/comment', 'CommentController@update')->name('comments.update');
@@ -101,7 +99,6 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => '{team_slug}/wikis'], function () {
         Route::post('', 'WikiController@store')->name('wikis.store');
         Route::get('create', 'WikiController@create')->name('wikis.create')->middleware('acl:admin|add_page');
-        Route::get('', 'WikiController@getWikis')->name('teams.wikis');
     });
 
     Route::group(['prefix' => '{team_slug}/spaces/{space_slug}/wikis'], function () {

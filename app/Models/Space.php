@@ -177,6 +177,6 @@ class Space extends Model
      */
     public function getSpace($spaceSlug, $teamId)
     {
-        return $this->where('slug', '=', $spaceSlug)->where('team_id', '=', $teamId)->with(['wikis'])->first();
+        return $this->where('slug', $spaceSlug)->where('team_id', $teamId)->with(['wikis'])->first();
     }
 }

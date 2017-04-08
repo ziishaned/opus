@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -57,5 +58,18 @@ class WatchWiki extends Model
     public function getWikiWatchers($wikiId)
     {
         return $this->where('wiki_id', $wikiId)->get();
+    }
+
+    public function unwatchWiki($wikiId)
+    {
+        return $this->where('user_id', Auth::user()->id)->where('wiki_id', $wikiId)->delete();
+    }
+
+    public function watchWiki($wikiId)
+    {
+        return $this->create([
+            'wiki_id' => $wikiId,
+            'user_id' => Auth::user()->id,
+        ]);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Pdf;
 use Auth;
 use App\Models\Tag;
-use App\Models\Page;
 use App\Models\Team;
 use App\Models\Wiki;
 use App\Models\Space;
@@ -29,16 +28,6 @@ class WikiController extends Controller
     protected $wiki;
 
     /**
-     * @var \App\Models\Page
-     */
-    protected $page;
-
-    /**
-     * @var \App\Models\Team
-     */
-    protected $team;
-
-    /**
      * @var \Illuminate\Http\Request
      */
     protected $request;
@@ -49,21 +38,38 @@ class WikiController extends Controller
     protected $space;
 
     /**
+     * @var \App\Models\Tag
+     */
+    protected $tag;
+
+    /**
+     * @var \App\Models\ReadList
+     */
+    protected $readList;
+
+    /**
+     * @var \App\Models\WatchWiki
+     */
+    protected $watchWiki;
+
+    /**
      * WikiController constructor.
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Wiki         $wiki
-     * @param \App\Models\Team         $team
-     * @param \App\Models\Page         $page
      * @param \App\Models\Space        $space
+     * @param \App\Models\Tag          $tag
+     * @param \App\Models\ReadList     $readList
+     * @param \App\Models\WatchWiki    $watchWiki
      */
-    public function __construct(Request $request, Wiki $wiki, Team $team, Page $page, Space $space)
+    public function __construct(Request $request, Wiki $wiki, Space $space, Tag $tag, ReadList $readList, WatchWiki $watchWiki)
     {
-        $this->wiki    = $wiki;
-        $this->page    = $page;
-        $this->team    = $team;
-        $this->request = $request;
-        $this->space   = $space;
+        $this->tag       = $tag;
+        $this->wiki      = $wiki;
+        $this->space     = $space;
+        $this->request   = $request;
+        $this->readList  = $readList;
+        $this->watchWiki = $watchWiki;
     }
 
     /**
@@ -100,7 +106,7 @@ class WikiController extends Controller
         $wiki = $this->wiki->saveWiki($this->request->all(), $team->id);
 
         if(!empty($this->request->get('tags'))) {
-            (new Tag)->createTags($this->request->get('tags'), Wiki::class, $wiki->id);
+            $this->tag->createTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
@@ -167,7 +173,7 @@ class WikiController extends Controller
         $this->wiki->updateWiki($wiki->id, $this->request->all());
 
         if(!empty($this->request->get('tags'))) {
-            (new Tag)->updateTags($this->request->get('tags'), Wiki::class, $wiki->id);
+            $this->tag->updateTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
         return redirect()->route('wikis.show', [$team->slug, $wiki->space->slug, $wiki->slug])->with([
@@ -195,7 +201,7 @@ class WikiController extends Controller
         ]);
 
         if(!empty($this->request->get('tags'))) {
-            (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Wiki', $wiki->id);
+            $this->tag->updateTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
         return redirect()->back()->with([
@@ -222,49 +228,30 @@ class WikiController extends Controller
         ]);
     }
 
-    public function reverseArray($data)
-    {
-        return array_combine(array_keys($data), array_reverse(array_values($data)));
-    }
-
+    /**
+     * Get all wikis having a specific tag.
+     *
+     * @param \App\Models\Team $team
+     * @param \App\Models\Tag  $tag
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getTagWikis(Team $team, Tag $tag)
     {
         $spaces = $this->space->getTeamSpaces($team->id);
 
-        $wikis = (new Tag)->getTeamTagWikis($team->id, $tag->id);
+        $wikis = $this->tag->getTeamTagWikis($team->id, $tag->id);
 
         return view('tag.wikis', compact('team', 'wikis', 'tag', 'spaces'));
     }
 
-    public function getWikis(Team $team)
-    {
-        $wikis = $this->wiki->getTeamWikis($team->id);
-
-        $spaces = $this->space->getTeamSpaces($team->id);
-
-        return view('wiki.list', compact('team', 'wikis', 'spaces'));
-    }
-
-    public function getTeamWikis(Team $team)
-    {
-        if($this->request->get('space_slug')) {
-            $space = $this->space->where('slug', $this->request->get('space_slug'))->first();
-
-            return $this->wiki->where('team_id', $team->id)->where('space_id', $space->id)->with(['user', 'space', 'team'])->latest()->paginate(10);
-        }
-
-        return $this->wiki->where('team_id', $team->id)->with(['user', 'space', 'team'])->latest()->paginate(10);
-    }
-
-    public function getWikiActivity(Team $team, Space $space, Wiki $wiki)
-    {
-        $isUserLikeWiki = $this->isUserLikeWiki($wiki);
-
-        $activities = $this->wiki->getActivty($wiki->id);
-
-        return view('wiki.activity', compact('team', 'space', 'wiki', 'activities', 'isUserLikeWiki'));
-    }
-
+    /**
+     * Get the setting view of the wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function setting(Team $team, Space $space, Wiki $wiki)
     {
         $isUserLikeWiki = self::isUserLikeWiki($wiki);
@@ -278,6 +265,12 @@ class WikiController extends Controller
         return view('wiki.setting.overview', compact('team', 'space', 'wiki', 'isUserLikeWiki', 'wikiLastUpdated', 'spaces', 'wikiTags'));
     }
 
+    /**
+     * Check if a user liked a wiki or not.
+     *
+     * @param $wiki
+     * @return bool
+     */
     public static function isUserLikeWiki($wiki)
     {
         $isLiked = false;
@@ -290,56 +283,43 @@ class WikiController extends Controller
         return $isLiked;
     }
 
+    /**
+     * Generate the .pdf file of wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return mixed
+     */
     public function generatePdf(Team $team, Space $space, Wiki $wiki)
     {
-        $header = '
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <title>Page header</title>
-                <style>
-                    * {
-                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-                    }
-
-                    p {
-                        font-weight: 500;
-                        padding-bottom: 8px;
-                        border-bottom: 1px solid #eaecef;
-                        color: #c1c1c1;
-                    }
-
-                    h1 {
-                        padding-bottom: 8px;
-                    }
-                </style>
-            </head>
-            <body>
-                <p>
-                    ' . $wiki->name . '
-                </p>
-                <h1></h1>
-            </body>
-            </html>
-        ';
-
-        return Pdf::loadView('pdf.page', compact('wiki'))->setOption('header-html', $header)->inline($wiki->name . '.pdf');
+        return Pdf::loadView('pdf.page', compact('wiki'))->setOption('header-html', view('pdf.header', compact('wiki')))->inline($wiki->name . '.pdf');
     }
 
+    /**
+     * Generate a .doc file of wiki.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function generateWord(Team $team, Space $space, Wiki $wiki)
     {
-        $htmltodoc = new HtmlToDocHelper();
-
-        return response()->json($htmltodoc->createDoc($wiki->description, $wiki->name . ".doc", true), 200);
+        return response()->json((new HtmlToDocHelper)->createDoc($wiki->description, $wiki->name . ".doc", true), 200);
     }
 
+    /**
+     * Add wiki to watching list.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function watch(Team $team, Space $space, Wiki $wiki)
     {
-        WatchWiki::create([
-            'wiki_id' => $wiki->id,
-            'user_id' => Auth::user()->id,
-        ]);
+        $this->watchWiki->watchWiki($wiki->id);
 
         return redirect()->back()->with([
             'alert'      => 'You are now watching this wiki.',
@@ -347,9 +327,17 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Remove a wiki from watching list.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function stopWatch(Team $team, Space $space, Wiki $wiki)
     {
-        WatchWiki::where('user_id', Auth::user()->id)->where('wiki_id', $wiki->id)->delete();
+        $this->watchWiki->unwatchWiki($wiki->id);
 
         return redirect()->back()->with([
             'alert'      => 'You are now ignoring this wiki.',
@@ -357,13 +345,17 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Insert a wiki in read list.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addToReadList(Team $team, Space $space, Wiki $wiki)
     {
-        ReadList::create([
-            'subject_id'   => $wiki->id,
-            'subject_type' => Wiki::class,
-            'user_id'      => Auth::user()->id,
-        ]);
+        $this->readList->createSubject($wiki->id, Wiki::class);
 
         return redirect()->back()->with([
             'alert'      => 'Wiki successfully added to read list.',
@@ -371,9 +363,17 @@ class WikiController extends Controller
         ]);
     }
 
+    /**
+     * Remove a wiki from read list.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function removeFromReadList(Team $team, Space $space, Wiki $wiki)
     {
-        ReadList::where('user_id', Auth::user()->id)->where('subject_id', $wiki->id)->where('subject_type', Wiki::class)->delete();
+        $this->readList->deleteSubject($wiki->id, Wiki::class);
 
         return redirect()->back()->with([
             'alert'      => 'Wiki successfully removed from read list.',

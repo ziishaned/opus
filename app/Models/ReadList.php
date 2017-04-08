@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -41,5 +42,33 @@ class ReadList extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * Delete a subject(Wiki, Page) from read list.
+     *
+     * @param $subjectId
+     * @param $subjectType
+     * @return bool
+     */
+    public function deleteSubject($subjectId, $subjectType)
+    {
+        return $this->where('user_id', Auth::user()->id)->where('subject_id', $subjectId)->where('subject_type', $subjectType)->delete();
+    }
+
+    /**
+     * Create a new subject(Wiki, Page).
+     *
+     * @param $subjectId
+     * @param $subjectType
+     * @return static
+     */
+    public function createSubject($subjectId, $subjectType)
+    {
+        return ReadList::create([
+            'subject_id'   => $subjectId,
+            'subject_type' => $subjectType,
+            'user_id'      => Auth::user()->id,
+        ]);
     }
 }
