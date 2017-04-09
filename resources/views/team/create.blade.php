@@ -4,12 +4,12 @@
 	<div class="home-con">
 		@include('partials.home-nav')
 		<div class="login-page">
-			<div class="login-form-con">
-		        <h1 class="header">Create a Team</h1>
+			<div class="login-form-con" style="margin-bottom: 24px;">
+		        <h1 class="header text-center" style="font-size: 28px;">Create a Team</h1>
 		        <form action="{{ route('team.store') }}" method="POST" role="form">
                     <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
 		                <label for="email" class="control-label">Email</label>
-		                <input name="email" id="email" value="{{ old('email') }}" type="email" class="form-control" placeholder="john@example.com" required>
+		                <input name="email" id="email" value="{{ old('email') }}" type="email" class="form-control" placeholder="john@doe.com" required>
                         @if($errors->has('email'))
                             <p class="help-block has-error">{{ $errors->first('email') }}</p>
                         @endif
@@ -63,11 +63,12 @@
                             <p class="help-block">Enter your team name here. e.g. Google</p>
                         @endif
                     </div>
-		            <div style="margin-top: 15px;">
-			            <input type="submit" class="btn btn-success" value="Submit"> <span class="text-muted" style="margin-left: 15px;">Already have a team?</span> <a href="{{ route('team.login') }}"> Login now</a>
+		            <div style="margin-top: 25px; margin-bottom: 10px;">
+			            <input type="submit" class="btn btn-success btn-block btn-lg" value="Submit">
 		            </div>
 		        </form>
 			</div>
+            <p class="text-center"><span class="text-muted" style="margin-left: 15px;">Already have a team?</span> <a href="{{ route('team.login') }}"> Login now</a></p>
 		</div>
 	</div>
 @endsection
