@@ -6,7 +6,7 @@
 		<div class="home-page brand-page-con">
 			<div class="brand-intro text-center">
 				<p style="margin-bottom: 38px;">
-					<img src="/img/home-logo.png">
+					<img src="/img/home-logo.png" width="147">
 				</p>
 				<h1 style="margin-bottom: 24px;">A place for teams.</h1>
 				<p class="minor-text" style="margin-bottom: 30px;">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
