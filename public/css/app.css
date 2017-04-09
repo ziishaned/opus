@@ -805,7 +805,6 @@ border-radius: 3px;
 }
 
 .home-nav {
-	background-color: #EFF2F6;
 	padding: 30px 0px;
 }
 
@@ -813,7 +812,6 @@ border-radius: 3px;
 	width: 500px;
 	margin: auto;
 	text-align: center;
-	background-color: #EFF2F6;
 }
 
 .home-nav ul {
@@ -839,10 +837,6 @@ border-radius: 3px;
 
 .home-nav ul li a:hover {
 	text-decoration: none;
-}
-
-.home-page {
-	background-color: #EFF2F6;
 }
 
 .home-page .brand-intro {
@@ -900,18 +894,6 @@ border-radius: 3px;
 .more-feature-button:hover {
 	color: #fff;
 	background-color: #4c5561;
-}
-
-.browser-buttons {
-	background-color: #fff;
-	height: 40px;
-	display: flex;
-	align-items: center;
-	border-radius: 3px 3px 0px 0px;
-}
-
-.browser-buttons .browser-buttons-inner {
-	margin-left: 15px;
 }
 
 .brand-img {
@@ -979,14 +961,13 @@ border-radius: 3px;
 }
 
 .brand-page-con {
-    height: 582px;
+    height: 825px;
 	overflow: hidden;
 	border-bottom: 1px solid #eee;
 }
 
 .home-con {
 	height: 100%;
-	background-color: #eff2f6;
 }
 
 #app {

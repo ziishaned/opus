@@ -18,10 +18,7 @@
 				</div>
 			</div>
 			<div class="brand-img">
-				<div class="browser-buttons">
-					<img src="img/mac-top.png" class="browser-buttons-inner" width="54">
-				</div>
-				<img src="img/brand.png">
+				<img src="img/brand.png" style="border-radius: 6px; border: 1px solid #dcdcdc;">
 			</div>
 		</div>
 		<div class="features text-center">
