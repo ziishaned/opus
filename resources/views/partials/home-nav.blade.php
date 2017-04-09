@@ -5,13 +5,13 @@
 				<a href="{{ route('home') }}">Home</a>
 			</li>
 			<li>
-				<a href="#">Features</a>
+				<a href="#features">Features</a>
+			</li>
+			<li>
+				<a href="#about-us">About Us</a>
 			</li>
 			<li>
 				<a href="#">Contact Us</a>
-			</li>
-			<li>
-				<a href="#">About Us</a>
 			</li>
 		</ul>
 	</nav>

@@ -845,16 +845,6 @@ border-radius: 3px;
     padding: 31px 0px;
 }
 
-.home-page .brand-intro .brand-name {
-	font-size: 65px;
-	text-transform: uppercase;
-	text-align: center;
-	font-family: Cambria;
-	font-weight: 900;
-	color: #323b44;
-	margin-bottom: 20px;
-}
-
 .home-page .brand-intro .minor-text {
 	font-size: 18px;
 	text-align: center;
@@ -869,38 +859,9 @@ border-radius: 3px;
     margin-bottom: 20px;
 }
 
-.features { background: #ffffff; padding: 60px 0px 50px 0px; color: #7E96B3; }
-
-.Carousel { height: 140px; position: relative; white-space: nowrap; overflow: hidden; max-width: 1200px; margin: 0 auto 30px; }
-
-.CarouselGroup { display: inline-block; }
-
-.CarouselItem { display: inline-block; vertical-align: top; width: 130px; padding: 0 10px; white-space: normal; }
-
-.Carousel:after { position: absolute; top: 0; right: 0; bottom: 0; left: 0; content: ' '; background-image: linear-gradient(to right, #ffffff 0%, rgba(239, 242, 246, 0) 50%, #ffffff 100%); }
-
-.CarouselItem .icon { margin-bottom: 20px; font-size: 55px; display: inline-block; font-size: 55px; vertical-align: top; }
-
-.CarouselItem-label { font-size: 16px; }
-
-/*.features-text { font-family: "Open Sans"; font-size: 17px; margin-bottom: 30px; color: #3C5675; max-width: 590px; margin-left: auto; margin-right: auto; padding: 0 20px; }*/
-
-.more-feature-button {
-	padding: 9px 25px;
-	background-color: #3C5675;
-	color: #fff; 
-}
-
-.more-feature-button:hover {
-	color: #fff;
-	background-color: #4c5561;
-}
-
 .brand-img {
 	width: 1100px;
 	margin: auto;
-	box-shadow: 0px 1px 14px rgba(0, 0, 0, 0.23);
-	border-radius: 7px;
 }
 
 .login-form-con {
@@ -961,9 +922,10 @@ border-radius: 3px;
 }
 
 .brand-page-con {
-    height: 825px;
+	margin: 8px 0px 0px;
+    height: 920px;
 	overflow: hidden;
-	border-bottom: 1px solid #eee;
+/*	border-bottom: 1px solid #eee;*/
 }
 
 .home-con {
@@ -1454,4 +1416,22 @@ ul.dot-divider li:before {
 
 i.icon {
 	color: #a5a5a5;
+}
+
+.home-head-btn:nth-of-type(1) {
+	margin-right: 12px;
+}
+
+.home-head-btn {
+    padding: 11px 25px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-width: 2px;
+    border-style: solid;
+    background-color: #fff;
+}
+
+.home-head-btn:hover {
+    background-color: #fff;
+	border-color: #333;
 }

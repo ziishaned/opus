@@ -3,7 +3,6 @@ var App = {
         this.params = params;
         this.bindUI();
         this.initJcrop();
-        this.initCarousel();
         this.initTooltip();
         this.initCKEditor();
         // this.getTeamMembers();
@@ -219,22 +218,6 @@ var App = {
             displayTpl: "<li><img src='/img/emojis/${key}.png' /> ${name}</li>",
             delay: 400,
         });
-    },
-    initCarousel() {
-        if ($(document).find('.Carousel').length) {
-            var $carousel = $('.Carousel');
-            $carousel.wrapInner($('<div class="CarouselGroup"/>'));
-            var $group = $('.CarouselGroup');
-            var $group2 = $group.clone().appendTo($carousel);
-
-            var animate = function () {
-                $group.css({marginLeft: 0}).animate({marginLeft: -$group.width()}, 70000, 'linear').promise().done(function () {
-                    animate();
-                });
-            };
-
-            animate();
-        }
     },
     initJcrop: function () {
         var that = this;
