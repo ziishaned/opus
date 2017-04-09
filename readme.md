@@ -102,4 +102,4 @@ There are spaces for every team, department or major project. Then employees can
 * Reach out to me directly at ziishaned@gmail.com or on twitter [@ziishaned](https://twitter.com/ziishaned)
 
 ## License
-MIT © [Zeeshan Ahmed](https://github.com/zeeshanu)
+The license holder is allowed to use the software for free, as long as they don't make money using it. [Read more in License](https://github.com/zeeshanu/opus/blob/master/LICENSE.md)
