@@ -263,4 +263,18 @@ class Wiki extends Model
             'description' => $data['description'],
         ]);
     }
+
+    /**
+     * Get all the wikis of a space.
+     *
+     * @param $spaceId
+     * @param $teamId
+     * @return mixed
+     */
+    public function getSpaceWikis($spaceId, $teamId)
+    {
+        return $this->where('team_id', $teamId)->where('space_id', $spaceId)->latest()->paginate(30);
+    }
+
+
 }

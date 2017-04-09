@@ -138,7 +138,7 @@ class Space extends Model
      */
     public function getTeamSpaces($teamId)
     {
-        return $this->where('team_id', $teamId)->get();
+        return $this->where('team_id', $teamId)->with(['team'])->orderBy('name', 'asc')->get();
     }
 
     /**

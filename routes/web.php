@@ -73,11 +73,11 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => '{team_slug}/spaces'], function () {
-        Route::get('create', 'SpaceConroller@create')->name('spaces.create');
-        Route::post('', 'SpaceConroller@store')->name('spaces.store');
-        Route::delete('{space_slug}', 'SpaceConroller@destroy')->name('teams.spaces.destroy');
-        Route::patch('{space_slug}', 'SpaceConroller@update')->name('teams.spaces.update');
-        Route::get('{space_slug}/wikis', 'SpaceConroller@getSpaceWikis')->name('spaces.wikis');
+        Route::get('create', 'SpaceController@create')->name('spaces.create');
+        Route::post('', 'SpaceController@store')->name('spaces.store');
+        Route::delete('{space_slug}', 'SpaceController@destroy')->name('teams.spaces.destroy');
+        Route::patch('{space_slug}', 'SpaceController@update')->name('teams.spaces.update');
+        Route::get('{space_slug}/wikis', 'SpaceController@getSpaceWikis')->name('spaces.wikis');
     });
 
     Route::get('{team_slug}/members', 'TeamController@getMembers')->name('teams.members');
