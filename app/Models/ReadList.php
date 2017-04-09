@@ -71,4 +71,15 @@ class ReadList extends Model
             'user_id'      => Auth::user()->id,
         ]);
     }
+
+    /**
+     * Get the read list of a user.
+     *
+     * @param int $userId
+     * @return mixed
+     */
+    public function getUserReadList($userId)
+    {
+        return $this->where('user_id', $userId)->with(['subject'])->latest()->paginate(30);
+    }
 }

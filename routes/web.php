@@ -61,7 +61,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
 
     Route::group(['prefix' => '{team_slug}/users'], function () {
         Route::get('activity', 'UserController@activity');
-        Route::post('{user_slug}', 'UserController@uploadAvatar')->name('users.avatar');
+        Route::post('{user_slug}', 'UserController@updateAvatar')->name('users.avatar');
         Route::delete('{user_slug}', 'UserController@deleteAccount')->name('users.destroy');
         Route::patch('{user_slug}/password', 'UserController@updatePassword')->name('users.password');
         Route::get('{user_slug}/readlist', 'UserController@getReadList')->name('users.readlist');
@@ -69,7 +69,6 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::patch('{user_slug}', 'UserController@update')->name('users.update');
         Route::get('{user_slug}/settings/account', 'UserController@accountSettings')->name('settings.account');
         Route::post('avatar/store', 'UserController@storeAvatar');
-        Route::post('avatar/crop', 'UserController@cropAvatar');
     });
 
     Route::group(['prefix' => '{team_slug}/spaces'], function () {

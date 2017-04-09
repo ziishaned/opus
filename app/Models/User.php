@@ -311,13 +311,13 @@ class User extends Authenticatable
     /**
      * Update the avatar of a user.
      *
-     * @param $id    integer
-     * @param $image string
+     * @param int    $userId
+     * @param string $image
      * @return mixed
      */
-    public function updateAvatar($id, $image)
+    public function updateAvatar($userId, $image)
     {
-        return $this->find($id)->update([
+        return $this->find($userId)->update([
             'profile_image' => $image,
         ]);
     }

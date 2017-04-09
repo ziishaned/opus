@@ -6,7 +6,7 @@ var App = {
         this.initCarousel();
         this.initTooltip();
         this.initCKEditor();
-        this.getTeamMembers();
+        // this.getTeamMembers();
         this.setCategoryItemBgColor();
 
         $('#permissions-select').val($('#permissions-select').data('val'));
@@ -539,50 +539,6 @@ var App = {
                 $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone);
             }
         }
-
-        $('#update-image-size').on('click', function (event) {
-            event.preventDefault();
-            $.ajax({
-                url: '/organizations/' + Cookies.get('organization_slug') + '/users/avatar/crop',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    'image': $('#crop-image-form').find('#profile-image-name').val(),
-                    'x': $('#crop-image-form').find('#x').val(),
-                    'y': $('#crop-image-form').find('#y').val(),
-                    'w': $('#crop-image-form').find('#w').val(),
-                    'h': $('#crop-image-form').find('#h').val(),
-
-                },
-                success: function (data) {
-                    $("#profile-pic-cropper").modal('hide');
-                    window.location.reload();
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-        $('#profile_image[type="file"]').on('change', function () {
-            var formData = new FormData($("#avatar-upload-form")[0]);
-            $.ajax({
-                url: '/organizations/' + Cookies.get('organization_slug') + '/users/avatar/store',
-                type: 'POST',
-                cache: false,
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function (data) {
-                    console.log(data);
-                    $("#profile-pic-cropper #cropimage").attr('src', '/images/profile-pics/' + data.image);
-                    $("#profile-pic-cropper").modal('show');
-                    $("#profile-pic-cropper").find('#profile-image-name').val(data.image);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
     },
 };
 

@@ -25,32 +25,32 @@ class WikiController extends Controller
     /**
      * @var \App\Models\Wiki
      */
-    protected $wiki;
+    private $wiki;
 
     /**
      * @var \Illuminate\Http\Request
      */
-    protected $request;
+    private $request;
 
     /**
      * @var \App\Models\Space
      */
-    protected $space;
+    private $space;
 
     /**
      * @var \App\Models\Tag
      */
-    protected $tag;
+    private $tag;
 
     /**
      * @var \App\Models\ReadList
      */
-    protected $readList;
+    private $readList;
 
     /**
      * @var \App\Models\WatchWiki
      */
-    protected $watchWiki;
+    private $watchWiki;
 
     /**
      * WikiController constructor.
