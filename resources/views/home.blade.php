@@ -6,9 +6,9 @@
 		<div style="background-color: #eeeeee; overflow: hidden; max-height: 400px;">
 			<div class="row no-container">
 				<div class="col-xs-4 col-sm-4 col-md-4">
-					<div style="padding: 40px 0px;" class="text-center">
-						<img src="/img/home-logo.png" width="147" style="margin-bottom: 18px;">
-						<p class="minor-text" style="margin-bottom: 25px; font-size: 18px;">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
+					<div style="padding: 80px 0px;">
+						<h1 style="margin-bottom: 20px; font-size: 38px;">A place where work happens.</h1>
+						<p class="minor-text" style="margin-bottom: 25px; font-size: 18px;">Opus let you document who you are, what you do and how to achieve results.</p>
 						<div class="brand-buttons text-center">
 							<a href="{{ route('team.create') }}" class="btn btn-default home-head-btn">Create Team</a>
 							<a href="{{ route('team.login') }}" class="btn btn-default home-head-btn">Login Team</a>
@@ -42,8 +42,8 @@
 			<div class="row no-container" style="width: 1130px; margin: auto;">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="text-center" style="margin-bottom: 55px; margin-top: 30px;">
-						<h1 style="font-size: 28px; margin-bottom: 7px;">Features</h1>
-						<p style="font-size: 16px; margin-bottom: 12px;">Opus is packed full of innovation, all wrapped up in a beautiful design. This isn't just a nice skin.</p>
+						<h1 style="font-size: 34px; margin-bottom: 12px;">Features</h1>
+						<p style="font-size: 18px; width: 550px; margin: auto; margin-bottom: 40px;">Opus is packed full of innovation, all wrapped up in a beautiful design. This isn't just a nice skin.</p>
 					</div>
 				</div>
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 45px;">

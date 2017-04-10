@@ -804,36 +804,27 @@ border-radius: 3px;
 	box-shadow: none;
 }
 
-.home-nav {
-	padding: 30px 0px;
-}
-
-.home-nav nav {
-	width: 500px;
-	margin: auto;
-	text-align: center;
-}
-
-.home-nav ul {
+.home-nav-con {
 	margin-bottom: 0;
+	padding: 15px 0px;
 }
 
-.home-nav ul li {
-	padding: 0;
-	margin-right: 20px;
+
+.home-nav-con .navbar-brand {
+    padding: 0px 15px;
 }
 
-.home-nav ul li a {
+ul.home-nav li a {
 	font-size: 14px;
 	font-weight: 600;
-	color: #3C5675;
-	padding-bottom: 6px;
+	color: #3C5675;	
+	padding: 0;
+	margin: 15px;
 }
 
-.home-nav ul li a:hover {
-	text-decoration: none;
-	border-bottom: 2px solid #333;
+ul.home-nav li a:hover {
 	color: #333;
+	background-color: inherit;
 }
 
 .home-page .brand-intro {
