@@ -918,10 +918,11 @@ border-radius: 3px;
 }
 
 .brand-page-con {
-	margin: 8px 0px 0px;
-    height: 920px;
-	overflow: hidden;
-/*	border-bottom: 1px solid #eee;*/
+    height: 790px;
+    overflow: hidden;
+    border-bottom: 1px solid #d7d7d7;
+    background-color: #d7d7d7;
+    padding: 48px 0px;
 }
 
 .home-con {
