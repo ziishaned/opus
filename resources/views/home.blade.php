@@ -22,23 +22,7 @@
 				</div>
 			</div>
 		</div>
-		{{-- <div class="home-page brand-page-con">
-			<div class="brand-intro text-center">
-				<p style="margin-bottom: 38px;">
-					<img src="/img/home-logo.png" width="147">
-				</p>
-				<h1 style="margin-bottom: 24px;">A place for teams.</h1>
-				<p class="minor-text" style="margin-bottom: 30px;">Opus is a place for your team to document who you are, what you do and how to achieve results.</p>
-				<div class="brand-buttons">
-					<a href="{{ route('team.create') }}" class="btn btn-default home-head-btn">Create Team</a>
-					<a href="{{ route('team.login') }}" class="btn btn-default home-head-btn">Login Team</a>
-				</div>
-			</div>
-			<div class="brand-img">
-				<img src="img/brand.png" style="border-radius: 5px; box-shadow: 0px 1px 8px #b3b3b3; ">
-			</div>
-		</div> --}}
-		<div style="padding-top: 45px; padding-bottom: 45px;" id="features">
+		<div style="padding-top: 26px; padding-bottom: 45px;" id="features">
 			<div class="row no-container" style="width: 1130px; margin: auto;">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="text-center" style="margin-bottom: 55px; margin-top: 30px;">
