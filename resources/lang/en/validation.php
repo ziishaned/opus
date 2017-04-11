@@ -13,7 +13,7 @@ return [
     |
     */
     'team_has_role'          => 'The :attribute has already been taken.',
-    'organization_has_email' => 'The :attribute has already been taken.',
+    'team_has_email'         => 'The :attribute has already been taken.',
     'hash'                   => 'The :attribute doesn\'t match current password.',
     'accepted'               => 'The :attribute must be accepted.',
     'active_url'             => 'The :attribute is not a valid URL.',

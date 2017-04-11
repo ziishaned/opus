@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use DB;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -282,5 +282,28 @@ class Team extends Model
         return $this->find($id)->update([
             'team_logo' => $image,
         ]);
+    }
+
+    /**
+     * Check if a user exists in a team. If user not exists then show 404 view or if found return the user.
+     *
+     * @param $passwordReset
+     * @return array|null|\stdClass
+     */
+    public function getUser($passwordReset)
+    {
+        $user = DB::table('users')
+            ->join('user_teams', 'users.id', '=', 'user_teams.user_id')
+            ->join('teams', 'user_teams.team_id', '=', 'teams.id')
+            ->where('teams.name', '=', $passwordReset->team_name)
+            ->where('users.email', '=', $passwordReset->email)
+            ->select('users.*')
+            ->first();
+
+        if(!$user) {
+            abort(404);
+        }
+
+        return $user;
     }
 }

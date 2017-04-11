@@ -8,6 +8,10 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('team/login', 'TeamController@postLogin')->name('team.postlogin');
     Route::get('team/create', 'TeamController@create')->name('team.create');
     Route::post('team/create', 'TeamController@store')->name('team.store');
+    Route::get('password/reset', 'UserController@showLinkRequestForm')->name('password.request');
+    Route::post('password/email', 'UserController@sendResetLinkEmail')->name('password.email');
+    Route::get('password/reset/{token}', 'UserController@showResetForm')->name('password.reset');
+    Route::post('password/reset/{token}', 'UserController@reset')->name('password.reset');
 });
 
 Route::get('get-pages', 'WikiController@getWikiPages')->name('wikis.pages');

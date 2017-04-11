@@ -25,7 +25,7 @@ class HelperServiceProvider extends ServiceProvider
     {
         $this->app->bind('helper', function()
         {
-            return new \App\Helpers\ViewHelper;
+
         });
     }
 }

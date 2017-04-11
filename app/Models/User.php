@@ -228,7 +228,7 @@ class User extends Authenticatable
     public function updatePassword($slug, $data)
     {
         return $this->where('slug', $slug)->update([
-            'password' => Hash::make($data['new_password']),
+            'password' => Hash::make(key_exists('new_password', $data) ? $data['new_password'] : $data['password']),
         ]);
     }
 

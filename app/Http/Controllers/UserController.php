@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Carbon\Carbon;
+use DB;
 use Image;
+use Mail;
 use Session;
 use App\Models\User;
 use App\Models\Wiki;
@@ -288,5 +291,85 @@ class UserController extends Controller
     public function getTeamMembers()
     {
         return $this->team->where('id', Auth::user()->getTeam()->id)->with(['members'])->first()->members;
+    }
+
+    public function showLinkRequestForm()
+    {
+        return view('user.passwords.email');
+    }
+
+    public function sendResetLinkEmail()
+    {
+        $this->validate($this->request, [
+            'team_name' => 'required|exists:teams,name',
+            'email'     => 'required|is_email_exists_in_team|email',
+        ], [
+            'is_email_exists_in_team' => 'Email does\'t exists in this team.',
+            'exists'                  => 'The team does not exist.',
+        ]);
+
+        $token = str_rot13(base64_encode(str_rot13($this->request->get('team_name') . $this->request->get('email'))));
+
+        DB::table('password_resets')->insert([
+            'token'      => $token,
+            'email'      => $this->request->get('email'),
+            'team_name'  => $this->request->get('team_name'),
+            'created_at' => Carbon::now(),
+        ]);
+
+        $this->sendResetPasswordEmail($this->request->get('email'), $token);
+
+        return redirect()->back()->with([
+            'alert' => 'Please check your inbox we sent you a link to change password.',
+        ]);
+    }
+
+    public function sendResetPasswordEmail($email, $token)
+    {
+        Mail::send('mails.reset-password', ['email' => $email, 'token' => $token], function ($message) use ($email) {
+            $message->from('opus@info.com', 'Opus');
+            $message->subject('Reset Password');
+            $message->to($email);
+        });
+
+        return true;
+    }
+
+    public function showResetForm($token)
+    {
+        $passwordReset = DB::table('password_resets')->where('token', $token)->get();
+
+        if(!count($passwordReset)) {
+            abort(404);
+        }
+
+        return view('user.passwords.reset', compact('token'));
+    }
+
+    public function reset($token)
+    {
+        $this->validate($this->request, [
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $passwordReset = DB::table('password_resets')->where('token', $token)->first();
+
+        if(!count($passwordReset)) {
+            abort(404);
+        }
+
+        $user = $this->findUser($passwordReset);
+
+        $this->user->updatePassword($user->slug, $this->request->all());
+
+        return redirect()->route('team.login')->with([
+            'alert'      => 'Password successfully changed.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    public function findUser($passwordReset)
+    {
+        return $this->team->getUser($passwordReset);
     }
 }

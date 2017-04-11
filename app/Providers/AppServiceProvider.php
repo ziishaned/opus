@@ -39,6 +39,21 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
+        Validator::extend('is_email_exists_in_team', function ($attribute, $email, $id, $validator) {
+            $team = Team::where('name', Request::get('team_name'))
+                ->with([
+                    'members' => function ($query) use ($email) {
+                        $query->where('email', $email);
+                    },
+                ])->first();
+
+            if(!$team || $team->members->count() === 0) {
+                return false;
+            }
+
+            return true;
+        });
+
         Validator::extend('team_has_role', function ($attribute, $role, $id, $validator) {
             if(Request::isMethod('patch') === false) {
                 $team = Auth::user()->getTeam();

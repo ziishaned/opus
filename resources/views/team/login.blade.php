@@ -24,7 +24,7 @@
                         @endif
                     </div>
 		            <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-		            	<a href="#" class="text-muted pull-right" style="font-size: 14px;">Forgot your password?</a>
+		            	<a href="{{ route('password.request') }}" class="text-muted pull-right" style="font-size: 14px;">Forgot your password?</a>
                         <label for="password" class="control-label">Password</label>
                         <input name="password" id="password" type="password" class="form-control" required>
                         @if($errors->has('password'))
