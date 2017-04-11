@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePageTagsTabel extends Migration
+class CreatePasswordResetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreatePageTagsTabel extends Migration
      */
     public function up()
     {
-        Schema::create('page_tags', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('tag_id');
-            $table->string('subject_type');
-            $table->integer('subject_id');
-            $table->timestamps();
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email');
+            $table->string('team_name');
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -29,6 +28,6 @@ class CreatePageTagsTabel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('page_tags');
+        Schema::dropIfExists('password_resets');
     }
 }

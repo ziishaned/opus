@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReadListTabel extends Migration
+class CreatePageTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateReadListTabel extends Migration
      */
     public function up()
     {
-        Schema::create('read_list', function (Blueprint $table) {
+        Schema::create('page_tags', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('tag_id');
             $table->string('subject_type');
-            $table->integer('subject_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->integer('subject_id');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateReadListTabel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('read_list');
+        Schema::dropIfExists('page_tags');
     }
 }

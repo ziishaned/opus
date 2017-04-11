@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWatchWikiTabel extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateWatchWikiTabel extends Migration
      */
     public function up()
     {
-        Schema::create('watch_wiki', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('wiki_id');
-            $table->integer('user_id');
+            $table->string('name');
+            $table->string('slug', 65535);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateWatchWikiTabel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('watch_wiki');
+        Schema::dropIfExists('tags');
     }
 }
