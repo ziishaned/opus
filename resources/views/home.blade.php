@@ -240,10 +240,10 @@
 					<ul class="list-unstyled">
 						<li style="font-size: 20px; margin-bottom: 20px; font-weight: 500;">Social</li>
 						<li>
-							<a href="#features" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">Twitter</a>
+							<a href="https://twitter.com/ziishaned" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">Twitter</a>
 						</li>
 						<li>
-							<a href="#" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">Github</a>
+							<a href="https://github.com/zeeshanu/opus" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">Github</a>
 						</li>
 						<li>
 							<a href="#" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">Contact Us</a>

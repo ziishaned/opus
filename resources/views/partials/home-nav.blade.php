@@ -13,6 +13,11 @@
 			<li>
 				<a href="#about-us">About Us</a>
 			</li>
+			<li>
+				<a href="https://github.com/zeeshanu/opus">
+					Github
+				</a>
+			</li>
 		</ul>
 	</div>
 </div>
