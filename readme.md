@@ -6,10 +6,11 @@
 Opus is a place for your team to document who you are, what you do and how you do it. It helps you create and maintain a knowledge base for your teams.
 
 You can try it out with the new demo site: [Demo here](http://45.55.140.55/)
-**Team Name:**  Opus
-**Email:**  admin@admin.com
-**Password:**  admin
-
+```
+Team Name:  Opus
+    Email:  admin@admin.com
+ Password:  admin
+```
 ## Motivation
 As companies grow, it becomes difficult to manage and communicate the knowledge across different departments, Opus acts as a single source of truth; a go-to place for the employees to get knowledge. It gives enterprises the power to create anything and everything; from meeting notes, project plans, product requirements, technical documentations, orchestrate processes, work-flows and more. 
 
