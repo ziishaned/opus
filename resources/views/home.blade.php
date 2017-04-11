@@ -232,7 +232,7 @@
 							<a href="#features" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">Features</a>
 						</li>
 						<li>
-							<a href="#" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">About Us</a>
+							<a href="#about-us" style="text-decoration: none; color: #c5dae6; display: block; margin-bottom: 10px; line-height: 140%; font-size: 15px;">About Us</a>
 						</li>
 					</ul>
 				</div>
