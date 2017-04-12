@@ -100,4 +100,16 @@ class Invite extends Model
             'claimed_at' => Carbon::now(),
         ]);
     }
+
+    /**
+     * Delete pending invitation.
+     *
+     * @param $invitationCode
+     * @param $teamId
+     * @return mixed
+     */
+    public function deleteInvitation($invitationCode, $teamId)
+    {
+        return $this->where('code', $invitationCode)->where('team_id', $teamId)->delete();
+    }
 }

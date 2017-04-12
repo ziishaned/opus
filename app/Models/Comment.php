@@ -110,7 +110,7 @@ class Comment extends Model
      */
     public function deleteComment($id)
     {
-        return $this->find($id)->delete();
+        return $this->find($id)->where('user_id', Auth::user()->id)->delete();
     }
 
     /**

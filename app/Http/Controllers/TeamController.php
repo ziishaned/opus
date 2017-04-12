@@ -14,18 +14,48 @@ use App\Models\Integration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class TeamController
+ *
+ * @package App\Http\Controllers
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 class TeamController extends Controller
 {
+    /**
+     * @var \Illuminate\Http\Request
+     */
     private $request;
 
+    /**
+     * @var \App\Models\Team
+     */
     private $team;
 
+    /**
+     * @var \App\Models\User
+     */
     private $user;
 
+    /**
+     * @var \App\Models\Role
+     */
     private $role;
 
+    /**
+     * @var
+     */
     private $space;
 
+    /**
+     * TeamController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Team         $team
+     * @param \App\Models\Role         $role
+     * @param \App\Models\User         $user
+     * @param \App\Models\Space        $space
+     */
     public function __construct(Request $request, Team $team, Role $role, User $user, Space $space)
     {
         $this->user    = $user;
@@ -34,6 +64,12 @@ class TeamController extends Controller
         $this->role    = $role;
     }
 
+    /**
+     * Get all the members of a team in a view.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getMembers(Team $team)
     {
         $teamMembers = $this->team->getMembers($team);
@@ -41,6 +77,13 @@ class TeamController extends Controller
         return view('team.members', compact('team', 'teamMembers'));
     }
 
+    /**
+     * Show a join team view to invited user.
+     *
+     * @param \App\Models\Team $team
+     * @param                  $hash
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function join(Team $team, $hash)
     {
         Auth::logout();
@@ -50,11 +93,12 @@ class TeamController extends Controller
         return view('team.join', compact('team', 'hash', 'invitation'));
     }
 
-    public function isContentTypeJson()
-    {
-        return $this->request->header('content-type') == 'application/json';
-    }
-
+    /**
+     * Update team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Team $team)
     {
         if($team->name === $this->request->get('team_name')) {
@@ -76,6 +120,12 @@ class TeamController extends Controller
         ]);
     }
 
+    /**
+     * Delete a team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Team $team)
     {
         $this->team->deleteTeam($team->id);
@@ -88,11 +138,18 @@ class TeamController extends Controller
         ]);
     }
 
+    /**
+     * Make invited user member of a team.
+     *
+     * @param \App\Models\Team $team
+     * @param                  $hash
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postJoin(Team $team, $hash)
     {
         $this->validate($this->request, Team::JOIN_TEAM_RULES, [
             'exists'         => 'Specified team does\'t exists.',
-            'team_has_email' => 'This team has alredy a user with this email address.',
+            'team_has_email' => 'This team has already a user with this email address.',
         ]);
 
         $user = $this->user->createUser($this->request->all());
@@ -122,16 +179,32 @@ class TeamController extends Controller
         ]);
     }
 
+    /**
+     * Show a view to invite user to a team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function inviteUsers(Team $team)
     {
         return view('team.users.invite', compact('team'));
     }
 
+    /**
+     * Show login view to guest.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function login()
     {
         return view('team.login');
     }
 
+    /**
+     * Login user to team.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postLogin()
     {
         $this->validate($this->request, User::LOGIN_RULES, [
@@ -147,15 +220,25 @@ class TeamController extends Controller
         }
 
         return redirect()->back()->withErrors([
-            'wrong_credential' => 'Email or password is not valid.'
+            'wrong_credential' => 'Email or password is not valid.',
         ]);
     }
 
+    /**
+     * Show create team view.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('team.create');
     }
 
+    /**
+     * Create a new team.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store()
     {
         $this->validate($this->request, Team::CREATE_TEAM_RULES);
@@ -173,6 +256,12 @@ class TeamController extends Controller
         ]);
     }
 
+    /**
+     * Create admin role when a user create a team.
+     *
+     * @param $team
+     * @return bool
+     */
     public function createAdminsRole($team)
     {
         // Create role
@@ -208,11 +297,23 @@ class TeamController extends Controller
         return true;
     }
 
+    /**
+     * Show general setting view.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function generalSettings(Team $team)
     {
         return view('team.setting.general', compact('team'));
     }
 
+    /**
+     * Get all the members of a team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function membersSettings(Team $team)
     {
         $members = $this->team->getMembers($team);
@@ -224,6 +325,12 @@ class TeamController extends Controller
         return view('team.setting.members', compact('team', 'members', 'roles', 'invitations'));
     }
 
+    /**
+     * Upload team logo.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function uploadLogo(Team $team)
     {
         $image = $this->request->file('team_logo');
@@ -242,6 +349,11 @@ class TeamController extends Controller
         ]);
     }
 
+    /**
+     * Filter members of a team.
+     *
+     * @return mixed
+     */
     public function filterMembers()
     {
         $members = $this->team->find(Auth::user()->getTeam()->id)->with(['members' => function ($query) {
@@ -251,6 +363,12 @@ class TeamController extends Controller
         return $members;
     }
 
+    /**
+     * Get all the integrations of a team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function integration(Team $team)
     {
         $integrations = (new Integration)->getTeamIntegration($team->id);
@@ -258,11 +376,22 @@ class TeamController extends Controller
         return view('team.setting.integration', compact('team', 'integrations'));
     }
 
+    /**
+     * Create a new slack integration view.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function slackIntegration(Team $team)
     {
         return view('team.setting.slack', compact('team'));
     }
 
+    /**
+     * Team search functionality
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function search()
     {
         $data  = [];
@@ -282,6 +411,13 @@ class TeamController extends Controller
         return response()->json($data, 200);
     }
 
+    /**
+     * Format search result.
+     *
+     * @param $members
+     * @param $team
+     * @return array
+     */
     public function formatMembers($members, $team)
     {
         $data = [];
@@ -296,6 +432,13 @@ class TeamController extends Controller
         return $data;
     }
 
+    /**
+     * Format search result.
+     *
+     * @param $pages
+     * @param $team
+     * @return array
+     */
     public function formatPages($pages, $team)
     {
         $data = [];
@@ -310,6 +453,13 @@ class TeamController extends Controller
         return $data;
     }
 
+    /**
+     * Format search result.
+     *
+     * @param $wikis
+     * @param $team
+     * @return array
+     */
     public function formatWikis($wikis, $team)
     {
         $data = [];
@@ -324,6 +474,13 @@ class TeamController extends Controller
         return $data;
     }
 
+    /**
+     * Format search result.
+     *
+     * @param $spaces
+     * @param $team
+     * @return array
+     */
     public function formatSpaces($spaces, $team)
     {
         $data = [];

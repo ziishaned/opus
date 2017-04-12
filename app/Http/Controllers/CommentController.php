@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Emoji;
+use Notifynder;
+use App\Models\User;
 use App\Models\Team;
 use App\Models\Wiki;
 use App\Models\Page;
@@ -11,21 +13,58 @@ use App\Models\Space;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
+/**
+ * Class CommentController
+ *
+ * @package App\Http\Controllers
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 class CommentController extends Controller
 {
+    /**
+     * @var \Illuminate\Http\Request
+     */
     protected $request;
 
-    protected $comment;
-
+    /**
+     * @var \App\Models\Page
+     */
     protected $page;
 
-    public function __construct(Request $request, Page $page, Comment $comment)
+    /**
+     * @var \App\Models\Comment
+     */
+    protected $comment;
+
+    /**
+     * @var \App\Models\User
+     */
+    protected $user;
+
+    /**
+     * CommentController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Page         $page
+     * @param \App\Models\Comment      $comment
+     * @param \App\Models\User         $user
+     */
+    public function __construct(Request $request, Page $page, Comment $comment, User $user)
     {
+        $this->page    = $page;
+        $this->user    = $user;
         $this->request = $request;
         $this->comment = $comment;
-        $this->page    = $page;
     }
 
+    /**
+     * Create a new wiki comment.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storeWikiComment(Team $team, Space $space, Wiki $wiki)
     {
         $this->validate($this->request, Comment::COMMENT_RULES);
@@ -45,16 +84,24 @@ class CommentController extends Controller
         ]);
     }
 
+    /**
+     * Notify all users that are mentioned in comment.
+     *
+     * @param      $mentions
+     * @param      $wiki
+     * @param null $page
+     * @return bool
+     */
     public function notifyMentionedUsers($mentions, $wiki, $page = null)
     {
         foreach ($mentions as $mention) {
             $mention = str_replace('@', '', $mention);
 
-            $user = \App\Models\User::where('slug', $mention)->first();
+            $user = $this->user->getUser($mention);;
 
             if(is_null($page)) {
                 $url = route('wikis.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug]);
-                \Notifynder::category('wiki.user.mentioned')
+                Notifynder::category('wiki.user.mentioned')
                     ->from(Auth::user()->id)
                     ->to($user->id)
                     ->url($url)
@@ -62,7 +109,7 @@ class CommentController extends Controller
                     ->send();
             } else {
                 $url = route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $page->slug]);
-                \Notifynder::category('page.user.mentioned')
+                Notifynder::category('page.user.mentioned')
                     ->from(Auth::user()->id)
                     ->to($user->id)
                     ->url($url)
@@ -75,6 +122,15 @@ class CommentController extends Controller
         return true;
     }
 
+    /**
+     * Create a new page comment.
+     *
+     * @param \App\Models\Team  $team
+     * @param \App\Models\Space $space
+     * @param \App\Models\Wiki  $wiki
+     * @param \App\Models\Page  $page
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storePageComment(Team $team, Space $space, Wiki $wiki, Page $page)
     {
 
@@ -95,15 +151,25 @@ class CommentController extends Controller
         ]);
     }
 
+    /**
+     * Delete comment.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy()
     {
-        $this->comment->where('id', $this->request->get('commentId'))->where('user_id', Auth::user()->id)->delete();
+        $this->comment->deleteComment($this->request->get('commentId'));
 
         return response()->json([
             'deleted' => true,
         ], 200);
     }
 
+    /**
+     * Update comment.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update()
     {
         $this->validate($this->request, Comment::COMMENT_RULES);

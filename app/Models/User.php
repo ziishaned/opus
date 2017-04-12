@@ -180,7 +180,7 @@ class User extends Authenticatable
      */
     public function getUser($userSlug)
     {
-        $user = $this->where('slug', '=', $userSlug)->first();
+        $user = $this->where('slug', $userSlug)->first();
 
         if($user) {
             return $user;

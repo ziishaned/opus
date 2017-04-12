@@ -9,18 +9,48 @@ use App\Models\Like;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
+/**
+ * Class LikeController
+ *
+ * @package App\Http\Controllers
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 class LikeController extends Controller
 {
+    /**
+     * @var \App\Models\Like
+     */
     protected $like;
 
+    /**
+     * @var \App\Models\Wiki
+     */
     protected $wiki;
 
+    /**
+     * @var \Illuminate\Http\Request
+     */
     protected $request;
 
+    /**
+     * @var \App\Models\Page
+     */
     protected $page;
 
+    /**
+     * @var \App\Models\Comment
+     */
     protected $comment;
 
+    /**
+     * LikeController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Like         $like
+     * @param \App\Models\Wiki         $wiki
+     * @param \App\Models\Page         $page
+     * @param \App\Models\Comment      $comment
+     */
     public function __construct(Request $request, Like $like, Wiki $wiki, Page $page, Comment $comment)
     {
         $this->request = $request;
@@ -30,12 +60,18 @@ class LikeController extends Controller
         $this->comment = $comment;
     }
 
+    /**
+     * Check type of subject(Comment, Wiki, Page) that is liked and then store the like if the subject
+     * is un-liked then remove the like.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeLike()
     {
         if($this->request->get('subjectType') === 'wiki') {
-            $wiki = $this->wiki->where('slug', $this->request->get('subject'))->first();
+            $wiki = $this->wiki->getWiki($this->request->get('subject'));
 
-            $like = $this->handleLike('App\Models\Wiki', $wiki->id);
+            $like = $this->handleLike(Wiki::class, $wiki->id);
 
             if($like) {
                 return response()->json([
@@ -49,9 +85,9 @@ class LikeController extends Controller
         }
 
         if($this->request->get('subjectType') === 'page') {
-            $page = $this->page->where('slug', $this->request->get('subject'))->first();
+            $page = $this->page->getPage($this->request->get('subject'));
 
-            $like = $this->handleLike('App\Models\Page', $page->id);
+            $like = $this->handleLike(Page::class, $page->id);
 
             if($like) {
                 return response()->json([
@@ -67,7 +103,7 @@ class LikeController extends Controller
         if($this->request->get('subjectType') === 'comment') {
             $comment = $this->comment->find($this->request->get('subject'));
 
-            $like = $this->handleLike('App\Models\Comment', $comment->id);
+            $like = $this->handleLike(Comment::class, $comment->id);
 
             if($like) {
                 return response()->json([
@@ -79,8 +115,17 @@ class LikeController extends Controller
                 'like' => false,
             ], 200);
         }
+
+        abort(404);
     }
 
+    /**
+     * Create new like or if like already exists then restore it.
+     *
+     * @param $subject
+     * @param $subjectId
+     * @return bool
+     */
     public function handleLike($subject, $subjectId)
     {
         $existing_like = $this

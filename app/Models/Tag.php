@@ -153,4 +153,15 @@ class Tag extends Model
 
         return true;
     }
+
+    /**
+     * Filter Tags.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function filterTags($query)
+    {
+        return $this->where('name', 'like', '%' . $query . '%')->get();
+    }
 }

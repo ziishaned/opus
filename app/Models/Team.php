@@ -191,7 +191,7 @@ class Team extends Model
     /**
      * Create a new team.
      *
-     * @param $team array
+     * @param $team
      * @return \App\Models\Team
      */
     public function postTeam($team)

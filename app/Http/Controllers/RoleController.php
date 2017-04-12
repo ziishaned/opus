@@ -2,40 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Carbon\Carbon;
 use App\Models\Team;
 use App\Models\Role;
 use App\Models\Space;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
+/**
+ * Class RoleController
+ *
+ * @package App\Http\Controllers
+ */
 class RoleController extends Controller
 {
+    /**
+     * @var \Illuminate\Http\Request
+     */
     protected $request;
 
+    /**
+     * @var \App\Models\Role
+     */
     protected $role;
 
-    public function __construct(Request $request, Role $role)
+    /**
+     * RoleController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Role         $role
+     * @param \App\Models\Space        $space
+     */
+    public function __construct(Request $request, Role $role, Space $space)
     {
-        $this->request = $request;
+        $this->space   = $space;
         $this->role    = $role;
+        $this->request = $request;
     }
 
+    /**
+     * Get all roles of team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Team $team)
     {
-        $spaces = (new Space)->getTeamSpaces($team->id);
+        $spaces = $this->space->getTeamSpaces($team->id);
 
-        $roles = $this->role->where('team_id', $team->id)->latest()->with(['members', 'permissions'])->get();
+        $roles = $this->role->getTeamRoles($team->id);
 
         return view('role.index', compact('team', 'roles', 'spaces'));
     }
 
+    /**
+     * Show a view to create new role.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(Team $team)
     {
         return view('role.create', compact('team'));
     }
 
-
+    /**
+     * Create a new team role.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Team $team)
     {
         $this->validate($this->request, Role::ROLE_RULES);
@@ -71,11 +107,25 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+     * Show a view to update an existing role.
+     *
+     * @param \App\Models\Team $team
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(Team $team, Role $role)
     {
         return view('role.edit', compact('team', 'role'));
     }
 
+    /**
+     * Update an existing role.
+     *
+     * @param \App\Models\Team $team
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Team $team, Role $role)
     {
         $this->validate($this->request, Role::ROLE_RULES);
@@ -114,6 +164,13 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+     * Delete an existing role.
+     *
+     * @param \App\Models\Team $team
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Team $team, Role $role)
     {
         $this->role->find($role->id)->delete();

@@ -293,11 +293,21 @@ class UserController extends Controller
         return $this->team->where('id', Auth::user()->getTeam()->id)->with(['members'])->first()->members;
     }
 
+    /**
+     * Show password reset form.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showLinkRequestForm()
     {
         return view('user.passwords.email');
     }
 
+    /**
+     * Send password reset email to user.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendResetLinkEmail()
     {
         $this->validate($this->request, [
@@ -324,6 +334,13 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Send password reset email.
+     *
+     * @param $email
+     * @param $token
+     * @return bool
+     */
     public function sendResetPasswordEmail($email, $token)
     {
         Mail::send('mails.reset-password', ['email' => $email, 'token' => $token], function ($message) use ($email) {
@@ -335,6 +352,12 @@ class UserController extends Controller
         return true;
     }
 
+    /**
+     * Show change password form.
+     *
+     * @param $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showResetForm($token)
     {
         $passwordReset = DB::table('password_resets')->where('token', $token)->get();
@@ -346,6 +369,12 @@ class UserController extends Controller
         return view('user.passwords.reset', compact('token'));
     }
 
+    /**
+     * Update user account password.
+     *
+     * @param $token
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function reset($token)
     {
         $this->validate($this->request, [
@@ -368,6 +397,12 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Get the user.
+     *
+     * @param $passwordReset
+     * @return array|null|\stdClass
+     */
     public function findUser($passwordReset)
     {
         return $this->team->getUser($passwordReset);

@@ -3,22 +3,46 @@
 namespace App\Http\Controllers;
 
 use Mail;
-use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\Invite;
+use Illuminate\Http\Request;
 
+/**
+ * Class InviteController
+ *
+ * @package App\Http\Controllers
+ * @author  Zeeshan Ahmed <ziishaned@gmail.com>
+ */
 class InviteController extends Controller
 {
+    /**
+     * @var \Illuminate\Http\Request
+     */
     protected $request;
 
+    /**
+     * @var \App\Models\Invite
+     */
     protected $invite;
 
+    /**
+     * InviteController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Invite       $invite
+     */
     public function __construct(Request $request, Invite $invite)
     {
         $this->request = $request;
         $this->invite  = $invite;
     }
 
+    /**
+     * Invite user to team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Team $team)
     {
         $this->validate($this->request, Invite::INVITE_RULES, [
@@ -36,6 +60,13 @@ class InviteController extends Controller
         ]);
     }
 
+    /**
+     * Send invitation mail to the invited user.
+     *
+     * @param $invitation
+     * @param $team
+     * @return bool
+     */
     public function sendInvitationEmail($invitation, $team)
     {
         Mail::send('mails.invitation', ['invitation' => $invitation, 'team' => $team], function ($message) use ($invitation, $team) {
@@ -47,9 +78,16 @@ class InviteController extends Controller
         return true;
     }
 
+    /**
+     * Delete pending invitation.
+     *
+     * @param \App\Models\Team $team
+     * @param                  $invitationCode
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Team $team, $invitationCode)
     {
-        $this->invite->where('code', $invitationCode)->where('team_id', $team->id)->delete();
+        $this->invite->deleteInvitation($invitationCode, $team->id);
 
         return redirect()->back()->with([
             'alert'      => 'Invitation successfully removed.',
