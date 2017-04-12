@@ -20,7 +20,7 @@ class CreateCommentNotification extends BaseNotification
     {
         $this->comment->content = preg_replace('/<a href="(.*?)" .*?>(.*?)<\/a>/', '<'. url('http://opus.dev/teams/'.Auth::user()->team->first()->slug.'/users/$1') .'|$2>', $this->comment->content);
 
-        if(preg_match('/Wiki/', $this->comment->subject_type)) {
+        if (preg_match('/Wiki/', $this->comment->subject_type)) {
             return (new SlackMessage)
                 ->to($this->channel)
                 ->from($this->from)

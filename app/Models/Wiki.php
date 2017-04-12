@@ -79,7 +79,7 @@ class Wiki extends Model
 
             $watchingList = (new WatchWiki)->getWikiWatchers($wiki->id);
 
-            if(!empty($watchingList)) {
+            if (!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
                     $url = route('wikis.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug]);
                     Notifynder::category('wiki.updated')
@@ -97,7 +97,7 @@ class Wiki extends Model
 
             $watchingList = (new WatchWiki)->getWikiWatchers($wiki->id);
 
-            if(!empty($watchingList)) {
+            if (!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
                     $url = route('wikis.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug]);
                     Notifynder::category('wiki.deleted')
@@ -195,12 +195,11 @@ class Wiki extends Model
      */
     public function getTeamWikis($teamId, $total = null)
     {
-        if($total !== null) {
+        if ($total !== null) {
             return $this->where('team_id', $teamId)->with(['space', 'likes'])->latest()->take(5)->get();
         }
 
         return $this->where('team_id', $teamId)->latest()->paginate(10);
-
     }
 
     /**
@@ -213,7 +212,7 @@ class Wiki extends Model
     {
         $wiki = $this->where('slug', '=', $wikiSlug)->with(['user', 'space'])->first();
 
-        if($wiki === null) {
+        if ($wiki === null) {
             return false;
         }
 
@@ -275,6 +274,4 @@ class Wiki extends Model
     {
         return $this->where('team_id', $teamId)->where('space_id', $spaceId)->latest()->paginate(30);
     }
-
-
 }

@@ -74,12 +74,12 @@ class PageController extends Controller
      */
     public function getWikiPages()
     {
-        if($this->request->get('explore')) {
+        if ($this->request->get('explore')) {
             // Fetch the pages tree to a specified page
             return $this->explorePagesTo($this->request->get('page'));
         }
 
-        if($this->request->get('wiki')) {
+        if ($this->request->get('wiki')) {
             // Get the root pages of a wiki
             return $this->getWikiRootPages($this->request->get('wiki'));
         }
@@ -166,12 +166,12 @@ class PageController extends Controller
     {
         foreach ($pages as $page => $value) {
             foreach ($value->getSiblings() as $siblings) {
-                if($value->wiki_id == $siblings->wiki_id) {
+                if ($value->wiki_id == $siblings->wiki_id) {
                     $html .= '<li id="' . $siblings->id . '" data-slug="' . $siblings->slug . '" data-position="' . $siblings->position . '" data-created_at="' . $siblings->created_at . '" class="' . ($siblings->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($siblings->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $siblings->slug]) . '">' . $siblings->name . '</a>';
                 }
             }
             $html .= '<li id="' . $value->id . '" data-slug="' . $value->slug . '" data-position="' . $value->position . '" data-created_at="' . $value->created_at . '" class="' . ($value->isLeaf() == false ? 'jstree-closed' : '') . ' ' . ($value->id == $currentPageId ? 'jstree-selected' : '') . '"><a href="' . route('pages.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug, $value->slug]) . '">' . $value->name . '</a>';
-            if(!empty($value['children'])) {
+            if (!empty($value['children'])) {
                 $html .= '<ul>';
                 self::makePageTree($wiki, $value['children'], $currentPageId, $html);
                 $html .= '</ul></li>';
@@ -190,7 +190,7 @@ class PageController extends Controller
     {
         $node = $this->page->find($this->request->get('nodeToChangeParent'));
 
-        if($this->request->get('parent') === '#') {
+        if ($this->request->get('parent') === '#') {
             $node->makeRoot();
             $this->changeSiblingsPositions($node, $this->request->get('position'));
         } else {
@@ -220,7 +220,7 @@ class PageController extends Controller
 
         // Change the siblings position +1 step
         foreach ($node->siblingsAndSelf()->where('position', '>=', $nodePosition)->get() as $key => $x) {
-            if($x->position >= $nodePosition && $x->id !== $node->id) {
+            if ($x->position >= $nodePosition && $x->id !== $node->id) {
                 $page           = $this->page->find($x->id);
                 $page->position = $x->position + 1;
                 $page->save();
@@ -281,7 +281,7 @@ class PageController extends Controller
 
         $page = $this->page->saveWikiPage($wiki, $this->request->all());
 
-        if(!empty($this->request->get('tags'))) {
+        if (!empty($this->request->get('tags'))) {
             (new Tag)->createTags($this->request->get('tags'), 'App\Models\Page', $page->id);
         }
 
@@ -300,12 +300,12 @@ class PageController extends Controller
      */
     public function getNodePosition($data, $wiki)
     {
-        if(empty($data['page_parent'])) {
+        if (empty($data['page_parent'])) {
             $pages = $this->page->where('wiki_id', $wiki->id)->whereNull('parent_id')->get();
-            if(!empty($pages->toArray())) {
+            if (!empty($pages->toArray())) {
                 $position = 0;
                 foreach ($pages as $page) {
-                    if($page->position > $position) {
+                    if ($page->position > $position) {
                         $position = $page->position;
                     }
                 }
@@ -318,10 +318,10 @@ class PageController extends Controller
 
 
         $childPages = $this->page->where('wiki_id', $wiki->id)->where('parent_id', $data['page_parent'])->get();
-        if(!empty($childPages->toArray())) {
+        if (!empty($childPages->toArray())) {
             $position = 0;
             foreach ($childPages as $page) {
-                if($page->position > $position) {
+                if ($page->position > $position) {
                     $position = $page->position;
                 }
             }
@@ -364,14 +364,14 @@ class PageController extends Controller
 
         $isUserLikeWiki = false;
         foreach ($wiki->likes as $like) {
-            if($like->user_id === Auth::user()->id) {
+            if ($like->user_id === Auth::user()->id) {
                 $isUserLikeWiki = true;
             }
         }
 
         $isUserLikePage = false;
         foreach ($page->likes as $like) {
-            if($like->user_id === Auth::user()->id) {
+            if ($like->user_id === Auth::user()->id) {
                 $isUserLikePage = true;
             }
         }
@@ -393,7 +393,7 @@ class PageController extends Controller
         $this->page->updatePage($page->id, $this->request->all());
         $page = $this->page->find($page->id);
 
-        if(!empty($this->request->get('tags'))) {
+        if (!empty($this->request->get('tags'))) {
             (new Tag)->updateTags($this->request->get('tags'), 'App\Models\Page', $page->id);
         }
 
@@ -530,7 +530,7 @@ class PageController extends Controller
             'parent_id' => !empty($this->request->get('page_parent')) ? $this->request->get('page_parent') : null,
         ]);
 
-        if(!empty($this->request->get('tags'))) {
+        if (!empty($this->request->get('tags'))) {
             (new Tag)->updateTags($this->request->get('tags'), Page::class, $page->id);
         }
 

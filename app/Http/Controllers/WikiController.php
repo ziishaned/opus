@@ -83,7 +83,7 @@ class WikiController extends Controller
     {
         $spaces = $this->space->getTeamSpaces($team->id);
 
-        if($spaces->count() == 0) {
+        if ($spaces->count() == 0) {
             return redirect()->route('spaces.create', [$team->slug])->with([
                 'alert'      => 'You need to create space before creating wiki!',
                 'alert_type' => 'info',
@@ -105,7 +105,7 @@ class WikiController extends Controller
 
         $wiki = $this->wiki->saveWiki($this->request->all(), $team->id);
 
-        if(!empty($this->request->get('tags'))) {
+        if (!empty($this->request->get('tags'))) {
             $this->tag->createTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
@@ -133,7 +133,7 @@ class WikiController extends Controller
 
         $isUserLikeWiki = false;
         foreach ($wiki->likes as $like) {
-            if($like->user_id === Auth::user()->id) {
+            if ($like->user_id === Auth::user()->id) {
                 $isUserLikeWiki = true;
             }
         }
@@ -172,7 +172,7 @@ class WikiController extends Controller
     {
         $this->wiki->updateWiki($wiki->id, $this->request->all());
 
-        if(!empty($this->request->get('tags'))) {
+        if (!empty($this->request->get('tags'))) {
             $this->tag->updateTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
@@ -200,7 +200,7 @@ class WikiController extends Controller
             'outline'  => $this->request->get('outline'),
         ]);
 
-        if(!empty($this->request->get('tags'))) {
+        if (!empty($this->request->get('tags'))) {
             $this->tag->updateTags($this->request->get('tags'), Wiki::class, $wiki->id);
         }
 
@@ -275,7 +275,7 @@ class WikiController extends Controller
     {
         $isLiked = false;
         foreach ($wiki->likes as $like) {
-            if($like->user_id === Auth::user()->id) {
+            if ($like->user_id === Auth::user()->id) {
                 $isLiked = true;
             }
         }

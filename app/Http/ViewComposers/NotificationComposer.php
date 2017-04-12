@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\ViewComposers;
 
@@ -12,9 +12,9 @@ class NotificationComposer
 
     public function __construct()
     {
-    	if(Auth::user()) {
-	    	$this->notifications = (new NotificationController())->getNotificationsNotRead();
-    	}
+        if (Auth::user()) {
+            $this->notifications = (new NotificationController())->getNotificationsNotRead();
+        }
     }
 
     public function compose(View $view)

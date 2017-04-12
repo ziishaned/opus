@@ -82,7 +82,7 @@ class Page extends Node
 
             $watchingList = (new WatchWiki)->getWikiWatchers($page->wiki_id);
 
-            if(!empty($watchingList)) {
+            if (!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
                     $url = route('pages.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
                     Notifynder::category('page.created')
@@ -100,7 +100,7 @@ class Page extends Node
 
             $watchingList = (new WatchWiki)->getWikiWatchers($page->wiki_id);
 
-            if(!empty($watchingList)) {
+            if (!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
                     $url = route('pages.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
                     Notifynder::category('page.updated')
@@ -118,7 +118,7 @@ class Page extends Node
 
             $watchingList = (new WatchWiki)->getWikiWatchers($page->wiki_id);
 
-            if(!empty($watchingList)) {
+            if (!empty($watchingList)) {
                 foreach ($watchingList as $watch) {
                     $url = route('pages.show', [Auth::user()->getTeam()->slug, $watch->wiki->space->slug, $watch->wiki->slug, $page->slug]);
                     Notifynder::category('page.deleted')
@@ -270,7 +270,7 @@ class Page extends Node
     public function getPage($slug)
     {
         $page = $this->where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->with(['comments', 'wiki'])->first();
-        if(is_null($page)) {
+        if (is_null($page)) {
             return false;
         }
 

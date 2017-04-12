@@ -41,7 +41,6 @@ class AppCommand extends Command
             } else {
                 $this->call($value);
             }
-
         }
     }
 }

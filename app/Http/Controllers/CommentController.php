@@ -70,7 +70,7 @@ class CommentController extends Controller
         $this->validate($this->request, Comment::COMMENT_RULES);
 
         preg_match_all('/(?<= |^)@[^@ ]+/', $this->request->get('comment'), $matches);
-        if(count($matches) === 1 && !empty($matches[0])) {
+        if (count($matches) === 1 && !empty($matches[0])) {
             $this->notifyMentionedUsers($matches, $wiki);
         }
 
@@ -97,9 +97,10 @@ class CommentController extends Controller
         foreach ($mentions as $mention) {
             $mention = str_replace('@', '', $mention);
 
-            $user = $this->user->getUser($mention);;
+            $user = $this->user->getUser($mention);
+            ;
 
-            if(is_null($page)) {
+            if (is_null($page)) {
                 $url = route('wikis.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug]);
                 Notifynder::category('wiki.user.mentioned')
                     ->from(Auth::user()->id)
@@ -116,7 +117,6 @@ class CommentController extends Controller
                     ->extra(['wiki_name' => $wiki->name, 'username' => Auth::user()->name, 'page_name' => $page->name])
                     ->send();
             }
-
         }
 
         return true;
@@ -137,7 +137,7 @@ class CommentController extends Controller
         $this->validate($this->request, Comment::COMMENT_RULES);
 
         preg_match_all('/(?<= |^)@[^@ ]+/', $this->request->get('comment'), $matches);
-        if(count($matches) === 1 && !empty($matches[0])) {
+        if (count($matches) === 1 && !empty($matches[0])) {
             $this->notifyMentionedUsers($matches, $wiki, $page);
         }
 

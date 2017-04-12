@@ -31,5 +31,4 @@ class CreateWikiNotification extends BaseNotification
                     ->markdown(['title', 'text']);
             });
     }
-
 }

@@ -68,12 +68,12 @@ class LikeController extends Controller
      */
     public function storeLike()
     {
-        if($this->request->get('subjectType') === 'wiki') {
+        if ($this->request->get('subjectType') === 'wiki') {
             $wiki = $this->wiki->getWiki($this->request->get('subject'));
 
             $like = $this->handleLike(Wiki::class, $wiki->id);
 
-            if($like) {
+            if ($like) {
                 return response()->json([
                     'like' => true,
                 ], 200);
@@ -84,12 +84,12 @@ class LikeController extends Controller
             ], 200);
         }
 
-        if($this->request->get('subjectType') === 'page') {
+        if ($this->request->get('subjectType') === 'page') {
             $page = $this->page->getPage($this->request->get('subject'));
 
             $like = $this->handleLike(Page::class, $page->id);
 
-            if($like) {
+            if ($like) {
                 return response()->json([
                     'like' => true,
                 ], 200);
@@ -100,12 +100,12 @@ class LikeController extends Controller
             ], 200);
         }
 
-        if($this->request->get('subjectType') === 'comment') {
+        if ($this->request->get('subjectType') === 'comment') {
             $comment = $this->comment->find($this->request->get('subject'));
 
             $like = $this->handleLike(Comment::class, $comment->id);
 
-            if($like) {
+            if ($like) {
                 return response()->json([
                     'like' => true,
                 ], 200);
@@ -136,7 +136,7 @@ class LikeController extends Controller
             ->where('user_id', Auth::user()->id)
             ->first();
 
-        if(is_null($existing_like)) {
+        if (is_null($existing_like)) {
             Like::create([
                 'subject_id'   => $subjectId,
                 'subject_type' => $subject,
@@ -145,7 +145,7 @@ class LikeController extends Controller
 
             return true;
         } else {
-            if(is_null($existing_like->deleted_at)) {
+            if (is_null($existing_like->deleted_at)) {
                 $existing_like->delete();
 
                 return false;
@@ -155,6 +155,5 @@ class LikeController extends Controller
                 return true;
             }
         }
-
     }
 }

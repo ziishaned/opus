@@ -362,7 +362,7 @@ class UserController extends Controller
     {
         $passwordReset = DB::table('password_resets')->where('token', $token)->get();
 
-        if(!count($passwordReset)) {
+        if (!count($passwordReset)) {
             abort(404);
         }
 
@@ -383,7 +383,7 @@ class UserController extends Controller
 
         $passwordReset = DB::table('password_resets')->where('token', $token)->first();
 
-        if(!count($passwordReset)) {
+        if (!count($passwordReset)) {
             abort(404);
         }
 

@@ -78,7 +78,7 @@ class RoleController extends Controller
 
         $role = $this->role->createRole($this->request->all());
 
-        if($this->request->get('role_members')) {
+        if ($this->request->get('role_members')) {
             foreach ($this->request->get('role_members') as $member) {
                 DB::table('users_roles')->insert([
                     'role_id'    => $role->id,
@@ -90,7 +90,7 @@ class RoleController extends Controller
             }
         }
 
-        if($this->request->get('permissions')) {
+        if ($this->request->get('permissions')) {
             foreach ($this->request->get('permissions') as $permission) {
                 DB::table('role_permissions')->insert([
                     'role_id'       => $role->id,
@@ -135,7 +135,7 @@ class RoleController extends Controller
         DB::table('users_roles')->where('role_id', $role->id)->delete();
         DB::table('role_permissions')->where('role_id', $role->id)->delete();
 
-        if($this->request->get('role_members')) {
+        if ($this->request->get('role_members')) {
             foreach ($this->request->get('role_members') as $member) {
                 DB::table('users_roles')->insert([
                     'role_id'    => $role->id,
@@ -147,7 +147,7 @@ class RoleController extends Controller
             }
         }
 
-        if($this->request->get('permissions')) {
+        if ($this->request->get('permissions')) {
             foreach ($this->request->get('permissions') as $permission) {
                 DB::table('role_permissions')->insert([
                     'role_id'       => $role->id,

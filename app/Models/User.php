@@ -182,7 +182,7 @@ class User extends Authenticatable
     {
         $user = $this->where('slug', $userSlug)->first();
 
-        if($user) {
+        if ($user) {
             return $user;
         }
 
@@ -276,7 +276,7 @@ class User extends Authenticatable
             ->select('users.*', 'teams.slug as team_slug')
             ->first();
 
-        if($user && Hash::check($data['password'], $user->password)) {
+        if ($user && Hash::check($data['password'], $user->password)) {
             return $user;
         }
 
@@ -298,7 +298,7 @@ class User extends Authenticatable
         foreach ($roles as $role) {
             foreach ($role->permissions as $permission) {
                 foreach ($routePermissions as $routePer) {
-                    if($permission->name === $routePer) {
+                    if ($permission->name === $routePer) {
                         return true;
                     }
                 }

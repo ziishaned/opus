@@ -523,7 +523,7 @@ class EmojiHelper
 
     public function __construct($options = array())
     {
-        $this->options = array_merge($this->default_options,$options);
+        $this->options = array_merge($this->default_options, $options);
     }
 
     /**
@@ -534,9 +534,9 @@ class EmojiHelper
      */
     public function getEmoji($name)
     {
-        if (in_array($name,$this->emoji)) {
+        if (in_array($name, $this->emoji)) {
             $format = '<img src="%s%s.png" title=":%s:" alt=":%s:" width="21" height="21" style="vertical-align: middle;" />';
-            return sprintf($format, $this->options['emoji.path'], $name,$name,$name);
+            return sprintf($format, $this->options['emoji.path'], $name, $name, $name);
         } else {
             return false;
         }
@@ -565,7 +565,8 @@ class EmojiHelper
 
 
                 if ($replacement = $this->getEmoji($symbol)) {
-                    $result = substr_replace($result,
+                    $result = substr_replace(
+                        $result,
                         $replacement,
                         $offset,
                         strlen($symbol)+2 // symbol name + (colon * 2)

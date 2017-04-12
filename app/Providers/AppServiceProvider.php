@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
                     },
                 ])->first();
 
-            if(!$team || $team->members->count() > 0) {
+            if (!$team || $team->members->count() > 0) {
                 return false;
             }
 
@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
                     },
                 ])->first();
 
-            if(!$team || $team->members->count() === 0) {
+            if (!$team || $team->members->count() === 0) {
                 return false;
             }
 
@@ -55,11 +55,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Validator::extend('team_has_role', function ($attribute, $role, $id, $validator) {
-            if(Request::isMethod('patch') === false) {
+            if (Request::isMethod('patch') === false) {
                 $team = Auth::user()->getTeam();
                 $role = Role::where('name', $role)->where('team_id', $team->id)->first();
 
-                if(!is_null($role)) {
+                if (!is_null($role)) {
                     return false;
                 }
 
@@ -74,7 +74,7 @@ class AppServiceProvider extends ServiceProvider
 
             $invited = Invite::where('email', Request::get('email'))->where('team_id', $team->id)->get();
 
-            if($invited->count() > 0) {
+            if ($invited->count() > 0) {
                 return false;
             }
 
@@ -90,14 +90,12 @@ class AppServiceProvider extends ServiceProvider
                     },
                 ])->first();
 
-            if(!$team || $team->members->count() > 0) {
+            if (!$team || $team->members->count() > 0) {
                 return false;
             }
 
             return true;
         });
-
-
     }
 
     /**

@@ -28,5 +28,4 @@ class CreatePageNotification extends BaseNotification
                     ->markdown(['title', 'text']);
             });
     }
-
 }

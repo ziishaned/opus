@@ -101,7 +101,7 @@ class TeamController extends Controller
      */
     public function update(Team $team)
     {
-        if($team->name === $this->request->get('team_name')) {
+        if ($team->name === $this->request->get('team_name')) {
             return redirect()->back()->with([
                 'alert'      => 'Team name successfully updated.',
                 'alert_type' => 'success',
@@ -211,7 +211,7 @@ class TeamController extends Controller
             'exists' => 'Specified team does\'t exists..',
         ]);
 
-        if($data = $this->user->validate($this->request->all())) {
+        if ($data = $this->user->validate($this->request->all())) {
             Auth::login($data, $this->request->get('remember'));
 
             return redirect()->route('dashboard', [

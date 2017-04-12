@@ -20,7 +20,7 @@ class Invitation
     {
         $invitation = Invite::where('code', $request->hash)->where('team_id', $request->team_slug->id)->whereNull('claimed_at')->first();
         
-        if(!empty($invitation)) {
+        if (!empty($invitation)) {
             return $next($request);
         }
         
