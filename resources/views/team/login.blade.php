@@ -6,7 +6,13 @@
 		<div class="home-page login-page">
 			<div class="login-form-con" style="margin-bottom: 24px;">
 		        <h1 class="header text-center" style="font-size: 28px;">Login</h1>
-		        <form action="{{ route('team.postlogin') }}" method="POST" role="form">
+                @if($errors->has('wrong_credential'))
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ $errors->first('wrong_credential') }}
+                    </div>
+                @endif
+                <form action="{{ route('team.postlogin') }}" method="POST" role="form">
 		            <div class="form-group {{ $errors->has('team_name') ? 'has-error' : '' }}">
                         <label for="team-name" class="control-label">Team Name</label>
                         <input type="text" name="team_name" class="form-control" id="team-name" autocomplete="on" required>

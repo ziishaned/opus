@@ -146,9 +146,8 @@ class TeamController extends Controller
             ]);
         }
 
-        return redirect()->back()->with([
-            'alert'      => 'Email or password is not valid.',
-            'alert_type' => 'danger',
+        return redirect()->back()->withErrors([
+            'wrong_credential' => 'Email or password is not valid.'
         ]);
     }
 
