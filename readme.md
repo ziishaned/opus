@@ -1,8 +1,10 @@
 ![Opus](http://i.imgur.com/WZvXEXY.png)
 
-[![Build Status](https://travis-ci.org/zeeshanu/opus.svg?branch=master)](https://travis-ci.org/zeeshanu/opus)
-[![GitHub release](https://img.shields.io/github/release/zeeshanu/opus.svg)](https://github.com/zeeshanu/opus)
-[![Total Downloads](https://poser.pugx.org/zeeshanu/opus/downloads)](https://packagist.org/packages/zeeshanu/opus)
+<p align="center">
+<a href="https://travis-ci.org/zeeshanu/opus"><img src="https://travis-ci.org/zeeshanu/opus.svg?branch=master"/></a>
+<a href="https://github.com/zeeshanu/opus"><img src="https://img.shields.io/github/release/zeeshanu/opus.svg" /></a>
+<a href="https://packagist.org/packages/zeeshanu/opus"><img src="https://poser.pugx.org/zeeshanu/opus/downloads"/></a>
+</p>
 
 > Opensource knowledge base application for Teams
 
