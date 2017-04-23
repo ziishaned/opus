@@ -67,7 +67,7 @@ There are spaces for every team, department or major project. Then employees can
 ## Composer Create-Project
 Alternatively, you may also install opus by running the Composer create-project command in your terminal:
 ```bash
-composer create-project --prefer-dist zeeshanu/opus
+composer create-project zeeshanu/opus
 ```
 
 ## Todo
