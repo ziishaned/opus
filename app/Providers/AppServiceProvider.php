@@ -8,6 +8,7 @@ use Validator;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\Invite;
+use Laravel\Dusk\DuskServiceProvider;
 use App\Http\Validators\HashValidator;
 use Illuminate\Support\ServiceProvider;
 
@@ -105,6 +106,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->environment('local', 'testing')) {
+            $this->app->register(DuskServiceProvider::class);
+        }
     }
 }
