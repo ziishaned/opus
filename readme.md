@@ -1,21 +1,21 @@
-![Opus](http://i.imgur.com/WZvXEXY.png)
-
+<p align="center">
+<a href="http://i.imgur.com/AfFX7vQ.png"><img src="http://i.imgur.com/AfFX7vQ.png"/></a>
+</p>
 <p align="center">
 <a href="https://travis-ci.org/zeeshanu/opus"><img src="https://travis-ci.org/zeeshanu/opus.svg?branch=master"/></a>
 <a href="https://github.com/zeeshanu/opus"><img src="https://img.shields.io/github/release/zeeshanu/opus.svg" /></a>
 <a href="https://packagist.org/packages/zeeshanu/opus"><img src="https://poser.pugx.org/zeeshanu/opus/downloads"/></a>
 </p>
+<hr/>
 
-> Opensource knowledge base application for Teams
+Opensource knowledge base application for Teams. You can try it out with the demo site: [Demo here](http://45.55.140.55/)
+
+## Introduction
 
 Opus is a place for your team to document who you are, what you do and how you do it. It helps you create and maintain a knowledge base for your teams.
 
-You can try it out with the new demo site: [Demo here](http://45.55.140.55/)
-```
-Team Name:  Opus
-    Email:  admin@admin.com
- Password:  admin
-```
+![Opus](http://i.imgur.com/WZvXEXY.png)
+
 ## Motivation
 As companies grow, it becomes difficult to manage and communicate the knowledge across different departments, Opus acts as a single source of truth; a go-to place for the employees to get knowledge. It gives enterprises the power to create anything and everything; from meeting notes, project plans, product requirements, technical documentations, orchestrate processes, work-flows and more. 
 
