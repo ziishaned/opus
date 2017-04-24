@@ -1,14 +1,18 @@
 <p align="center">
 <a href="http://i.imgur.com/AfFX7vQ.png"><img src="http://i.imgur.com/AfFX7vQ.png"/></a>
 </p>
+
+<hr/>
+
+<p align="center">
+Opensource knowledge base application for Teams. You can try it out with the demo site: [Demo here](http://45.55.140.55/)
+</p>
+
 <p align="center">
 <a href="https://travis-ci.org/zeeshanu/opus"><img src="https://travis-ci.org/zeeshanu/opus.svg?branch=master"/></a>
 <a href="https://github.com/zeeshanu/opus"><img src="https://img.shields.io/github/release/zeeshanu/opus.svg" /></a>
 <a href="https://packagist.org/packages/zeeshanu/opus"><img src="https://poser.pugx.org/zeeshanu/opus/downloads"/></a>
 </p>
-<hr/>
-
-Opensource knowledge base application for Teams. You can try it out with the demo site: [Demo here](http://45.55.140.55/)
 
 ## Introduction
 
