@@ -2,7 +2,7 @@
 <a href="http://i.imgur.com/AfFX7vQ.png"><img src="http://i.imgur.com/AfFX7vQ.png"/></a>
 </p>
 
-<hr/>
+#
 
 <p align="center">
 Opensource knowledge base application for Teams. You can try it out with the demo site: [Demo here](http://45.55.140.55/)
