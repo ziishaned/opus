@@ -46,7 +46,9 @@ class CommentController extends Controller
         foreach($mentions as $mention) {
             $mention = str_replace('@', '', $mention);
 
-            $user = \App\Models\User::where('slug', $mention)->first();
+            if (!$user = \App\Models\User::where('slug', $mention)->first()) {
+	    	continue;
+	    }
 
             if(is_null($page)) {
                 $url = route('wikis.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug]);
