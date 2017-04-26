@@ -1403,3 +1403,50 @@ i.icon {
     background-color: #fff;
 	border-color: #333;
 }
+
+.home-nav {
+    text-align: center;
+}
+
+.home-nav ul {
+    margin-bottom: 0;
+}
+
+.home-nav ul li {
+    padding: 0 12px;
+    line-height: 48px;
+}
+
+.home-nav ul li a {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.home-nav ul li a:hover {
+    text-decoration: none;
+}
+
+.footer a {
+    font-weight:normal;
+    line-height: 12px;
+    text-decoration: none;
+    color: #939393;
+    display: inline-block;
+}
+
+.footer a i {
+    font-size:19px;
+}
+
+.footer a:hover {
+    color: #444;
+}
+
+.header-bg {
+    background-image: url(../img/bg.png);
+}
+
+.header-bg ul li a {
+    color: white !important;
+}

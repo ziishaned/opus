@@ -10,13 +10,14 @@ class WikiTest extends TestCase
 {
     private $dispatcher;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->dispatcher = Model::getEventDispatcher();
         Model::unsetEventDispatcher();
-	}
+    }
 
-	protected function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
         Model::setEventDispatcher($this->dispatcher);
@@ -29,8 +30,28 @@ class WikiTest extends TestCase
      */
     public function test_create_wiki()
     {
-        $users = factory(Wiki::class, 3)->create();
+        $wikis = factory(Wiki::class, 3)->create();
 
-        $this->assertCount(3, $users);
+        $this->assertCount(3, $wikis);
+    }
+
+    public function test_wiki_can_update()
+    {
+        $wiki = factory(Wiki::class, 1)->create()->first();
+
+        $updated = Wiki::find($wiki->id)->update([
+            'name' => 'opus',
+        ]);
+
+        $this->assertTrue($updated);
+    }
+
+    public function test_wiki_can_delete()
+    {
+        $wiki = factory(Wiki::class, 1)->create()->first();
+
+        $deleted = Wiki::find($wiki->id)->delete();
+
+        $this->assertTrue($deleted);
     }
 }
