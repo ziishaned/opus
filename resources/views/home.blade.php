@@ -158,7 +158,7 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <ul style="margin-bottom: 0;" class="list-inline list-unstyled">
                             <li><a href="#"><i class="fa fa-twitter fa-fw"></i> @Zeeshanu</a></li>
-                            <li><a href="#"><i class="fa fa-github fa-fw"></i> Opus</a></li>
+                            <li><a href="#"><i class="fa fa-github-alt fa-fw"></i> Opus</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">

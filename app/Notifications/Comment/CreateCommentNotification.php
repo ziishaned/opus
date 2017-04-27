@@ -22,7 +22,6 @@ class CreateCommentNotification extends BaseNotification
 
         if (preg_match('/Wiki/', $this->comment->subject_type)) {
             return (new SlackMessage)
-                ->to($this->channel)
                 ->from($this->from)
                 ->content(':speech_balloon: <' . route('users.show', [$this->comment->user->team->first()->slug, $this->comment->user->slug,]) . '|' . $this->comment->user->first_name . ' ' . $this->comment->user->last_name . '> commented on wiki <' . route('wikis.show', [$this->comment->user->team->first()->slug, $this->comment->subject->space->slug, $this->comment->subject->slug,]) . '|' . $this->comment->subject->space->slug . '/' . $this->comment->subject->slug . '>')
                 ->attachment(function ($attachment) {

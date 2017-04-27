@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Wiki;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WikiTest extends TestCase
 {
-    private $dispatcher;
+    protected $dispatcher;
 
     public function setUp()
     {
@@ -28,14 +28,14 @@ class WikiTest extends TestCase
      *
      * @return void
      */
-    public function test_create_wiki()
+    public function testCreateWiki()
     {
         $wikis = factory(Wiki::class, 3)->create();
 
         $this->assertCount(3, $wikis);
     }
 
-    public function test_wiki_can_update()
+    public function testWikiCanUpdate()
     {
         $wiki = factory(Wiki::class, 1)->create()->first();
 
@@ -46,7 +46,7 @@ class WikiTest extends TestCase
         $this->assertTrue($updated);
     }
 
-    public function test_wiki_can_delete()
+    public function testWikiCanDelete()
     {
         $wiki = factory(Wiki::class, 1)->create()->first();
 

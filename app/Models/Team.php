@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -181,7 +182,7 @@ class Team extends Model
     {
         $team = $this->where('slug', '=', $teamSlug)->with(['user', 'wikis', 'members'])->first();
 
-        if ($team) {
+        if($team) {
             return $team;
         }
 
@@ -252,7 +253,7 @@ class Team extends Model
             'team_id' => $teamId,
         ])->first();
 
-        if ($member) {
+        if($member) {
             return true;
         }
 
@@ -300,10 +301,17 @@ class Team extends Model
             ->select('users.*')
             ->first();
 
-        if (!$user) {
+        if(!$user) {
             abort(404);
         }
 
         return $user;
+    }
+
+    public static function getIntegration($teamId)
+    {
+         $team = self::where('id', $teamId)->with(['integration'])->first();
+
+         return $team->integration;
     }
 }

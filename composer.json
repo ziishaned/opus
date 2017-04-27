@@ -19,7 +19,6 @@
     "laravel",
     "wiki"
   ],
-  "minimum-stability": "dev",
   "type": "project",
   "require": {
     "php": ">=7.0",

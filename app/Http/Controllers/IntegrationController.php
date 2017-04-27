@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Team;
 use App\Models\Integration;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\In;
 
 /**
  * Class IntegrationController
@@ -45,24 +46,146 @@ class IntegrationController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      *
      */
-    public function storeSlackIntegration(Team $team)
+    public function store(Team $team)
     {
         $this->validate($this->request, Integration::INTEGRATION_RULES);
 
-        $teamIntegration = $this->integration->storeSlackIntegration($this->request->all(), $team->id);
+        $teamIntegration = $this->integration->storeIntegration($this->request->all(), $team->id);
 
-        // Update all the integration actions on which user want to be notified on slack.
-        foreach ($this->request->integrations as $integration) {
+        $this->createIntegrationActions($this->request->integrations, $teamIntegration);
+
+        return redirect()->route('integrations.index', [$team->slug])->with([
+            'alert'      => 'Integration successfully set on team.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    /**
+     * Create integration actions against an integration.
+     *
+     * @param $integrationActions
+     * @param $integration
+     * @return bool
+     */
+    public function createIntegrationActions($integrationActions, $integration)
+    {
+        foreach ($integrationActions as $action) {
             DB::table('team_integration_actions')->insert([
-                'integration_id'        => $teamIntegration->id,
-                'integration_action_id' => $integration,
+                'integration_id'        => $integration->id,
+                'integration_action_id' => $action,
                 'created_at'            => Carbon::now(),
                 'updated_at'            => Carbon::now(),
             ]);
         }
 
-        return redirect()->route('teams.integration', [$team->slug])->with([
-            'alert'      => 'Integration successfully set on team.',
+        return true;
+    }
+
+
+    /**
+     * Create a new slack integration view.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create(Team $team)
+    {
+        return view('integration.create', compact('team'));
+    }
+
+
+    /**
+     * Get all the integrations of a team.
+     *
+     * @param \App\Models\Team $team
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Team $team)
+    {
+        $integrations = (new Integration)->getTeamIntegration($team->id);
+
+        return view('integration.index', compact('team', 'integrations'));
+    }
+
+    /**
+     * Edit an integration.
+     *
+     * @param \App\Models\Team        $team
+     * @param \App\Models\Integration $integration
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Team $team, Integration $integration)
+    {
+        $integrationActions = $this->getIntegrationActions($integration->integrationActions);
+
+        return view('integration.edit', compact('team', 'integration', 'integrationActions'));
+    }
+
+    /**
+     * Get the actions of an integration.
+     *
+     * @param $actions
+     * @return array
+     */
+    public function getIntegrationActions($actions)
+    {
+        $integrationActions = [];
+
+        foreach ($actions as $action) {
+            $integrationActions[] = $action->name;
+        }
+
+        return $integrationActions;
+    }
+
+    public function update(Team $team, Integration $integration)
+    {
+        $this->integration->updateIntegration($integration->id, $this->request->all());
+
+        $this->updateIntegrations($integration, $this->request->integrations);
+
+        return redirect()->route('integrations.index', [$team->slug])->with([
+            'alert'      => 'Integration successfully updated.',
+            'alert_type' => 'success',
+        ]);
+    }
+
+    /**
+     * Update actions of an integration.
+     *
+     * @param $integration
+     * @param $integrationActions
+     * @return bool
+     */
+    public function updateIntegrations($integration, $integrationActions)
+    {
+        DB::table('team_integration_actions')->where('integration_id', $integration->id)->delete();
+
+        foreach ($integrationActions as $action) {
+            DB::table('team_integration_actions')->insert([
+                'integration_id'        => $integration->id,
+                'integration_action_id' => $action,
+                'created_at'            => Carbon::now(),
+                'updated_at'            => Carbon::now(),
+            ]);
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete an integration.
+     *
+     * @param \App\Models\Team        $team
+     * @param \App\Models\Integration $integration
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Team $team, Integration $integration)
+    {
+        $this->integration->deleteIntegration($integration->id);
+
+        return redirect()->route('integrations.index', [$team->slug])->with([
+            'alert'      => 'Integration successfully deleted.',
             'alert_type' => 'success',
         ]);
     }
