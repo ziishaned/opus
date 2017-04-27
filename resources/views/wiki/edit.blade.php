@@ -18,7 +18,8 @@
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     <button type="submit" class="btn btn-success pull-right" style="margin-right: 17px;">Update</button>
-                    <button type="submit" class="btn btn-link pull-right" style="margin-right: 10px;">Close</button>
+                    <a href="{{ route('wikis.show', [$team->slug, $space->slug, $wiki->slug]) }}" class="btn btn-link pull-right">Cancel</a>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </form>

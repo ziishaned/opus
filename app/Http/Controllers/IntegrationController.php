@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use App\Models\Team;
 use App\Models\Integration;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\In;
 
 /**
  * Class IntegrationController

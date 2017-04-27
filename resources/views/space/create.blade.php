@@ -19,7 +19,8 @@
                 <p class="help-block">Describe a little about space.</p>
             </div>
             <div style="margin-top: 15px;">
-                <input type="submit" class="btn btn-success" value="Save">
+                <input type="submit" class="btn btn-success pull-right" value="Save">
+                <a href="{{ route('dashboard', [$team->slug]) }}" class="btn btn-link pull-right">Cancel</a>
             </div>
         </form>
     </div>
