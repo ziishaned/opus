@@ -6,7 +6,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class CreateTeamTest extends DuskTestCase
+class LoginTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
@@ -19,48 +19,43 @@ class CreateTeamTest extends DuskTestCase
     ];
 
     /** @test */
-    public function it_can_see_create_team_page()
+    public function it_can_see_login_page()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visitRoute('team.create')
-                ->assertSee('Create a Team')
+            $browser->visitRoute('team.login')
+                ->assertSee('Login')
+                ->assertSee('Team Name')
+                ->assertInputValue('team_name', '')
                 ->assertSee('Email')
                 ->assertInputValue('email', '')
-                ->assertSee('First name')
-                ->assertInputValue('first_name', '')
-                ->assertSee('Last name')
-                ->assertInputValue('last_name', '')
                 ->assertSee('Password')
-                ->assertInputValue('password', '')
-                ->assertSee('Confirm Password')
-                ->assertInputValue('password_confirmation', '');
+                ->assertInputValue('password', '');
         });
     }
 
     /** @test */
-    public function it_can_create_team()
+    public function it_can_login_user()
     {
         $this->browse(function (Browser $browser) {
             $browser->visitRoute('team.create')
-                ->assertSee('Create a Team')
                 ->type('email', $this->data['email'])
                 ->type('first_name', $this->data['first_name'])
                 ->type('last_name', $this->data['last_name'])
                 ->type('password', $this->data['password'])
                 ->type('password_confirmation', $this->data['password'])
                 ->type('team_name', $this->data['team_name'])
-                ->click('.btn[value=Submit]')
-                ->assertRouteIs('home');
+                ->click('.btn[value=Submit]');
         });
 
-        $this->assertDatabaseHas('users', [
-            'first_name' => $this->data['first_name'],
-            'last_name'  => $this->data['last_name'],
-            'email'      => $this->data['email'],
-        ]);
+        $this->browse(function (Browser $browser) {
+            $browser->visitRoute('team.login')
+                ->type('team_name', $this->data['team_name'])
+                ->type('email', $this->data['email'])
+                ->type('password', $this->data['password'])
+                ->click('.btn[value=Login]')
+                ->assertSee('Activities')
+                ->assertRouteIs('dashboard', [$this->data['team_name']]);
+        });
 
-        $this->assertDatabaseHas('teams', [
-            'name' => $this->data['team_name'],
-        ]);
     }
 }
