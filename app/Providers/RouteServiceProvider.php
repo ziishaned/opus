@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('user_slug', function ($slug) {
             $user = User::where('slug', $slug)->first();
 
-            if(empty($user)) {
+            if (empty($user)) {
                 abort(404);
             }
 
@@ -63,7 +63,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('integration_slug', function ($slug) {
             $integration = Integration::where('slug', $slug)->with(['integrationActions'])->first();
 
-            if(empty($integration)) {
+            if (empty($integration)) {
                 abort(404);
             }
 
@@ -75,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->with(['likes', 'comments'])
                 ->first();
 
-            if(empty($page)) {
+            if (empty($page)) {
                 abort(404);
             }
 
@@ -85,7 +85,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('page_id', function ($id) {
             $page = Page::where('id', $id)->first();
 
-            if(empty($page)) {
+            if (empty($page)) {
                 abort(404);
             }
 
@@ -95,7 +95,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('tag_slug', function ($slug) {
             $tag = Tag::where('slug', '=', $slug)->first();
 
-            if(empty($tag)) {
+            if (empty($tag)) {
                 abort(404);
             }
 
@@ -105,7 +105,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('wiki_id', function ($id) {
             $wiki = Wiki::where('id', '=', $id)->with(['space'])->first();
 
-            if(empty($wiki)) {
+            if (empty($wiki)) {
                 abort(404);
             }
 
@@ -119,7 +119,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->where('team_id', '=', $teamId)
                 ->with(['space', 'comments', 'likes'])
                 ->first();
-            if(empty($wiki)) {
+            if (empty($wiki)) {
                 abort(404);
             }
 
@@ -129,7 +129,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('team_id', function ($id) {
             $team = Team::where('id', $id)->first();
 
-            if(empty($team)) {
+            if (empty($team)) {
                 abort(404);
             }
 
@@ -139,7 +139,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('team_slug', function ($slug) {
             $team = Team::where('slug', $slug)->first();
 
-            if(empty($team)) {
+            if (empty($team)) {
                 abort(404);
             }
 
@@ -149,7 +149,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('role_slug', function ($slug) {
             $role = Role::where('slug', $slug)->with(['members', 'permissions'])->first();
 
-            if(empty($role)) {
+            if (empty($role)) {
                 abort(404);
             }
 
@@ -159,7 +159,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('space_slug', function ($slug) {
             $space = Space::where('slug', $slug)->first();
 
-            if(empty($space)) {
+            if (empty($space)) {
                 abort(404);
             }
 
