@@ -29,13 +29,13 @@
     "intervention/image": "^2.3",
     "barryvdh/laravel-snappy": "^0.3.3",
     "fenos/notifynder": "4.0",
-    "doctrine/dbal": "^2.5"
+    "doctrine/dbal": "^2.5",
+    "laravel/tinker": "^1.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
-    "phpunit/phpunit": "^5.7",
-    "squizlabs/php_codesniffer": "2.*",
-    "laravel/dusk": "^1.0"
+    "phpunit/phpunit": "^6.0",
+    "squizlabs/php_codesniffer": "2.*"
   },
   "autoload": {
     "classmap": [
