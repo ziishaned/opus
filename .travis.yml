@@ -4,4 +4,4 @@ php:
 before_script:
     - composer install
 script:
-  - vendor/bin/phpcs --standard=PSR2 -n --extensions=php app/ tests/
+  - vendor/bin/phpcs --standard=PSR2 -n --extensions=php app/
