@@ -1391,17 +1391,22 @@ i.icon {
 }
 
 .home-head-btn {
-    padding: 11px 25px;
+	padding: 11px 25px;
     text-transform: uppercase;
     font-weight: 500;
-    border-width: 2px;
     border-style: solid;
-    background-color: #fff;
+    background-color: transparent;
+    color: white;
+    font-size: 12px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    transition: all 0.1s;
 }
 
 .home-head-btn:hover {
-    background-color: #fff;
-	border-color: #333;
+    color: white;
+    background-color: transparent;
+	transform: scale(1.05);
 }
 
 .home-nav {

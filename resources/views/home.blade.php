@@ -5,20 +5,26 @@
         <div class="header-bg">
             @include('partials.home-nav')
             <div>
-                <div style="padding: 105px 0px;" class="text-center">
+                <div style="padding: 109px 0px;" class="text-center">
                     <div style="margin-bottom: 45px;">
                         <img src="/img/white-logo.png" alt="">
                     </div>
-                    <h1 style="line-height: 52px; font-size: 36px; font-weight: 700; width: 650px; margin: auto auto 24px; color: white;">Opus lets you work more collaboratively and get more done.</h1>
-                    <p class="minor-text" style="font-size: 20px; width: 550px; margin: auto auto 24px; font-weight: 300; color: white;">Opus let you work more collaboratively to document who you are, what you do and how to achieve results.</p>
+                    <h1 style="line-height: 52px;font-size: 38px; font-weight: 700; width: 610px; margin: auto auto 24px;color: white;font-weight: 100;">Opus lets you work more collaboratively and get more done.</h1>
+                    <p class="minor-text" style="font-size: 17px;width: 550px;margin: auto auto 24px;font-weight: normal;color: white;">Opus let you work more collaboratively to document who you are, what you do and how to achieve results.</p>
                     <div class="brand-buttons text-center">
-                        <a href="{{ route('team.create') }}" class="btn btn-default home-head-btn" style="border: none;">Create Team</a>
-                        <a href="{{ route('team.login') }}" class="btn btn-default home-head-btn" style="border: none;">Login Team</a>
+                        <a href="{{ route('team.create') }}" class="btn btn-default home-head-btn">Create Team</a>
+                        <a href="{{ route('team.login') }}" class="btn btn-default home-head-btn">Login Team</a>
                     </div>
                 </div>
             </div>
         </div>
         <div style="padding-top: 95px; padding-bottom: 75px;" id="features">
+			<div class="row no-container">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+					<h1 style="font-weight: 100; font-size: 38px; margin-bottom: 15px;">Elegant UI and so much more.</h1>
+					<p style="color: rgba(0,0,0,0.55); font-size: 17px; line-height: 24px; font-weight: 400; margin: 0 0 70px; ">Check out all you can do in Opus.</p>
+				</div>
+			</div>
 			<div class="row no-container" style="width: 1130px; margin: auto;">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 45px;">
 					<div class="media">

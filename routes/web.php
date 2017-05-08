@@ -37,7 +37,7 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('account', 'UserController@accountSettings')->name('settings.account');
     });
 
-    Route::group(['prefix' => '/{team_slug}/tags/{tag_slug}'], function() {
+    Route::group(['prefix' => '/{team_slug}/tags/{tag_slug}'], function () {
         Route::get('wikis', 'WikiController@getTagWikis')->name('tags.wikis');
         Route::get('pages', 'PageController@getTagPages')->name('tags.pages');
     });
@@ -51,11 +51,11 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::get('create', 'RoleController@create')->name('roles.create');
     });
 
-    Route::group([ 'prefix' => '{team_slug}/users/{user_slug}/notifications'], function() {
+    Route::group(['prefix' => '{team_slug}/users/{user_slug}/notifications'], function () {
         Route::get('read-all', 'NotificationController@readAll')->name('notifications.readall');
-    });    
+    });
 
-    Route::group([ 'prefix' => '{team_slug}/settings'], function() {
+    Route::group(['prefix' => '{team_slug}/settings'], function () {
         Route::get('general', 'TeamController@generalSettings')->name('teams.settings.general');
         Route::get('members', 'TeamController@membersSettings')->name('teams.settings.members');
 
@@ -140,5 +140,5 @@ Route::group(['prefix' => 'teams', 'middleware' => 'auth'], function () {
         Route::post('{wiki_slug}/pages/{page_slug}/comments', 'CommentController@storePageComment')->name('pages.comments.store');
         Route::delete('{wiki_slug}/pages/{page_slug}/{comment_id}', 'CommentController@destroy')->name('comments.delete');
     });
-    
+
 });
