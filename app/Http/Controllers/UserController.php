@@ -344,7 +344,7 @@ class UserController extends Controller
     public function sendResetPasswordEmail($email, $token)
     {
         Mail::send('mails.reset-password', ['email' => $email, 'token' => $token], function ($message) use ($email) {
-            $message->from(env('OPUS_MAIL_SENDER_ADDRESS', 'opus@info.com'), env('OPUS_MAIL_SENDER_NAME', 'Opus'));
+            $message->from(config('opus.mail_sender_address'), config('opus.mail_sender_name'));
             $message->subject('Reset Password');
             $message->to($email);
         });
