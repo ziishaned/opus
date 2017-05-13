@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Integration;
 use Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -34,18 +35,19 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::patterns([
-            'id'         => '[0-9]+',
-            'team_id'    => '[0-9]+',
-            'page_id'    => '[0-9]+',
-            'wiki_id'    => '[0-9]+',
-            'text'       => '[a-zA-Z0-9]+',
-            'wiki_slug'  => '(\w+-*\d*)+',
-            'space_slug' => '(\w+-*\d*)+',
-            'team_slug'  => '(\w+-*\d*)+',
-            'role_slug'  => '(\w+-*\d*)+',
-            'tag_slug'   => '(\w+-*\d*)+',
-            'page_slug'  => '(\w+-*\d*)+',
-            'user_slug'  => '(\w+-*\d*)+',
+            'id'               => '[0-9]+',
+            'team_id'          => '[0-9]+',
+            'page_id'          => '[0-9]+',
+            'wiki_id'          => '[0-9]+',
+            'text'             => '[a-zA-Z0-9]+',
+            'wiki_slug'        => '(\w+-*\d*)+',
+            'space_slug'       => '(\w+-*\d*)+',
+            'team_slug'        => '(\w+-*\d*)+',
+            'role_slug'        => '(\w+-*\d*)+',
+            'integration_slug' => '(\w+-*\d*)+',
+            'tag_slug'         => '(\w+-*\d*)+',
+            'page_slug'        => '(\w+-*\d*)+',
+            'user_slug'        => '(\w+-*\d*)+',
         ]);
 
         Route::bind('user_slug', function ($slug) {
@@ -58,10 +60,20 @@ class RouteServiceProvider extends ServiceProvider
             return $user;
         });
 
+        Route::bind('integration_slug', function ($slug) {
+            $integration = Integration::where('slug', $slug)->with(['integrationActions'])->first();
+
+            if (empty($integration)) {
+                abort(404);
+            }
+
+            return $integration;
+        });
+
         Route::bind('page_slug', function ($slug) {
             $page = Page::where('slug', $slug)
-                                    ->with(['likes', 'comments'])
-                                    ->first();
+                ->with(['likes', 'comments'])
+                ->first();
 
             if (empty($page)) {
                 abort(404);
@@ -102,11 +114,11 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('wiki_slug', function ($slug) {
             $teamId = Auth::user()->getTeam()->id;
-            
+
             $wiki = Wiki::where('slug', '=', $slug)
-                                    ->where('team_id', '=', $teamId)
-                                    ->with(['space', 'comments', 'likes'])
-                                    ->first();
+                ->where('team_id', '=', $teamId)
+                ->with(['space', 'comments', 'likes'])
+                ->first();
             if (empty($wiki)) {
                 abort(404);
             }
@@ -180,7 +192,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
         ], function ($router) {
             require base_path('routes/web.php');
         });
@@ -197,8 +209,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
+            'namespace'  => $this->namespace,
+            'prefix'     => 'api',
         ], function ($router) {
             require base_path('routes/api.php');
         });

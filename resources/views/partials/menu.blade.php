@@ -12,7 +12,7 @@
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav">
 				<li class="with-img">
-					<a href="{{ route('dashboard', [ Auth::user()->getTeam()->slug ]) }}" style="font-size: 13px; font-weight: 500; font-family: 'Open Sans';">
+					<a href="{{ route('dashboard', [ Auth::user()->getTeam()->slug ]) }}" style="font-size: 13px;">
 						@if($team->team_logo)
                             <img src="/img/avatars/{{ $team->team_logo }}" alt="" width="155" height="155" class="media-object" style="border-radius: 3px;">
                         @else

@@ -10,7 +10,7 @@ use App\Models\Team;
 use App\Models\Role;
 use App\Models\Space;
 use App\Models\Invite;
-use App\Models\Integration;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -361,30 +361,6 @@ class TeamController extends Controller
         }])->first()->members;
 
         return $members;
-    }
-
-    /**
-     * Get all the integrations of a team.
-     *
-     * @param \App\Models\Team $team
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function integration(Team $team)
-    {
-        $integrations = (new Integration)->getTeamIntegration($team->id);
-
-        return view('team.setting.integration', compact('team', 'integrations'));
-    }
-
-    /**
-     * Create a new slack integration view.
-     *
-     * @param \App\Models\Team $team
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function slackIntegration(Team $team)
-    {
-        return view('team.setting.slack', compact('team'));
     }
 
     /**

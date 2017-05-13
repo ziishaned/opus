@@ -20,7 +20,6 @@ class CreateWikiNotification extends BaseNotification
     {
         return (new SlackMessage)
             ->success()
-            ->to($this->channel)
             ->from($this->from)
             ->success()
             ->content(':book: <' . route('users.show', [$this->wiki->team->slug, $this->wiki->user->slug,]) . '|' . $this->wiki->user->first_name . ' ' . $this->wiki->user->last_name . '> created a new wiki.')

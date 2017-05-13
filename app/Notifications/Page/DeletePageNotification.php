@@ -18,7 +18,6 @@ class DeletePageNotification extends BaseNotification
     public function toSlack()
     {
         return (new SlackMessage)
-            ->to($this->channel)
             ->from($this->from)
             ->attachment(function ($attachment) {
                 $attachment

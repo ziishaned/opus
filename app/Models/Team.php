@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -305,5 +306,12 @@ class Team extends Model
         }
 
         return $user;
+    }
+
+    public static function getIntegration($teamId)
+    {
+         $team = self::where('id', $teamId)->with(['integration'])->first();
+
+         return $team->integration;
     }
 }

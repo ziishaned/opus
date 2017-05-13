@@ -46,6 +46,7 @@
 						<textarea name="description" class="form-control" data-height="380" id="wiki-description"></textarea>
 					</div>
 					<button type="submit" class="btn btn-primary pull-right">Save</button>
+					<a href="{{ route('dashboard', [$team->slug]) }}" class="btn btn-link pull-right">Cancel</a>
 					<div class="clearfix"></div>
 				</form>
 			</div>

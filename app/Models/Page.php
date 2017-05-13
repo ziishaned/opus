@@ -152,6 +152,8 @@ class Page extends Node
         return $this->belongsToMany(Tag::class, 'page_tags', 'subject_id', 'tag_id')->where('page_tags.subject_type', Page::class);
     }
 
+
+
     /**
      * Get the likes that owns the page.
      *
