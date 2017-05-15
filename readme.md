@@ -106,7 +106,7 @@ There are spaces for every team, department or major project. Then employees can
   - [x] ~~Mentioned in comment notifications~~
 - [x] ~~Global Search~~
 - [ ] Responsive
-- [ ] Upload demo somewhere
+- [x] ~~Upload demo somewhere~~
 
 ## Contribution
 
