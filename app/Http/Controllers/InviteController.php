@@ -70,7 +70,7 @@ class InviteController extends Controller
     public function sendInvitationEmail($invitation, $team)
     {
         Mail::send('mails.invitation', ['invitation' => $invitation, 'team' => $team], function ($message) use ($invitation, $team) {
-            $message->from(env('OPUS_MAIL_SENDER_ADDRESS', 'opus@info.com'), env('OPUS_MAIL_SENDER_NAME', 'Opus'));
+            $message->from(config('opus.mail_sender_address'), config('opus.mail_sender_name'));
             $message->subject('Invitation request from ' . $team->name . '.');
             $message->to($invitation->email);
         });
