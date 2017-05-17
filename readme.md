@@ -11,7 +11,6 @@ Opensource knowledge base application for Teams. You can try it out with the dem
 <p align="center">
 <a href="https://travis-ci.org/zeeshanu/opus"><img src="https://travis-ci.org/zeeshanu/opus.svg?branch=master"/></a>
 <a href="https://github.com/zeeshanu/opus"><img src="https://img.shields.io/github/release/zeeshanu/opus.svg" /></a>
-<a href="https://packagist.org/packages/zeeshanu/opus"><img src="https://poser.pugx.org/zeeshanu/opus/downloads"/></a>
 </p>
 
 ## Introduction
