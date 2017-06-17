@@ -76,7 +76,7 @@ There are spaces for every team, department or major project. Then employees can
   - [x] ~~Create User Roles~~
   - [x] ~~Assign Roles to Employees~~
   - [x] ~~Invite employees by email~~
-- [x] Wikis
+- [x] ~~Wikis~~
   - [x] ~~Create Spaces (Group of Wikis)~~ 
   - [x] ~~Create Wikis inside Spaces~~
   - [x] ~~Update and Delete Wikis~~
