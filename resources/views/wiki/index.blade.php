@@ -16,9 +16,9 @@
                                     	<a href="{{ route('wikis.unwatch', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-eye icon"></i> Watching</a>
                                     @endif 
                                 </li>
-                                <li>
+                                {{-- <li>
 									<a href="#" style="padding: 5px 6px;"><i class="fa fa-tasks icon"></i> Make Shortcut</a>
-								</li>
+								</li> --}}
                                 <li>
                                     @if(empty($isWikiInReadList)) 
                                         <a href="{{ route('wikis.readlater.create', [$team->slug, $wiki->space->slug, $wiki->slug]) }}" style="padding: 5px 6px;"><i class="fa fa-check-square-o icon"></i> Read Later</a>
