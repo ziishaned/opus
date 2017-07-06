@@ -5,7 +5,7 @@ var App = {
         this.initJcrop();
         this.initTooltip();
         this.initCKEditor();
-        // this.getTeamMembers();
+        this.getTeamMembers();
         this.setCategoryItemBgColor();
 
         $('#permissions-select').val($('#permissions-select').data('val'));

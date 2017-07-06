@@ -74,7 +74,7 @@ class CommentController extends Controller
             $this->notifyMentionedUsers($matches, $wiki);
         }
 
-        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
+        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="http://opus.dev/teams/'.$team->slug.'/users/$1" class="user-mention">@$1</a>', $this->request->get('comment'));
 
         $this->comment->storeComment($wiki->id, Wiki::class, $this->request->all());
 
@@ -141,7 +141,7 @@ class CommentController extends Controller
             $this->notifyMentionedUsers($matches, $wiki, $page);
         }
 
-        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
+        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="http://opus.dev/teams/'.$team->slug.'/users/$1" class="user-mention">@$1</a>', $this->request->get('comment'));
 
         $this->comment->storeComment($page->id, Page::class, $this->request->all());
 
@@ -178,7 +178,7 @@ class CommentController extends Controller
 
         $encodedComment = $this->request->get('comment');
 
-        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="$1" class="user-mention">@$1</a>', $this->request->get('comment'));
+        $this->request['comment'] = preg_replace('/(?<= |^)@([\w\d]+)/', '<a href="http://opus.dev/teams/'.$team->slug.'/users/$1" class="user-mention">@$1</a>', $this->request->get('comment'));
         $this->request['comment'] = (new Emoji)->render($this->request->get('comment'));
 
         return response()->json([
