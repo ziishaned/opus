@@ -69,7 +69,7 @@ class Comment extends Model
 
     public function wiki()
     {
-        return $this->belongsTo(Wiki::class, 'subject_id', 'id');
+        return $this->belongsTo(Wiki::class, 'subject_id', 'id')->withTrashed();
     }
 
     public function page()

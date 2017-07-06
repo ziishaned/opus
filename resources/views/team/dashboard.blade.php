@@ -39,9 +39,9 @@
 					<div class="panel panel-default">
 						<div class="panel-heading" style="position: relative;">
 							<i class="fa fa-star-o fa-fw" style="margin-right: 3px;"></i> Favourite Wikis 
-							<a href="#" style="position: absolute; right: 12px; top: 10px; color: #337ab7;">
+							{{-- <a href="#" style="position: absolute; right: 12px; top: 10px; color: #337ab7;">
 								All
-							</a>
+							</a> --}}
 						</div>
 						<div class="panel-body" style="padding: 0px 0px">
 							@if($likeWikis->count() > 0) 
