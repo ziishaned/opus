@@ -356,11 +356,9 @@ class TeamController extends Controller
      */
     public function filterMembers()
     {
-        $members = $this->team->find(Auth::user()->getTeam()->id)->with(['members' => function ($query) {
-            $query->where('slug', 'like', '%' . $this->request->get('q') . '%')->get();
+        return $this->team->where('id', Auth::user()->getTeam()->id)->with(['members' => function ($query) {
+            $query->where('slug', 'like', '%' . $this->request->get('q') . '%');
         }])->first()->members;
-
-        return $members;
     }
 
     /**
