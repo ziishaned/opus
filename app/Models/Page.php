@@ -181,7 +181,7 @@ class Page extends Node
      */
     public function wiki()
     {
-        return $this->belongsTo(Wiki::class, 'wiki_id', 'id');
+        return $this->belongsTo(Wiki::class, 'wiki_id', 'id')->withTrashed();
     }
 
     /**
@@ -191,7 +191,7 @@ class Page extends Node
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withTrashed();
     }
 
     /**
