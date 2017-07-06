@@ -29,7 +29,9 @@
 			                    			    <select name="page_parent" id="page-parent" class="form-control">
 			                    			        <option value="">Select a option</option>
 			                    			        @foreach($pages as $item)
-			                    			            <option value="{{ $item->id }}" @if($item->id === $page->parent_id) selected @endif>{{ $item->name }}</option>
+			                    			        	@if($page->id != $item->id)
+				                    			            <option value="{{ $item->id }}" @if($item->id === $page->parent_id) selected @endif>{{ $item->name }}</option>
+														@endif
 			                    			        @endforeach
 			                    			    </select>
 			                    			    @if($errors->has('page_parent'))
