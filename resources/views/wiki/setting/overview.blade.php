@@ -59,7 +59,7 @@
 									<div class="wiki-overview">
 										<div style="margin-bottom: 4px;">
 											<label style="margin-bottom: 0;">Created by</label>
-											<p><a href="#">{{ $wiki->user->name }}</a></p>
+											<p><a href="{{ route('users.show', [$team->slug, $wiki->user->slug]) }}">{{ $wiki->user->name }}</a></p>
 										</div>
 										<div style="margin-bottom: 4px;">
 											<label style="margin-bottom: 0;">Created at</label>
