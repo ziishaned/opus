@@ -18,7 +18,6 @@ class CreatePageNotification extends BaseNotification
     public function toSlack()
     {
         return (new SlackMessage)
-            ->to($this->channel)
             ->from($this->from)
             ->content(':memo: <' . route('users.show', [$this->page->wiki->team->slug, $this->page->user->slug,]) . '|' . $this->page->user->first_name . ' ' . $this->page->user->last_name . '> created a page.')
             ->attachment(function ($attachment) {

@@ -31,7 +31,6 @@ class CreateCommentNotification extends BaseNotification
         };
 
         return (new SlackMessage)
-                ->to($this->channel)
                 ->from($this->from)
                 ->content(':speech_balloon: <' . route('users.show', [$this->comment->user->team->first()->slug, $this->comment->user->slug,]) . '|' . $this->comment->user->first_name . ' ' . $this->comment->user->last_name . '> commented on page <' . route('pages.show', [$this->comment->user->team->first()->slug, $this->comment->subject->wiki->space->slug, $this->comment->subject->wiki->slug, $this->comment->subject->slug]) . '|' . $this->comment->subject->wiki->slug . '/' . $this->comment->subject->slug . '>')
                 ->attachment(function ($attachment) {

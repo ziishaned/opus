@@ -68,7 +68,7 @@ class Page extends Node
 
     public function routeNotificationForSlack()
     {
-        $integration = Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration;
+        $integration = Team::getIntegration(Auth::user()->getTeam()->id);
 
         return $integration ? $integration->url : null;
     }

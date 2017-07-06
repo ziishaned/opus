@@ -43,7 +43,7 @@ class Comment extends Model
 
     public function routeNotificationForSlack()
     {
-        $integration = Team::find(Auth::user()->team->first()->id)->with(['integration'])->first()->integration;
+        $integration = Team::getIntegration(Auth::user()->getTeam()->id);
 
         return $integration ? $integration->url : null;
     }
@@ -74,7 +74,7 @@ class Comment extends Model
 
     public function page()
     {
-        return $this->belongsTo(Page::class, 'subject_id', 'id');
+        return $this->belongsTo(Page::class, 'subject_id', 'id')->withTrashed();
     }
 
     public function likes()
