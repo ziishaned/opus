@@ -1,0 +1,38 @@
+version: '2'
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: web.docker
+    volumes:
+      - ./:/var/www
+    ports:
+      - "80:80"
+    links:
+      - app
+    restart: always
+
+  mysql:
+    image: mariadb
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=change_this_root_password
+      - MYSQL_DATABASE=opus
+      - MYSQL_USER=opus
+      - MYSQL_PASSWORD=change_this_user_password
+    restart: always
+
+  app:
+    build:
+      context: ./
+      dockerfile: app.docker
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+    restart: always
+
+volumes:
+  mysql-data:
+    driver: local
