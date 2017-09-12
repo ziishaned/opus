@@ -145,14 +145,14 @@ class LikeController extends Controller
 
             return true;
         }
-            if (is_null($existing_like->deleted_at)) {
-                $existing_like->delete();
+        if (is_null($existing_like->deleted_at)) {
+            $existing_like->delete();
 
-                return false;
-            }
-                $existing_like->restore();
+            return false;
+        }
+        $existing_like->restore();
 
-                return true;
+        return true;
             
         
     }
