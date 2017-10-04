@@ -134,7 +134,7 @@ var App = {
                 height: $('#wiki-description').data('height'),
                 enableTabKeyTools: true,
                 removePlugins: 'elementspath',
-                extraPlugins: 'codesnippet',
+                extraPlugins: 'codesnippet,markdown',
                 codeSnippet_theme: 'github',
                 resize_enabled: false,
                 uiColor: '#eeeeee',
@@ -152,7 +152,7 @@ var App = {
                     {name: 'insert', items: ['Table', 'HorizontalRule', 'PageBreak', '-', 'Link', 'Iframe']},
                     {name: 'editing', items: ['SpellCheck', '-', 'Find', 'Replace',]},
                     {name: 'paragraph', items: ['-', 'Outdent', 'Indent']},
-                    {name: 'justify2', items: ['CodeSnippet', 'Source', 'Maximize', '-', 'Undo', 'Redo']},
+                    {name: 'justify2', items: ['CodeSnippet', 'Source', 'Markdown', 'Maximize', '-', 'Undo', 'Redo']},
                 ]
             });
         }
