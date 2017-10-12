@@ -97,8 +97,10 @@ class CommentController extends Controller
         foreach ($mentions as $mention) {
             $mention = str_replace('@', '', $mention);
 
-            $user = $this->user->getUser($mention);
-            ;
+            if(!$user = $this->user->getUser($mention)){
+                continue;
+            }
+            
 
             if (is_null($page)) {
                 $url = route('wikis.show', [Auth::user()->getTeam()->slug, $wiki->space->slug, $wiki->slug]);
