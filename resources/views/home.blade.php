@@ -73,7 +73,7 @@
 						<div class="media-body">
 							<h4 class="media-heading" style="margin-bottom: 10px; font-size: 16px; font-weight: 600; line-height: 26px; color: #444444;">Notifications</h4>
 							<p style="font-size: 14px; color: #444444; line-height: 22px; font-weight: 300;">
-								Instantly received notigication when some one mention you in comment. Opus has first-class notifications out of the box.
+								Instantly received notification when some one mention you in comment. Opus has first-class notifications out of the box.
 							</p>
 						</div>
 					</div>
@@ -168,7 +168,7 @@
                         </ul>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
-                        Copyright © 2015 <a href="mailto:ziishaned@gmail.com" style="text-decoration: none;">Zeeshan Ahmed</a>
+                        Copyright © {{ date("Y") }} <a href="mailto:ziishaned@gmail.com" style="text-decoration: none;">Zeeshan Ahmed</a>
                     </div>
                 </div>
             </div>

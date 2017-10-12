@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div style="margin-top: 15px;">
-                        <input type="submit" class="btn btn-success" value="Join"> <span class="text-muted" style="margin-left: 15px;">Already joined a team?</span> <a href="#"> Login now</a>
+                        <input type="submit" class="btn btn-success" value="Join"> <span class="text-muted" style="margin-left: 15px;">Already joined a team?</span> <a href="{{ route('team.login') }}"> Login now</a>
                     </div>
                 </form>
             </div>
