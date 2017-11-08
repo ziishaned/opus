@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\Role;
 use App\Models\Space;
 use App\Models\Invite;
+use App\Helpers\TeamHelper;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -248,53 +249,12 @@ class TeamController extends Controller
         $teamRequestData = collect($this->request->all())->put('user_id', $user->id);
         $team            = $this->team->postTeam($teamRequestData);
 
-        $this->createAdminsRole($team);
+        TeamHelper::createAdminsRole($team);
 
         return redirect()->route('home')->with([
             'alert'      => 'Team successfully created. Now login to your team!',
             'alert_type' => 'success',
         ]);
-    }
-
-    /**
-     * Create admin role when a user create a team.
-     *
-     * @param $team
-     * @return bool
-     */
-    public function createAdminsRole($team)
-    {
-        // Create role
-        $roleId = DB::table('roles')->insertGetId([
-            'name'       => 'Admins',
-            'slug'       => str_slug('Admins', '-'),
-            'user_id'    => $team->user_id,
-            'team_id'    => $team->id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        // Implementing permissions on role
-        $permissions = DB::table('permissions')->get();
-        foreach ($permissions as $permission) {
-            DB::table('role_permissions')->insert([
-                'role_id'       => $roleId,
-                'permission_id' => $permission->id,
-                'created_at'    => Carbon::now(),
-                'updated_at'    => Carbon::now(),
-            ]);
-        }
-
-        // Inserting user into role.
-        DB::table('users_roles')->insertGetId([
-            'role_id'    => $roleId,
-            'user_id'    => $team->user_id,
-            'team_id'    => $team->id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        return true;
     }
 
     /**

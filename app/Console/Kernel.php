@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\AppCommand;
+use App\Console\Commands\CreateTeam;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        AppCommand::class
+        AppCommand::class,
+        CreateTeam::class,
     ];
 
     /**
