@@ -2,7 +2,9 @@
 
 @section('content')
 	<div class="home-con">
-		@include('partials.home-nav')
+		@if (env('ONE_TEAM_MODE') == false)
+				@include('partials.home-nav')
+		@endif
         <div class="login-page">
             <div class="login-form-con">
                 <h1 class="header">Join Team</h1>

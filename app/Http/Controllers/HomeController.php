@@ -17,6 +17,9 @@ class HomeController extends Controller
      */
     public function home()
     {
+        if(env('ONE_TEAM_MODE') == true && !empty(env('TEAM_NAME'))){
+            return view('team.login', ['team_name'=>env('TEAM_NAME')]);
+        }
         return view('home');
     }
 }

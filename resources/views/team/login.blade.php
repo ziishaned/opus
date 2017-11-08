@@ -2,7 +2,9 @@
 
 @section('content')
 	<div class="home-con">
-		@include('partials.home-nav')
+		@if (env('ONE_TEAM_MODE') == false)
+				@include('partials.home-nav')
+		@endif
 		<div class="home-page login-page">
 			<div class="login-form-con" style="margin-bottom: 24px;">
 		        <h1 class="header text-center" style="font-size: 28px;">Login</h1>
@@ -15,7 +17,12 @@
                 <form action="{{ route('team.postlogin') }}" method="POST" role="form">
 		            <div class="form-group {{ $errors->has('team_name') ? 'has-error' : '' }}">
                         <label for="team-name" class="control-label">Team Name</label>
-                        <input type="text" name="team_name" class="form-control" id="team-name" autocomplete="on" required>
+												@if(env('ONE_TEAM_MODE') == true)
+                            <input type="text" name="team_name" class="form-control" id="team-name" value="{{$team_name}}"  readonly autocomplete="on" required>
+                        @else
+                            <input type="text" name="team_name" class="form-control" id="team-name" autocomplete="on" required>
+                        @endif
+
                         @if($errors->has('team_name'))
                             <p class="help-block has-error">{{ $errors->first('team_name') }}</p>
                         @else
@@ -48,7 +55,9 @@
 		            </div>
 		        </form>
 			</div>
-			<p class="text-center" style="font-size: 14px;"><span class="text-muted" style="margin-left: 15px;">Don't have a team?</span> <a href="{{ route('team.create') }}">Create now</a>.</p>
+			@if (env('ONE_TEAM_MODE') == false)
+					<p class="text-center" style="font-size: 14px;"><span class="text-muted" style="margin-left: 15px;">Don't have a team?</span> <a href="{{ route('team.create') }}">Create now</a>.</p>
+			@endif
 		</div>
 	</div>
 @endsection()

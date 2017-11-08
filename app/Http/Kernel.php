@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'acl' => \App\Http\Middleware\CheckPermission::class,
         'invitation' => \App\Http\Middleware\Invitation::class,
+        'team_mode' => \App\Http\Middleware\TeamMode::class,
     ];
 }
