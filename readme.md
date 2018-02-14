@@ -11,6 +11,7 @@ Opensource knowledge base application for Teams.
 <p align="center">
 <a href="https://travis-ci.org/zeeshanu/opus"><img src="https://travis-ci.org/zeeshanu/opus.svg?branch=master"/></a>
 <a href="https://github.com/zeeshanu/opus"><img src="https://img.shields.io/github/release/zeeshanu/opus.svg" /></a>
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fzeeshanu%2Fopus?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fzeeshanu%2Fopus.svg?type=shield"/></a>
 </p>
 
 ## Introduction
@@ -116,3 +117,6 @@ There are spaces for every team, department or major project. Then employees can
 
 ## License
 The license holder is allowed to use the software for free, as long as they don't make money using it. [Read more in License](https://github.com/zeeshanu/opus/blob/master/LICENSE.md)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fzeeshanu%2Fopus.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fzeeshanu%2Fopus?ref=badge_large)
