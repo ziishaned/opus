@@ -9,8 +9,8 @@ Opensource knowledge base application for Teams.
 </p>
 
 <p align="center">
-<a href="https://travis-ci.org/zeeshanu/opus"><img src="https://travis-ci.org/zeeshanu/opus.svg?branch=master"/></a>
-<a href="https://github.com/zeeshanu/opus"><img src="https://img.shields.io/github/release/zeeshanu/opus.svg" /></a>
+<a href="https://travis-ci.org/ziishaned/opus"><img src="https://travis-ci.org/ziishaned/opus.svg?branch=master"/></a>
+<a href="https://github.com/ziishaned/opus"><img src="https://img.shields.io/github/release/ziishaned/opus.svg" /></a>
 </p>
 
 ## Introduction
@@ -49,7 +49,7 @@ There are spaces for every team, department or major project. Then employees can
 
 - Run the below command in your terminal:
   ```bash
-  composer create-project zeeshanu/opus
+  composer create-project ziishaned/opus
   ```
 - Create `.env` using `.env.dist` and populate the relevant information
 - Install the dependencies
@@ -115,4 +115,4 @@ There are spaces for every team, department or major project. Then employees can
 * Reach out to me directly at ziishaned@gmail.com or on twitter [@ziishaned](https://twitter.com/ziishaned)
 
 ## License
-The license holder is allowed to use the software for free, as long as they don't make money using it. [Read more in License](https://github.com/zeeshanu/opus/blob/master/LICENSE.md)
+The license holder is allowed to use the software for free, as long as they don't make money using it. [Read more in License](https://github.com/ziishaned/opus/blob/master/LICENSE.md)
