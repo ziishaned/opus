@@ -9,8 +9,12 @@ Opensource knowledge base application for Teams.
 </p>
 
 <p align="center">
-<a href="https://travis-ci.org/ziishaned/opus"><img src="https://travis-ci.org/ziishaned/opus.svg?branch=master"/></a>
-<a href="https://github.com/ziishaned/opus"><img src="https://img.shields.io/github/release/ziishaned/opus.svg" /></a>
+  <a href="https://travis-ci.org/ziishaned/opus">
+    <img src="https://img.shields.io/travis/ziishaned/opus/master.svg?style=flat-square"/>
+  </a>
+  <a href="https://www.paypal.me/zeshanu">
+    <img src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square" />
+  </a>
 </p>
 
 ## Introduction
@@ -40,12 +44,30 @@ There are spaces for every team, department or major project. Then employees can
 * Search across the knowledge base
 * ..and more
 
-## Requirements
+## Screenshots
 
-* PHP 7.0+
-* MySQL 5+
+You can find some screenshots of the application in this following [link](https://github.com/ziishaned/opus/blob/master/demo.md).
 
 ## Installation
+
+You can use one of the following methods:
+
+* [Docker](#docker)
+* [Localhost](#localhost)
+
+### Docker
+
+```bash
+composer create-project ziishaned/opus
+cd opus
+cp .env.dist .env
+docker-compose up
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate
+docker run -v "$PWD":/var/www/ opus_app /usr/local/bin/composer install
+```
+
+### Localhost
 
 - Run the below command in your terminal:
   ```bash
@@ -69,50 +91,12 @@ There are spaces for every team, department or major project. Then employees can
   php artisan db:seed
   ```
 
-## Todo
-
-- [x] ~~Access Control~~
-  - [x] ~~Create and Update User Roles~~ 
-  - [x] ~~Create User Roles~~
-  - [x] ~~Assign Roles to Employees~~
-  - [x] ~~Invite employees by email~~
-- [x] ~~Wikis~~
-  - [x] ~~Create Spaces (Group of Wikis)~~ 
-  - [x] ~~Create Wikis inside Spaces~~
-  - [x] ~~Update and Delete Wikis~~
-  - [x] ~~Create Pages inside Wikis~~
-  - [x] ~~Syntax Highlighting for Code~~
-  - [x] ~~Update and Delete Pages~~
-  - [x] ~~Hierarchical Page Trees~~
-  - [x] ~~Rearrange Pages in Wikis~~
-  - [x] ~~Mark Pages as Favorite~~
-  - [x] ~~Leave Comments~~
-    - [x] ~~Mention Team Members~~
-    - [x] ~~Add Emojis~~
-  - [x] ~~Watch Wikis to get notified for updates~~
-  - [x] ~~Save pages in Read List (Like Watch Later in Youtube)~~
-  - [x] ~~Add Tags to Pages~~
-  - [x] ~~List all Pages available in a tag~~
-- [x] ~~Team Dashboard (Monitor Team Activity)~~
-- [x] ~~User Dashboard (Monitor User Activity)~~
-- [x] ~~Export Documents~~
-    - [x] ~~Export Page as PDF~~
-    - [x] ~~Export Page as MS Word File~~
-- [x] ~~Notifications~~
-  - [x] ~~Add slack integration in team~~
-  - [x] ~~Notify on slack~~
-  - [x] ~~In-app Notification balloon~~
-  - [x] ~~Mentioned in comment notifications~~
-- [x] ~~Global Search~~
-- [ ] Responsive
-- [x] ~~Upload demo somewhere~~
-
-## Contribution
+## Contributions
 
 * Report issues
-* Open pull request to **DEV BRANCH** with improvements
 * Spread the word
 * Reach out to me directly at ziishaned@gmail.com or on twitter [@ziishaned](https://twitter.com/ziishaned)
 
 ## License
+
 The license holder is allowed to use the software for free, as long as they don't make money using it. [Read more in License](https://github.com/ziishaned/opus/blob/master/LICENSE.md)
