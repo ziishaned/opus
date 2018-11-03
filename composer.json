@@ -28,7 +28,7 @@
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "intervention/image": "^2.3",
     "barryvdh/laravel-snappy": "^0.3.3",
-    "fenos/notifynder": "4.0",
+    "fenos/notifynder": "^4.0",
     "doctrine/dbal": "^2.5",
     "laravel/tinker": "^1.0"
   },
