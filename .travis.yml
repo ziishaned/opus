@@ -2,6 +2,6 @@ language: php
 php:
     - 7.0
 before_script:
-    - composer install
+    - composer install --ignore-platform-reqs
 script:
   - vendor/bin/phpcs --standard=PSR2 -n --extensions=php app/
