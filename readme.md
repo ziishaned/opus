@@ -58,7 +58,7 @@ You can use one of the following methods:
 ### Docker
 
 ```bash
-composer create-project ziishaned/opus
+composer create-project zeeshanu/opus
 cd opus
 cp .env.dist .env
 docker-compose up
@@ -71,7 +71,7 @@ docker run -v "$PWD":/var/www/ opus_app /usr/local/bin/composer install
 
 - Run the below command in your terminal:
   ```bash
-  composer create-project ziishaned/opus
+  composer create-project zeeshanu/opus
   ```
 - Create `.env` using `.env.dist` and populate the relevant information
 - Install the dependencies
