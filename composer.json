@@ -1,14 +1,14 @@
 {
-  "name": "zeeshanu/opus",
+  "name": "ziishaned/opus",
   "description": "Open source knowledge base application for Teams",
   "version": "1.3.4",
-  "homepage": "https://github.com/zeeshanu/opus",
+  "homepage": "https://github.com/ziishaned/opus",
   "license": "YUMMY License",
   "authors": [
     {
-      "name": "Zeeshan Ahmed",
+      "name": "Zeeshan Ahmad",
       "email": "ziishaned@gmail.com",
-      "homepage": "https://github.com/zeeshanu",
+      "homepage": "https://github.com/ziishaned",
       "role": "developer"
     }
   ],
