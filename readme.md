@@ -12,6 +12,12 @@ Opensource knowledge base application for Teams.
   <a href="https://travis-ci.org/ziishaned/opus">
     <img src="https://img.shields.io/travis/ziishaned/opus/master.svg?style=flat-square"/>
   </a>
+  <a href="https://twitter.com/home?status=Opus%20by%20%40ziishaned%20http%3A//github.com/ziishaned/opus">
+    <img src="https://img.shields.io/badge/twitter-tweet-blue.svg?style=flat-square"/>
+  </a>
+  <a href="https://twitter.com/ziishaned">
+    <img src="https://img.shields.io/badge/feedback-@ziishaned-blue.svg?style=flat-square" />
+  </a>
   <a href="https://www.paypal.me/zeshanu">
     <img src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square" />
   </a>
