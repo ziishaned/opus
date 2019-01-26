@@ -18,9 +18,6 @@ Opensource knowledge base application for Teams.
   <a href="https://twitter.com/ziishaned">
     <img src="https://img.shields.io/badge/feedback-@ziishaned-blue.svg?style=flat-square" />
   </a>
-  <a href="https://www.paypal.me/zeshanu">
-    <img src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square" />
-  </a>
 </p>
 
 ## Introduction
