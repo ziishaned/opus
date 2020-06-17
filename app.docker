@@ -1,7 +1,7 @@
 FROM php:7.2-fpm
 
 RUN apt-get update \
-  && apt-get install -y git zip libmcrypt-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev mysql-client libmagickwand-dev \
+  && apt-get install -y git zip libmcrypt-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev default-mysql-client libmagickwand-dev \
   && apt-get clean \
   && pecl install mcrypt imagick \
   && docker-php-ext-enable imagick \
