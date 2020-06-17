@@ -138,7 +138,7 @@ class WikiController extends Controller
             }
         }
 
-        return view('wiki.index', compact('pages', 'wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags', 'isUserWatchWiki', 'isWikiInReadList'));
+        return view('wiki.index', compact('wiki', 'team', 'space', 'isUserLikeWiki', 'wikiTags', 'isUserWatchWiki', 'isWikiInReadList'));
     }
 
     /**
