@@ -29,8 +29,6 @@ services:
     build:
       context: ./
       dockerfile: app.docker
-    volumes:
-      - ./:/var/www
     links:
       - mysql
     restart: always
