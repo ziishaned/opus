@@ -1,5 +1,7 @@
 FROM php:7.2-fpm
 
+WORKDIR /var/www
+
 RUN apt-get update \
   && apt-get install -y git zip libmcrypt-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev default-mysql-client libmagickwand-dev \
   && apt-get clean \
@@ -10,4 +12,6 @@ RUN apt-get update \
 #  && docker-php-ext-configure mcrypt \
   && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /var/www
+ADD . /var/www
+
+RUN chown -R www-data:www-data /var/www
