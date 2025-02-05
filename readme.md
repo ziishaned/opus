@@ -92,7 +92,7 @@ docker run -v "$PWD":/var/www/ opus_app /usr/local/bin/composer install
 
 * Report issues
 * Spread the word
-* Reach out to me directly at ziishaned@gmail.com or on twitter [@ziishaned](https://twitter.com/ziishaned)
+* Reach out to me directly at ziishaned@gmail.com
 
 ## License
 
