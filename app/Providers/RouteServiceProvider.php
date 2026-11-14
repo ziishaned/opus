@@ -72,6 +72,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('page_slug', function ($slug) {
             $page = Page::where('slug', $slug)
+                ->where('team_id', '=', Auth::user()->getTeam()->id)
                 ->with(['likes', 'comments'])
                 ->first();
 
